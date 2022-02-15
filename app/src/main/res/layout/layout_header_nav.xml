@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_header_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_125sdp"
+        android:background="@color/orange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layerType="software"
+            android:src="@drawable/header_back2"
+            android:alpha="0.2"
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/inter_semi_bold"
+            android:text="@string/j"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="normal"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:includeFontPadding="false"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:background="@drawable/circle_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_bottom"/>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:orientation="vertical"
+            android:gravity="start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/user_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_email_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="normal"
+                android:gravity="center"
+                android:letterSpacing="0.01"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:fontFamily="@font/inter_regular"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/cl_header_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/tab_home"
+            android:tint="@color/orange"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/home"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_regular"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:fontFamily="@font/inter_regular"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_15sdp"
+        app:layout_constraintTop_toBottomOf="@id/ll_home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_register"
+            android:tint="@color/orange"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/register"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/inter_regular"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_vouchers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:fontFamily="@font/inter_regular"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_15sdp"
+        app:layout_constraintTop_toBottomOf="@id/ll_register"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_vouchers"
+            android:tint="@color/orange"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/vouchers"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_regular"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_re_purchase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_15sdp"
+        app:layout_constraintTop_toBottomOf="@id/ll_vouchers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_repurchase"
+            android:tint="@color/orange"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/repurchase"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_15sdp"
+        app:layout_constraintTop_toBottomOf="@id/ll_re_purchase"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_wallet"
+            android:tint="@color/orange"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/wallet"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_15sdp"
+        app:layout_constraintTop_toBottomOf="@id/ll_wallet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:src="@drawable/ic_logout"
+            android:tint="@color/orange"
+            tools:ignore="UseAppTint" />
+
+        <TextView
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/logout"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/black"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.transaction.NSTransactionFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_header_transaction"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_44sdp"
+        android:background="@color/light_gray"
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_back"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:src="@drawable/ic_back"
+                android:tint="@color/orange"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/back"
+                tools:ignore="UseAppTint" />
+
+            <TextView
+                android:id="@+id/tv_header_transaction"
+                style="@style/LayoutWidthHeightWrap"
+                android:textSize="@dimen/_15sdp"
+                android:text="@string/profile_title"
+                android:textColor="@color/orange"
+                android:includeFontPadding="false"
+                app:layout_constraintStart_toEndOf="@id/iv_back"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            style="@style/HeaderFontsZeroWrap"
+            android:text="@string/transactions_title"
+            app:layout_constraintStart_toEndOf="@id/cl_back"
+            app:layout_constraintEnd_toStartOf="@id/view_end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <View
+            android:id="@+id/view_end"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top_wallet"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:paddingVertical="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_header_transaction">
+
+        <TextView
+            android:id="@+id/tv_wallet_title"
+            style="@style/LayoutWidthHeightZeroWrap"
+            android:text="@string/wallet"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_wallet"/>
+
+        <TextView
+            android:id="@+id/tv_wallet"
+            style="@style/LayoutWidthHeightZeroWrap"
+            tools:text="$0.0"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_28sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_wallet_title"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_transaction_not_found"
+        style="@style/LayoutWidthHeightZero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_top_wallet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_transaction_not_found"
+            style="@style/LayoutWidthHeightZero"
+            android:paddingVertical="@dimen/_6sdp"
+            android:clipToPadding="false"
+            android:text="@string/no_item"
+            android:textColor="@color/black"
+            android:gravity="center|bottom"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_transaction_not_found_sub"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_transaction_not_found_sub"
+            style="@style/LayoutWidthHeightZero"
+            android:clipToPadding="false"
+            android:text="@string/no_transaction_available"
+            android:textColor="@color/gray_text"
+            android:gravity="center|top"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_transaction_not_found"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
+        style="@style/LayoutWidthHeightZero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cl_top_wallet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_transaction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="0dp"
+            android:clipToPadding="false"
+            tools:listitem="@layout/layout_transaction"
+            android:visibility="gone"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

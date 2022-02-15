@@ -1,0 +1,5 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="marker_offset_x">5dp</dimen>
+    <dimen name="marker_offset_y">39dp</dimen>
+</resources>

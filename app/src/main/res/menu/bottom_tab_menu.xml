@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/tb_home"
+        android:icon="@drawable/tab_home"
+        android:title="@string/home" />
+
+    <item android:id="@+id/tb_register"
+        android:icon="@drawable/ic_register"
+        android:title="@string/register" />
+
+    <item android:id="@+id/tb_vouchers"
+        android:icon="@drawable/ic_vouchers"
+        android:title="@string/vouchers" />
+
+    <item android:id="@+id/tb_offers"
+        android:icon="@drawable/ic_offers"
+        android:title="@string/offers" />
+
+    <item android:id="@+id/tb_profile"
+        android:icon="@drawable/tab_profile"
+        android:title="@string/profile_title"/>
+</menu>

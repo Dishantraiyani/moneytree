@@ -1,0 +1,253 @@
+<resources>
+    <string name="app_name">MoneyTree</string>
+    <string name="something_went_wrong">Internal Server Error, Please Try Again Later</string>
+    <string name="login_title">Login</string>
+    <string name="sign_title">Sign In</string>
+    <string name="please_sign_in">Please Sign in to continue.</string>
+    <string name="user_name">UserName</string>
+    <string name="not_have_account">Don’t have an account?</string>
+    <string name="sign_up">SignUp</string>
+    <string name="enter_user_name">Please Enter UserName.</string>
+    <string name="enter_password">Please Enter Password.</string>
+    <string name="enter_password_correct">Please Enter Valid Password.</string>
+
+    <string name="error_phone_number_empty">Mobile Number should not be Empty</string>
+    <string name="error_invalid_phone_number">Mobile Number must be 10 Digits</string>
+    <string name="error_invalid_number">Mobile Number is not valid</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_code">Enter Code</string>
+    <string name="we_have_sent_">We have sent a 6 digit verification\ncode to your mobile number</string>
+    <string name="resend"><u>Resend</u></string>
+    <string name="only_valid_for_4_58_min">Only valid for 4:58 min</string>
+    <string name="submit_code">Submit Code</string>
+    <string name="back">back</string>
+    <string name="contact_us"><u>Contact Us</u></string>
+    <string name="contact_us_title">Contact Us</string>
+
+    <!--Language-->
+    <string name="select_language_title" translatable="false">Select Language</string>
+    <string name="english_l" translatable="false">English</string>
+    <string name="arabic_l" translatable="false">Arabic</string>
+
+    <!--Resend OTP-->
+    <string name="close">Close</string>
+    <string name="email">Email</string>
+    <string name="call">Call</string>
+    <string name="home">Home</string>
+    <string name="orders">Orders</string>
+    <string name="profile_title">My Account</string>
+        <!--AIzaSyCarxoldwoOfN1avMrTLg1bfdBi998RSQw-->
+    <string name="google_maps_key" translatable="false">AIzaSyA_coyCsWHgKVZsAypeU2tSJvck9Y_8ZdA</string>
+
+    <string name="location_permission">Location Permission Needed</string>
+    <string name="location_permission_description">This app needs the Location permission, please accept to use location functionality</string>
+
+    <string name="sms_permission">Sms Permission Needed</string>
+    <string name="sms_permission_description">This app needs the Sms permission, please accept to use auto fill otp functionality</string>
+
+    <string name="dispatch_id_title">Dispatch Id: #%1$s (%2$s)</string>
+    <string name="order_address">Address: %1$s</string>
+    <string name="order_item">Total Items : %1$s</string>
+    <string name="delivery_time">Delivery Time: %1$s</string>
+    <string name="call_user">Call: %1$s</string>
+    <string name="no_order_available">No Order Available</string>
+    <string name="no_item">No Item</string>
+    <string name="order_detail">Order Detail</string>
+    <string name="shop_order_id_title">Shop Order # %1$s</string>
+    <string name="delivery_date_title">Delivery Date: %1$s</string>
+    <string name="delivery_duration">Duration: %1$s</string>
+    <string name="delivery_proof">Delivery Proof</string>
+    <string name="vendor_item">Vendor: %1$s</string>
+
+    <string name="user_name_register">UserName: %1$s</string>
+    <string name="email_register">Email: %1$s</string>
+    <string name="phone_register">Mobile: %1$s</string>
+    <string name="date_register">Entry Date: %1$s</string>
+
+    <string name="logout">Logout</string>
+    <string name="wallet">Wallet</string>
+    <string name="wallet_data">SAR %1$s</string>
+    <string name="wallet_data_dollar">$%1$d</string>
+
+    <string name="email_title">Email :</string>
+    <string name="username_title">UserName :</string>
+    <string name="mobile_title">Mobile :</string>
+    <string name="password_title">Password</string>
+    <string name="notification_title">Notifications</string>
+    <string name="transactions_title">Transactions</string>
+    <string name="trip_history_title">Trip History</string>
+
+    <string name="get_directions">Get Directions</string>
+    <string name="show_details">Show Details</string>
+    <string name="delivered">Delivered</string>
+
+    <string name="no_network_available">No Network Available</string>
+    <string name="network_unreachable">Something temporarily wrong with your network connection. please make sure you are connected to the internet and then try again.</string>
+
+    <!--Errors-->
+    <string name="error_01">unhandled error status code sent from service, error code: %1$d</string>
+
+    <string name="no_retail_available">No Direct Retail Available</string>
+    <string name="no_royalty_available">No Royalty Offer Available</string>
+    <string name="no_repurchase_available">No RePurchase Available</string>
+    <string name="no_voucher_available">No Voucher Available</string>
+    <string name="no_register_available">No Register Available</string>
+    <string name="no_notification_available">No Notification Available</string>
+    <string name="data_title">Data</string>
+
+    <string name="location_title">Locations</string>
+
+    <string name="cell_title">Cellular</string>
+
+
+    <!--Sensors-->
+    <string name="sensor_title">Sensors</string>
+    <string name="not_applicable">n/a</string>
+    <string name="sensor_accuracy">Accuracy</string>
+    <string name="sensor_additional_info">Additional Info</string>
+    <string name="sensor_confidence">Confidence</string>
+    <string name="sensor_delay_min">Minimum Delay</string>
+    <string name="sensor_delay_max">Maximum Delay</string>
+    <string name="sensor_deprecated">SENSOR API DEPRECATED</string>
+    <string name="sensor_dynamic">Dynamic</string>
+    <string name="sensor_id">Id</string>
+    <string name="sensor_name">Name</string>
+    <string name="sensor_power">Power</string>
+    <string name="sensor_range">Maximum Range</string>
+    <string name="sensor_reporting_mode">Reporting mode</string>
+    <string name="sensor_resolution">Resolution</string>
+    <string name="sensor_type_int">Int Type</string>
+    <string name="sensor_type_str">String Type</string>
+    <string name="sensor_vendor">Vendor</string>
+    <string name="sensor_version">Version</string>
+    <string name="sensor_wakeup">WakeUp</string>
+    <string name="values_default">Press button to listen or stop listening.</string>
+    <string name="values_unavailable">Event values not available.</string>
+    <string name="values_true">true</string>
+    <string name="values_false">false</string>
+    <string name="gps_network_not_enabled">No location access</string>
+    <string name="open_location_settings">Device location for HubzDriver is turned off, please turn on to continue use this app.</string>
+
+    <string name="gps_enable">GPS enable</string>
+    <string name="please_turn_on_gps">Please turn on GPS</string>
+
+    <string name="no_transaction_available">No Transaction Available</string>
+
+    <!--QR code-->
+    <string name="qr_code">QR Code</string>
+    <string name="user_canceled">User canceled</string>
+    <string name="missing_permission">Missing permission</string>
+
+    <string name="service_already_running">Service is already running</string>
+    <string name="service_start_successfully">Service start successfully</string>
+
+    <string-array name="accuracy">
+        <item>not connected</item>
+        <item>unreliable</item>
+        <item>low</item>
+        <item>medium</item>
+        <item>high</item>
+    </string-array>
+    <string-array name="reportingMode">
+        <item>continuous</item>
+        <item>on change</item>
+        <item>one shot</item>
+        <item>special trigger</item>
+    </string-array>
+
+    <string-array name="languageList">
+        <item>English</item>
+        <item>Arabic</item>
+        <item>German</item>
+    </string-array>
+    <string-array name="languageCode">
+        <item>EN</item>
+        <item>AR</item>
+        <item>DE</item>
+    </string-array>
+
+    <string name="no_address_found">Not Available</string>
+    <string name="stop">Stop</string>
+    <string name="status_updated">Status Updated</string>
+    <string name="lat_long">%1$s , %2$s</string>
+    <string name="add_proof_image">Add Proof Image</string>
+    <string name="success">Success</string>
+    <string name="success_dispatch">Dispatch proof added successfully</string>
+    <string name="otp_send_successfully">Otp has been sent successfully</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="yes_title">Yes</string>
+    <string name="no_title">No</string>
+    <string name="j">J</string>
+    <string name="edit">Edit</string>
+
+    <string name="dashboard_data">%1$s</string>
+    <string name="name">%1$s</string>
+    <string name="ac_no">Ac No. %1$s</string>
+    <string name="balance">₹%1$s</string>
+    <string name="vouchers">Vouchers</string>
+    <string name="register">Register</string>
+    <string name="repurchase">Repurchase</string>
+    <string name="repurchase_info">Repurchase Info</string>
+    <string name="royalty_info">Royalty Info</string>
+    <string name="retail_info">Retail Info</string>
+    <string name="recharges_amp_pay_bills"><![CDATA[Recharges & Pay Bills]]></string>
+    <string name="my_downline">My Downline</string>
+    <string name="join_vouchers">Join Vouchers</string>
+    <string name="zero">0</string>
+    <string name="add_new">Add New</string>
+
+    <string-array name="recharge_list">
+        <item>Mobile</item>
+        <item>DTH</item>
+        <item>Data Card</item>
+        <item>Landline</item>
+        <item>Broadband</item>
+        <item>Gas</item>
+        <item>Electricity</item>
+        <item>Water</item>
+        <item>Insurance</item>
+        <item>Fees</item>
+        <item>Credit Card</item>
+        <item>Google Play</item>
+    </string-array>
+
+    <string-array name="voucher_tab">
+        <item>Pending</item>
+        <item>Receive</item>
+        <item>Transfer</item>
+    </string-array>
+
+    <string-array name="offers_tab">
+        <item>RePurchase</item>
+        <item>Direct Retail</item>
+        <item>Royalty Offer</item>
+        <item>Downline Member</item>
+    </string-array>
+
+    <!--Voucher-->
+    <string name="voucher_code">Voucher Code: %1$s</string>
+    <string name="product_name">Product Name: %1$s</string>
+    <string name="qty_title">Qty: %1$s</string>
+    <string name="rate_title">Rate: %1$s</string>
+    <string name="percentage_title">Percentage: %1$s</string>
+    <string name="member_id">Member Id: %1$s</string>
+    <string name="member_type">Member Type: %1$s</string>
+    <string name="voucher_date">Date: %1$s</string>
+    <string name="voucher_status">Status: %1$s</string>
+    <string name="order_no">Order No: %1$s</string>
+    <string name="total">Total: </string>
+    <string name="amount">Amount: </string>
+    <string name="_zero">₹0</string>
+    <string name="offers">Offers</string>
+
+    <string name="payout_no">Payout No: %1$s</string>
+    <string name="repurchase_no">Repurchase No: %1$s</string>
+    <string name="date_from">Date From:</string>
+    <string name="date_to">To:</string>
+    <string name="tds">Tds:</string>
+    <string name="admin_data">Admin:</string>
+    <string name="percentage_data">Percentage:</string>
+    <string name="level">Level:</string>
+    <string name="search_hint">Search</string>
+</resources>

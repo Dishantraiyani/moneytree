@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_2sdp"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="@dimen/_90sdp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_90sdp"
+        android:src="@drawable/offer_slider"
+        android:scaleType="fitXY"/>
+</androidx.cardview.widget.CardView>
