@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.franmontiel.localechanger.LocaleChanger
-import com.franmontiel.localechanger.utils.ActivityRecreationHelper
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
@@ -43,16 +41,6 @@ class NSProfileFragment : NSFragment() {
         return profileBinding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        ActivityRecreationHelper.onResume(activity)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        ActivityRecreationHelper.onDestroy(activity)
-    }
-
     /**
      * View created
      *
@@ -85,19 +73,6 @@ class NSProfileFragment : NSFragment() {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Set language
-     *
-     * @param localeLang language name select
-     * @param isRecreate is activity recreate
-     */
-    private fun setLanguage(localeLang: String, isRecreate: Boolean) {
-        LocaleChanger.setLocale(Locale(localeLang))
-        if (isRecreate) {
-            ActivityRecreationHelper.recreate(activity, true)
         }
     }
 
@@ -199,7 +174,6 @@ class NSProfileFragment : NSFragment() {
                     viewLifecycleOwner
                 ) { isLogout ->
                     NSLog.d(TAG, "observeViewModel: $isLogout")
-                    setLanguage("en", false)
                     NSApplication.getInstance().getPrefs().clearPrefData()
                     switchActivity(
                         NSLoginActivity::class.java,

@@ -7,6 +7,7 @@ import com.moneytree.app.databinding.NsActivityMainBinding
 import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.offers.NSOfferFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
+import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.vouchers.NSVoucherFragment
 import io.github.g00fy2.quickie.QRResult
 import org.greenrobot.eventbus.EventBus
@@ -45,7 +46,7 @@ class NSMainActivity : NSActivity() {
                         replaceCurrentFragment(NSHomeFragment.newInstance(), false, mainContainer.id)
                     }
                     R.id.tb_register -> {
-                        //replaceCurrentFragment(NSRegisterListFragment.newInstance(), false, mainContainer.id)
+                        replaceCurrentFragment(NSRegisterFragment.newInstance(), false, mainContainer.id)
                     }
                     R.id.tb_vouchers -> {
                         replaceCurrentFragment(NSVoucherFragment.newInstance(), false, mainContainer.id)

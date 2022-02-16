@@ -10,7 +10,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
-import com.franmontiel.localechanger.LocaleChanger
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
 import org.greenrobot.eventbus.EventBus

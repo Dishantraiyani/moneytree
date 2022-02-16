@@ -109,7 +109,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:$playServicesMapVersion"
     implementation "com.google.android.gms:play-services-location:$playServicesLocationVersion"
 
-    implementation 'com.github.franmontiel:LocaleChanger:1.1'
+    //implementation 'com.github.franmontiel:LocaleChanger:1.1'
 
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
