@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
@@ -14,6 +16,8 @@ import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentProfileBinding
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.main.NSMainActivity
+import com.moneytree.app.ui.memberTree.MemberTreeActivity
 import com.moneytree.app.ui.notification.NSNotificationFragment
 import com.moneytree.app.ui.transaction.NSTransactionFragment
 import org.greenrobot.eventbus.EventBus
@@ -104,25 +108,38 @@ class NSProfileFragment : NSFragment() {
      */
     private fun onClickProfile(position: Int) {
         when (position) {
-            /*0 -> {
-
-            }*/
+            0 -> {
+                switchActivity(
+                    MemberTreeActivity::class.java,
+                    bundleOf(
+                        NSConstants.MEMBER_TREE_ENABLE to true
+                    )
+                )
+            }
+            1 -> {
+                switchActivity(
+                    MemberTreeActivity::class.java,
+                    bundleOf(
+                        NSConstants.MEMBER_TREE_ENABLE to false
+                    )
+                )
+            }
             /*0 -> {
                 showDialogLanguageSelect()
             }*/
-            1 -> {
-                EventBus.getDefault().post(NSFragmentChange(NSNotificationFragment.newInstance()))
-            }
-            2 -> {
-
-            }
             3 -> {
-                EventBus.getDefault().post(NSFragmentChange(NSTransactionFragment.newInstance()))
+                EventBus.getDefault().post(NSFragmentChange(NSNotificationFragment.newInstance()))
             }
             4 -> {
 
             }
-            0 -> {
+            5 -> {
+                EventBus.getDefault().post(NSFragmentChange(NSTransactionFragment.newInstance()))
+            }
+            6 -> {
+
+            }
+            2 -> {
                 with(profileModel) {
                     with(activity.resources) {
                         showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))

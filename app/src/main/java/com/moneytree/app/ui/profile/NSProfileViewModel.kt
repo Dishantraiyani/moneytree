@@ -30,8 +30,8 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
         with(activity) {
             with(resources) {
                 profileItemList.clear()
-                //profileItemList.add(getString(R.string.change_password_title))
-               // profileItemList.add(getString(R.string.select_language_title))
+                profileItemList.add(getString(R.string.member_tree))
+                profileItemList.add(getString(R.string.level_member_tree))
                // profileItemList.add(getString(R.string.notification_title))
               //  profileItemList.add(getString(R.string.trip_history_title))
               //  profileItemList.add(getString(R.string.transactions_title))

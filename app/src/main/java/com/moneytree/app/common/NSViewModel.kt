@@ -1,11 +1,14 @@
 package com.moneytree.app.common
 
 import android.app.Application
+import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSConstants.Companion.REFRESH_TOKEN_ENABLE
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
+import com.moneytree.app.ui.login.NSLoginActivity
 
 /**
  * The base class for all view models which holds methods and members common to all view models
@@ -38,7 +41,13 @@ open class NSViewModel(mApplication: Application) : AndroidViewModel(mApplicatio
     protected fun handleError(apiErrorList: List<Any>) {
         isProgressShowing.value = false
         isBottomProgressShowing.value = false
-        apiErrors.value = apiErrorList
+
+        if (apiErrorList.contains("Session TimeOut!!\n")) {
+            NSApplication.getInstance().getPrefs().clearPrefData()
+            NSApplication.getInstance().startActivity(Intent(NSApplication.getInstance(), NSLoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+        } else {
+            apiErrors.value = apiErrorList
+        }
     }
 
     /**

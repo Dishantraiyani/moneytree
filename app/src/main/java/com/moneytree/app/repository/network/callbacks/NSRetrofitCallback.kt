@@ -21,7 +21,12 @@ abstract class NSRetrofitCallback<T>(
 
     override fun onResponse(call: Call<T>, response: Response<T>) {
         if (response.isSuccessful) {
-            onResponse(response)
+            if (response.body() == null && response.errorBody() == null) {
+                NSApiErrorHandler.getApiErrorMessage(response, viewModelCallback)
+                onErrorResponse(response)
+            } else {
+                onResponse(response)
+            }
         } else {
             NSApiErrorHandler.getApiErrorMessage(response, viewModelCallback)
             onErrorResponse(response)

@@ -270,6 +270,33 @@ class NSApiManager {
     fun getRoyaltyListData(pageIndex: String, search: String, callback: NSRetrofitCallback<NSRoyaltyListResponse>) {
         request(unAuthorised3020Client.getRoyaltyList(NSUserManager.getAuthToken()!!, pageIndex, search), callback)
     }
+
+    /**
+     * To call the downline direct reOffer API
+     *
+     * @param callback  The callback for the result
+     */
+    fun getDownlineMemberDirectReOffer(callback: NSRetrofitCallback<NSDownlineMemberDirectReOfferResponse>) {
+        request(unAuthorised3020Client.getDownLineMemberDirectReOffer(NSUserManager.getAuthToken()!!), callback)
+    }
+
+    /**
+     * To call the user detail data API
+     *
+     * @param callback  The callback for the result
+     */
+    fun getMemberTreeData(callback: NSRetrofitCallback<NSMemberTreeResponse>) {
+        request(unAuthorised3020Client.getMemberTree(NSUserManager.getAuthToken()!!), callback)
+    }
+
+    /**
+     * To call the downline direct reOffer API
+     *
+     * @param callback  The callback for the result
+     */
+    fun getLevelWiseTree(callback: NSRetrofitCallback<NSMemberTreeResponse>) {
+        request(unAuthorised3020Client.getLevelWiseMemberReportList(NSUserManager.getAuthToken()!!), callback)
+    }
 }
 
 /**

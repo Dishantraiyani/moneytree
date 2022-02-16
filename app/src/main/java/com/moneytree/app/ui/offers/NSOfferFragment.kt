@@ -10,6 +10,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.databinding.NsFragmentOffersBinding
+import com.moneytree.app.ui.downlineReOffer.NSDownlineReOfferFragment
 import com.moneytree.app.ui.repurchase.NSRePurchaseListFragment
 import com.moneytree.app.ui.retail.NSRetailListFragment
 import com.moneytree.app.ui.royalty.NSRoyaltyListFragment
@@ -69,6 +70,14 @@ class NSOfferFragment : NSFragment() {
                         offerFrameContainer.id
                     )
                 }
+                3 -> {
+                    layoutHeader.ivSearch.visibility = View.GONE
+                replaceFragment(
+                    NSDownlineReOfferFragment.newInstance(),
+                    false,
+                    offerFrameContainer.id
+                )
+            }
             }
         }
         addTabs()
@@ -119,6 +128,7 @@ class NSOfferFragment : NSFragment() {
                     override fun onTabSelected(tab: TabLayout.Tab?) {
                         tabPosition = tab!!.position
                         pref.offerTabPosition = tabPosition
+                        ivSearch.visibility = View.VISIBLE
                         when (tabPosition) {
                             0 -> {
                                 replaceFragment(NSRePurchaseListFragment.newInstance(), false, offerFrameContainer.id)
@@ -128,6 +138,14 @@ class NSOfferFragment : NSFragment() {
                             }
                             2 -> {
                                 replaceFragment(NSRoyaltyListFragment.newInstance(), false, offerFrameContainer.id)
+                            }
+                            3 -> {
+                                ivSearch.visibility = View.GONE
+                                replaceFragment(
+                                    NSDownlineReOfferFragment.newInstance(),
+                                    false,
+                                    offerFrameContainer.id
+                                )
                             }
                         }
                     }

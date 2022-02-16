@@ -20,6 +20,7 @@
             style="@style/ProfileZeroWrap"
             android:text="@string/password_title"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@id/iv_next"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

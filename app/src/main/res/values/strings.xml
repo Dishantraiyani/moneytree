@@ -37,7 +37,7 @@
     <string name="home">Home</string>
     <string name="orders">Orders</string>
     <string name="profile_title">My Account</string>
-        <!--AIzaSyCarxoldwoOfN1avMrTLg1bfdBi998RSQw-->
+    <!--AIzaSyCarxoldwoOfN1avMrTLg1bfdBi998RSQw-->
     <string name="google_maps_key" translatable="false">AIzaSyA_coyCsWHgKVZsAypeU2tSJvck9Y_8ZdA</string>
 
     <string name="location_permission">Location Permission Needed</string>
@@ -92,8 +92,11 @@
     <string name="no_royalty_available">No Royalty Offer Available</string>
     <string name="no_repurchase_available">No RePurchase Available</string>
     <string name="no_voucher_available">No Voucher Available</string>
+    <string name="no_downline_re_offer_available">No Downline ReOffer Available</string>
     <string name="no_register_available">No Register Available</string>
     <string name="no_notification_available">No Notification Available</string>
+    <string name="no_member_tree_available">No Member Tree Available</string>
+    <string name="no_level_tree_available">No Level Wise Member Tree Available</string>
     <string name="data_title">Data</string>
 
     <string name="location_title">Locations</string>
@@ -225,6 +228,14 @@
         <item>Downline Member</item>
     </string-array>
 
+    <string-array name="reports">
+        <item>Member Tree</item>
+        <item>Level Wise Member</item>
+    </string-array>
+
+    <string name="member_tree">Member Tree</string>
+    <string name="level_member_tree">Level Wise Member</string>
+
     <!--Voucher-->
     <string name="voucher_code">Voucher Code: %1$s</string>
     <string name="product_name">Product Name: %1$s</string>
@@ -250,4 +261,23 @@
     <string name="percentage_data">Percentage:</string>
     <string name="level">Level:</string>
     <string name="search_hint">Search</string>
+    <string name="downline_member">Downline ReOffer</string>
+    <string name="member_id_title">Member Id:</string>
+    <string name="status_title">Status:</string>
+    <string name="reports">Reports</string>
+
+    <string name="slot1">Slot 1</string>
+    <string name="slot2">Slot 2</string>
+    <string name="slot3">Slot 3</string>
+    <string name="slot4">Slot 4</string>
+    <string name="slot5">Slot 5</string>
+    <string name="slot6">Slot 6</string>
+    <string name="slot7">Slot 7</string>
+    <string name="slot8">Slot 8</string>
+    <string name="slot9">Slot 9</string>
+    <string name="slot10">Slot 10</string>
+    <string name="slot11">Slot 11</string>
+    <string name="slot12">Slot 12</string>
+
+
 </resources>

@@ -29,6 +29,9 @@ class NSApiErrorHandler {
         const val ERROR_RETAIL_INFO_DATA = "error_retail_info_data"
         const val ERROR_ROYAL_INFO_DATA = "error_royal_info_data"
         const val ERROR_ROYALTY_LIST_DATA = "error_royalty_list_data"
+        const val ERROR_DOWNLINE_MEMBER_LIST_DATA = "error_downline_member_list_data"
+        const val ERROR_MEMBER_TREE = "error_member_tree"
+        const val ERROR_LEVEL_WISE_MEMBER_TREE = "error_level_wise_member_tree"
         const val ERROR_WALLET_DATA = "error_wallet_data"
         const val ERROR_WALLET_BALANCE_DATA = "error_wallet_balance_data"
         const val ERROR_UPLOAD_FILE = "error_upload_file"
@@ -47,27 +50,35 @@ class NSApiErrorHandler {
         ) {
             val context: Context = NSApplication.getInstance().applicationContext
             errorMessageList = mutableListOf()
-            when (val responseErrorCode = rawErrorResponse.code()) {
-                in 400..429 -> {
-                    if (responseErrorCode == 401) {
-                      viewModelCallback.onFailure(REFRESH_TOKEN_ENABLE)
-                    } else {
+
+            if (rawErrorResponse.body() == null && rawErrorResponse.errorBody() == null) {
+                val errorString = "Session TimeOut!!\n"
+                errorMessageList.add(errorString)
+                errorMessageList.add("Please Logout and Login again!!!")
+            } else {
+                when (val responseErrorCode = rawErrorResponse.code()) {
+                    in 400..429 -> {
+                        if (responseErrorCode == 401) {
+                            viewModelCallback.onFailure(REFRESH_TOKEN_ENABLE)
+                        } else {
+                            val errorString = context.getString(R.string.error_01, responseErrorCode)
+                            errorMessageList.add(rawErrorResponse.message())
+                            errorMessageList.add(errorString)
+                        }
+                    }
+                    in 500..503 -> {
+                        val errorString = context.getString(R.string.error_01, responseErrorCode)
+                        errorMessageList.add(rawErrorResponse.message())
+                        errorMessageList.add(errorString)
+                    }
+                    else -> {
                         val errorString = context.getString(R.string.error_01, responseErrorCode)
                         errorMessageList.add(rawErrorResponse.message())
                         errorMessageList.add(errorString)
                     }
                 }
-                in 500..503 -> {
-                    val errorString = context.getString(R.string.error_01, responseErrorCode)
-                    errorMessageList.add(rawErrorResponse.message())
-                    errorMessageList.add(errorString)
-                }
-                else -> {
-                    val errorString = context.getString(R.string.error_01, responseErrorCode)
-                    errorMessageList.add(rawErrorResponse.message())
-                    errorMessageList.add(errorString)
-                }
             }
+
             if (errorMessageList.size > 0) {
                 viewModelCallback.onError(errorMessageList)
             }
