@@ -4,7 +4,8 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSRePurchaseInfoResponse
+import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
 import retrofit2.Response
 
 /**
@@ -12,6 +13,7 @@ import retrofit2.Response
  */
 object NSRePurchaseRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
+    private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
      * To get single order data API
@@ -24,7 +26,13 @@ object NSRePurchaseRepository {
         apiManager.getRePurchaseListData(pageIndex, search, object :
             NSRetrofitCallback<NSRePurchaseListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REPURCHASE_LIST_DATA) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSRePurchaseListResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }
@@ -40,7 +48,13 @@ object NSRePurchaseRepository {
         apiManager.getRePurchaseInfoData(pageIndex, repurchaseId, object :
             NSRetrofitCallback<NSRePurchaseInfoResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REPURCHASE_INFO_DATA) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSRePurchaseInfoResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }

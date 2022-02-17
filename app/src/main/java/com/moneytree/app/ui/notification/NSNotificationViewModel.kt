@@ -17,7 +17,7 @@ class NSNotificationViewModel(application: Application) : NSViewModel(applicatio
     /**
      * Get order list data
      *
-     * @param activity The activity's context
+     * @param isShowProgress The progress dialog check show
      */
     fun getNotificationData(isShowProgress: Boolean) {
         notificationList.clear()

@@ -4,10 +4,6 @@ import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.moneytree.app.common.NSConstants.Companion.REFRESH_TOKEN_ENABLE
-import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.repository.NSUserRepository
-import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.ui.login.NSLoginActivity
 
 /**

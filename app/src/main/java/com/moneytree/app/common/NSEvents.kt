@@ -1,10 +1,7 @@
 package com.moneytree.app.common
 
 import android.content.Intent
-import android.location.Address
-import android.location.Location
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.LocationResult
 import com.moneytree.app.repository.network.responses.NSDataUser
 
 /**
@@ -21,7 +18,7 @@ class NSLogoutEvent
  *
  * @param isNetworkConnected The status of the network state
  */
-class NSNetworkStateChangeEvent(var isNetworkConnected: Boolean)
+class NSNetworkStateChangeEvent(private var isNetworkConnected: Boolean)
 
 /**
  * The event that is triggered when a button is clicked in the alert dialog
@@ -60,8 +57,8 @@ class NSFragmentChange(var fragment: Fragment)
  */
 class NSTabChange(var tab: Int)
 
-class BackPressEvent()
+class BackPressEvent
 
-class SearchCloseEvent()
+class SearchCloseEvent
 
 class SearchStringEvent(val search: String)

@@ -5,13 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDownlineMemberReOfferRepository
-import com.moneytree.app.repository.NSVoucherRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferData
 import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferResponse
-import com.moneytree.app.repository.network.responses.NSVoucherListData
-import com.moneytree.app.repository.network.responses.NSVoucherListResponse
-
 
 /**
  * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
@@ -19,9 +15,8 @@ import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 class NSDownlineReOfferViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var downlineList: MutableList<NSDownlineMemberDirectReOfferData> = arrayListOf()
-    var tempDownlineList: MutableList<NSDownlineMemberDirectReOfferData> = arrayListOf()
     var isDownlineDataAvailable = MutableLiveData<Boolean>()
-    var downlineResponse: NSDownlineMemberDirectReOfferResponse? = null
+    private var downlineResponse: NSDownlineMemberDirectReOfferResponse? = null
 
     /**
      * Get register list data

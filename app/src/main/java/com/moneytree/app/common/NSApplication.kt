@@ -2,7 +2,6 @@ package com.moneytree.app.common
 
 import android.app.Application
 import android.content.Context
-import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
@@ -13,7 +12,6 @@ import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
 import org.greenrobot.eventbus.EventBus
-import java.util.*
 
 /**
  * The DoT application class containing Preference, network manager and functionality
@@ -26,7 +24,7 @@ class NSApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         initInstance()
     }
 

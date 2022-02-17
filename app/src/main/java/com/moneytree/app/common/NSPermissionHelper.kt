@@ -2,10 +2,12 @@ package com.moneytree.app.common
 
 import android.Manifest
 import android.app.Activity
-import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
+import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,22 +15,15 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSRequestCodes.REQUEST_LOCATION_CODE
 import com.moneytree.app.common.NSRequestCodes.REQUEST_SMS_CODE
 
-import android.content.Intent
-
-import android.location.LocationManager
-import android.provider.Settings
-import android.util.Log
-import java.lang.Exception
-
 
 /**
  * Created by Admin on 25-01-2022.
  */
 class NSPermissionHelper(context: Context) {
-    val TAG = NSPermissionHelper::class.java.simpleName
-    val nsContext = context
-    var gps_enabled = false
-    var network_enabled = false
+    val tag: String = NSPermissionHelper::class.java.simpleName
+    private val nsContext = context
+    private var gpsEnabled = false
+    private var networkEnabled = false
 
     /**
      * Is location permission enable
@@ -103,7 +98,7 @@ class NSPermissionHelper(context: Context) {
                     .setTitle(R.string.location_permission)
                     .setMessage(R.string.location_permission_description)
                     .setPositiveButton(R.string.ok) { dialog, which ->
-                        NSLog.d(TAG, "checkPhonePermission: $dialog $which")
+                        NSLog.d(tag, "checkPhonePermission: $dialog $which")
                         ActivityCompat.requestPermissions(
                             activity,
                             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -142,7 +137,7 @@ class NSPermissionHelper(context: Context) {
                     .setTitle(R.string.location_permission)
                     .setMessage(R.string.location_permission_description)
                     .setPositiveButton(R.string.ok) { dialog, which ->
-                        NSLog.d(TAG, "checkLocationPermission: $dialog $which")
+                        NSLog.d(tag, "checkLocationPermission: $dialog $which")
                         ActivityCompat.requestPermissions(
                             activity,
                             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -166,7 +161,6 @@ class NSPermissionHelper(context: Context) {
      * Is sms permission enable
      *
      * @param activity The activity's context
-     * @param smsCode sms request code
      * @return location permission check
      */
     fun isSmsPermissionEnable(activity: Activity): Boolean {
@@ -202,7 +196,7 @@ class NSPermissionHelper(context: Context) {
                     .setTitle(R.string.sms_permission)
                     .setMessage(R.string.sms_permission_description)
                     .setPositiveButton(R.string.ok) { dialog, which ->
-                        NSLog.d(TAG, "checkSmsPermission: $dialog $which")
+                        NSLog.d(tag, "checkSmsPermission: $dialog $which")
                         ActivityCompat.requestPermissions(
                             activity,
                             arrayOf(Manifest.permission.RECEIVE_SMS),
@@ -224,22 +218,22 @@ class NSPermissionHelper(context: Context) {
         val lm = nsContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         try {
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
         } catch (ex: Exception) {
         }
 
         try {
-            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         } catch (ex: Exception) {
         }
 
-        if (!gps_enabled && !network_enabled) {
+        if (!gpsEnabled && !networkEnabled) {
             // notify user
             AlertDialog.Builder(activity)
                 .setTitle(R.string.gps_network_not_enabled)
                 .setMessage(R.string.open_location_settings)
                 .setPositiveButton(R.string.ok) { dialog, which ->
-                    NSLog.d(TAG, "checkGpsEnable: $dialog $which")
+                    NSLog.d(tag, "checkGpsEnable: $dialog $which")
                     nsContext.startActivity(
                         Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     )
@@ -262,7 +256,7 @@ class NSPermissionHelper(context: Context) {
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(R.string.ok) { dialog, which ->
-                NSLog.d(TAG, "showAlertLocation: $dialog $which")
+                NSLog.d(tag, "showAlertLocation: $dialog $which")
                 context.startActivity(
                     Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 )
@@ -270,19 +264,6 @@ class NSPermissionHelper(context: Context) {
             .setNegativeButton(R.string.cancel, null)
             .create()
             .show()
-    }
-
-    fun isMyServiceRunning(serviceClass: Class<*>, mActivity: Activity): Boolean {
-        val manager: ActivityManager =
-            mActivity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
-            if (serviceClass.name == service.service.className) {
-                Log.i("Service status", "Running")
-                return true
-            }
-        }
-        Log.i("Service status", "Not running")
-        return false
     }
 
     fun checkLocation(activity: Activity) {

@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.retailinfo
+package com.moneytree.app.ui.retailInfo
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutRetailInfoItemBinding
-import com.moneytree.app.repository.network.responses.NSRePurchaseInfoData
 import com.moneytree.app.repository.network.responses.NSRetailInfoData
 
 class NSRetailInfoRecycleAdapter(
@@ -68,12 +67,10 @@ class NSRetailInfoRecycleAdapter(
         fun bind(response: NSRetailInfoData) {
             with(retailBinding) {
                 with(response) {
-                    with(response) {
-                        tvMemberId.text = addText(activity, R.string.member_id, repurchaseMemberid!!)
-                        tvLevel.text = level
-                        tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
-                        tvPercentage.text = percentage
-                    }
+                    tvMemberId.text = addText(activity, R.string.member_id, repurchaseMemberid!!)
+                    tvLevel.text = level
+                    tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
+                    tvPercentage.text = percentage
                 }
             }
         }

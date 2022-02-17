@@ -8,7 +8,6 @@ import com.moneytree.app.repository.NSMemberTreeRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSMemberTreeData
 import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
-import com.moneytree.app.repository.network.responses.NSVoucherListData
 
 
 /**
@@ -19,7 +18,7 @@ class MemberTreeViewModel(application: Application) : NSViewModel(application),
     var isMemberTree: Boolean? = false
     var memberList: MutableList<NSMemberTreeData> = arrayListOf()
     var isMemberDataAvailable = MutableLiveData<Boolean>()
-    var memberResponse: NSMemberTreeResponse? = null
+    private var memberResponse: NSMemberTreeResponse? = null
 
     /**
      * Get member tree data

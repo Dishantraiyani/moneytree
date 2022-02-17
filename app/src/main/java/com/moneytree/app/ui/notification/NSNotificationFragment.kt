@@ -113,40 +113,43 @@ class NSNotificationFragment : NSFragment() {
         with(notificationModel) {
             with(notificationBinding) {
                 isProgressShowing.observe(
-                    viewLifecycleOwner,
-                    { shouldShowProgress ->
-                        updateProgress(shouldShowProgress)
-                    })
+                    viewLifecycleOwner
+                ) { shouldShowProgress ->
+                    updateProgress(shouldShowProgress)
+                }
 
                 isNotificationDataAvailable.observe(
-                    viewLifecycleOwner,
-                    { isNotification ->
-                        srlRefresh.isRefreshing = false
-                        setNotificationData(isNotification)
-                    })
+                    viewLifecycleOwner
+                ) { isNotification ->
+                    srlRefresh.isRefreshing = false
+                    setNotificationData(isNotification)
+                }
 
-                failureErrorMessage.observe(viewLifecycleOwner, { errorMessage ->
+                failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                     srlRefresh.isRefreshing = false
                     showAlertDialog(errorMessage)
-                })
+                }
 
-                apiErrors.observe(viewLifecycleOwner, { apiErrors ->
+                apiErrors.observe(viewLifecycleOwner) { apiErrors ->
                     srlRefresh.isRefreshing = false
                     parseAndShowApiError(apiErrors)
-                })
+                }
 
-                noNetworkAlert.observe(viewLifecycleOwner, {
+                noNetworkAlert.observe(viewLifecycleOwner) {
                     srlRefresh.isRefreshing = false
-                    showNoNetworkAlertDialog(getString(R.string.no_network_available), getString(R.string.network_unreachable))
-                })
+                    showNoNetworkAlertDialog(
+                        getString(R.string.no_network_available),
+                        getString(R.string.network_unreachable)
+                    )
+                }
 
-                validationErrorId.observe(viewLifecycleOwner, { errorId ->
+                validationErrorId.observe(viewLifecycleOwner) { errorId ->
                     showAlertDialog(getString(errorId))
-                })
+                }
 
-                isRefreshComplete.observe(viewLifecycleOwner, {
+                isRefreshComplete.observe(viewLifecycleOwner) {
                     getNotificationData(!srlRefresh.isRefreshing)
-                })
+                }
             }
         }
     }

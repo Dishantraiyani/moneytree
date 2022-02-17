@@ -11,7 +11,6 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutRoyaltyItemBinding
 import com.moneytree.app.repository.network.responses.NSRoyaltyListData
-import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData
 
 class NSRoyaltyListRecycleAdapter(
     activityNS: Activity,
@@ -71,19 +70,17 @@ class NSRoyaltyListRecycleAdapter(
         fun bind(response: NSRoyaltyListData) {
             with(royaltyBinding) {
                 with(response) {
-                    with(response) {
-                        tvPayoutNo.text = addText(activity, R.string.payout_no, payoutNo!!)
-                        tvDateFrom.text = addText(activity, R.string.dashboard_data, entryFrom!!)
-                        tvDateTo.text = addText(activity, R.string.dashboard_data, entryTo!!)
-                        tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
-                        tvTda.text = addText(activity, R.string.dashboard_data, tds!!)
-                        tvAdmin.text = addText(activity, R.string.dashboard_data, adminCharges!!)
-                        tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
-                        tvPercentage.text = addText(activity, R.string.dashboard_data, percentage!!)
+                    tvPayoutNo.text = addText(activity, R.string.payout_no, payoutNo!!)
+                    tvDateFrom.text = addText(activity, R.string.dashboard_data, entryFrom!!)
+                    tvDateTo.text = addText(activity, R.string.dashboard_data, entryTo!!)
+                    tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
+                    tvTda.text = addText(activity, R.string.dashboard_data, tds!!)
+                    tvAdmin.text = addText(activity, R.string.dashboard_data, adminCharges!!)
+                    tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
+                    tvPercentage.text = addText(activity, R.string.dashboard_data, percentage!!)
 
-                        clRepurchase.setOnClickListener {
-                            onClickListener.onClick(absoluteAdapterPosition)
-                        }
+                    clRepurchase.setOnClickListener {
+                        onClickListener.onClick(absoluteAdapterPosition)
                     }
                 }
             }

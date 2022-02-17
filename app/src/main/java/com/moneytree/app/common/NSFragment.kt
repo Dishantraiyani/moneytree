@@ -23,8 +23,8 @@ import org.greenrobot.eventbus.ThreadMode
  * The base class for all fragments which holds the members and methods common to all fragments
  */
 open class NSFragment : Fragment() {
-    protected val TAG = this::class.java.simpleName
-    protected lateinit var mContext: Context
+    protected val tags: String = this::class.java.simpleName
+    private lateinit var mContext: Context
     protected lateinit var activity: Activity
     private var replaceFragmentCallback: NSReplaceFragmentCallback? = null
     private var progressCallback: NSProgressCallback? = null
@@ -38,7 +38,7 @@ open class NSFragment : Fragment() {
             progressCallback = context as NSProgressCallback
             replaceFragmentCallback = context as NSReplaceFragmentCallback
         } catch (exception: ClassCastException) {
-            NSLog.e(TAG, "onAttach: ClassCastException: " + exception.message)
+            NSLog.e(tags, "onAttach: ClassCastException: " + exception.message)
         }
     }
 
@@ -144,7 +144,7 @@ open class NSFragment : Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLogoutEvent(logoutEvent: NSLogoutEvent) {
-        NSLog.d(TAG, "onLogoutEvent: $logoutEvent")
+        NSLog.d(tags, "onLogoutEvent: $logoutEvent")
     }
 
     fun hideKeyboard(currentFocus: View) {

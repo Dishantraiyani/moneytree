@@ -43,16 +43,14 @@ class NSRegisterFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(registerBinding) {
-            with(registerListModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.register)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.VISIBLE
-                    ivAddNew.visibility = View.VISIBLE
-                }
-                setRegisterAdapter()
+            with(layoutHeader) {
+                clBack.visibility = View.VISIBLE
+                tvHeaderBack.text = activity.resources.getString(R.string.register)
+                ivBack.visibility = View.VISIBLE
+                ivSearch.visibility = View.VISIBLE
+                ivAddNew.visibility = View.VISIBLE
             }
+            setRegisterAdapter()
         }
         observeViewModel()
     }

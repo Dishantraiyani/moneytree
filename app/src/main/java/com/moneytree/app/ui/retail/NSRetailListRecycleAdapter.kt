@@ -11,7 +11,6 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutRetailItemBinding
 import com.moneytree.app.repository.network.responses.NSRetailListData
-import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData
 
 class NSRetailListRecycleAdapter(
     activityNS: Activity,
@@ -71,18 +70,16 @@ class NSRetailListRecycleAdapter(
         fun bind(response: NSRetailListData) {
             with(retailBinding) {
                 with(response) {
-                    with(response) {
-                        tvPayoutNo.text = addText(activity, R.string.payout_no, payoutNo!!)
-                        tvDateFrom.text = addText(activity, R.string.dashboard_data, entryFrom!!)
-                        tvDateTo.text = addText(activity, R.string.dashboard_data, entryTo!!)
-                        tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
-                        tvTda.text = addText(activity, R.string.dashboard_data, tds!!)
-                        tvAdmin.text = addText(activity, R.string.dashboard_data, adminCharges!!)
-                        tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
+                    tvPayoutNo.text = addText(activity, R.string.payout_no, payoutNo!!)
+                    tvDateFrom.text = addText(activity, R.string.dashboard_data, entryFrom!!)
+                    tvDateTo.text = addText(activity, R.string.dashboard_data, entryTo!!)
+                    tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
+                    tvTda.text = addText(activity, R.string.dashboard_data, tds!!)
+                    tvAdmin.text = addText(activity, R.string.dashboard_data, adminCharges!!)
+                    tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
 
-                        clRetail.setOnClickListener {
-                            onClickListener.onClick(absoluteAdapterPosition)
-                        }
+                    clRetail.setOnClickListener {
+                        onClickListener.onClick(absoluteAdapterPosition)
                     }
                 }
             }

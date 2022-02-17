@@ -53,7 +53,7 @@ class NSAlertUtils {
          *
          * @param fragmentActivity The instance of the fragmentActivity needed to get the fragmentManager
          */
-        fun removeExistingDialog(fragmentActivity: FragmentActivity) {
+        private fun removeExistingDialog(fragmentActivity: FragmentActivity) {
             try {
                 val fragmentManager: FragmentManager = fragmentActivity.supportFragmentManager
                 val fragment: Fragment? = fragmentManager.findFragmentByTag(ALERT_DIALOG_TAG)

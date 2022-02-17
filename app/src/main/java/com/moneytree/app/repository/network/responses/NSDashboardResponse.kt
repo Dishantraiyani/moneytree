@@ -39,7 +39,11 @@ data class NSDashboardData(
     @SerializedName("available_joining_voucher")
     val availableJoiningVoucher: MutableList<NSDwnTotalData>? = null,
     @SerializedName("slot_list")
-    val slotList: MutableList<NSSlotListData>? = null
+    val slotList: MutableList<NSSlotListData>? = null,
+    @SerializedName("directRetailStatus")
+    val directRetailStatus: String = "",
+    @SerializedName("colour")
+    val colour: String = ""
 )
 
 /**

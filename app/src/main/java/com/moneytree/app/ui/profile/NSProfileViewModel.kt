@@ -9,7 +9,7 @@ import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSDataUser
 
 /**
  * The view model class for profile. It handles the business logic to communicate with the model for the profile item and provides the data to the observing UI component.
@@ -32,8 +32,8 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
                 profileItemList.clear()
                 profileItemList.add(getString(R.string.member_tree))
                 profileItemList.add(getString(R.string.level_member_tree))
-               // profileItemList.add(getString(R.string.notification_title))
-              //  profileItemList.add(getString(R.string.trip_history_title))
+                profileItemList.add(getString(R.string.change_password))
+                profileItemList.add(getString(R.string.change_tran_password))
               //  profileItemList.add(getString(R.string.transactions_title))
               //  profileItemList.add(getString(R.string.contact_us_title))
                 profileItemList.add(getString(R.string.logout))

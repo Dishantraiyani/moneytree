@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.databinding.FragmentMemberTreeBinding
-import com.moneytree.app.ui.vouchers.NSVoucherListRecycleAdapter
 
 class MemberTreeFragment : NSFragment() {
     private val memberTreeViewModel: MemberTreeViewModel by lazy {
@@ -45,11 +43,9 @@ class MemberTreeFragment : NSFragment() {
 
     private fun setListener() {
         with(memberTreeBinding) {
-            with(memberTreeViewModel) {
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
+            with(layoutHeader) {
+                clBack.setOnClickListener {
+                    onBackPress()
                 }
             }
         }

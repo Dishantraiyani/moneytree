@@ -3,7 +3,6 @@ package com.moneytree.app.ui.memberTree
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityMemberTreeBinding
-import com.moneytree.app.ui.home.NSHomeFragment
 
 class MemberTreeActivity : NSActivity() {
     private lateinit var memberTreeBinding: ActivityMemberTreeBinding

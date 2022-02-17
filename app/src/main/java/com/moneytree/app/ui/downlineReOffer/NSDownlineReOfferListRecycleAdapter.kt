@@ -3,10 +3,8 @@ package com.moneytree.app.ui.downlineReOffer
 import android.app.Activity
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutDownlineItemBinding
 import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferData
@@ -63,12 +61,10 @@ class NSDownlineReOfferListRecycleAdapter(
         fun bind(response: NSDownlineMemberDirectReOfferData) {
             with(downlineBinding) {
                 with(response) {
-                    with(response) {
-                        tvMemberId.text = memberid
-                        tvStatus.text = status
-                        tvMemberId.setTextColor(Color.parseColor(colour))
-                        tvStatus.setTextColor(Color.parseColor(colour))
-                    }
+                    tvMemberId.text = memberid
+                    tvStatus.text = status
+                    tvMemberId.setTextColor(Color.parseColor(colour))
+                    tvStatus.setTextColor(Color.parseColor(colour))
                 }
             }
         }

@@ -51,16 +51,14 @@ class NSRoyaltyInfoFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(royaltyBinding) {
-            with(royaltyListModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.royalty_info)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.GONE
-                    ivAddNew.visibility = View.GONE
-                }
-                setRoyaltyAdapter()
+            with(layoutHeader) {
+                clBack.visibility = View.VISIBLE
+                tvHeaderBack.text = activity.resources.getString(R.string.royalty_info)
+                ivBack.visibility = View.VISIBLE
+                ivSearch.visibility = View.GONE
+                ivAddNew.visibility = View.GONE
             }
+            setRoyaltyAdapter()
         }
         observeViewModel()
     }

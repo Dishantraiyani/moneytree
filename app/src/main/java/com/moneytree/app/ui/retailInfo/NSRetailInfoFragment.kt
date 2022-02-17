@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.retailinfo
+package com.moneytree.app.ui.retailInfo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,16 +51,14 @@ class NSRetailInfoFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(retailBinding) {
-            with(retailListModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.retail_info)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.GONE
-                    ivAddNew.visibility = View.GONE
-                }
-                setRetailAdapter()
+            with(layoutHeader) {
+                clBack.visibility = View.VISIBLE
+                tvHeaderBack.text = activity.resources.getString(R.string.retail_info)
+                ivBack.visibility = View.VISIBLE
+                ivSearch.visibility = View.GONE
+                ivAddNew.visibility = View.GONE
             }
+            setRetailAdapter()
         }
         observeViewModel()
     }

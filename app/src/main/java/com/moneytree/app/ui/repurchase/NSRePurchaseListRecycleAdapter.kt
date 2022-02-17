@@ -10,7 +10,6 @@ import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutRepurchaseItemBinding
-import com.moneytree.app.repository.network.responses.NSRePurchaseInfoData
 import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData
 
 class NSRePurchaseListRecycleAdapter(
@@ -71,15 +70,13 @@ class NSRePurchaseListRecycleAdapter(
         fun bind(response: NSTodayRePurchaseListData) {
             with(rePurchaseBinding) {
                 with(response) {
-                    with(response) {
-                        tvOrderNoRepurchase.text = addText(activity, R.string.order_no, repurchaseNo!!)
-                        tvMemberId.text = addText(activity, R.string.member_id, memberid!!)
-                        tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
-                        tvDate.text = addText(activity, R.string.voucher_date, createdAt!!)
+                    tvOrderNoRepurchase.text = addText(activity, R.string.order_no, repurchaseNo!!)
+                    tvMemberId.text = addText(activity, R.string.member_id, memberid!!)
+                    tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
+                    tvDate.text = addText(activity, R.string.voucher_date, createdAt!!)
 
-                        clRepurchase.setOnClickListener {
-                            onClickListener.onClick(absoluteAdapterPosition)
-                        }
+                    clRepurchase.setOnClickListener {
+                        onClickListener.onClick(absoluteAdapterPosition)
                     }
                 }
             }

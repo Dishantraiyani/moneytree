@@ -7,7 +7,6 @@ import android.widget.ImageView
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
-import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutMemberTreeBinding
@@ -67,17 +66,17 @@ class MemberTreeRecycleAdapter(
                 with(response) {
                     tvMemberId.text = addText(activity, R.string.member_id, memberid!!)
                     setImage(ivSlot1, true)
-                    setImage(ivSlot2, response.slot2 != null && response.slot2 != false)
-                    setImage(ivSlot3, response.slot3 != null && response.slot3 != false)
-                    setImage(ivSlot4, response.slot4 != null && response.slot4 != false)
-                    setImage(ivSlot5, response.slot5 != null && response.slot5 != false)
-                    setImage(ivSlot6, response.slot6 != null && response.slot6 != false)
-                    setImage(ivSlot7, response.slot7 != null && response.slot7 != false)
-                    setImage(ivSlot8, response.slot8 != null && response.slot8 != false)
-                    setImage(ivSlot9, response.slot9 != null && response.slot9 != false)
-                    setImage(ivSlot10, response.slot10 != null && response.slot10 != false)
-                    setImage(ivSlot11, response.slot11 != null && response.slot11 != false)
-                    setImage(ivSlot12, response.slot12 != null && response.slot12 != false)
+                    setImage(ivSlot2, slot2 != null && slot2 != false)
+                    setImage(ivSlot3, slot3 != null && slot3 != false)
+                    setImage(ivSlot4, slot4 != null && slot4 != false)
+                    setImage(ivSlot5, slot5 != null && slot5 != false)
+                    setImage(ivSlot6, slot6 != null && slot6 != false)
+                    setImage(ivSlot7, slot7 != null && slot7 != false)
+                    setImage(ivSlot8, slot8 != null && slot8 != false)
+                    setImage(ivSlot9, slot9 != null && slot9 != false)
+                    setImage(ivSlot10, slot10 != null && slot10 != false)
+                    setImage(ivSlot11, slot11 != null && slot11 != false)
+                    setImage(ivSlot12, slot12 != null && slot12 != false)
                 }
             }
         }

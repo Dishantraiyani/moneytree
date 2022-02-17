@@ -1,19 +1,15 @@
 package com.moneytree.app.ui.slide
 
-import android.content.Context
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.moneytree.app.R
 import com.moneytree.app.databinding.LayoutItemRechargesBinding
-import com.moneytree.app.databinding.LayoutProfileItemBinding
 import com.moneytree.app.repository.network.responses.GridModel
 
-class GridRecycleAdapter(nsContext: Context, nsOfferList: MutableList<GridModel>
+class GridRecycleAdapter(
+    nsOfferList: MutableList<GridModel>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val context = nsContext
     private val offerList: MutableList<GridModel> = nsOfferList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

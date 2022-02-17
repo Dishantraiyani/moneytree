@@ -5,12 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSRegisterRepository
-import com.moneytree.app.repository.NSVoucherRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 import com.moneytree.app.repository.network.responses.NSRegisterListResponse
-import com.moneytree.app.repository.network.responses.NSVoucherListData
-import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 
 
 /**

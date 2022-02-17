@@ -2,10 +2,10 @@ package com.moneytree.app.database
 
 import android.content.Context
 import android.os.Handler
-import androidx.room.Room
 import android.os.Looper
+import androidx.room.Room
 import com.moneytree.app.common.callbacks.NSUserDataCallback
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSDataUser
 
 object MainDatabase {
     private const val DATABASE_NAME = "dot_db"

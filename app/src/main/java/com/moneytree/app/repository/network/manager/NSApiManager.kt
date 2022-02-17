@@ -5,14 +5,19 @@ import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
-import com.moneytree.app.repository.network.requests.*
+import com.moneytree.app.repository.network.requests.NSLoginRequest
 import com.moneytree.app.repository.network.responses.*
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 

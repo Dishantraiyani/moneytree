@@ -7,7 +7,6 @@ import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.moneytree.app.common.callbacks.NSProgressCallback
@@ -22,7 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
  * The base class for all activities which holds the members and methods common to all activities
  */
 open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgressCallback {
-    protected val TAG: String = NSActivity::class.java.simpleName
+    protected val tag: String = NSActivity::class.java.simpleName
     private var isProgressShowing = false
     private var allowBackPress = true
     private lateinit var rlLayout: RelativeLayout
@@ -136,7 +135,7 @@ open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgre
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLogoutEvent(logoutEvent: NSLogoutEvent) {
-        NSLog.d(TAG, "onLogoutEvent: $logoutEvent")
+        NSLog.d(tag, "onLogoutEvent: $logoutEvent")
         val instance = NSApplication.getInstance()
         instance.getApiManager().cancelAllRequests()
         instance.getPrefs().clearPrefData()

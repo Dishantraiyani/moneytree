@@ -2,10 +2,8 @@ package com.moneytree.app.repository.network.responses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.moneytree.app.database.NSTypeConverter
 
 /**
  * The class representing the response body of user

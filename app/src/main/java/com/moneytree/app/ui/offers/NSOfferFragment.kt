@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.databinding.NsFragmentOffersBinding
 import com.moneytree.app.ui.downlineReOffer.NSDownlineReOfferFragment
 import com.moneytree.app.ui.repurchase.NSRePurchaseListFragment

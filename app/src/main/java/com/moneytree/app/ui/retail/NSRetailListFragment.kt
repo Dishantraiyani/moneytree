@@ -12,8 +12,7 @@ import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentDirectRetailListBinding
-import com.moneytree.app.ui.repurchaseInfo.NSRePurchaseInfoFragment
-import com.moneytree.app.ui.retailinfo.NSRetailInfoFragment
+import com.moneytree.app.ui.retailInfo.NSRetailInfoFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -45,11 +44,7 @@ class NSRetailListFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(retailBinding) {
-            with(retailListModel) {
-                setRetailAdapter()
-            }
-        }
+        setRetailAdapter()
         observeViewModel()
     }
 
@@ -184,6 +179,7 @@ class NSRetailListFragment : NSFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
+        NSLog.d(tags, "onSearchClose: $event")
         with(retailListModel) {
             pageIndex = "1"
             if (tempRetailList.isValidList()) {

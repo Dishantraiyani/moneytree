@@ -20,8 +20,6 @@ import com.moneytree.app.ui.slide.GridRecycleAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.lang.Exception
-import java.util.ArrayList
 
 class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
@@ -105,14 +103,13 @@ class NSHomeFragment : NSFragment() {
                 val layoutManager = GridLayoutManager(activity, 4)
                 recyclerView.layoutManager = layoutManager
                 recyclerView.itemAnimator = DefaultItemAnimator()
-                homeListModelClassArrayList1 = ArrayList<GridModel>()
+                homeListModelClassArrayList1 = ArrayList()
                 fieldName = resources.getStringArray(R.array.recharge_list)
                 for (i in fieldName.indices) {
                     val gridModel = GridModel(fieldName[i], fieldImage[i])
                     homeListModelClassArrayList1!!.add(gridModel)
                 }
                 bAdapterNS = GridRecycleAdapter(
-                    activity,
                     homeListModelClassArrayList1!!
                 )
                 recyclerView.adapter = bAdapterNS
@@ -148,12 +145,19 @@ class NSHomeFragment : NSFragment() {
         with(homeBinding) {
             with(homeModel) {
                 if (isDashboardData) {
-                    with(dashboardData!!) {
-                        tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
-                        tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
-                        tvJoinVoucher.text = addText(activity, R.string.dashboard_data, setJoinVoucher())
-                        tvBalance.text = addText(activity, R.string.balance, setWallet())
-                    }
+                    tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
+                    tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
+                    tvJoinVoucher.text = addText(activity, R.string.dashboard_data, setJoinVoucher())
+                    tvBalance.text = addText(activity, R.string.balance, setWallet())
+                    //This is display Message slider
+                    /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
+                        tvMessage.setTextColor(Color.parseColor(data!!.colour))
+                        tvMessage.text = data!!.directRetailStatus
+                        tvMessage.visibility = View.VISIBLE
+                        tvMessage.isSelected = true
+                    } else {
+                        tvMessage.visibility = View.GONE
+                    }*/
                 }
             }
         }
@@ -193,44 +197,42 @@ class NSHomeFragment : NSFragment() {
      */
     private fun observeViewModel() {
         with(homeModel) {
-            with(homeBinding) {
-                isProgressShowing.observe(
-                    viewLifecycleOwner
-                ) { shouldShowProgress ->
-                    updateProgress(shouldShowProgress)
-                }
+            isProgressShowing.observe(
+                viewLifecycleOwner
+            ) { shouldShowProgress ->
+                updateProgress(shouldShowProgress)
+            }
 
-                isUserDataAvailable.observe(
-                    viewLifecycleOwner
-                ) { isUserData ->
-                    setUserData(isUserData)
-                }
+            isUserDataAvailable.observe(
+                viewLifecycleOwner
+            ) { isUserData ->
+                setUserData(isUserData)
+            }
 
-                isDashboardDataAvailable.observe(
-                    viewLifecycleOwner
-                ) { isDashboardDataAvailable ->
-                    setDashboardData(isDashboardDataAvailable)
-                }
+            isDashboardDataAvailable.observe(
+                viewLifecycleOwner
+            ) { isDashboardDataAvailable ->
+                setDashboardData(isDashboardDataAvailable)
+            }
 
-                failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
-                    showAlertDialog(errorMessage)
-                }
+            failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                showAlertDialog(errorMessage)
+            }
 
-                apiErrors.observe(viewLifecycleOwner) { apiErrors ->
-                    parseAndShowApiError(apiErrors)
-                }
+            apiErrors.observe(viewLifecycleOwner) { apiErrors ->
+                parseAndShowApiError(apiErrors)
+            }
 
-                noNetworkAlert.observe(viewLifecycleOwner) {
-                    showNoNetworkAlertDialog(
-                        getString(com.moneytree.app.R.string.no_network_available), getString(
-                            com.moneytree.app.R.string.network_unreachable
-                        )
+            noNetworkAlert.observe(viewLifecycleOwner) {
+                showNoNetworkAlertDialog(
+                    getString(com.moneytree.app.R.string.no_network_available), getString(
+                        com.moneytree.app.R.string.network_unreachable
                     )
-                }
+                )
+            }
 
-                validationErrorId.observe(viewLifecycleOwner) { errorId ->
-                    showAlertDialog(getString(errorId))
-                }
+            validationErrorId.observe(viewLifecycleOwner) { errorId ->
+                showAlertDialog(getString(errorId))
             }
         }
     }

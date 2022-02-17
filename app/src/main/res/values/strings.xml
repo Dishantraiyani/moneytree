@@ -77,6 +77,8 @@
     <string name="notification_title">Notifications</string>
     <string name="transactions_title">Transactions</string>
     <string name="trip_history_title">Trip History</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_tran_password">Change Transaction Password</string>
 
     <string name="get_directions">Get Directions</string>
     <string name="show_details">Show Details</string>

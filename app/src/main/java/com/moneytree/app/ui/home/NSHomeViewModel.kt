@@ -9,11 +9,10 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.database.MainDatabase
-import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.NSDashboardRepository
+import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
 import com.moneytree.app.ui.slide.SliderFragment
-import java.util.ArrayList
 
 
 /**
@@ -23,13 +22,13 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     var isDashboardDataAvailable = MutableLiveData<Boolean>()
     var dashboardData: NSDashboardResponse? = null
     var strHomeData : String? = null
-    var homeDetail: NSNotificationListData? = null
+    private var homeDetail: NSNotificationListData? = null
     var nsUserData: NSDataUser? = null
     var isUserDataAvailable = MutableLiveData<Boolean>()
     private val mFragmentTitleList: MutableList<String> = ArrayList()
     val mFragmentList: MutableList<Fragment> = ArrayList()
     var fieldName: Array<String> = arrayOf()
-    var fieldImage = arrayOf<Int>(
+    var fieldImage = arrayOf(
         R.drawable.mobile,
         R.drawable.dth,
         R.drawable.data_card,
@@ -65,7 +64,7 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     /**
      * Get order list data
      *
-     * @param activity The activity's context
+     * @param isShowProgress The progress dialog show check
      */
     fun getDashboardData(isShowProgress: Boolean) {
         if (isShowProgress) {
@@ -75,10 +74,8 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
             override fun <T> onSuccess(data: T) {
                 isProgressShowing.value = false
                 val dashboardMainData = data as NSDashboardResponse
-                if (dashboardMainData != null) {
-                    dashboardData = dashboardMainData
-                    isDashboardDataAvailable.value = true
-                }
+                dashboardData = dashboardMainData
+                isDashboardDataAvailable.value = true
             }
 
             override fun onError(errors: List<Any>) {

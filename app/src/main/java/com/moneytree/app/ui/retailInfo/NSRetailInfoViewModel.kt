@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.retailinfo
+package com.moneytree.app.ui.retailInfo
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData

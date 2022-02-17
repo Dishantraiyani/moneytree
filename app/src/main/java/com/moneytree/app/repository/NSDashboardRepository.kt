@@ -4,7 +4,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSDashboardResponse
 import retrofit2.Response
 
 /**
@@ -12,6 +12,7 @@ import retrofit2.Response
  */
 object NSDashboardRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
+    private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
      * To get order list API
@@ -24,7 +25,13 @@ object NSDashboardRepository {
         apiManager.getDashboard(object :
             NSRetrofitCallback<NSDashboardResponse>(viewModelCallback, NSApiErrorHandler.ERROR_DASHBOARD) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSDashboardResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }

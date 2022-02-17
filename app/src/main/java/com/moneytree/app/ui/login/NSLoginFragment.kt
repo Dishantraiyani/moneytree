@@ -40,9 +40,6 @@ class NSLoginFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(loginViewModel) {
-            util
-        }
         observeViewModel()
     }
 
@@ -67,31 +64,35 @@ class NSLoginFragment : NSFragment() {
     private fun observeViewModel() {
         with(loginViewModel) {
             isProgressShowing.observe(
-                viewLifecycleOwner,
-                { shouldShowProgress ->
-                    updateProgress(shouldShowProgress)
-                })
+                viewLifecycleOwner
+            ) { shouldShowProgress ->
+                updateProgress(shouldShowProgress)
+            }
 
-            failureErrorMessage.observe(viewLifecycleOwner, { errorMessage ->
+            failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                 showAlertDialog(errorMessage)
-            })
+            }
 
-            apiErrors.observe(viewLifecycleOwner, { apiErrors ->
+            apiErrors.observe(viewLifecycleOwner) { apiErrors ->
                 parseAndShowApiError(apiErrors)
-            })
+            }
 
-            noNetworkAlert.observe(viewLifecycleOwner, {
-                showNoNetworkAlertDialog(getString(R.string.no_network_available), getString(R.string.network_unreachable))
-            })
+            noNetworkAlert.observe(viewLifecycleOwner) {
+                showNoNetworkAlertDialog(
+                    getString(R.string.no_network_available),
+                    getString(R.string.network_unreachable)
+                )
+            }
 
-            validationErrorId.observe(viewLifecycleOwner, { errorId ->
+            validationErrorId.observe(viewLifecycleOwner) { errorId ->
                 showAlertDialog(getString(errorId))
-            })
+            }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onLoginRegisterEvent(loginEvent: NSLoginRegisterEvent) {
+        NSConstants.IS_LOGIN_SUCCESS = true
         switchActivity(
             NSMainActivity::class.java,
             bundleOf(

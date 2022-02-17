@@ -12,7 +12,6 @@ import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRoyaltyListBinding
-import com.moneytree.app.ui.repurchaseInfo.NSRePurchaseInfoFragment
 import com.moneytree.app.ui.royaltyInfo.NSRoyaltyInfoFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -45,11 +44,7 @@ class NSRoyaltyListFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(royaltyBinding) {
-            with(royaltyListModel) {
-                setRoyaltyAdapter()
-            }
-        }
+        setRoyaltyAdapter()
         observeViewModel()
     }
 
@@ -184,6 +179,7 @@ class NSRoyaltyListFragment : NSFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
+        NSLog.d(tags, "onSearchClose: $event")
         with(royaltyListModel) {
             pageIndex = "1"
             if (tempRoyaltyList.isValidList()) {

@@ -12,7 +12,6 @@ import androidx.fragment.app.DialogFragment
 import com.moneytree.app.R
 import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
 import org.greenrobot.eventbus.EventBus
-import java.util.*
 
 /**
  * Dialog fragment responsible for showing the alert
@@ -63,13 +62,16 @@ class NSAlertDialogFragment : DialogFragment() {
         arguments?.let {
             //title
             val title = arguments.getString(BUNDLE_KEY_TITLE, "")
+            val message = arguments.getString(BUNDLE_KEY_MESSAGE, "")
             bind.tvTitle.text = title
             if (title.isNotEmpty()) {
                 bind.tvTitle.visibility = View.VISIBLE
+                if (title.equals(requireActivity().resources.getString(R.string.app_name))) {
+                    bind.tvTitle.setTextColor(Color.parseColor("#eba94a"))
+                }
             }
 
             //supporting text
-            val message = arguments.getString(BUNDLE_KEY_MESSAGE, "")
             bind.tvSubTitle.text = message
 
             var positiveButtonText = arguments.getString(BUNDLE_KEY_POSITIVE_BUTTON_TEXT, "")

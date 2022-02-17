@@ -2,16 +2,15 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "com.money.tree.app"
         minSdk 21
-        targetSdk 31
+        targetSdk 32
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -32,7 +31,6 @@ android {
             versionName "1.0.0"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
-            buildConfigField 'String', 'BASE_URL_SECOND', ' "http://34.91.192.111:" '
             buildConfigField 'String', 'PREFERENCE', ' "DoT" '
             buildConfigField 'String', 'MAIL_ID', ' "test@gmail.com" '
             buildConfigField 'String', 'PHONE_NUMBER', ' "+12373629297" '
@@ -48,10 +46,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     packagingOptions {
-        exclude 'META-INF/atomicfu.kotlin_module'
+        resources {
+            excludes += ['META-INF/atomicfu.kotlin_module']
+        }
     }
+
 
 }
 
@@ -65,7 +65,7 @@ ext {
     multiDexVersion = '2.0.1'
     sdpVersion = '1.0.6'
     loggingVersion = '5.0.0-alpha.3'
-    lifeCycleVersion = '2.4.0'
+    lifeCycleVersion = '2.4.1'
     phoneNumberVersion = "2.5.4"
     libPhoneNumber = "8.12.41"
     authApiPhoneVersion = '18.0.1'
@@ -102,24 +102,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifeCycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVersion"
 
-    //Google phone number validation
-    implementation "com.googlecode.libphonenumber:libphonenumber:$libPhoneNumber"
-
-    //Google maps
-    implementation "com.google.android.gms:play-services-maps:$playServicesMapVersion"
-    implementation "com.google.android.gms:play-services-location:$playServicesLocationVersion"
-
-    //implementation 'com.github.franmontiel:LocaleChanger:1.1'
-
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-
-    //QR Code scanner
-    implementation 'io.github.g00fy2.quickie:quickie-bundled:1.4.0'
-    implementation 'com.github.dhaval2404:imagepicker:2.1'
-
-    implementation "androidx.activity:activity-ktx:1.4.0"
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
 
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'

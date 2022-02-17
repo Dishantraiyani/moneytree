@@ -3,8 +3,6 @@ package com.moneytree.app.repository.network.responses
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-/*{"status":true,"message":"","data":[{"memberid":"4548396215","slot2":null,"slot3":null,"slot4":null,"slot5":null,"slot6":null,"slot7":null,"slot8":null,"slot9":null,"slot10":null,"slot11":null,"slot12":null},{"memberid":"9473931001","slot2":null,"slot3":null,"slot4":null,"slot5":null,"slot6":null,"slot7":null,"slot8":null,"slot9":null,"slot10":null,"slot11":null,"slot12":null},{"memberid":"2898543375","slot2":null,"slot3":null,"slot4":null,"slot5":null,"slot6":null,"slot7":null,"slot8":null,"slot9":null,"slot10":null,"slot11":null,"slot12":null},{"memberid":"9125548840","slot2":null,"slot3":null,"slot4":null,"slot5":null,"slot6":null,"slot7":null,"slot8":null,"slot9":null,"slot10":null,"slot11":null,"slot12":null},{"memberid":"6353336889","slot2":null,"slot3":null,"slot4":null,"slot5":null,"slot6":null,"slot7":null,"slot8":null,"slot9":null,"slot10":null,"slot11":null,"slot12":null}]}*/
-
 /**
  * The class representing the response body of user
  */

@@ -4,7 +4,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 import retrofit2.Response
 
 /**
@@ -12,6 +12,7 @@ import retrofit2.Response
  */
 object NSVoucherRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
+    private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
      * To get single order data API
@@ -24,7 +25,13 @@ object NSVoucherRepository {
         apiManager.getJoiningVoucherPendingData(pageIndex, search, object :
             NSRetrofitCallback<NSVoucherListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_PENDING_DATA) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSVoucherListResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }
@@ -40,7 +47,13 @@ object NSVoucherRepository {
         apiManager.getJoiningVoucherReceiveData(pageIndex, search, object :
             NSRetrofitCallback<NSVoucherListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_RECEIVE_DATA) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSVoucherListResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }
@@ -56,7 +69,13 @@ object NSVoucherRepository {
         apiManager.getJoiningVoucherTransferData(pageIndex, search, object :
             NSRetrofitCallback<NSVoucherListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TRANSFER_DATA) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSVoucherListResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }

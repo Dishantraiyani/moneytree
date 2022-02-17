@@ -6,13 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutRepurchaseInfoItemBinding
-import com.moneytree.app.databinding.LayoutRepurchaseItemBinding
 import com.moneytree.app.repository.network.responses.NSRePurchaseInfoData
-import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData
 
 class NSRePurchaseInfoRecycleAdapter(
     activityNS: Activity,
@@ -70,12 +67,10 @@ class NSRePurchaseInfoRecycleAdapter(
         fun bind(response: NSRePurchaseInfoData) {
             with(rePurchaseBinding) {
                 with(response) {
-                    with(response) {
-                        tvProductName.text = addText(activity, R.string.product_name, productName!!)
-                        tvQty.text = addText(activity, R.string.qty_title, qty!!)
-                        tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
-                        tvRate.text = addText(activity, R.string.rate_title, rate!!)
-                    }
+                    tvProductName.text = addText(activity, R.string.product_name, productName!!)
+                    tvQty.text = addText(activity, R.string.qty_title, qty!!)
+                    tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
+                    tvRate.text = addText(activity, R.string.rate_title, rate!!)
                 }
             }
         }

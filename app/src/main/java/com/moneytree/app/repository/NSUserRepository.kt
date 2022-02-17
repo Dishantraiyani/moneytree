@@ -15,7 +15,7 @@ import retrofit2.Response
  */
 object NSUserRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
-
+    private var errorMessageList: MutableList<Any> = mutableListOf()
     /**
      * To make login API to authenticate the user
      *
@@ -32,9 +32,15 @@ object NSUserRepository {
         apiManager.login(loginRequest, object :
             NSRetrofitCallback<NSUserResponse>(viewModelCallback, NSApiErrorHandler.ERROR_LOGIN) {
             override fun <T> onResponse(response: Response<T>) {
-                NSUserManager.saveUserInPreference(response)
-                NSUserManager.saveHeadersInPreference(response)
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSUserResponse
+                if (data.status) {
+                    NSUserManager.saveUserInPreference(response)
+                    NSUserManager.saveHeadersInPreference(response)
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }
@@ -49,8 +55,14 @@ object NSUserRepository {
             viewModelCallback, NSApiErrorHandler.ERROR_LOGOUT
         ) {
             override fun <T> onResponse(response: Response<T>) {
-                NSApplication.getInstance().getPrefs().clearPrefData()
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSLogoutResponse
+                if (data.status) {
+                    NSApplication.getInstance().getPrefs().clearPrefData()
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }

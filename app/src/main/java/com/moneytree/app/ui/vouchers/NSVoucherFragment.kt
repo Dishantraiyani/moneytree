@@ -44,15 +44,13 @@ class NSVoucherFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(voucherBinding) {
-            with(voucherListModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.vouchers)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.VISIBLE
-                }
-                setVoucherAdapter()
+            with(layoutHeader) {
+                clBack.visibility = View.VISIBLE
+                tvHeaderBack.text = activity.resources.getString(R.string.vouchers)
+                ivBack.visibility = View.VISIBLE
+                ivSearch.visibility = View.VISIBLE
             }
+            setVoucherAdapter()
         }
         addTabs()
         observeViewModel()

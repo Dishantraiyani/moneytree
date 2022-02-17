@@ -4,17 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Spanned
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
-import com.moneytree.app.R
 import com.moneytree.app.common.NSLog
 import java.text.DecimalFormat
 
@@ -64,7 +60,7 @@ fun <T : Activity> Activity.switchActivityForResult(
  */
 fun <T : Activity> Activity.getIntent(
     destination: Class<T>, bundle: Bundle?, flags: IntArray?
-): Intent? {
+): Intent {
     return getIntent(this, destination, flags, bundle)
 }
 
@@ -135,7 +131,7 @@ fun <T : Activity> Fragment.switchResultActivity(launcher: ActivityResultLaunche
  */
 fun <T : Activity> Fragment.getIntent(
     destination: Class<T>, bundle: Bundle?, flags: IntArray?
-): Intent? {
+): Intent {
     return getIntent(context, destination, flags, bundle)
 }
 

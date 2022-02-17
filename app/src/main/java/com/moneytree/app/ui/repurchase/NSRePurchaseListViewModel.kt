@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSRePurchaseRepository
-import com.moneytree.app.repository.NSRegisterRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
 import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData

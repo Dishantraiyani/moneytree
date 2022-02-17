@@ -67,11 +67,9 @@ class NSRoyaltyInfoRecycleAdapter(
         fun bind(response: NSRoyaltyInfoData) {
             with(royaltyBinding) {
                 with(response) {
-                    with(response) {
-                        tvRepurchaseNo.text = addText(activity, R.string.repurchase_no, repurchaseNo!!)
-                        tvMemberId.text = addText(activity, R.string.member_id, repurchaseMemberId!!)
-                        tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
-                    }
+                    tvRepurchaseNo.text = addText(activity, R.string.repurchase_no, repurchaseNo!!)
+                    tvMemberId.text = addText(activity, R.string.member_id, repurchaseMemberId!!)
+                    tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
                 }
             }
         }

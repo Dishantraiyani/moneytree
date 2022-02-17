@@ -74,15 +74,13 @@ class NSVoucherListRecycleAdapter(
         fun bind(response: NSVoucherListData) {
             with(voucherBinding) {
                 with(response) {
-                    with(response) {
-                        tvVoucherCode.text = addText(activity, R.string.voucher_code, voucherCode!!)
-                        tvMemberId.text = addText(activity, R.string.member_id, memberId!!)
-                        tvMemberType.text = addText(activity, R.string.member_type, memberType!!)
-                        if (type == 0) {
-                            tvDateStatus.text = addText(activity, R.string.voucher_status, voucherStatus!!)
-                        } else {
-                            tvDateStatus.text = addText(activity, R.string.voucher_date, createdAt!!)
-                        }
+                    tvVoucherCode.text = addText(activity, R.string.voucher_code, voucherCode!!)
+                    tvMemberId.text = addText(activity, R.string.member_id, memberId!!)
+                    tvMemberType.text = addText(activity, R.string.member_type, memberType!!)
+                    if (type == 0) {
+                        tvDateStatus.text = addText(activity, R.string.voucher_status, voucherStatus!!)
+                    } else {
+                        tvDateStatus.text = addText(activity, R.string.voucher_date, createdAt!!)
                     }
                 }
             }

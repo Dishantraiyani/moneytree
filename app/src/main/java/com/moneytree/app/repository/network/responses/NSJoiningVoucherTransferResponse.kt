@@ -3,8 +3,6 @@ package com.moneytree.app.repository.network.responses
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-/*{"status":true,"message":"","voucher_count":4,"data":[{"username":"6353336889","mobile":"8735985994","email":""}]}*/
-
 /**
  * The class representing the response body of user
  */

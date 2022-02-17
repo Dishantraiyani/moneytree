@@ -1,7 +1,6 @@
 package com.moneytree.app.ui.login
 
 import android.app.Application
-import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.moneytree.app.R
 import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.NSViewModel
@@ -17,7 +16,6 @@ import org.greenrobot.eventbus.EventBus
  * The view model class for login. It handles the business logic to communicate with the model for the login and provides the data to the observing UI component.
  */
 class NSLoginViewModel(application: Application) : NSViewModel(application) {
-    var util: PhoneNumberUtil? = null
     var strUserName: String? = null
     var strPassword: String? = null
 

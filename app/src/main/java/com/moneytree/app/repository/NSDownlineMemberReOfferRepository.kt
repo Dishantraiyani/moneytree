@@ -4,7 +4,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferResponse
 import retrofit2.Response
 
 /**
@@ -12,6 +12,7 @@ import retrofit2.Response
  */
 object NSDownlineMemberReOfferRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
+    private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
      * To get single order data API
@@ -22,7 +23,13 @@ object NSDownlineMemberReOfferRepository {
         apiManager.getDownlineMemberDirectReOffer(object :
             NSRetrofitCallback<NSDownlineMemberDirectReOfferResponse>(viewModelCallback, NSApiErrorHandler.ERROR_DOWNLINE_MEMBER_LIST_DATA) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+                val data = response.body() as NSDownlineMemberDirectReOfferResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
             }
         })
     }

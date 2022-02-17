@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
-import com.moneytree.app.common.*
+import com.moneytree.app.common.NSActivity
+import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsActivitySplashBinding
 import com.moneytree.app.ui.login.NSLoginActivity
@@ -14,10 +15,7 @@ import com.moneytree.app.ui.main.NSMainActivity
 class NSSplashActivity : NSActivity() {
 
     private lateinit var activitySplashBinding: NsActivitySplashBinding
-    private val splashViewModel: NSSplashViewModel by lazy {
-        ViewModelProvider(this)[NSSplashViewModel::class.java]
-    }
-    private val MIN_SPLASH_TIME = 3000L
+    private val minSplashTime = 3000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +40,7 @@ class NSSplashActivity : NSActivity() {
                         flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     )
                     finish()
-                }, MIN_SPLASH_TIME
+                }, minSplashTime
             )
         } else {
             gotoDashboard()
@@ -59,6 +57,6 @@ class NSSplashActivity : NSActivity() {
                     NSMainActivity::class.java,
                     flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 )
-            }, MIN_SPLASH_TIME)
+            }, minSplashTime)
     }
 }

@@ -7,15 +7,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
-import com.moneytree.app.common.BackPressEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRepurchaseInfoBinding
-import com.moneytree.app.databinding.NsFragmentRepurchaseListBinding
-import com.moneytree.app.ui.repurchase.NSRePurchaseListRecycleAdapter
-import org.greenrobot.eventbus.EventBus
 
 class NSRePurchaseInfoFragment : NSFragment() {
     private val repurchaseListModel: NSRePurchaseInfoViewModel by lazy {
@@ -56,16 +51,14 @@ class NSRePurchaseInfoFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(repurchaseBinding) {
-            with(repurchaseListModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.repurchase_info)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.GONE
-                    ivAddNew.visibility = View.GONE
-                }
-                setRepurchaseAdapter()
+            with(layoutHeader) {
+                clBack.visibility = View.VISIBLE
+                tvHeaderBack.text = activity.resources.getString(R.string.repurchase_info)
+                ivBack.visibility = View.VISIBLE
+                ivSearch.visibility = View.GONE
+                ivAddNew.visibility = View.GONE
             }
+            setRepurchaseAdapter()
         }
         observeViewModel()
     }

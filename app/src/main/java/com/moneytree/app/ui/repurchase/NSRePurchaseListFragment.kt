@@ -1,7 +1,6 @@
 package com.moneytree.app.ui.repurchase
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRepurchaseListBinding
-import com.moneytree.app.ui.notification.NSNotificationFragment
 import com.moneytree.app.ui.repurchaseInfo.NSRePurchaseInfoFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -46,11 +44,7 @@ class NSRePurchaseListFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(repurchaseBinding) {
-            with(repurchaseListModel) {
-                setRepurchaseAdapter()
-            }
-        }
+        setRepurchaseAdapter()
         observeViewModel()
     }
 
@@ -185,6 +179,7 @@ class NSRePurchaseListFragment : NSFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
+        NSLog.d(tags, "onSearchClose: $event")
         with(repurchaseListModel) {
             pageIndex = "1"
             if (tempRePurchaseList.isValidList()) {

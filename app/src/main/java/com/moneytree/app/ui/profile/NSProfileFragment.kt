@@ -8,22 +8,18 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentProfileBinding
 import com.moneytree.app.ui.login.NSLoginActivity
-import com.moneytree.app.ui.main.NSMainActivity
 import com.moneytree.app.ui.memberTree.MemberTreeActivity
 import com.moneytree.app.ui.notification.NSNotificationFragment
 import com.moneytree.app.ui.transaction.NSTransactionFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 class NSProfileFragment : NSFragment() {
     private val profileModel: NSProfileViewModel by lazy {
@@ -69,12 +65,10 @@ class NSProfileFragment : NSFragment() {
      *
      */
     private fun setListener() {
-        with(profileModel) {
-            with(profileBinding) {
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        EventBus.getDefault().post(BackPressEvent())
-                    }
+        with(profileBinding) {
+            with(layoutHeader) {
+                clBack.setOnClickListener {
+                    EventBus.getDefault().post(BackPressEvent())
                 }
             }
         }
@@ -130,20 +124,18 @@ class NSProfileFragment : NSFragment() {
             3 -> {
                 EventBus.getDefault().post(NSFragmentChange(NSNotificationFragment.newInstance()))
             }
-            4 -> {
+            /*4 -> {
 
-            }
+            }*/
             5 -> {
                 EventBus.getDefault().post(NSFragmentChange(NSTransactionFragment.newInstance()))
             }
             6 -> {
 
             }
-            2 -> {
-                with(profileModel) {
-                    with(activity.resources) {
-                        showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
-                    }
+            4 -> {
+                with(activity.resources) {
+                    showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
                 }
 
             }
@@ -151,11 +143,9 @@ class NSProfileFragment : NSFragment() {
     }
 
     private fun setWalletData(isWalletData: Boolean) {
-        with(profileBinding) {
-            with(profileModel) {
-                if (isWalletData) {
-                    apiValue = 0
-                }
+        with(profileModel) {
+            if (isWalletData) {
+                apiValue = 0
             }
         }
     }
@@ -180,48 +170,46 @@ class NSProfileFragment : NSFragment() {
      */
     private fun observeViewModel() {
         with(profileModel) {
-            with(profileBinding) {
-                isProgressShowing.observe(
-                    viewLifecycleOwner
-                ) { shouldShowProgress ->
-                    updateProgress(shouldShowProgress)
-                }
+            isProgressShowing.observe(
+                viewLifecycleOwner
+            ) { shouldShowProgress ->
+                updateProgress(shouldShowProgress)
+            }
 
-                isLogout.observe(
-                    viewLifecycleOwner
-                ) { isLogout ->
-                    NSLog.d(TAG, "observeViewModel: $isLogout")
-                    NSApplication.getInstance().getPrefs().clearPrefData()
-                    switchActivity(
-                        NSLoginActivity::class.java,
-                        flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    )
-                }
+            isLogout.observe(
+                viewLifecycleOwner
+            ) { isLogout ->
+                NSLog.d(tags, "observeViewModel: $isLogout")
+                NSApplication.getInstance().getPrefs().clearPrefData()
+                switchActivity(
+                    NSLoginActivity::class.java,
+                    flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+            }
 
-                isUserDataAvailable.observe(
-                    viewLifecycleOwner
-                ) { isUserData ->
-                    setUserData(isUserData)
-                }
+            isUserDataAvailable.observe(
+                viewLifecycleOwner
+            ) { isUserData ->
+                setUserData(isUserData)
+            }
 
-                failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
-                    showAlertDialog(errorMessage)
-                }
+            failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                showAlertDialog(errorMessage)
+            }
 
-                apiErrors.observe(viewLifecycleOwner) { apiErrors ->
-                    parseAndShowApiError(apiErrors)
-                }
+            apiErrors.observe(viewLifecycleOwner) { apiErrors ->
+                parseAndShowApiError(apiErrors)
+            }
 
-                noNetworkAlert.observe(viewLifecycleOwner) {
-                    showNoNetworkAlertDialog(
-                        getString(R.string.no_network_available),
-                        getString(R.string.network_unreachable)
-                    )
-                }
+            noNetworkAlert.observe(viewLifecycleOwner) {
+                showNoNetworkAlertDialog(
+                    getString(R.string.no_network_available),
+                    getString(R.string.network_unreachable)
+                )
+            }
 
-                validationErrorId.observe(viewLifecycleOwner) { errorId ->
-                    showAlertDialog(getString(errorId))
-                }
+            validationErrorId.observe(viewLifecycleOwner) { errorId ->
+                showAlertDialog(getString(errorId))
             }
         }
     }

@@ -1,20 +1,14 @@
 package com.moneytree.app.ui.downlineReOffer
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
-import com.moneytree.app.common.BackPressEvent
-import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentDownlineReOfferBinding
-import org.greenrobot.eventbus.EventBus
 
 class NSDownlineReOfferFragment : NSFragment() {
     private val downlineListModel: NSDownlineReOfferViewModel by lazy {
@@ -42,11 +36,7 @@ class NSDownlineReOfferFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(downlineBinding) {
-            with(downlineListModel) {
-                setDownlineAdapter()
-            }
-        }
+        setDownlineAdapter()
         observeViewModel()
     }
 

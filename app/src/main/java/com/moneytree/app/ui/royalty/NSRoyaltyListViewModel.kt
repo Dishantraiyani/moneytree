@@ -4,13 +4,10 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.repository.NSRePurchaseRepository
 import com.moneytree.app.repository.NSRoyaltyRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
 import com.moneytree.app.repository.network.responses.NSRoyaltyListData
 import com.moneytree.app.repository.network.responses.NSRoyaltyListResponse
-import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData
 
 
 /**
