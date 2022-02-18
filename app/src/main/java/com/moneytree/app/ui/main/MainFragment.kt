@@ -39,16 +39,14 @@ class MainFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(mainBinding) {
-            replaceFragment(NSHomeFragment.newInstance(), false, fragmentMainContainer.id)
+        replaceFragment(NSHomeFragment.newInstance(), false, mainBinding.fragmentMainContainer.id)
 
-            if (NSConstants.IS_LOGIN_SUCCESS) {
-                NSConstants.IS_LOGIN_SUCCESS = false
-                showSuccessDialog(
-                    requireActivity().resources.getString(R.string.app_name),
-                    "Welcome to MoneyTree"
-                )
-            }
+        if (NSConstants.IS_LOGIN_SUCCESS) {
+            NSConstants.IS_LOGIN_SUCCESS = false
+            showSuccessDialog(
+                requireActivity().resources.getString(R.string.app_name),
+                "Welcome to MoneyTree"
+            )
         }
     }
 

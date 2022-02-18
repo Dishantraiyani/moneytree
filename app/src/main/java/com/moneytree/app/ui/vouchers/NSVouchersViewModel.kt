@@ -11,7 +11,7 @@ import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for voucher. It handles the business logic to communicate with the model for the voucher and provides the data to the observing UI component.
  */
 class NSVouchersViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
@@ -25,7 +25,7 @@ class NSVouchersViewModel(application: Application) : NSViewModel(application),
     private var searchData: String = ""
 
     /**
-     * Get register list data
+     * Get voucher list data
      *
      */
     fun getVoucherListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
@@ -58,11 +58,11 @@ class NSVouchersViewModel(application: Application) : NSViewModel(application),
         if (isBottomProgressShow) {
             isBottomProgressShowing.value = false
         }
-        val registerMainListData = data as NSVoucherListResponse
-        voucherResponse = registerMainListData
-        if (registerMainListData.data != null) {
-            if (registerMainListData.data.isValidList()) {
-                voucherList.addAll(registerMainListData.data!!)
+        val voucherMainListData = data as NSVoucherListResponse
+        voucherResponse = voucherMainListData
+        if (voucherMainListData.data != null) {
+            if (voucherMainListData.data.isValidList()) {
+                voucherList.addAll(voucherMainListData.data!!)
                 isVoucherDataAvailable.value = voucherList.isValidList()
             } else if (pageIndex == "1" || searchData.isNotEmpty()){
                 isVoucherDataAvailable.value = false

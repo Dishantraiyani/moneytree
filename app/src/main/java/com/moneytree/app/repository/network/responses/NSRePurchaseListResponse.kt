@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of rePurchase list
  */
 data class NSRePurchaseListResponse(
     @SerializedName("status")

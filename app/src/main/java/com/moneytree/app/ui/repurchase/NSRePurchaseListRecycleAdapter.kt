@@ -55,17 +55,17 @@ class NSRePurchaseListRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for repurchase list
      *
-     * @property rePurchaseBinding The trip history list view binding
+     * @property rePurchaseBinding The repurchase list view binding
      */
     inner class NSRePurchaseViewHolder(private val rePurchaseBinding: LayoutRepurchaseItemBinding) :
         RecyclerView.ViewHolder(rePurchaseBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the repurchase details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The repurchase details
          */
         fun bind(response: NSTodayRePurchaseListData) {
             with(rePurchaseBinding) {

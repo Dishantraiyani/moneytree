@@ -153,11 +153,4 @@ open class NSFragment : Fragment() {
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-
-    val dataResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            val data = result.data
-            EventBus.getDefault().post(NSActivityEvent(resultCode, data))
-        }
 }

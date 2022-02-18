@@ -84,7 +84,7 @@ class NSRetailInfoFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of retail in list
      */
     private fun setRetailAdapter() {
         with(retailBinding) {
@@ -114,7 +114,7 @@ class NSRetailInfoFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set retail data
      *
      * @param isRetail when data available it's true
      */
@@ -129,9 +129,9 @@ class NSRetailInfoFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * retail data manage
      *
-     * @param isRetailVisible when notification available it's visible
+     * @param isRetailVisible when retail available it's visible
      */
     private fun retailDataManage(isRetailVisible: Boolean) {
         with(retailBinding) {

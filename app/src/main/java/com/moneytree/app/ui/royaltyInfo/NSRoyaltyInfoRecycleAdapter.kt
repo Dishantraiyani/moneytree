@@ -52,17 +52,17 @@ class NSRoyaltyInfoRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for royalty list
      *
-     * @property royaltyBinding The trip history list view binding
+     * @property royaltyBinding The royalty list view binding
      */
     inner class NSRoyaltyViewHolder(private val royaltyBinding: LayoutRoyaltyInfoItemBinding) :
         RecyclerView.ViewHolder(royaltyBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the royalty details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The royalty details
          */
         fun bind(response: NSRoyaltyInfoData) {
             with(royaltyBinding) {

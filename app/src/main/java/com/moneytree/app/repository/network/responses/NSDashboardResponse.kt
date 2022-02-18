@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of dashboard
  */
 data class NSDashboardResponse(
     @SerializedName("status")
@@ -19,7 +19,7 @@ data class NSDashboardResponse(
 )
 
 /**
- * The class representing the response of single order detail
+ * The class representing the response of dashboard detail
  */
 data class NSDashboardData(
     @SerializedName("today_joining")
@@ -47,7 +47,7 @@ data class NSDashboardData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the down total details
  */
 data class NSDwnTotalData(
     @SerializedName("cnt")
@@ -56,7 +56,7 @@ data class NSDwnTotalData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the wallet amount details
  */
 data class NSWalletAmountData(
     @SerializedName("amount")
@@ -65,7 +65,7 @@ data class NSWalletAmountData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the today joining details
  */
 data class NSTodayJoiningData(
     @SerializedName("today_joining")
@@ -74,7 +74,7 @@ data class NSTodayJoiningData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the slot list details
  */
 data class NSSlotListData(
     @SerializedName("slot_master_id")
@@ -92,7 +92,7 @@ data class NSSlotListData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the today joining details
  */
 data class NSTodayJoiningListData(
     @SerializedName("fullname")
@@ -131,7 +131,7 @@ data class NSTodayJoiningListData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the today repurchase details
  */
 data class NSTodayRePurchaseData(
     @SerializedName("today_repurchase")
@@ -140,7 +140,7 @@ data class NSTodayRePurchaseData(
 )
 
 /**
- * The class representing the order details
+ * The class representing the today repurchase details
  */
 data class NSTodayRePurchaseListData(
     @SerializedName("repurchase_id")

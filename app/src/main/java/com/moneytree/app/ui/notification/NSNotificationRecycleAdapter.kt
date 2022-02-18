@@ -10,10 +10,8 @@ import com.moneytree.app.databinding.LayoutNotificaitonBinding
 import com.moneytree.app.repository.network.responses.NSNotificationListData
 
 class NSNotificationRecycleAdapter(
-    activityNS: Activity,
     onCallBack: NSNotificationCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val activity: Activity = activityNS
     private val onNSNotificationCallback = onCallBack
     private val notificationData: MutableList<NSNotificationListData> = arrayListOf()
 

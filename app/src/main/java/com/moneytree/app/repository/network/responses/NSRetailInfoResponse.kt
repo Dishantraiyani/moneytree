@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of retail info
  */
 data class NSRetailInfoResponse(
     @SerializedName("status")
@@ -22,7 +22,7 @@ data class NSRetailInfoResponse(
 )
 
 /**
- * The class representing the order details
+ * The class representing the retail details
  */
 data class NSRetailInfoData(
     @SerializedName("direct_retail_offer_part_id")

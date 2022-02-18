@@ -79,7 +79,7 @@ class MemberTreeFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of member tree in list
      */
     private fun setMemberTreeAdapter() {
         with(memberTreeBinding) {
@@ -93,14 +93,14 @@ class MemberTreeFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set member tree data
      *
-     * @param isVoucher when data available it's true
+     * @param isMemberTree when data available it's true
      */
-    private fun setMemberData(isVoucher: Boolean) {
+    private fun setMemberData(isMemberTree: Boolean) {
         with(memberTreeViewModel) {
-            voucherDataManage(isVoucher)
-            if (isVoucher) {
+            memberTreeDataManage(isMemberTree)
+            if (isMemberTree) {
                 memberTreeListAdapter!!.clearData()
                 memberTreeListAdapter!!.updateData(memberList)
             }
@@ -108,14 +108,14 @@ class MemberTreeFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * MemberTree data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param isMemberTreeVisible when memberTree available it's visible
      */
-    private fun voucherDataManage(isTripHistoryVisible: Boolean) {
+    private fun memberTreeDataManage(isMemberTreeVisible: Boolean) {
         with(memberTreeBinding) {
-            rvMemberTreeList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
-            clMemberNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
+            rvMemberTreeList.visibility = if (isMemberTreeVisible) View.VISIBLE else View.GONE
+            clMemberNotFound.visibility = if (isMemberTreeVisible) View.GONE else View.VISIBLE
         }
     }
 

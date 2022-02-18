@@ -33,8 +33,8 @@ class MemberTreeRecycleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val orderView = LayoutMemberTreeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NSMemberTreeViewHolder(orderView)
+        val memberView = LayoutMemberTreeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NSMemberTreeViewHolder(memberView)
     }
 
     override fun onBindViewHolder(holderRec: RecyclerView.ViewHolder, position: Int) {
@@ -49,17 +49,17 @@ class MemberTreeRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for member tree list
      *
-     * @property voucherBinding The trip history list view binding
+     * @property voucherBinding The member tree list view binding
      */
     inner class NSMemberTreeViewHolder(private val voucherBinding: LayoutMemberTreeBinding) :
         RecyclerView.ViewHolder(voucherBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the member tree details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The member tree details
          */
         fun bind(response: NSMemberTreeData) {
             with(voucherBinding) {

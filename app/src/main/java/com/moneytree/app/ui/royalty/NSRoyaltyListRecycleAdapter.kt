@@ -55,9 +55,9 @@ class NSRoyaltyListRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for royalty list
      *
-     * @property royaltyBinding The trip history list view binding
+     * @property royaltyBinding The royalty list view binding
      */
     inner class NSRoyaltyViewHolder(private val royaltyBinding: LayoutRoyaltyItemBinding) :
         RecyclerView.ViewHolder(royaltyBinding.root) {

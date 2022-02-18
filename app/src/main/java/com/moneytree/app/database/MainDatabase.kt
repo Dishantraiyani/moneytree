@@ -8,7 +8,7 @@ import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.repository.network.responses.NSDataUser
 
 object MainDatabase {
-    private const val DATABASE_NAME = "dot_db"
+    private const val DATABASE_NAME = "money_tree_db"
     private var appDatabase: AppDatabase? = null
     private var nsUserData: NSDataUser? = null
 

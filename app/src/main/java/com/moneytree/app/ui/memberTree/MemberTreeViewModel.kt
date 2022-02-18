@@ -11,7 +11,7 @@ import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
 
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for member tree. It handles the business logic to communicate with the model for the member tree and provides the data to the observing UI component.
  */
 class MemberTreeViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {

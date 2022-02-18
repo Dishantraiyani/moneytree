@@ -11,7 +11,7 @@ import com.moneytree.app.repository.network.responses.NSRoyaltyInfoResponse
 
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for royalty info. It handles the business logic to communicate with the model for the royalty info and provides the data to the observing UI component.
  */
 class NSRoyaltyInfoViewModel(application: Application) : NSViewModel(application) {
     var royaltyInfoList: MutableList<NSRoyaltyInfoData> = arrayListOf()
@@ -21,7 +21,7 @@ class NSRoyaltyInfoViewModel(application: Application) : NSViewModel(application
     var royaltyId: String? = null
 
     /**
-     * Get register list data
+     * Get royalty info list data
      *
      */
     fun getRoyaltyListData(pageIndex: String, royaltyId: String, isShowProgress: Boolean, isBottomProgress: Boolean) {

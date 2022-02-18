@@ -84,7 +84,7 @@ class NSRoyaltyInfoFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of royalty in list
      */
     private fun setRoyaltyAdapter() {
         with(royaltyBinding) {
@@ -114,7 +114,7 @@ class NSRoyaltyInfoFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set royalty data
      *
      * @param isRoyalty when data available it's true
      */
@@ -129,14 +129,14 @@ class NSRoyaltyInfoFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Royalty data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param isRoyaltyInfo when royalty available it's visible
      */
-    private fun royaltyDataManage(isTripHistoryVisible: Boolean) {
+    private fun royaltyDataManage(isRoyaltyInfo: Boolean) {
         with(royaltyBinding) {
-            rvRetailList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
-            clRetailNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
+            rvRetailList.visibility = if (isRoyaltyInfo) View.VISIBLE else View.GONE
+            clRetailNotFound.visibility = if (isRoyaltyInfo) View.GONE else View.VISIBLE
         }
     }
 
@@ -160,9 +160,9 @@ class NSRoyaltyInfoFragment : NSFragment() {
 
                 isRoyaltyDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isRoyalty ->
                     srlRefresh.isRefreshing = false
-                    setRegisterData(isNotification)
+                    setRegisterData(isRoyalty)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

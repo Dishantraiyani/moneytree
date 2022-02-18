@@ -54,14 +54,14 @@ class NSDownlineReOfferFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of downline adapter in list
      */
     private fun setDownlineAdapter() {
         with(downlineBinding) {
             with(downlineListModel) {
                 rvDownlineReOfferList.layoutManager = LinearLayoutManager(activity)
                 downlineListAdapter =
-                    NSDownlineReOfferListRecycleAdapter(activity)
+                    NSDownlineReOfferListRecycleAdapter()
                 rvDownlineReOfferList.adapter = downlineListAdapter
                 getDownlineListData(true)
             }
@@ -75,14 +75,14 @@ class NSDownlineReOfferFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set downline data
      *
-     * @param isVoucher when data available it's true
+     * @param isDownline when data available it's true
      */
-    private fun setDownlineData(isVoucher: Boolean) {
+    private fun setDownlineData(isDownline: Boolean) {
         with(downlineListModel) {
-            downlineDataManage(isVoucher)
-            if (isVoucher) {
+            downlineDataManage(isDownline)
+            if (isDownline) {
                 downlineListAdapter!!.clearData()
                 downlineListAdapter!!.updateData(downlineList)
             }
@@ -90,9 +90,9 @@ class NSDownlineReOfferFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Downline data manage
      *
-     * @param isDownlineVisible when notification available it's visible
+     * @param isDownlineVisible when downline data available it's visible
      */
     private fun downlineDataManage(isDownlineVisible: Boolean) {
         with(downlineBinding) {
@@ -121,9 +121,9 @@ class NSDownlineReOfferFragment : NSFragment() {
 
                 isDownlineDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isDownlineDataAvailable ->
                     srlRefresh.isRefreshing = false
-                    setDownlineData(isNotification)
+                    setDownlineData(isDownlineDataAvailable)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

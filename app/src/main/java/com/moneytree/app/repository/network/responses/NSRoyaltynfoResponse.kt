@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of royalty info
  */
 data class NSRoyaltyInfoResponse(
     @SerializedName("status")
@@ -22,7 +22,7 @@ data class NSRoyaltyInfoResponse(
 )
 
 /**
- * The class representing the order details
+ * The class representing the royalty info details
  */
 data class NSRoyaltyInfoData(
     @SerializedName("royalty_offer_part_id")

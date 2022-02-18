@@ -10,7 +10,7 @@ import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOf
 import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferResponse
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for downline reOffer. It handles the business logic to communicate with the model for the downline reOffer and provides the data to the observing UI component.
  */
 class NSDownlineReOfferViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
@@ -19,7 +19,7 @@ class NSDownlineReOfferViewModel(application: Application) : NSViewModel(applica
     private var downlineResponse: NSDownlineMemberDirectReOfferResponse? = null
 
     /**
-     * Get register list data
+     * Get downline list data
      *
      */
     fun getDownlineListData(isShowProgress: Boolean) {
@@ -32,11 +32,11 @@ class NSDownlineReOfferViewModel(application: Application) : NSViewModel(applica
 
     override fun <T> onSuccess(data: T) {
         isProgressShowing.value = false
-        val registerMainListData = data as NSDownlineMemberDirectReOfferResponse
-        downlineResponse = registerMainListData
-        if (registerMainListData.data != null) {
-            if (registerMainListData.data.isValidList()) {
-                downlineList.addAll(registerMainListData.data!!)
+        val downlineMainListData = data as NSDownlineMemberDirectReOfferResponse
+        downlineResponse = downlineMainListData
+        if (downlineMainListData.data != null) {
+            if (downlineMainListData.data.isValidList()) {
+                downlineList.addAll(downlineMainListData.data!!)
             }
             isDownlineDataAvailable.value = downlineList.isValidList()
         }

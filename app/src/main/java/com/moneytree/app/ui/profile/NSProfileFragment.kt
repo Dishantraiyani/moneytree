@@ -142,14 +142,6 @@ class NSProfileFragment : NSFragment() {
         }
     }
 
-    private fun setWalletData(isWalletData: Boolean) {
-        with(profileModel) {
-            if (isWalletData) {
-                apiValue = 0
-            }
-        }
-    }
-
     private fun setUserData(isUserData: Boolean) {
         with(profileBinding) {
             with(profileModel) {

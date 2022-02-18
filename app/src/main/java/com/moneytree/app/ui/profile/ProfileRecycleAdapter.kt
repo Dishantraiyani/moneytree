@@ -35,15 +35,15 @@ class ProfileRecycleAdapter(
     }
 
     /**
-     * The view holder for order list
+     * The view holder for profile list
      *
-     * @property profileBinding The order list view binding
+     * @property profileBinding The profile list view binding
      */
     inner class NSProfileViewHolder(private val profileBinding: LayoutProfileItemBinding) :
         RecyclerView.ViewHolder(profileBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the profile details view into Recycler view with given data
          *
          * @param response The order details
          */

@@ -85,7 +85,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/iv_add_new"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/search_hint"/>
 
         <ImageView
             android:id="@+id/iv_add_new"
@@ -99,7 +100,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/add_new"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_search"
@@ -165,7 +167,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="UseAppTint" />
+                    tools:ignore="UseAppTint"
+                    android:contentDescription="@string/close"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

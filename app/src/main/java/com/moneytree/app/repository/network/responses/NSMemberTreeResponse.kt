@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of member tree
  */
 data class NSMemberTreeResponse(
     @SerializedName("status")
@@ -19,7 +19,7 @@ data class NSMemberTreeResponse(
 )
 
 /**
- * The class representing the order details
+ * The class representing the member tree details
  */
 data class NSMemberTreeData(
     @SerializedName("memberid")

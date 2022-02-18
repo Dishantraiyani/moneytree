@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of register
  */
 data class NSRegisterListResponse(
     @SerializedName("status")
@@ -22,7 +22,7 @@ data class NSRegisterListResponse(
 )
 
 /**
- * The class representing the trip history details
+ * The class representing the register list details
  */
 data class NSRegisterListData(
     @SerializedName("user_id")

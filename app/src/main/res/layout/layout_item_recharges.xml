@@ -23,7 +23,8 @@
         android:layout_height="@dimen/_22sdp"
         android:src="@drawable/mobile"
         android:id="@+id/iv_fieldImage"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/mobile_title"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -11,7 +11,7 @@ import com.moneytree.app.repository.network.responses.NSRegisterListResponse
 
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for register. It handles the business logic to communicate with the model for the register and provides the data to the observing UI component.
  */
 class NSRegisterViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {

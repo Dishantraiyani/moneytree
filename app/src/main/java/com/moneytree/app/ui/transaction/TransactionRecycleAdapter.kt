@@ -27,8 +27,8 @@ class TransactionRecycleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val orderView = LayoutTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NSTransactionViewHolder(orderView)
+        val transactionView = LayoutTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NSTransactionViewHolder(transactionView)
     }
 
     override fun onBindViewHolder(holderRec: RecyclerView.ViewHolder, position: Int) {
@@ -43,20 +43,20 @@ class TransactionRecycleAdapter(
     }
 
     /**
-     * The view holder for order list
+     * The view holder for transaction list
      *
-     * @property orderBinding The order list view binding
+     * @property transactionBinding The transaction list view binding
      */
-    inner class NSTransactionViewHolder(private val orderBinding: LayoutTransactionBinding) :
-        RecyclerView.ViewHolder(orderBinding.root) {
+    inner class NSTransactionViewHolder(private val transactionBinding: LayoutTransactionBinding) :
+        RecyclerView.ViewHolder(transactionBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the transaction details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The transaction details
          */
         fun bind(response: NSTransactionListData) {
-            with(orderBinding) {
+            with(transactionBinding) {
                 with(response) {
                     tvShopOrderId.text = addText(activity, R.string.shop_order_id_title, orderId!!)
                     tvOrderCredit.text = isCredit

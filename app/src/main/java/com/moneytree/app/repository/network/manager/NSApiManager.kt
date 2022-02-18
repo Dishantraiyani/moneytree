@@ -373,8 +373,8 @@ interface RTApiInterface {
     @POST("level-wise-member-report-list")
     fun getLevelWiseMemberReportList(@Field("token_id") token: String): Call<NSMemberTreeResponse>
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST("joining-voucher-transfer-info")
     fun getJoiningVoucherTransferInfo(@Field("token_id") token: String, @Field("memberid") memberId: String): Call<NSJoiningVoucherTransferResponse>
-
+*/
 }

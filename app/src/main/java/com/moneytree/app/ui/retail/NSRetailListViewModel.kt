@@ -11,7 +11,7 @@ import com.moneytree.app.repository.network.responses.NSRetailListResponse
 
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for retail list. It handles the business logic to communicate with the model for the retail info and provides the data to the observing UI component.
  */
 class NSRetailListViewModel(application: Application) : NSViewModel(application) {
     var retailList: MutableList<NSRetailListData> = arrayListOf()
@@ -21,7 +21,7 @@ class NSRetailListViewModel(application: Application) : NSViewModel(application)
     var retailResponse: NSRetailListResponse? = null
 
     /**
-     * Get register list data
+     * Get retail list data
      *
      */
     fun getRetailListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {

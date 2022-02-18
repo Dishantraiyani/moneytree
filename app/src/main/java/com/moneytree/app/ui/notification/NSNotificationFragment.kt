@@ -68,7 +68,7 @@ class NSNotificationFragment : NSFragment() {
             with(notificationModel) {
                 rvNotificationList.layoutManager = LinearLayoutManager(activity)
                 notificationAdapter =
-                    NSNotificationRecycleAdapter(activity, object : NSNotificationCallback {
+                    NSNotificationRecycleAdapter(object : NSNotificationCallback {
                         override fun onClick(data: NSNotificationListData) {
 
                         }

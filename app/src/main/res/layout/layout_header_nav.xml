@@ -22,7 +22,8 @@
             android:src="@drawable/header_back2"
             android:alpha="0.2"
             android:scaleType="centerCrop"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:contentDescription="@string/back"/>
 
         <TextView
             android:id="@+id/tv_icon"
@@ -90,14 +91,16 @@
         android:layout_marginTop="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/cl_header_top"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/tab_home"
             android:tint="@color/orange"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/home"/>
 
         <TextView
             style="@style/LayoutWidthHeightWrap"
@@ -124,14 +127,16 @@
         android:paddingVertical="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/ll_home"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/ic_register"
             android:tint="@color/orange"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/register"/>
 
         <TextView
             style="@style/LayoutWidthHeightWrap"
@@ -158,14 +163,16 @@
         android:paddingVertical="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/ll_register"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/ic_vouchers"
             android:tint="@color/orange"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/vouchers"/>
 
         <TextView
             style="@style/LayoutWidthHeightWrap"
@@ -191,14 +198,16 @@
         android:paddingVertical="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/ll_vouchers"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/ic_repurchase"
             android:tint="@color/orange"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/repurchase"/>
 
         <TextView
             style="@style/LayoutWidthHeightWrap"
@@ -224,14 +233,16 @@
         android:paddingVertical="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/ll_re_purchase"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/ic_wallet"
             android:tint="@color/orange"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/wallet"/>
 
         <TextView
             style="@style/LayoutWidthHeightWrap"
@@ -257,14 +268,16 @@
         android:paddingVertical="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/ll_wallet"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:src="@drawable/ic_logout"
             android:tint="@color/orange"
-            tools:ignore="UseAppTint" />
+            tools:ignore="UseAppTint"
+            android:contentDescription="@string/logout"/>
 
         <TextView
             style="@style/LayoutWidthHeightWrap"

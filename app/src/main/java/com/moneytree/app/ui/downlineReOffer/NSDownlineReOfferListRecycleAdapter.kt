@@ -9,15 +9,12 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutDownlineItemBinding
 import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferData
 
-class NSDownlineReOfferListRecycleAdapter(
-    activityNS: Activity
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val activity: Activity = activityNS
+class NSDownlineReOfferListRecycleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val downlineData: MutableList<NSDownlineMemberDirectReOfferData> = arrayListOf()
 
-    fun updateData(voucherList: MutableList<NSDownlineMemberDirectReOfferData>) {
-        downlineData.addAll(voucherList)
-        if (voucherList.isValidList()) {
+    fun updateData(downlineList: MutableList<NSDownlineMemberDirectReOfferData>) {
+        downlineData.addAll(downlineList)
+        if (downlineList.isValidList()) {
             notifyItemRangeChanged(0, downlineData.size - 1)
         } else {
             notifyDataSetChanged()
@@ -46,17 +43,17 @@ class NSDownlineReOfferListRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for downline list
      *
-     * @property downlineBinding The trip history list view binding
+     * @property downlineBinding The downline list view binding
      */
     inner class NSDownlineViewHolder(private val downlineBinding: LayoutDownlineItemBinding) :
         RecyclerView.ViewHolder(downlineBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the downline details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The downline details
          */
         fun bind(response: NSDownlineMemberDirectReOfferData) {
             with(downlineBinding) {

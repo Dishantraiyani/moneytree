@@ -145,7 +145,7 @@ class NSVoucherFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of vouchers in list
      */
     private fun setVoucherAdapter() {
         with(voucherBinding) {
@@ -175,7 +175,7 @@ class NSVoucherFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set voucher data
      *
      * @param isVoucher when data available it's true
      */
@@ -190,14 +190,14 @@ class NSVoucherFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Voucher data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param isVoucherVisible when voucher available it's visible
      */
-    private fun voucherDataManage(isTripHistoryVisible: Boolean) {
+    private fun voucherDataManage(isVoucherVisible: Boolean) {
         with(voucherBinding) {
-            rvVoucherList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
-            clVoucherNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
+            rvVoucherList.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
+            clVoucherNotFound.visibility = if (isVoucherVisible) View.GONE else View.VISIBLE
         }
     }
 
@@ -221,9 +221,9 @@ class NSVoucherFragment : NSFragment() {
 
                 isVoucherDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isVoucher ->
                     srlRefresh.isRefreshing = false
-                    setVoucherData(isNotification)
+                    setVoucherData(isVoucher)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

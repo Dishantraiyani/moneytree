@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of joining voucher
  */
 data class NSJoiningVoucherTransferResponse(
     @SerializedName("status")
@@ -22,7 +22,7 @@ data class NSJoiningVoucherTransferResponse(
 )
 
 /**
- * The class representing the order details
+ * The class representing the joining voucher details
  */
 data class NSJoiningVoucherTransferData(
     @SerializedName("username")

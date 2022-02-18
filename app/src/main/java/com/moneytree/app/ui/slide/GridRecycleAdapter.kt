@@ -29,12 +29,12 @@ class GridRecycleAdapter(
     }
 
     /**
-     * The view holder for recharge list
+     * The view holder for grid list
      *
-     * @property profileBinding The recharge list view binding
+     * @property recharge The recharge list view binding
      */
-    inner class NSRechargeViewHolder(private val profileBinding: LayoutItemRechargesBinding) :
-        RecyclerView.ViewHolder(profileBinding.root) {
+    inner class NSRechargeViewHolder(private val recharge: LayoutItemRechargesBinding) :
+        RecyclerView.ViewHolder(recharge.root) {
 
         /**
          * To bind the recharge view into Recycler view with given data
@@ -42,7 +42,7 @@ class GridRecycleAdapter(
          * @param response The recharge list
          */
         fun bind(response: GridModel) {
-            with(profileBinding) {
+            with(recharge) {
                 with(response) {
                     tvFieldName.text = fieldName
                     ivFieldImage.setImageResource(fieldImage)

@@ -63,7 +63,7 @@ class NSRePurchaseListFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of repurchase in list
      */
     private fun setRepurchaseAdapter() {
         with(repurchaseBinding) {
@@ -101,14 +101,14 @@ class NSRePurchaseListFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set repurchase data
      *
-     * @param isNotification when data available it's true
+     * @param isRepurchase when data available it's true
      */
-    private fun setRegisterData(isNotification: Boolean) {
+    private fun setRePurchaseData(isRepurchase: Boolean) {
         with(repurchaseListModel) {
-            notificationDataManage(isNotification)
-            if (isNotification) {
+            repurchaseDataManage(isRepurchase)
+            if (isRepurchase) {
                 repurchaseListAdapter!!.clearData()
                 repurchaseListAdapter!!.updateData(rePurchaseList)
             }
@@ -116,14 +116,14 @@ class NSRePurchaseListFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Repurchase data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param repurchaseData when notification available it's visible
      */
-    private fun notificationDataManage(isTripHistoryVisible: Boolean) {
+    private fun repurchaseDataManage(repurchaseData: Boolean) {
         with(repurchaseBinding) {
-            rvRepurchaseList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
-            clRepurchaseNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
+            rvRepurchaseList.visibility = if (repurchaseData) View.VISIBLE else View.GONE
+            clRepurchaseNotFound.visibility = if (repurchaseData) View.GONE else View.VISIBLE
         }
     }
 
@@ -149,7 +149,7 @@ class NSRePurchaseListFragment : NSFragment() {
                     viewLifecycleOwner
                 ) { isNotification ->
                     srlRefresh.isRefreshing = false
-                    setRegisterData(isNotification)
+                    setRePurchaseData(isNotification)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
@@ -186,7 +186,7 @@ class NSRePurchaseListFragment : NSFragment() {
                 rePurchaseList.clear()
                 rePurchaseList.addAll(tempRePurchaseList)
                 tempRePurchaseList.clear()
-                setRegisterData(rePurchaseList.isValidList())
+                setRePurchaseData(rePurchaseList.isValidList())
             }
         }
     }

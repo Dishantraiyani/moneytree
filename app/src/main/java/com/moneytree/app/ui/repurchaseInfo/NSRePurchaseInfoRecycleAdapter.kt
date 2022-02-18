@@ -30,8 +30,8 @@ class NSRePurchaseInfoRecycleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val orderView = LayoutRepurchaseInfoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NSRePurchaseViewHolder(orderView)
+        val repurchaseView = LayoutRepurchaseInfoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NSRePurchaseViewHolder(repurchaseView)
     }
 
     override fun onBindViewHolder(holderRec: RecyclerView.ViewHolder, position: Int) {
@@ -52,17 +52,17 @@ class NSRePurchaseInfoRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for repurchase list
      *
-     * @property rePurchaseBinding The trip history list view binding
+     * @property rePurchaseBinding The repurchase list view binding
      */
     inner class NSRePurchaseViewHolder(private val rePurchaseBinding: LayoutRepurchaseInfoItemBinding) :
         RecyclerView.ViewHolder(rePurchaseBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the repurchase details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The repurchase details
          */
         fun bind(response: NSRePurchaseInfoData) {
             with(rePurchaseBinding) {

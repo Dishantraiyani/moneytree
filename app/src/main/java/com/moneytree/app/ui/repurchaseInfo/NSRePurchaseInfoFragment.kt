@@ -84,7 +84,7 @@ class NSRePurchaseInfoFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of repurchase in list
      */
     private fun setRepurchaseAdapter() {
         with(repurchaseBinding) {
@@ -114,14 +114,14 @@ class NSRePurchaseInfoFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set repurchase data
      *
-     * @param isNotification when data available it's true
+     * @param isRepurchase when data available it's true
      */
-    private fun setRegisterData(isNotification: Boolean) {
+    private fun setRePurchaseData(isRepurchase: Boolean) {
         with(repurchaseListModel) {
-            notificationDataManage(isNotification)
-            if (isNotification) {
+            repurchaseDataManage(isRepurchase)
+            if (isRepurchase) {
                 repurchaseListAdapter!!.clearData()
                 repurchaseListAdapter!!.updateData(rePurchaseInfoList)
             }
@@ -129,14 +129,14 @@ class NSRePurchaseInfoFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Repurchase data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param isRepurchaseDataAvailable when repurchase available it's visible
      */
-    private fun notificationDataManage(isTripHistoryVisible: Boolean) {
+    private fun repurchaseDataManage(isRepurchaseDataAvailable: Boolean) {
         with(repurchaseBinding) {
-            rvRepurchaseList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
-            clRepurchaseNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
+            rvRepurchaseList.visibility = if (isRepurchaseDataAvailable) View.VISIBLE else View.GONE
+            clRepurchaseNotFound.visibility = if (isRepurchaseDataAvailable) View.GONE else View.VISIBLE
         }
     }
 
@@ -160,9 +160,9 @@ class NSRePurchaseInfoFragment : NSFragment() {
 
                 isRePurchaseDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isRePurchaseDataAvailable ->
                     srlRefresh.isRefreshing = false
-                    setRegisterData(isNotification)
+                    setRePurchaseData(isRePurchaseDataAvailable)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

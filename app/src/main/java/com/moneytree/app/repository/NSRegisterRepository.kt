@@ -8,14 +8,14 @@ import com.moneytree.app.repository.network.responses.NSRegisterListResponse
 import retrofit2.Response
 
 /**
- * Repository class to handle data operations related to orders
+ * Repository class to handle data operations related to register
  */
 object NSRegisterRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
     private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
-     * To get single order data API
+     * To get register data API
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */

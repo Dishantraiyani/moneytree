@@ -91,14 +91,14 @@ class NSTransactionFragment : NSFragment() {
     }
 
     /**
-     * Order data manage
+     * transaction data manage
      *
-     * @param isOrderVisible when order available it's visible
+     * @param isTransactionVisible when transaction available it's visible
      */
-    private fun transactionDataManage(isOrderVisible: Boolean) {
+    private fun transactionDataManage(isTransactionVisible: Boolean) {
         with(transactionBinding) {
-            rvTransaction.visibility = if (isOrderVisible) View.VISIBLE else View.GONE
-            clTransactionNotFound.visibility = if (isOrderVisible) View.GONE else View.VISIBLE
+            rvTransaction.visibility = if (isTransactionVisible) View.VISIBLE else View.GONE
+            clTransactionNotFound.visibility = if (isTransactionVisible) View.GONE else View.VISIBLE
         }
     }
 

@@ -8,8 +8,6 @@ import retrofit2.Response
  */
 object NSUserManager {
     private val prefs = NSApplication.getInstance().getPrefs()
-    private const val TOKEN = "accessToken"
-    private const val REFRESH_TOKEN = "refreshToken"
 
     //Status of user logged in
     val isUserLoggedIn: Boolean get() = !getAuthToken().isNullOrBlank()
@@ -40,13 +38,4 @@ object NSUserManager {
         val userResponse = response.body() as NSUserResponse
         prefs.userData = userResponse
     }
-
-    /**
-     * To access the user data from preference and do actions
-     */
-    var userData: NSUserResponse?
-        get() = prefs.userData
-        set(userData) {
-            prefs.userData = userData
-        }
 }

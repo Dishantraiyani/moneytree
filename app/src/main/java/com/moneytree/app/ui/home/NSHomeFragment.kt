@@ -1,35 +1,32 @@
 package com.moneytree.app.ui.home
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.moneytree.app.R
-import com.moneytree.app.common.*
-import com.moneytree.app.common.NSRequestCodes.REQUEST_STATUS_UPDATED
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSTabChange
+import com.moneytree.app.common.ViewPagerMDAdapter
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
         ViewModelProvider(this)[NSHomeViewModel::class.java]
     }
     private var _binding: NsFragmentHomeBinding? = null
-
     private val homeBinding get() = _binding!!
-
-
     private var homeListModelClassArrayList1: ArrayList<GridModel>? = null
     private var bAdapterNS: GridRecycleAdapter? = null
 
@@ -122,8 +119,8 @@ class NSHomeFragment : NSFragment() {
      */
     private fun setListener() {
         with(homeBinding) {
-            layoutHeader.ivMenu.setOnClickListener { drawer.openDrawer(Gravity.LEFT) }
-            drawer.closeDrawer(Gravity.LEFT)
+            layoutHeader.ivMenu.setOnClickListener { drawer.openDrawer(GravityCompat.START) }
+            drawer.closeDrawer(GravityCompat.START)
         }
     }
 
@@ -225,23 +222,14 @@ class NSHomeFragment : NSFragment() {
 
             noNetworkAlert.observe(viewLifecycleOwner) {
                 showNoNetworkAlertDialog(
-                    getString(com.moneytree.app.R.string.no_network_available), getString(
-                        com.moneytree.app.R.string.network_unreachable
+                    getString(R.string.no_network_available), getString(
+                        R.string.network_unreachable
                     )
                 )
             }
 
             validationErrorId.observe(viewLifecycleOwner) { errorId ->
                 showAlertDialog(getString(errorId))
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onDismissEvent(event: NSActivityEvent) {
-        if (event.resultCode == REQUEST_STATUS_UPDATED) {
-            with(homeModel) {
-                getDashboardData(true)
             }
         }
     }

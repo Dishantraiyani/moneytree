@@ -63,7 +63,7 @@ class NSRoyaltyListFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of royal in list
      */
     private fun setRoyaltyAdapter() {
         with(royaltyBinding) {
@@ -101,14 +101,14 @@ class NSRoyaltyListFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set Royalty data
      *
-     * @param isNotification when data available it's true
+     * @param isRoyalty when data available it's true
      */
-    private fun setRoyaltyData(isNotification: Boolean) {
+    private fun setRoyaltyData(isRoyalty: Boolean) {
         with(royaltyListModel) {
-            notificationDataManage(isNotification)
-            if (isNotification) {
+            royaltyDataManage(isRoyalty)
+            if (isRoyalty) {
                 royaltyListAdapter!!.clearData()
                 royaltyListAdapter!!.updateData(royaltyList)
             }
@@ -116,11 +116,11 @@ class NSRoyaltyListFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Royalty data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param isTripHistoryVisible when Royalty available it's visible
      */
-    private fun notificationDataManage(isTripHistoryVisible: Boolean) {
+    private fun royaltyDataManage(isTripHistoryVisible: Boolean) {
         with(royaltyBinding) {
             rvRoyaltyList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
             clRoyaltyNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
@@ -147,9 +147,9 @@ class NSRoyaltyListFragment : NSFragment() {
 
                 isRoyaltyDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isRoyalty ->
                     srlRefresh.isRefreshing = false
-                    setRoyaltyData(isNotification)
+                    setRoyaltyData(isRoyalty)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

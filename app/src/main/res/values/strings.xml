@@ -280,6 +280,10 @@
     <string name="slot10">Slot 10</string>
     <string name="slot11">Slot 11</string>
     <string name="slot12">Slot 12</string>
+    <string name="correct">correct</string>
+    <string name="next">next</string>
+    <string name="slider">slider</string>
+    <string name="slots">Slots</string>
 
 
 </resources>

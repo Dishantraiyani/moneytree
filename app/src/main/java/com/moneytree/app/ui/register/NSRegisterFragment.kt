@@ -114,7 +114,7 @@ class NSRegisterFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of register in list
      */
     private fun setRegisterAdapter() {
         with(registerBinding) {
@@ -144,14 +144,14 @@ class NSRegisterFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set register data
      *
-     * @param isVoucher when data available it's true
+     * @param isRegister when data available it's true
      */
-    private fun setRegisterData(isVoucher: Boolean) {
+    private fun setRegisterData(isRegister: Boolean) {
         with(registerListModel) {
-            voucherDataManage(isVoucher)
-            if (isVoucher) {
+            registerDataManage(isRegister)
+            if (isRegister) {
                 registerListAdapter!!.clearData()
                 registerListAdapter!!.updateData(registerList)
             }
@@ -159,14 +159,14 @@ class NSRegisterFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Register data manage
      *
-     * @param isTripHistoryVisible when notification available it's visible
+     * @param isRegisterVisible when register available it's visible
      */
-    private fun voucherDataManage(isTripHistoryVisible: Boolean) {
+    private fun registerDataManage(isRegisterVisible: Boolean) {
         with(registerBinding) {
-            rvRegisterList.visibility = if (isTripHistoryVisible) View.VISIBLE else View.GONE
-            clRegisterNotFound.visibility = if (isTripHistoryVisible) View.GONE else View.VISIBLE
+            rvRegisterList.visibility = if (isRegisterVisible) View.VISIBLE else View.GONE
+            clRegisterNotFound.visibility = if (isRegisterVisible) View.GONE else View.VISIBLE
         }
     }
 

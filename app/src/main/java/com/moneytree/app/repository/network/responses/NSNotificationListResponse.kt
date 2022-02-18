@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of notification
  */
 data class NSNotificationListResponse(
     @SerializedName("data")
@@ -13,7 +13,7 @@ data class NSNotificationListResponse(
 )
 
 /**
- * The class representing the notification details
+ * The class representing the notification list details
  */
 data class NSNotificationListData(
     @SerializedName("title")

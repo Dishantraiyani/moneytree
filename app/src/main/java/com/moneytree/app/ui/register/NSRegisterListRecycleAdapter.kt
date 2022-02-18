@@ -57,17 +57,17 @@ class NSRegisterListRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for register list
      *
-     * @property registerBinding The trip history list view binding
+     * @property registerBinding The register list view binding
      */
     inner class NSRegisterViewHolder(private val registerBinding: LayoutRegisterItemBinding) :
         RecyclerView.ViewHolder(registerBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the register details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The register details
          */
         fun bind(response: NSRegisterListData) {
             with(registerBinding) {

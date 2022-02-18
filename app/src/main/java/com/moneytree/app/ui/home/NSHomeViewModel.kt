@@ -62,7 +62,7 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     }
 
     /**
-     * Get order list data
+     * Get dashboard data
      *
      * @param isShowProgress The progress dialog show check
      */

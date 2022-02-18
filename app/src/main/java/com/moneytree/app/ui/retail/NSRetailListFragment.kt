@@ -63,7 +63,7 @@ class NSRetailListFragment : NSFragment() {
     }
 
     /**
-     * To add data of notification in list
+     * To add data of retail in list
      */
     private fun setRetailAdapter() {
         with(retailBinding) {
@@ -101,7 +101,7 @@ class NSRetailListFragment : NSFragment() {
     }
 
     /**
-     * Set notification data
+     * Set retail data
      *
      * @param isRetail when data available it's true
      */
@@ -116,9 +116,9 @@ class NSRetailListFragment : NSFragment() {
     }
 
     /**
-     * Notification data manage
+     * Retail data manage
      *
-     * @param isRetailVisible when notification available it's visible
+     * @param isRetailVisible when retail data available it's visible
      */
     private fun retailDataManage(isRetailVisible: Boolean) {
         with(retailBinding) {
@@ -131,8 +131,8 @@ class NSRetailListFragment : NSFragment() {
      * To observe the view model for data changes
      */
     private fun observeViewModel() {
-        with(retailListModel) {
-            with(retailBinding) {
+        with(retailBinding) {
+            with(retailListModel) {
                 isProgressShowing.observe(
                     viewLifecycleOwner
                 ) { shouldShowProgress ->
@@ -147,9 +147,9 @@ class NSRetailListFragment : NSFragment() {
 
                 isRetailDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isRetail ->
                     srlRefresh.isRefreshing = false
-                    setRetailData(isNotification)
+                    setRetailData(isRetail)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

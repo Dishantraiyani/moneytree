@@ -9,14 +9,14 @@ import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
 import retrofit2.Response
 
 /**
- * Repository class to handle data operations related to orders
+ * Repository class to handle data operations related to repurchase
  */
 object NSRePurchaseRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
     private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
-     * To get single order data API
+     * To get repurchase list data API
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */
@@ -38,7 +38,7 @@ object NSRePurchaseRepository {
     }
 
     /**
-     * To get single order data API
+     * To get repurchase info data API
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */

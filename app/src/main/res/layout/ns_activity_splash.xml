@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toTopOf="@id/ll_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/app_name"/>
 
     <LinearLayout
         android:id="@+id/ll_text"

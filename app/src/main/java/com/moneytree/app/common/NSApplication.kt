@@ -14,13 +14,12 @@ import com.moneytree.app.repository.network.manager.NSApiManager
 import org.greenrobot.eventbus.EventBus
 
 /**
- * The DoT application class containing Preference, network manager and functionality
+ * The MoneyTree application class containing Preference, network manager and functionality
  * to be used across modules
  */
 class NSApplication : Application() {
     private lateinit var preferences: NSPreferences
     private lateinit var apiManager: NSApiManager
-        private lateinit var permissionHelper: NSPermissionHelper
 
     override fun onCreate() {
         super.onCreate()
@@ -40,7 +39,6 @@ class NSApplication : Application() {
         instance = this
         preferences = NSPreferences(this)
         apiManager = NSApiManager()
-        permissionHelper = NSPermissionHelper(this)
         MainDatabase.appDatabase(applicationContext)
 
         startNetworkListener()
@@ -56,14 +54,6 @@ class NSApplication : Application() {
      * To get instance of Api manager
      */
     fun getApiManager(): NSApiManager = apiManager
-
-    /**
-     * To get the instance of Permission helper
-     *
-     * @return The permission helper instance
-     */
-    fun getPermissionHelper(): NSPermissionHelper = permissionHelper
-
 
     companion object {
         private lateinit var instance: NSApplication

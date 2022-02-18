@@ -31,23 +31,6 @@ class NSAlertButtonClickEvent(val buttonType: String, val alertKey: String)
 class NSLoginRegisterEvent(val data: NSDataUser?)
 
 /**
- * Event that triggered when the permission check
- */
-class NSPermissionEvent(
-    val requestCode: Int,
-    val permissions: Array<out String>,
-    val grantResults: IntArray
-)
-
-/**
- * Event that triggered when the permission check
- */
-class NSActivityEvent(
-    val resultCode: Int,
-    val data: Intent?
-)
-
-/**
  * Event that triggered when click on Fragment change
  */
 class NSFragmentChange(var fragment: Fragment)
@@ -57,8 +40,24 @@ class NSFragmentChange(var fragment: Fragment)
  */
 class NSTabChange(var tab: Int)
 
+/**
+ * Back press event
+ *
+ * @constructor Create empty Back press event
+ */
 class BackPressEvent
 
+/**
+ * Search close event
+ *
+ * @constructor Create empty Search close event
+ */
 class SearchCloseEvent
 
+/**
+ * Search string event
+ *
+ * @property search
+ * @constructor Create empty Search string event
+ */
 class SearchStringEvent(val search: String)

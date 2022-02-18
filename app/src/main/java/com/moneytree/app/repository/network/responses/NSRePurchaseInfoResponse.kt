@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of repurchase info
  */
 data class NSRePurchaseInfoResponse(
     @SerializedName("status")
@@ -22,7 +22,7 @@ data class NSRePurchaseInfoResponse(
 )
 
 /**
- * The class representing the order details
+ * The class representing the repurchase details
  */
 data class NSRePurchaseInfoData(
     @SerializedName("repurchase_item_id")

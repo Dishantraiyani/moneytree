@@ -55,17 +55,17 @@ class NSRetailListRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for retail list
      *
-     * @property retailBinding The trip history list view binding
+     * @property retailBinding The retail list view binding
      */
     inner class NSRetailViewHolder(private val retailBinding: LayoutRetailItemBinding) :
         RecyclerView.ViewHolder(retailBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the retail details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The retail details
          */
         fun bind(response: NSRetailListData) {
             with(retailBinding) {

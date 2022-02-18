@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.ThreadMode
  * The base class for all activities which holds the members and methods common to all activities
  */
 open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgressCallback {
-    protected val tag: String = NSActivity::class.java.simpleName
+    private val tag: String = NSActivity::class.java.simpleName
     private var isProgressShowing = false
     private var allowBackPress = true
     private lateinit var rlLayout: RelativeLayout
@@ -143,14 +143,5 @@ open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgre
             NSLoginActivity::class.java,
             flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EventBus.getDefault().post(NSPermissionEvent(requestCode, permissions, grantResults))
     }
 }

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of downline member
  */
 data class NSDownlineMemberDirectReOfferResponse(
     @SerializedName("status")
@@ -19,7 +19,7 @@ data class NSDownlineMemberDirectReOfferResponse(
 )
 
 /**
- * The class representing the order details
+ * The class representing the downline member reOffer details
  */
 data class NSDownlineMemberDirectReOfferData(
     @SerializedName("memberid")

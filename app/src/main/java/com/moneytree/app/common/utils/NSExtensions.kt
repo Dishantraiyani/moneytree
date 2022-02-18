@@ -35,21 +35,6 @@ fun <T : Activity> Activity.switchActivity(
 }
 
 /**
- * Used for switching from one activity to another with additional flags and bundle parameters using request code to get results
- *
- * @param destination destination screen to move the user
- * @param flags       flags needed to be set in the intent
- * @param bundle      additional information to be carried
- * @param requestCode which is used to identify result
- * @param <T>         represents the common template, able to get calling class using <T> format
- */
-fun <T : Activity> Activity.switchActivityForResult(
-    destination: Class<T>, requestCode: Int, bundle: Bundle? = null, flags: IntArray? = null
-) {
-    startActivityForResult(getIntent(destination, bundle, flags), requestCode)
-}
-
-/**
  * To get the intent with the below parameter details attached to the intent
  *
  * @param destination destination screen to move the user
@@ -82,15 +67,6 @@ fun Activity.hideKeyboard() {
     }
 }
 
-/**
- * To show toast with the message corresponding to the string resource.
- *
- * @param stringId the id of string
- */
-fun Activity.showToast(stringId: Int) {
-    Toast.makeText(this, getString(stringId), Toast.LENGTH_SHORT).show()
-}
-
 // Extension functions for Fragment
 /**
  * Used for switching to an activity from the fragment with additional flags and bundle parameters
@@ -104,20 +80,6 @@ fun <T : Activity> Fragment.switchActivity(
     destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
 ) {
     startActivity(getIntent(destination, bundle, flags))
-}
-
-/**
- * Used for switching to an activity from the fragment with additional flags and bundle parameters
- *
- * @param destination destination screen to move the user
- * @param flags       flags needed to be set in the intent
- * @param bundle      additional information to be carried
- * @param <T>         represents the common template, able to get calling class using <T> format
- */
-fun <T : Activity> Fragment.switchResultActivity(launcher: ActivityResultLauncher<Intent?>,
-    destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
-) {
-    launcher.launch(getIntent(destination, bundle, flags))
 }
 
 /**
@@ -178,6 +140,7 @@ fun TextView.getString(): String = this.text.toString()
  * @param text the text to compare with this
  * @return boolean comparison result of two strings
  */
+@Suppress("unused")
 fun String?.equalsIgnoreCase(text: String?): Boolean = this.equals(text, true)
 
 //Extension functions for List class
@@ -304,6 +267,14 @@ fun Group.setAlphaForAll(alpha: Float) = referencedIds.forEach {
  */
 fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(this).toDouble()
 
+/**
+ * Add text
+ *
+ * @param activity The activity's context
+ * @param resource string file name
+ * @param data data set
+ * @return
+ */
 fun addText(activity: Activity, resource: Int,  data: String) : String {
     with(activity.resources) {
         return getString(resource, data)

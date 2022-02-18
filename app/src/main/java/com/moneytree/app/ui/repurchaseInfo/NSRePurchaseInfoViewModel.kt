@@ -11,7 +11,7 @@ import com.moneytree.app.repository.network.responses.NSRePurchaseInfoResponse
 
 
 /**
- * The view model class for trip history. It handles the business logic to communicate with the model for the trip history and provides the data to the observing UI component.
+ * The view model class for repurchase info. It handles the business logic to communicate with the model for the repurchase info and provides the data to the observing UI component.
  */
 class NSRePurchaseInfoViewModel(application: Application) : NSViewModel(application) {
     var rePurchaseInfoList: MutableList<NSRePurchaseInfoData> = arrayListOf()
@@ -21,7 +21,7 @@ class NSRePurchaseInfoViewModel(application: Application) : NSViewModel(applicat
     var repurchaseId: String? = null
 
     /**
-     * Get register list data
+     * Get repurchase list data
      *
      */
     fun getRePurchaseListData(pageIndex: String, repurchaseId: String, isShowProgress: Boolean, isBottomProgress: Boolean) {

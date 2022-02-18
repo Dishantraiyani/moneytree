@@ -8,14 +8,14 @@ import com.moneytree.app.repository.network.responses.NSDashboardResponse
 import retrofit2.Response
 
 /**
- * Repository class to handle data operations related to orders
+ * Repository class to handle data operations related to dashboard
  */
 object NSDashboardRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
     private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
-     * To get order list API
+     * To get dashboard list API
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */

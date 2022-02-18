@@ -31,7 +31,7 @@ android {
             versionName "1.0.0"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
-            buildConfigField 'String', 'PREFERENCE', ' "DoT" '
+            buildConfigField 'String', 'PREFERENCE', ' "MoneyTree" '
             buildConfigField 'String', 'MAIL_ID', ' "test@gmail.com" '
             buildConfigField 'String', 'PHONE_NUMBER', ' "+12373629297" '
         }
@@ -51,8 +51,6 @@ android {
             excludes += ['META-INF/atomicfu.kotlin_module']
         }
     }
-
-
 }
 
 ext {

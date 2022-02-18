@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.utils.switchActivity

@@ -37,8 +37,8 @@ class NSVoucherListRecycleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val orderView = LayoutVoucherItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NSVoucherViewHolder(orderView)
+        val voucherView = LayoutVoucherItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NSVoucherViewHolder(voucherView)
     }
 
     override fun onBindViewHolder(holderRec: RecyclerView.ViewHolder, position: Int) {
@@ -59,17 +59,17 @@ class NSVoucherListRecycleAdapter(
     }
 
     /**
-     * The view holder for trip history list
+     * The view holder for voucher list
      *
-     * @property voucherBinding The trip history list view binding
+     * @property voucherBinding The voucher list view binding
      */
     inner class NSVoucherViewHolder(private val voucherBinding: LayoutVoucherItemBinding) :
         RecyclerView.ViewHolder(voucherBinding.root) {
 
         /**
-         * To bind the order details view into Recycler view with given data
+         * To bind the voucher details view into Recycler view with given data
          *
-         * @param response The order details
+         * @param response The voucher details
          */
         fun bind(response: NSVoucherListData) {
             with(voucherBinding) {

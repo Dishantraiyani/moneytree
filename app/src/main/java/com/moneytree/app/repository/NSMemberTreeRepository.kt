@@ -8,14 +8,14 @@ import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
 import retrofit2.Response
 
 /**
- * Repository class to handle data operations related to orders
+ * Repository class to handle data operations related to member tree
  */
 object NSMemberTreeRepository {
     private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
     private var errorMessageList: MutableList<Any> = mutableListOf()
 
     /**
-     * To get single order data API
+     * To get member tree data API
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */
@@ -36,7 +36,7 @@ object NSMemberTreeRepository {
     }
 
     /**
-     * To get single order data API
+     * To get level wise data API
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */

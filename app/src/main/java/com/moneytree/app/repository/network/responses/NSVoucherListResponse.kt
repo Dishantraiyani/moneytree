@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 /**
- * The class representing the response body of user
+ * The class representing the response body of voucher
  */
 data class NSVoucherListResponse(
     @SerializedName("status")
@@ -22,7 +22,7 @@ data class NSVoucherListResponse(
 )
 
 /**
- * The class representing the trip history details
+ * The class representing the trip voucher list details
  */
 data class NSVoucherListData(
     @SerializedName("voucher_id")

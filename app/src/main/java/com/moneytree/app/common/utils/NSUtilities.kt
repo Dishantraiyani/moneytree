@@ -7,7 +7,6 @@ import android.content.Context
  * The utility class that handles tasks that are common throughout the application
  */
 object NSUtilities {
-    private val TAG: String = NSUtilities::class.java.simpleName
 
     /**
      * To parse api error list and get string message from resource id
