@@ -35,9 +35,13 @@ class NSRoyaltyListFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRoyaltyListBinding.inflate(inflater, container, false)
+        return royaltyBinding.root
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTabSelectEvent(event: NSRoyaltyEventTab) {
         viewCreated()
         setListener()
-        return royaltyBinding.root
     }
 
     /**

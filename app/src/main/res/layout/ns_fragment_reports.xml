@@ -10,12 +10,10 @@
         layout="@layout/layout_header"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_offers_list"
+        android:id="@+id/cl_reports_list"
         android:layout_width="0dp"
         android:layout_height="@dimen/_45sdp"
         android:background="@color/orange"
-        android:paddingStart="@dimen/_12sdp"
-        android:paddingEnd="0dp"
         app:layout_constraintTop_toBottomOf="@id/layout_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +27,7 @@
             app:tabTextColor="#e5e5e5"
             app:tabRippleColor="@null"
             app:tabIndicatorHeight="@dimen/_2sdp"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
             app:tabPadding="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +36,11 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/offer_frame_container"
+    <FrameLayout
+        android:id="@+id/reports_frame_container"
         style="@style/LayoutWidthHeightZero"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_offers_list"
+        app:layout_constraintTop_toBottomOf="@id/cl_reports_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

@@ -12,6 +12,7 @@ import com.moneytree.app.ui.offers.NSOfferFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
 import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.vouchers.NSVoucherFragment
+import com.moneytree.app.ui.wallets.NSWalletFragment
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -63,12 +64,12 @@ class MainFragment : NSFragment() {
                     R.id.tb_register -> {
                         replaceFragment(NSRegisterFragment.newInstance(), false, fragmentMainContainer.id)
                     }
-                    R.id.tb_vouchers -> {
-                        replaceFragment(NSVoucherFragment.newInstance(), false, fragmentMainContainer.id)
-                    }
                     R.id.tb_offers -> {
                         pref.offerTabPosition = 0
                         replaceFragment(NSOfferFragment.newInstance(), false, fragmentMainContainer.id)
+                    }
+                    R.id.tb_wallets -> {
+                        replaceFragment(NSWalletFragment.newInstance(), false, fragmentMainContainer.id)
                     }
                     R.id.tb_profile -> {
                         replaceFragment(NSProfileFragment.newInstance(), false, fragmentMainContainer.id)

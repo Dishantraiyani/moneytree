@@ -61,3 +61,17 @@ class SearchCloseEvent
  * @constructor Create empty Search string event
  */
 class SearchStringEvent(val search: String)
+
+class NSRepurchaseEventTab()
+
+class NSRetailInfoEventTab()
+
+class NSRoyaltyEventTab()
+
+class NSDownlineEventTab()
+
+class NSPendingEventTab()
+
+class NSReceiveEventTab()
+
+class NSTransferEventTab()

@@ -96,6 +96,7 @@
     <string name="no_voucher_available">No Voucher Available</string>
     <string name="no_downline_re_offer_available">No Downline ReOffer Available</string>
     <string name="no_register_available">No Register Available</string>
+    <string name="no_slot_available">No Slots Available</string>
     <string name="no_notification_available">No Notification Available</string>
     <string name="no_member_tree_available">No Member Tree Available</string>
     <string name="no_level_tree_available">No Level Wise Member Tree Available</string>
@@ -193,6 +194,9 @@
     <string name="vouchers">Vouchers</string>
     <string name="register">Register</string>
     <string name="repurchase">Repurchase</string>
+    <string name="direct_retail">Direct Retail</string>
+    <string name="royalty_offer">Royalty Offer</string>
+    <string name="downline_member">Downline Member</string>
     <string name="repurchase_info">Repurchase Info</string>
     <string name="royalty_info">Royalty Info</string>
     <string name="retail_info">Retail Info</string>
@@ -263,7 +267,7 @@
     <string name="percentage_data">Percentage:</string>
     <string name="level">Level:</string>
     <string name="search_hint">Search</string>
-    <string name="downline_member">Downline ReOffer</string>
+    <string name="downline_reoffer">Downline ReOffer</string>
     <string name="member_id_title">Member Id:</string>
     <string name="status_title">Status:</string>
     <string name="reports">Reports</string>
@@ -285,5 +289,9 @@
     <string name="slider">slider</string>
     <string name="slots">Slots</string>
 
+    <string name="slots_mrp">SLOT %1$s /-</string>
+    <string name="pending">Pending</string>
+    <string name="receive">Receive</string>
+    <string name="transfer">Transfer</string>
 
 </resources>

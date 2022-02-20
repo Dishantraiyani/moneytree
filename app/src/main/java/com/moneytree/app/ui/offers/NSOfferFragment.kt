@@ -5,7 +5,10 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.databinding.NsFragmentOffersBinding
@@ -18,6 +21,8 @@ import org.greenrobot.eventbus.EventBus
 class NSOfferFragment : NSFragment() {
     var tabPosition = 0
     private var _binding: NsFragmentOffersBinding? = null
+    private val mFragmentTitleList: MutableList<String> = ArrayList()
+    val mFragmentList: MutableList<Fragment> = ArrayList()
 
     private val offerBinding get() = _binding!!
     private val pref = NSApplication.getInstance().getPrefs()
@@ -47,7 +52,8 @@ class NSOfferFragment : NSFragment() {
                 ivSearch.visibility = View.VISIBLE
             }
 
-            when (pref.offerTabPosition) {
+            setFragmentData()
+            /*when (pref.offerTabPosition) {
                 0 -> {
                     replaceFragment(
                         NSRePurchaseListFragment.newInstance(),
@@ -77,10 +83,60 @@ class NSOfferFragment : NSFragment() {
                     offerFrameContainer.id
                 )
             }
+            }*/
+        }
+        //addTabs()
+    }
+
+    fun setFragmentData() {
+        with(activity.resources) {
+            mFragmentTitleList.clear()
+            mFragmentTitleList.add(getString(R.string.repurchase))
+            mFragmentTitleList.add(getString(R.string.retail_info))
+            mFragmentTitleList.add(getString(R.string.royalty_offer))
+            mFragmentTitleList.add(getString(R.string.downline_member))
+        }
+        mFragmentList.clear()
+        mFragmentList.add(NSRePurchaseListFragment())
+        mFragmentList.add(NSRetailListFragment())
+        mFragmentList.add(NSRoyaltyListFragment())
+        mFragmentList.add(NSDownlineReOfferFragment())
+        setupViewPager(offerBinding.offerFrameContainer)
+    }
+
+    // Add Fragments to Tabs
+    private fun setupViewPager(viewPager: ViewPager2) {
+        with(offerBinding) {
+            try {
+                val adapter = ViewPagerMDAdapter(requireActivity())
+                adapter.setFragment(mFragmentList)
+                viewPager.adapter = adapter
+                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                    tab.text = mFragmentTitleList[position]
+                }.attach()
+                viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                    override fun onPageSelected(position: Int) {
+                        super.onPageSelected(position)
+                        when (position) {
+                            0 -> {
+                                EventBus.getDefault().post(NSRepurchaseEventTab())
+                            }
+                            1 -> {
+                                EventBus.getDefault().post(NSRetailInfoEventTab())
+                            }
+                            2 -> {
+                                EventBus.getDefault().post(NSRoyaltyEventTab())
+                            }
+                            3 -> {
+                                EventBus.getDefault().post(NSDownlineEventTab())
+                            }
+                        }
+                    }
+                })
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
-        addTabs()
-
     }
 
     /**
@@ -122,7 +178,7 @@ class NSOfferFragment : NSFragment() {
                         return false
                     }
                 })
-                tabLayout.getTabAt(pref.offerTabPosition!!)!!.select()
+                /*tabLayout.getTabAt(pref.offerTabPosition!!)!!.select()
                 tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
                     override fun onTabSelected(tab: TabLayout.Tab?) {
                         tabPosition = tab!!.position
@@ -157,7 +213,7 @@ class NSOfferFragment : NSFragment() {
 
                     }
 
-                })
+                })*/
 
             }
         }

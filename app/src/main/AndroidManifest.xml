@@ -39,6 +39,15 @@
         <activity
             android:name=".ui.main.NSMainActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.reports.NSReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.vouchers.NSVouchersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.slots.NSSlotsActivity"
+            android:exported="false" />
 
         <uses-library android:name="com.google.android.maps" />
         <uses-library

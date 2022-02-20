@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
-import com.moneytree.app.common.BackPressEvent
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentVouchersBinding
@@ -24,7 +24,6 @@ class NSVoucherFragment : NSFragment() {
     private var _binding: NsFragmentVouchersBinding? = null
 
     private val voucherBinding get() = _binding!!
-    private var voucherListAdapter: NSVoucherListRecycleAdapter? = null
     companion object {
         fun newInstance() = NSVoucherFragment()
     }
@@ -44,16 +43,17 @@ class NSVoucherFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(voucherBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.vouchers)
-                ivBack.visibility = View.VISIBLE
-                ivSearch.visibility = View.VISIBLE
+            with(voucherListModel) {
+                with(layoutHeader) {
+                    clBack.visibility = View.VISIBLE
+                    tvHeaderBack.text = activity.resources.getString(R.string.vouchers)
+                    ivBack.visibility = View.VISIBLE
+                    ivSearch.visibility = View.VISIBLE
+                }
+                setFragmentData(activity)
+                setupViewPager(voucherContainer)
             }
-            setVoucherAdapter()
         }
-        addTabs()
-        observeViewModel()
     }
 
     /**
@@ -62,14 +62,10 @@ class NSVoucherFragment : NSFragment() {
     private fun setListener() {
         with(voucherBinding) {
             with(voucherListModel) {
-                srlRefresh.setOnRefreshListener {
-                    pageIndex = "1"
-                    getVoucherListData(pageIndex, "", false, isBottomProgress = false)
-                }
 
                 with(layoutHeader) {
                     clBack.setOnClickListener {
-                        EventBus.getDefault().post(BackPressEvent())
+                        onBackPress()
                     }
 
                     ivSearch.setOnClickListener {
@@ -80,13 +76,14 @@ class NSVoucherFragment : NSFragment() {
                         cardSearch.visibility = View.GONE
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
-                        pageIndex = "1"
+                        EventBus.getDefault().post(SearchCloseEvent())
+                        /*pageIndex = "1"
                         if (tempVoucherList.isValidList()) {
                             voucherList.clear()
                             voucherList.addAll(tempVoucherList)
                             tempVoucherList.clear()
                             setVoucherData(voucherList.isValidList())
-                        }
+                        }*/
                     }
 
                     etSearch.setOnKeyListener(object: View.OnKeyListener{
@@ -97,10 +94,7 @@ class NSVoucherFragment : NSFragment() {
                                         val strSearch = etSearch.text.toString()
                                         if (strSearch.isNotEmpty()) {
                                             hideKeyboard(cardSearch)
-                                            tempVoucherList.addAll(voucherList)
-                                            getVoucherListData(pageIndex, strSearch, true,
-                                                isBottomProgress = false
-                                            )
+                                            EventBus.getDefault().post(SearchStringEvent(strSearch))
                                         }
                                         return true
                                     }
@@ -109,146 +103,46 @@ class NSVoucherFragment : NSFragment() {
                             return false
                         }
                     })
-
-                    tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-                        override fun onTabSelected(tab: TabLayout.Tab?) {
-                            tabPosition = tab!!.position
-                            pageIndex = "1"
-                            if (voucherListAdapter != null) {
-                                voucherListAdapter!!.clearData()
-                            }
-                            getVoucherListData(pageIndex, "", true, isBottomProgress = false)
-                        }
-
-                        override fun onTabUnselected(tab: TabLayout.Tab?) {
-
-                        }
-
-                        override fun onTabReselected(tab: TabLayout.Tab?) {
-
-                        }
-
-                    })
-
                 }
             }
         }
     }
 
-    private fun addTabs() {
-        with(voucherBinding) {
-            val tabList = activity.resources.getStringArray(R.array.voucher_tab)
-            for (tab in tabList) {
-                tabLayout.addTab(tabLayout.newTab().setText(tab))
-            }
-        }
-    }
-
-    /**
-     * To add data of vouchers in list
-     */
-    private fun setVoucherAdapter() {
+    // Add Fragments to Tabs
+    private fun setupViewPager(viewPager: ViewPager2) {
         with(voucherBinding) {
             with(voucherListModel) {
-                rvVoucherList.layoutManager = LinearLayoutManager(activity)
-                voucherListAdapter =
-                    NSVoucherListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
-                            if (voucherResponse!!.nextPage) {
-                                val page: Int = voucherList.size/NSConstants.PAGINATION + 1
-                                pageIndex = page.toString()
-                                getVoucherListData(pageIndex, "", true, isBottomProgress = true)
+                try {
+                    val adapter = ViewPagerMDAdapter(requireActivity())
+                    adapter.setFragment(mFragmentList)
+                    viewPager.adapter = adapter
+                    TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                        tab.text = mFragmentTitleList[position]
+                    }.attach()
+                    viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            when (position) {
+                                0 -> {
+                                    EventBus.getDefault().post(
+                                        NSPendingEventTab()
+                                    )
+                                }
+                                1 -> {
+                                    EventBus.getDefault().post(
+                                        NSReceiveEventTab()
+                                    )
+                                }
+                                2 -> {
+                                    EventBus.getDefault().post(NSTransferEventTab())
+                                }
                             }
                         }
                     })
-                rvVoucherList.adapter = voucherListAdapter
-                pageIndex = "1"
-                getVoucherListData(pageIndex, "", true, isBottomProgress = false)
-            }
-        }
-    }
-
-    private fun bottomProgress(isShowProgress: Boolean) {
-        with(voucherBinding) {
-            cvProgress.visibility = if (isShowProgress) View.VISIBLE else View.GONE
-        }
-    }
-
-    /**
-     * Set voucher data
-     *
-     * @param isVoucher when data available it's true
-     */
-    private fun setVoucherData(isVoucher: Boolean) {
-        with(voucherListModel) {
-            voucherDataManage(isVoucher)
-            if (isVoucher) {
-                voucherListAdapter!!.clearData()
-                voucherListAdapter!!.updateData(voucherList, tabPosition)
-            }
-        }
-    }
-
-    /**
-     * Voucher data manage
-     *
-     * @param isVoucherVisible when voucher available it's visible
-     */
-    private fun voucherDataManage(isVoucherVisible: Boolean) {
-        with(voucherBinding) {
-            rvVoucherList.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
-            clVoucherNotFound.visibility = if (isVoucherVisible) View.GONE else View.VISIBLE
-        }
-    }
-
-    /**
-     * To observe the view model for data changes
-     */
-    private fun observeViewModel() {
-        with(voucherListModel) {
-            with(voucherBinding) {
-                isProgressShowing.observe(
-                    viewLifecycleOwner
-                ) { shouldShowProgress ->
-                    updateProgress(shouldShowProgress)
-                }
-
-                isBottomProgressShowing.observe(
-                    viewLifecycleOwner
-                ) { isBottomProgressShowing ->
-                    bottomProgress(isBottomProgressShowing)
-                }
-
-                isVoucherDataAvailable.observe(
-                    viewLifecycleOwner
-                ) { isVoucher ->
-                    srlRefresh.isRefreshing = false
-                    setVoucherData(isVoucher)
-                }
-
-                failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
-                    srlRefresh.isRefreshing = false
-                    showAlertDialog(errorMessage)
-                }
-
-                apiErrors.observe(viewLifecycleOwner) { apiErrors ->
-                    srlRefresh.isRefreshing = false
-                    parseAndShowApiError(apiErrors)
-                }
-
-                noNetworkAlert.observe(viewLifecycleOwner) {
-                    srlRefresh.isRefreshing = false
-                    showNoNetworkAlertDialog(
-                        getString(R.string.no_network_available),
-                        getString(R.string.network_unreachable)
-                    )
-                }
-
-                validationErrorId.observe(viewLifecycleOwner) { errorId ->
-                    showAlertDialog(getString(errorId))
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
         }
     }
-
 }

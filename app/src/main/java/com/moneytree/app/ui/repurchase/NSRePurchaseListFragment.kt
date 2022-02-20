@@ -35,9 +35,13 @@ class NSRePurchaseListFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRepurchaseListBinding.inflate(inflater, container, false)
+        return repurchaseBinding.root
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTabSelectEvent(event: NSRepurchaseEventTab) {
         viewCreated()
         setListener()
-        return repurchaseBinding.root
     }
 
     /**

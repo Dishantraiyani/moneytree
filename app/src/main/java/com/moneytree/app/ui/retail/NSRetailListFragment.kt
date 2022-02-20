@@ -35,9 +35,13 @@ class NSRetailListFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentDirectRetailListBinding.inflate(inflater, container, false)
+        return retailBinding.root
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTabSelectEvent(event: NSRetailInfoEventTab) {
         viewCreated()
         setListener()
-        return retailBinding.root
     }
 
     /**

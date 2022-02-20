@@ -1,24 +1,32 @@
 package com.moneytree.app.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.NSTabChange
 import com.moneytree.app.common.ViewPagerMDAdapter
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
+import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
+import com.moneytree.app.ui.slots.NSSlotsActivity
+import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import org.greenrobot.eventbus.EventBus
 
 class NSHomeFragment : NSFragment() {
@@ -121,6 +129,27 @@ class NSHomeFragment : NSFragment() {
         with(homeBinding) {
             layoutHeader.ivMenu.setOnClickListener { drawer.openDrawer(GravityCompat.START) }
             drawer.closeDrawer(GravityCompat.START)
+
+            clReports.setOnClickListener {
+                switchActivity(
+                    NSReportsActivity::class.java
+                )
+            }
+
+            clVoucherBtn.setOnClickListener {
+                switchActivity(
+                    NSVouchersActivity::class.java
+                )
+            }
+
+            clSlotsBtn.setOnClickListener {
+                switchActivity(
+                    NSSlotsActivity::class.java,
+                    bundleOf(
+                        NSConstants.KEY_SLOTS_INFO to Gson().toJson(homeModel.dashboardData!!.data!!.slotList)
+                    )
+                )
+            }
         }
     }
 
@@ -176,8 +205,8 @@ class NSHomeFragment : NSFragment() {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_register))
                         }
 
-                        llVouchers.setOnClickListener {
-                            EventBus.getDefault().post(NSTabChange(R.id.tb_vouchers))
+                        llWallet.setOnClickListener {
+                            EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
                         }
 
                         llRePurchase.setOnClickListener {

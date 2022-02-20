@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.NSDownlineEventTab
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRoyaltyEventTab
 import com.moneytree.app.databinding.NsFragmentDownlineReOfferBinding
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NSDownlineReOfferFragment : NSFragment() {
     private val downlineListModel: NSDownlineReOfferViewModel by lazy {
@@ -27,9 +31,13 @@ class NSDownlineReOfferFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentDownlineReOfferBinding.inflate(inflater, container, false)
+        return downlineBinding.root
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTabSelectEvent(event: NSDownlineEventTab) {
         viewCreated()
         setListener()
-        return downlineBinding.root
     }
 
     /**

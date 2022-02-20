@@ -16,6 +16,7 @@ class NSConstants {
         const val KEY_HOME_DETAIL = "key_home_detail"
         const val REFRESH_TOKEN_ENABLE = "refresh_token_enable"
         const val MEMBER_TREE_ENABLE = "member_tree_enable"
+        const val KEY_SLOTS_INFO = "key_slots_info"
 
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"
