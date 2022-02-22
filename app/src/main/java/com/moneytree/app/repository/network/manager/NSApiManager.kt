@@ -299,7 +299,7 @@ class NSApiManager {
      *
      * @param callback  The callback for the result
      */
-    fun getLevelWiseTree(callback: NSRetrofitCallback<NSMemberTreeResponse>) {
+    fun getLevelWiseTree(callback: NSRetrofitCallback<NSLevelMemberTreeResponse>) {
         request(unAuthorised3020Client.getLevelWiseMemberReportList(NSUserManager.getAuthToken()!!), callback)
     }
 }
@@ -371,7 +371,7 @@ interface RTApiInterface {
 
     @FormUrlEncoded
     @POST("level-wise-member-report-list")
-    fun getLevelWiseMemberReportList(@Field("token_id") token: String): Call<NSMemberTreeResponse>
+    fun getLevelWiseMemberReportList(@Field("token_id") token: String): Call<NSLevelMemberTreeResponse>
 
     /*@FormUrlEncoded
     @POST("joining-voucher-transfer-info")

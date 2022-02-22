@@ -1,7 +1,9 @@
 package com.moneytree.app.ui.slots
 
 import android.app.Activity
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
@@ -15,6 +17,7 @@ class NSSlotListRecycleAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
     private val slotData: MutableList<NSSlotListData> = arrayListOf()
+    private var isComplete = false
 
     fun updateData(slotList: MutableList<NSSlotListData>) {
         slotData.addAll(slotList)
@@ -65,8 +68,40 @@ class NSSlotListRecycleAdapter(
                     tvSlotsMrp.text = addText(activity, R.string.slots_mrp, mrp!!)
                     tvSlotCrn.text = cnt
                     tvSlotEntry.text = checkEntry
+
+                    with(activity.resources){
+                        when {
+                            absoluteAdapterPosition == 0 -> {
+                                isComplete = true
+                                clSlot.setBackgroundColor(Color.parseColor(getString(R.string.color1)))
+                                ivSlotUser.setImageResource(R.drawable.ic_slot_user)
+                            }
+                            isComplete -> {
+                                isComplete = false
+                                clSlot.setBackgroundColor(Color.parseColor(getString(R.string.color2)))
+                                ivSlotUser.setImageResource(R.drawable.ic_add_sec)
+                            }
+                            else -> {
+                                clSlot.setBackgroundColor(Color.parseColor(getString(R.string.color3)))
+                                ivSlotUser.setImageResource(R.drawable.ic_shopping_cart)
+                            }
+                        }
+                        setPoint(checkEntry!!.toInt(), view1, view2, view3)
+                    }
                 }
             }
+        }
+    }
+
+    private fun setPoint(position: Int, view1: View, view2: View, view3: View) {
+        if (position > 0) {
+            view1.setBackgroundResource(R.drawable.green_circle)
+        }
+        if (position > 1) {
+            view2.setBackgroundResource(R.drawable.green_circle)
+        }
+        if (position > 2) {
+            view3.setBackgroundResource(R.drawable.green_circle)
         }
     }
 }

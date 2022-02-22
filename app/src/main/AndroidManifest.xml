@@ -22,6 +22,9 @@
             android:name=".ui.memberTree.MemberTreeActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.levelMember.LevelMemberTreeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.splash.NSSplashActivity"
             android:exported="true">
             <intent-filter>

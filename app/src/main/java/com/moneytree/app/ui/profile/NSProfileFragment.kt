@@ -13,10 +13,10 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentProfileBinding
+import com.moneytree.app.ui.levelMember.LevelMemberTreeActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.memberTree.MemberTreeActivity
 import com.moneytree.app.ui.notification.NSNotificationFragment
-import com.moneytree.app.ui.transaction.NSTransactionFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -112,7 +112,7 @@ class NSProfileFragment : NSFragment() {
             }
             1 -> {
                 switchActivity(
-                    MemberTreeActivity::class.java,
+                    LevelMemberTreeActivity::class.java,
                     bundleOf(
                         NSConstants.MEMBER_TREE_ENABLE to false
                     )
@@ -128,7 +128,7 @@ class NSProfileFragment : NSFragment() {
 
             }*/
             5 -> {
-                EventBus.getDefault().post(NSFragmentChange(NSTransactionFragment.newInstance()))
+                //EventBus.getDefault().post(NSFragmentChange(NSTransactionFragment.newInstance()))
             }
             6 -> {
 

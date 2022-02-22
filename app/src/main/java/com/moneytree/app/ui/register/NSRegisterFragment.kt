@@ -11,6 +11,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.BackPressEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSFragmentChange
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
@@ -73,6 +74,10 @@ class NSRegisterFragment : NSFragment() {
 
                     ivSearch.setOnClickListener {
                         cardSearch.visibility = View.VISIBLE
+                    }
+
+                    ivAddNew.setOnClickListener {
+                        EventBus.getDefault().post(NSFragmentChange(NSAddRegisterFragment.newInstance()))
                     }
 
                     ivClose.setOnClickListener {

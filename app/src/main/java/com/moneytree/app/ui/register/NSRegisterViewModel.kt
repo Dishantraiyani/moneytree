@@ -1,7 +1,9 @@
 package com.moneytree.app.ui.register
 
+import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.moneytree.app.R
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSRegisterRepository
@@ -22,6 +24,9 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
     var registerResponse: NSRegisterListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
+
+    //Spinner value for registration form
+    var registrationType: MutableList<String> = arrayListOf()
 
     /**
      * Get register list data
@@ -71,5 +76,14 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 
     override fun <T> onNoNetwork(localData: T) {
         handleNoNetwork()
+    }
+
+    fun addRegistrationType(activity: Activity) {
+        with(activity.resources) {
+            val registration = getStringArray(R.array.registration_type)
+            for (data in registration) {
+                registrationType.add(data)
+            }
+        }
     }
 }

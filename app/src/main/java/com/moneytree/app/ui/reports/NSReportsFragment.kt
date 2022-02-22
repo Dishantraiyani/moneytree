@@ -9,6 +9,7 @@ import com.google.android.material.tabs.TabLayout
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.databinding.NsFragmentReportsBinding
+import com.moneytree.app.ui.levelMember.LevelMemberTreeFragment
 import com.moneytree.app.ui.memberTree.MemberTreeFragment
 
 class NSReportsFragment : NSFragment() {
@@ -73,7 +74,7 @@ class NSReportsFragment : NSFragment() {
                             }
                             1 -> {
                                 replaceFragment(
-                                    MemberTreeFragment.newInstance(
+                                    LevelMemberTreeFragment.newInstance(
                                         bundleOf(
                                             NSConstants.MEMBER_TREE_ENABLE to false
                                         )

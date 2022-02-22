@@ -1,105 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:id="@+id/cl_notification" xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_2sdp"
-    app:cardUseCompatPadding="true"
-    android:layout_marginBottom="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_4sdp"
+    android:clipToPadding="true"
+    android:clipChildren="true"
+    android:layout_marginBottom="@dimen/_10sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_slot_layout"
+    <LinearLayout
+        android:id="@+id/cl_slot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_5sdp"
-        android:paddingHorizontal="@dimen/_5sdp">
+        android:orientation="vertical"
+        android:clipChildren="true">
 
-        <TextView
-            android:id="@+id/tv_slots_mrp"
-            style="@style/LoginSubFontsZeroWrap"
-            tools:text="Slots MRP"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:paddingStart="@dimen/_10sdp"
-            android:lines="1"
-            android:textStyle="bold"
-            android:fontFamily="@font/inter_semi_bold"
-            android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_slot_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_10sdp">
 
-        <ImageView
-            android:id="@+id/iv_slot_group"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
-            android:src="@drawable/ic_slot_group"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
+            <TextView
+                android:id="@+id/tv_slots_mrp"
+                style="@style/LoginSubFontsZeroWrap"
+                tools:text="Slots MRP"
+                android:gravity="start"
+                app:guidelineUseRtl="true"
+                android:textColor="@color/black"
+                android:paddingStart="@dimen/_10sdp"
+                android:lines="1"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_semi_bold"
+                android:paddingEnd="@dimen/_5sdp"
+                app:layout_constraintEnd_toStartOf="@+id/iv_slot_user"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_slot_crn"
-            style="@style/LoginSubFontsWrap"
-            tools:text="abc@gmail.com"
-            android:textSize="@dimen/_11sdp"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:paddingStart="@dimen/_10sdp"
-            android:lines="1"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/inter_medium"
-            android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintStart_toEndOf="@+id/iv_slot_group"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
+            <ImageView
+                android:id="@+id/iv_slot_group"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/ic_slot_group"
+                android:gravity="start"
+                app:guidelineUseRtl="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
 
-        <ImageView
-            android:id="@+id/iv_slot_refresh"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
-            android:src="@drawable/ic_refresh"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintStart_toEndOf="@id/tv_slot_crn"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
+            <TextView
+                android:id="@+id/tv_slot_crn"
+                style="@style/LoginSubFontsWrap"
+                tools:text="abc@gmail.com"
+                android:textSize="@dimen/_11sdp"
+                android:gravity="start"
+                app:guidelineUseRtl="true"
+                android:textColor="@color/black"
+                android:paddingStart="@dimen/_10sdp"
+                android:lines="1"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/inter_medium"
+                android:paddingEnd="@dimen/_5sdp"
+                app:layout_constraintStart_toEndOf="@+id/iv_slot_group"
+                app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
 
-        <TextView
-            android:id="@+id/tv_slot_entry"
-            style="@style/LoginSubFontsZeroWrap"
-            tools:text="Notification"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:paddingStart="@dimen/_10sdp"
-            android:lines="1"
-            android:textSize="@dimen/_11sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:fontFamily="@font/inter_regular"
-            android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toStartOf="@id/iv_slot_user"
-            app:layout_constraintStart_toEndOf="@id/iv_slot_refresh"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
+            <ImageView
+                android:id="@+id/iv_slot_refresh"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/ic_refresh"
+                android:gravity="start"
+                app:guidelineUseRtl="true"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintStart_toEndOf="@id/tv_slot_crn"
+                app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
 
-        <ImageView
-            android:id="@+id/iv_slot_user"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:src="@drawable/ic_slot_user"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:layout_marginEnd="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
+            <TextView
+                android:id="@+id/tv_slot_entry"
+                style="@style/LoginSubFontsZeroWrap"
+                tools:text="Notification"
+                android:gravity="start"
+                app:guidelineUseRtl="true"
+                android:textColor="@color/black"
+                android:paddingStart="@dimen/_10sdp"
+                android:lines="1"
+                android:textSize="@dimen/_11sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/inter_regular"
+                android:paddingEnd="@dimen/_5sdp"
+                app:layout_constraintEnd_toStartOf="@id/iv_slot_user"
+                app:layout_constraintStart_toEndOf="@id/iv_slot_refresh"
+                app:layout_constraintTop_toBottomOf="@+id/tv_slots_mrp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/iv_slot_user"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/ic_slot_user"
+                android:gravity="start"
+                app:guidelineUseRtl="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/dark_black"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+               android:background="@drawable/red_circle"/>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:background="@drawable/red_circle"/>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:background="@drawable/red_circle"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

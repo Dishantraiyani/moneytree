@@ -76,6 +76,7 @@
     <string name="password_title">Password</string>
     <string name="notification_title">Notifications</string>
     <string name="transactions_title">Transactions</string>
+    <string name="redeem_title">Redemption</string>
     <string name="trip_history_title">Trip History</string>
     <string name="change_password">Change Password</string>
     <string name="change_tran_password">Change Transaction Password</string>
@@ -221,6 +222,12 @@
         <item>Google Play</item>
     </string-array>
 
+    <string-array name="registration_type">
+        <item>Select Register Type</item>
+        <item>Wallet Register</item>
+        <item>Voucher Register</item>
+    </string-array>
+
     <string-array name="voucher_tab">
         <item>Pending</item>
         <item>Receive</item>
@@ -294,4 +301,20 @@
     <string name="receive">Receive</string>
     <string name="transfer">Transfer</string>
 
+    <string name="color1">#b5e6b5</string>
+    <string name="color2">#f77a7a</string>
+    <string name="color3">#bf8d8d</string>
+    <string name="member_register">Member Registration</string>
+    <string name="phone">Phone</string>
+    <string name="submit">Submit</string>
+    <string name="total_balance">Wallet Balance</string>
+    <string name="coins">Coins</string>
+    <string name="redeem">Redeem</string>
+
+    <string name="level_no">Level No: %1$s</string>
+    <string name="active_members">Active Members: %1$s</string>
+    <string name="direct">Direct15: %1$s Members</string>
+    <string name="repurchase_data">Repurchase: %1$s</string>
+    <string name="no_redeem_available">No Redemption Available</string>
+    <string name="transaction_id">Transaction Id: %1$s</string>
 </resources>
