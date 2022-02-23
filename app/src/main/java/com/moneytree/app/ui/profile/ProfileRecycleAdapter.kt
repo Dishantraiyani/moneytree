@@ -11,16 +11,18 @@ import com.moneytree.app.databinding.LayoutProfileItemBinding
 
 class ProfileRecycleAdapter(
     profileItemList: MutableList<String>,
+    profileIconList: MutableList<Int>,
     isLanguageSelected: Boolean,
     profileItemSelectCallBack: NSProfileSelectCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val profileItemListData: MutableList<String> = profileItemList
+    private val profileIconListData: MutableList<Int> = profileIconList
     private val nsProfileItemSelectCallBack: NSProfileSelectCallback = profileItemSelectCallBack
     private val isLanguage = isLanguageSelected
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val orderView = LayoutProfileItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NSProfileViewHolder(orderView)
+        val view = LayoutProfileItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NSProfileViewHolder(view)
     }
 
     override fun onBindViewHolder(holderRec: RecyclerView.ViewHolder, position: Int) {
@@ -50,6 +52,7 @@ class ProfileRecycleAdapter(
         fun bind(response: String) {
             with(profileBinding) {
                 tvProfileTitle.text = response
+                ivIcon.setImageResource(profileIconListData[absoluteAdapterPosition])
                 if (absoluteAdapterPosition == itemCount - 1) {
                     viewLine.visibility = View.GONE
                 }

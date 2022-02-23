@@ -16,6 +16,7 @@ import com.moneytree.app.repository.network.responses.NSDataUser
  */
 class NSProfileViewModel(application: Application) : NSViewModel(application) {
     var profileItemList: MutableList<String> = arrayListOf()
+    var profileIconList: MutableList<Int> = arrayListOf()
     var isUserDataAvailable = MutableLiveData<Boolean>()
     var nsUserData: NSDataUser? = null
     var apiValue: Int = 0
@@ -30,13 +31,31 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
         with(activity) {
             with(resources) {
                 profileItemList.clear()
-                profileItemList.add(getString(R.string.member_tree))
-                profileItemList.add(getString(R.string.level_member_tree))
                 profileItemList.add(getString(R.string.change_password))
                 profileItemList.add(getString(R.string.change_tran_password))
-              //  profileItemList.add(getString(R.string.transactions_title))
-              //  profileItemList.add(getString(R.string.contact_us_title))
+                profileItemList.add(getString(R.string.share))
+                profileItemList.add(getString(R.string.rate_us))
+                profileItemList.add(getString(R.string.update))
+                profileItemList.add(getString(R.string.terms))
+                profileItemList.add(getString(R.string.policy))
                 profileItemList.add(getString(R.string.logout))
+                getProfileIconListData(activity)
+            }
+        }
+    }
+
+    fun getProfileIconListData(activity: Activity) {
+        with(activity) {
+            with(resources) {
+                profileIconList.clear()
+                profileIconList.add(R.drawable.ic_lock)
+                profileIconList.add(R.drawable.ic_lock)
+                profileIconList.add(R.drawable.ic_share)
+                profileIconList.add(R.drawable.ic_rate_us)
+                profileIconList.add(R.drawable.ic_refresh)
+                profileIconList.add(R.drawable.ic_terms)
+                profileIconList.add(R.drawable.ic_policy)
+                profileIconList.add(R.drawable.ic_logout)
             }
         }
     }

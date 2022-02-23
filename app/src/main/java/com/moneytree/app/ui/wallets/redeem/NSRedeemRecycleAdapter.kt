@@ -10,6 +10,7 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.databinding.LayoutRedeemBinding
 import com.moneytree.app.databinding.LayoutTransactionBinding
 import com.moneytree.app.repository.network.responses.NSVoucherListData
 
@@ -36,7 +37,7 @@ class NSRedeemRecycleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = LayoutRedeemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NSViewHolder(view)
     }
 
@@ -62,7 +63,7 @@ class NSRedeemRecycleAdapter(
      *
      * @property redeemBinding The redeem list view binding
      */
-    inner class NSViewHolder(private val redeemBinding: LayoutTransactionBinding) :
+    inner class NSViewHolder(private val redeemBinding: LayoutRedeemBinding) :
         RecyclerView.ViewHolder(redeemBinding.root) {
 
         /**
@@ -73,15 +74,11 @@ class NSRedeemRecycleAdapter(
         fun bind(response: NSVoucherListData) {
             with(redeemBinding) {
                 with(response) {
-                    tvTransactionId.text = addText(activity, R.string.transaction_id, "1234567890")
-                    tvTransactionStatus.text = "Recharge"
-                    tvOrderCredit.text = "Debit"
-                    tvDate.text = createdAt
-                    tvCreditPrice.text = "100".toString()
-
-                    val isCreditCheck = false//isCredit.equals("Credit")
-                    tvOrderCredit.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
-                    tvCreditPrice.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
+                    tvEntryDate.text = addText(activity, R.string.entry_date, createdAt!!)
+                    tvAmount.text = "10"
+                    tvAdmin.text = "0.5"
+                    tvTds.text = "0.5"
+                    tvTotal.text = "9"
                 }
             }
         }

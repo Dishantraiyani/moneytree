@@ -32,7 +32,6 @@
 
     <!--Resend OTP-->
     <string name="close">Close</string>
-    <string name="email">Email</string>
     <string name="call">Call</string>
     <string name="home">Home</string>
     <string name="orders">Orders</string>
@@ -78,8 +77,7 @@
     <string name="transactions_title">Transactions</string>
     <string name="redeem_title">Redemption</string>
     <string name="trip_history_title">Trip History</string>
-    <string name="change_password">Change Password</string>
-    <string name="change_tran_password">Change Transaction Password</string>
+
 
     <string name="get_directions">Get Directions</string>
     <string name="show_details">Show Details</string>
@@ -300,6 +298,7 @@
     <string name="pending">Pending</string>
     <string name="receive">Receive</string>
     <string name="transfer">Transfer</string>
+    <string name="wallet_transfer">Wallet Transfer</string>
 
     <string name="color1">#b5e6b5</string>
     <string name="color2">#f77a7a</string>
@@ -317,4 +316,45 @@
     <string name="repurchase_data">Repurchase: %1$s</string>
     <string name="no_redeem_available">No Redemption Available</string>
     <string name="transaction_id">Transaction Id: %1$s</string>
+    <string name="entry_date">Entry Date: %1$s</string>
+    <string name="available_wallet_amount">Available Wallet Amount</string>
+    <string name="transfer_id">Transfer Id</string>
+    <string name="transaction_password">Transaction Password</string>
+    <string name="amount_title">Amount</string>
+    <string name="note_5_admin"><![CDATA[Note:5% admin & 5% Tds charges will be deducted]]></string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="enter_transaction_id">Enter Transaction Id</string>
+    <string name="remark">Remark</string>
+    <string name="enter_remark">Enter Remark</string>
+
+    <string name="full_name">Full Name</string>
+    <string name="address">Address</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="pan_no">Pan No</string>
+    <string name="bank_ifsc">Bank IFSC</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="bank_account_no">Bank Account Number</string>
+
+    <string name="enter_full_name">Enter Full Name</string>
+    <string name="enter_address">Enter Address</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_mobile">Enter Mobile</string>
+    <string name="enter_pan_no">Enter Pan No</string>
+    <string name="enter_bank_ifsc">Enter Bank IFSC</string>
+    <string name="enter_bank_name">Enter Bank Name</string>
+    <string name="enter_bank_account_no">Enter Bank Account Number</string>
+
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="enter_current_password">Enter Current Password</string>
+    <string name="enter_new_password">Enter New Password</string>
+
+    <string name="change_password">Change Password</string>
+    <string name="change_tran_password">Change Transaction Password</string>
+    <string name="share">Share</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="update">Update</string>
+    <string name="terms">Terms &amp; Conditions</string>
+    <string name="policy">Privacy Policy</string>
 </resources>

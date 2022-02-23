@@ -22,6 +22,18 @@
             android:name=".ui.memberTree.MemberTreeActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.wallets.redeemForm.NSAddRedeemActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.wallets.transfer.NSTransferActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.profile.edit.NSEditActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".ui.levelMember.LevelMemberTreeActivity"
             android:exported="false" />
         <activity
@@ -35,7 +47,8 @@
         </activity>
         <activity
             android:name=".ui.home.NSHomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.login.NSLoginActivity"
             android:exported="false" />
@@ -50,6 +63,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.slots.NSSlotsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.profile.password.NSChangePasswordActivity"
             android:exported="false" />
 
         <uses-library android:name="com.google.android.maps" />

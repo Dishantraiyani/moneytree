@@ -10,9 +10,12 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.FragmentMainBinding
 import com.moneytree.app.databinding.NsFragmentWalletBinding
 import com.moneytree.app.ui.vouchers.NSVouchersViewModel
+import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
+import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import org.greenrobot.eventbus.EventBus
 
 class NSWalletFragment : Fragment() {
@@ -61,6 +64,14 @@ class NSWalletFragment : Fragment() {
             with(layoutHeader) {
                 clBack.setOnClickListener {
                     EventBus.getDefault().post(BackPressEvent())
+                }
+
+                tvRedeem.setOnClickListener {
+                    switchActivity(NSAddRedeemActivity::class.java)
+                }
+
+                tvTransfer.setOnClickListener {
+                    switchActivity(NSTransferActivity::class.java)
                 }
             }
         }
