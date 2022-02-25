@@ -43,7 +43,11 @@ data class NSDashboardData(
     @SerializedName("directRetailStatus")
     val directRetailStatus: String = "",
     @SerializedName("colour")
-    val colour: String = ""
+    val colour: String = "",
+    @SerializedName("royalty_name")
+    val royaltyName: String? = null,
+    @SerializedName("earning_amount")
+    val earningAmount: String = "0.00"
 )
 
 /**

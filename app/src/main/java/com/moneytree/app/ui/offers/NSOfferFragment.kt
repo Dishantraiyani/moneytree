@@ -53,42 +53,10 @@ class NSOfferFragment : NSFragment() {
             }
 
             setFragmentData()
-            /*when (pref.offerTabPosition) {
-                0 -> {
-                    replaceFragment(
-                        NSRePurchaseListFragment.newInstance(),
-                        false,
-                        offerFrameContainer.id
-                    )
-                }
-                1 -> {
-                    replaceFragment(
-                        NSRetailListFragment.newInstance(),
-                        false,
-                        offerFrameContainer.id
-                    )
-                }
-                2 -> {
-                    replaceFragment(
-                        NSRoyaltyListFragment.newInstance(),
-                        false,
-                        offerFrameContainer.id
-                    )
-                }
-                3 -> {
-                    layoutHeader.ivSearch.visibility = View.GONE
-                replaceFragment(
-                    NSDownlineReOfferFragment.newInstance(),
-                    false,
-                    offerFrameContainer.id
-                )
-            }
-            }*/
         }
-        //addTabs()
     }
 
-    fun setFragmentData() {
+    private fun setFragmentData() {
         with(activity.resources) {
             mFragmentTitleList.clear()
             mFragmentTitleList.add(getString(R.string.repurchase))
@@ -133,6 +101,7 @@ class NSOfferFragment : NSFragment() {
                         }
                     }
                 })
+                viewPager.offscreenPageLimit = 4
             } catch (e: Exception) {
                 e.printStackTrace()
             }

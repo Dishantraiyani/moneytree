@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.FragmentMainBinding
 import com.moneytree.app.databinding.NsFragmentWalletBinding
@@ -17,8 +18,10 @@ import com.moneytree.app.ui.vouchers.NSVouchersViewModel
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class NSWalletFragment : Fragment() {
+class NSWalletFragment : NSFragment() {
     private val walletModel: NSWalletsViewModel by lazy {
         ViewModelProvider(this).get(NSWalletsViewModel::class.java)
     }
@@ -96,23 +99,31 @@ class NSWalletFragment : Fragment() {
                                     tvTransfer.visibility = View.VISIBLE
                                     tvRedeem.visibility = View.GONE
                                     EventBus.getDefault().post(
-                                        NSPendingEventTab()
+                                        NSTransactionsEventTab()
                                     )
                                 }
                                 1 -> {
                                     tvTransfer.visibility = View.GONE
                                     tvRedeem.visibility = View.VISIBLE
                                     EventBus.getDefault().post(
-                                        NSReceiveEventTab()
+                                        NSRedemptionEventTab()
                                     )
                                 }
                             }
                         }
                     })
+                    viewPager.offscreenPageLimit = 2
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun walletAmount(event: NSWalletAmount) {
+        with(mainBinding) {
+            tvTotalBalance.text = addText(requireActivity(), R.string.balance, event.amount)
         }
     }
 

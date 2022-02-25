@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
-import com.moneytree.app.common.utils.NSUtilities
-import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentProfileBinding
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.profile.edit.NSEditActivity
@@ -152,10 +151,14 @@ class NSProfileFragment : NSFragment() {
             with(profileModel) {
                 if (isUserData) {
                     with(nsUserData!!) {
-                        tvUserName.text = userName
-                        tvMobile.text = mobile
-                        tvEmailId.text = email
-                        tvIcon.text = email!!.substring(0, 1).uppercase()
+                        tvUserName.text = setUserName(activity, userName!!)
+                        tvMobile.text = setMobile(activity, mobile!!)
+                        tvEmailId.text = setEmail(activity, email!!)
+                        if (!email.isNullOrEmpty()) {
+                            tvIcon.text = email!!.substring(0, 1).uppercase()
+                        } else {
+                            tvIcon.text = getString(R.string.app_first)
+                        }
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.requests.NSLoginRequest
+import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
 import com.moneytree.app.repository.network.responses.NSLogoutResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
 import retrofit2.Response
@@ -36,6 +37,40 @@ object NSUserRepository {
                 if (data.status) {
                     NSUserManager.saveUserInPreference(response)
                     NSUserManager.saveHeadersInPreference(response)
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+    /**
+     * To make update profile API to the user
+     *
+     * @param userName  The username provided by the user
+     * @param password      The password provided by the user
+     * @param viewModelCallback The callback to communicate back to the view model
+     */
+    fun updateProfile(
+        fullName: String?,
+        address: String?,
+        email: String?,
+        mobile: String?,
+        panno: String?,
+        ifscCode: String?,
+        bankName: String?,
+        acNo: String?,
+        viewModelCallback: NSGenericViewModelCallback
+    ) {
+        val updateRequest = NSUpdateProfileRequest(fullName, address, email, mobile, panno, ifscCode, bankName, acNo)
+        apiManager.updateProfile(updateRequest, object :
+            NSRetrofitCallback<NSUserResponse>(viewModelCallback, NSApiErrorHandler.ERROR_UPDATE_PROFILE) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as NSUserResponse
+                if (data.status) {
+                    NSUserManager.saveUserInPreference(response)
                     viewModelCallback.onSuccess(response.body())
                 } else {
                     errorMessageList.add(data.message!!)

@@ -29,18 +29,16 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     val mFragmentList: MutableList<Fragment> = ArrayList()
     var fieldName: Array<String> = arrayOf()
     var fieldImage = arrayOf(
-        R.drawable.mobile,
-        R.drawable.dth,
-        R.drawable.data_card,
-        R.drawable.landlne,
-        R.drawable.broadband,
-        R.drawable.gas,
-        R.drawable.electricity,
-        R.drawable.water,
-        R.drawable.insurance,
-        R.drawable.fee,
-        R.drawable.creditcard,
-        R.drawable.google_play
+        R.drawable.ic_mobile_ico,
+        R.drawable.ic_dth,
+        R.drawable.ic_cable,
+        R.drawable.ic_fast_tag,
+        R.drawable.ic_broadband,
+        R.drawable.ic_gas,
+        R.drawable.ic_electricity,
+        R.drawable.ic_emi,
+        R.drawable.ic_insurance_ico,
+        R.drawable.ic_lic_ico
     )
 
     /**
@@ -146,6 +144,16 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
                 return if (wltAmt.isValidList()) {
                     wltAmt?.get(0)?.amount ?: "0"
                 } else {
+                    "0"
+                }
+            }
+        }
+    }
+
+    fun setEarningAmount(): String {
+        with(dashboardData) {
+            with(this?.data!!) {
+                return earningAmount.ifEmpty {
                     "0"
                 }
             }

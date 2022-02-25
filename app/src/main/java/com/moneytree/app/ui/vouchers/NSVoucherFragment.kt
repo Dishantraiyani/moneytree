@@ -6,14 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentVouchersBinding
 import org.greenrobot.eventbus.EventBus
 
@@ -77,13 +73,6 @@ class NSVoucherFragment : NSFragment() {
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
                         EventBus.getDefault().post(SearchCloseEvent())
-                        /*pageIndex = "1"
-                        if (tempVoucherList.isValidList()) {
-                            voucherList.clear()
-                            voucherList.addAll(tempVoucherList)
-                            tempVoucherList.clear()
-                            setVoucherData(voucherList.isValidList())
-                        }*/
                     }
 
                     etSearch.setOnKeyListener(object: View.OnKeyListener{
@@ -139,6 +128,7 @@ class NSVoucherFragment : NSFragment() {
                             }
                         }
                     })
+                    viewPager.offscreenPageLimit = 3
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

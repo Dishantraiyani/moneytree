@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.databinding.NsFragmentChangePasswordBinding
 import com.moneytree.app.databinding.NsFragmentEditBinding
 
@@ -57,6 +58,7 @@ class NSChangePasswordFragment : NSFragment() {
                 }
             }
         }
+        observeViewModel()
     }
 
     /**
@@ -64,9 +66,76 @@ class NSChangePasswordFragment : NSFragment() {
      */
     private fun setListener() {
         with(cpBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
+            with(changePasswordModel) {
+                with(layoutHeader) {
+                    clBack.setOnClickListener {
+                        onBackPress()
+                    }
+
+                    btnSubmit.setOnClickListener(object : SingleClickListener() {
+                        override fun performClick(v: View?) {
+                            strCurrentPassword = etPassword.text.toString()
+                            strNewPassword = etNewPassword.text.toString()
+                            if (isValid()) {
+                                btnSubmit.isEnabled = false
+                                if (isChangePassword) {
+                                    changePassword()
+                                } else {
+                                    changeTransPassword()
+                                }
+                            } else {
+                                showAlertDialog(activity.resources.getString(R.string.please_enter_password))
+                            }
+                        }
+
+                    })
+                }
+            }
+
+        }
+    }
+
+    /**
+     * To observe the view model for data changes
+     */
+    private fun observeViewModel() {
+        with(cpBinding) {
+            with(changePasswordModel) {
+                isProgressShowing.observe(
+                    viewLifecycleOwner
+                ) { shouldShowProgress ->
+                    updateProgress(shouldShowProgress)
+                }
+
+                isChangeDataAvailable.observe(viewLifecycleOwner) { isChange ->
+                    if (isChange) {
+                        btnSubmit.isEnabled = true
+                        onBackPress()
+                    }
+                }
+
+                failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                    btnSubmit.isEnabled = true
+                    showAlertDialog(errorMessage)
+                }
+
+                apiErrors.observe(viewLifecycleOwner) { apiErrors ->
+                    btnSubmit.isEnabled = true
+                    parseAndShowApiError(apiErrors)
+                }
+
+                noNetworkAlert.observe(viewLifecycleOwner) {
+                    btnSubmit.isEnabled = true
+                    showNoNetworkAlertDialog(
+                        getString(R.string.no_network_available), getString(
+                            R.string.network_unreachable
+                        )
+                    )
+                }
+
+                validationErrorId.observe(viewLifecycleOwner) { errorId ->
+                    btnSubmit.isEnabled = true
+                    showAlertDialog(getString(errorId))
                 }
             }
         }

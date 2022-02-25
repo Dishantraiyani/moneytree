@@ -50,7 +50,7 @@ data class NSDataUser(
     var panno: String? = null,
     @SerializedName("bank_name")
     @Expose
-    var bank_name: String? = null,
+    var bankName: String? = null,
     @SerializedName("ifsc_code")
     @Expose
     var ifscCode: String? = null,

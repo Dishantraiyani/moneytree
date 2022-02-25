@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.wallets.redeem
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRedeemBinding
 import org.greenrobot.eventbus.Subscribe
@@ -31,9 +33,14 @@ class NSRedeemFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRedeemBinding.inflate(inflater, container, false)
+        return redeemBinding.root
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onTabSelectEvent(event: NSRedemptionEventTab) {
+        Log.d(TAG, "onTabSelectEvent: $event")
         viewCreated()
         setListener()
-        return redeemBinding.root
     }
 
     /**

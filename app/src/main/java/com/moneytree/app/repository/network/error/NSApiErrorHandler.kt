@@ -28,6 +28,10 @@ class NSApiErrorHandler {
         const val ERROR_MEMBER_TREE = "error_member_tree"
         const val ERROR_LEVEL_WISE_MEMBER_TREE = "error_level_wise_member_tree"
         const val ERROR_LOGOUT = "error_logout"
+        const val ERROR_CHANGE_PASSWORD = "error_change_password"
+        const val ERROR_CHANGE_TRAN_PASSWORD = "error_change_tran_password"
+        const val ERROR_UPDATE_PROFILE = "error_update_profile"
+        const val ERROR_WALLET_LIST_DATA = "error_wallet_list_data"
 
         /**
          * To get the error messages from API endpoints

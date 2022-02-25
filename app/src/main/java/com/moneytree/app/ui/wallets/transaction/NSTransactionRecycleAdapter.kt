@@ -12,16 +12,17 @@ import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutTransactionBinding
 import com.moneytree.app.repository.network.responses.NSVoucherListData
+import com.moneytree.app.repository.network.responses.NSWalletData
 
 class NSTransactionRecycleAdapter(
     activityNS: Activity,
     onPageChange: NSPageChangeCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
-    private val transactionData: MutableList<NSVoucherListData> = arrayListOf()
+    private val transactionData: MutableList<NSWalletData> = arrayListOf()
     private val onPageChangeCallback: NSPageChangeCallback = onPageChange
 
-    fun updateData(transactionList: MutableList<NSVoucherListData>) {
+    fun updateData(transactionList: MutableList<NSWalletData>) {
         transactionData.addAll(transactionList)
         if (transactionList.isValidList()) {
             notifyItemRangeChanged(0, transactionData.size - 1)
@@ -70,16 +71,16 @@ class NSTransactionRecycleAdapter(
          *
          * @param response The voucher details
          */
-        fun bind(response: NSVoucherListData) {
+        fun bind(response: NSWalletData) {
             with(transactionBinding) {
                 with(response) {
-                    tvTransactionId.text = addText(activity, R.string.transaction_id, "1234567890")
-                    tvTransactionStatus.text = "Recharge"
-                    tvOrderCredit.text = "Credit"
-                    tvDate.text = createdAt
-                    tvCreditPrice.text = "100".toString()
+                    tvTransactionId.text = addText(activity, R.string.transaction_id, transferid!!)
+                    tvTransactionStatus.text = status!!
+                    tvOrderCredit.text = entryType!!.trim()
+                    tvDate.text = entryDate
+                    tvCreditPrice.text = amount!!.trim()
 
-                    val isCreditCheck = true//isCredit.equals("Credit")
+                    val isCreditCheck = entryType!!.lowercase() == "credit"
                     tvOrderCredit.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
                     tvCreditPrice.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
                 }

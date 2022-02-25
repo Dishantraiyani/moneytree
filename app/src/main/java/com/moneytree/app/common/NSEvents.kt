@@ -75,3 +75,9 @@ class NSPendingEventTab()
 class NSReceiveEventTab()
 
 class NSTransferEventTab()
+
+class NSRedemptionEventTab()
+
+class NSTransactionsEventTab()
+
+class NSWalletAmount(val amount: String)

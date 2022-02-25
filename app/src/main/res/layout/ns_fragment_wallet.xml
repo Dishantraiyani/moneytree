@@ -51,10 +51,9 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/inter_semi_bold"
                 android:includeFontPadding="false"
-                android:text="₹ 200.00"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/_18sdp"
+                android:textStyle="bold"
                 tools:text="₹ 200.00" />
 
             <TextView

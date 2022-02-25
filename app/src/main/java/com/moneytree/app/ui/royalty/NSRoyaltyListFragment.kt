@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.royalty
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRoyaltyListBinding
 import com.moneytree.app.ui.royaltyInfo.NSRoyaltyInfoFragment
@@ -40,6 +42,7 @@ class NSRoyaltyListFragment : NSFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabSelectEvent(event: NSRoyaltyEventTab) {
+        Log.d(TAG, "onTabSelectEvent: $event")
         viewCreated()
         setListener()
     }

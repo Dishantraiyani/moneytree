@@ -3,6 +3,7 @@ package com.moneytree.app.ui.register
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentAddRegisterBinding
 
@@ -148,7 +150,7 @@ class NSAddRegisterFragment : NSFragment() {
                 isRegisterDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isNotification ->
-
+                    Log.d(TAG, "onTabSelectEvent: $isNotification")
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

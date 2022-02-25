@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
 import com.moneytree.app.databinding.LayoutItemRechargesBinding
 import com.moneytree.app.repository.network.responses.GridModel
 
 class GridRecycleAdapter(
-    nsOfferList: MutableList<GridModel>
+    nsOfferList: MutableList<GridModel>,
+    rechargeCallBack: NSRechargeSelectCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val offerList: MutableList<GridModel> = nsOfferList
+    private val nsRechargeCallBack: NSRechargeSelectCallback = rechargeCallBack
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val rechargeView = LayoutItemRechargesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -46,10 +49,8 @@ class GridRecycleAdapter(
                 with(response) {
                     tvFieldName.text = fieldName
                     ivFieldImage.setImageResource(fieldImage)
-                    if (absoluteAdapterPosition == 7) {
-                        tvTick.visibility = View.VISIBLE
-                    } else {
-                        tvTick.visibility = View.GONE
+                    llRecharge.setOnClickListener {
+                        nsRechargeCallBack.onClick(absoluteAdapterPosition)
                     }
                 }
             }

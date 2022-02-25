@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.repository.NSVoucherRepository
+import com.moneytree.app.repository.NSWalletRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.NSVoucherListData
-import com.moneytree.app.repository.network.responses.NSVoucherListResponse
+import com.moneytree.app.repository.network.responses.NSWalletData
+import com.moneytree.app.repository.network.responses.NSWalletListResponse
 
 
 /**
@@ -15,17 +15,16 @@ import com.moneytree.app.repository.network.responses.NSVoucherListResponse
  */
 class NSTransactionViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
-    var transactionList: MutableList<NSVoucherListData> = arrayListOf()
-    var tempTransactionList: MutableList<NSVoucherListData> = arrayListOf()
+    var transactionList: MutableList<NSWalletData> = arrayListOf()
+    var tempTransactionList: MutableList<NSWalletData> = arrayListOf()
     var isTransactionDataAvailable = MutableLiveData<Boolean>()
     var pageIndex: String = "1"
-    var transactionResponse: NSVoucherListResponse? = null
-    var tabPosition = 0
+    var transactionResponse: NSWalletListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
 
     /**
-     * Get voucher list data
+     * Get transaction list data
      *
      */
     fun getTransactionListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
@@ -40,17 +39,7 @@ class NSTransactionViewModel(application: Application) : NSViewModel(application
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-        when (tabPosition) {
-            0 -> {
-                NSVoucherRepository.getJoiningVoucherPendingData(pageIndex, search, this)
-            }
-            1 -> {
-                NSVoucherRepository.getJoiningVoucherReceiveData(pageIndex, search, this)
-            }
-            else -> {
-                NSVoucherRepository.getJoiningVoucherTransferData(pageIndex, search, this)
-            }
-        }
+        NSWalletRepository.getWalletList(pageIndex, search, this)
     }
 
     override fun <T> onSuccess(data: T) {
@@ -58,11 +47,11 @@ class NSTransactionViewModel(application: Application) : NSViewModel(application
         if (isBottomProgressShow) {
             isBottomProgressShowing.value = false
         }
-        val voucherMainListData = data as NSVoucherListResponse
-        transactionResponse = voucherMainListData
-        if (voucherMainListData.data != null) {
-            if (voucherMainListData.data.isValidList()) {
-                transactionList.addAll(voucherMainListData.data!!)
+        val transactionMainListData = data as NSWalletListResponse
+        transactionResponse = transactionMainListData
+        if (transactionMainListData.data != null) {
+            if (transactionMainListData.data.isValidList()) {
+                transactionList.addAll(transactionMainListData.data)
                 isTransactionDataAvailable.value = transactionList.isValidList()
             } else if (pageIndex == "1" || searchData.isNotEmpty()){
                 isTransactionDataAvailable.value = false

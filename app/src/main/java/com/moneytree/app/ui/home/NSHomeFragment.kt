@@ -17,12 +17,13 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.NSTabChange
 import com.moneytree.app.common.ViewPagerMDAdapter
-import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.slots.NSSlotsActivity
@@ -74,6 +75,7 @@ class NSHomeFragment : NSFragment() {
                     tvHeaderBack.text = activity.resources.getString(R.string.app_name)
                     ivBack.visibility = View.INVISIBLE
                     ivMenu.visibility = View.VISIBLE
+                    tvAmountData.visibility = View.VISIBLE
                 }
                 getUserDetail()
                 setFragmentData()
@@ -115,7 +117,11 @@ class NSHomeFragment : NSFragment() {
                     homeListModelClassArrayList1!!.add(gridModel)
                 }
                 bAdapterNS = GridRecycleAdapter(
-                    homeListModelClassArrayList1!!
+                    homeListModelClassArrayList1!!, object : NSRechargeSelectCallback{
+                        override fun onClick(position: Int) {
+                            switchActivity(NSRechargeActivity::class.java)
+                        }
+                    }
                 )
                 recyclerView.adapter = bAdapterNS
             }
@@ -175,6 +181,7 @@ class NSHomeFragment : NSFragment() {
                     tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
                     tvJoinVoucher.text = addText(activity, R.string.dashboard_data, setJoinVoucher())
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
+                    layoutHeader.tvAmountData.text = addText(activity, R.string.my_earning, setEarningAmount())
                     //This is display Message slider
                     /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
                         tvMessage.setTextColor(Color.parseColor(data!!.colour))
@@ -196,9 +203,13 @@ class NSHomeFragment : NSFragment() {
                     val navView: View = navView.getHeaderView(0)
                     val navBinding = LayoutHeaderNavBinding.bind(navView)
                     with(navBinding) {
-                        tvUserName.text = userName
-                        tvEmailId.text = email
-                        tvIcon.text = email!!.substring(0, 1).uppercase()
+                        tvUserName.text = setUserName(activity, userName!!)
+                        tvEmailId.text = setEmail(activity, email!!)
+                        if (!email.isNullOrEmpty()) {
+                            tvIcon.text = email!!.substring(0, 1).uppercase()
+                        } else {
+                            tvIcon.text = getString(R.string.app_first)
+                        }
 
                         //Click
                         llRegister.setOnClickListener {

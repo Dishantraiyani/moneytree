@@ -198,7 +198,7 @@
     <string name="downline_member">Downline Member</string>
     <string name="repurchase_info">Repurchase Info</string>
     <string name="royalty_info">Royalty Info</string>
-    <string name="retail_info">Retail Info</string>
+    <string name="retail_info">Direct Retail Offer</string>
     <string name="recharges_amp_pay_bills"><![CDATA[Recharges & Pay Bills]]></string>
     <string name="my_downline">My Downline</string>
     <string name="join_vouchers">Join Vouchers</string>
@@ -208,16 +208,14 @@
     <string-array name="recharge_list">
         <item>Mobile</item>
         <item>DTH</item>
-        <item>Data Card</item>
-        <item>Landline</item>
+        <item>Cable</item>
+        <item>FastTag</item>
         <item>Broadband</item>
         <item>Gas</item>
         <item>Electricity</item>
-        <item>Water</item>
+        <item>EMI</item>
         <item>Insurance</item>
-        <item>Fees</item>
-        <item>Credit Card</item>
-        <item>Google Play</item>
+        <item>LIC</item>
     </string-array>
 
     <string-array name="registration_type">
@@ -357,4 +355,11 @@
     <string name="update">Update</string>
     <string name="terms">Terms &amp; Conditions</string>
     <string name="policy">Privacy Policy</string>
+    <string name="recharge">Recharge</string>
+    <string name="please_enter_password">Please Enter Password</string>
+    <string name="app_first">M</string>
+    <string name="no_user_name">No UserName</string>
+    <string name="no_email_added">No Email added</string>
+    <string name="no_mobile_added">No Mobile added</string>
+    <string name="my_earning">₹ My Earning: %1$s</string>
 </resources>

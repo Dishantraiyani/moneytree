@@ -7,10 +7,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
+import com.moneytree.app.R
 import com.moneytree.app.common.NSLog
 import java.text.DecimalFormat
 
@@ -278,6 +277,24 @@ fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(this).toDo
 fun addText(activity: Activity, resource: Int,  data: String) : String {
     with(activity.resources) {
         return getString(resource, data)
+    }
+}
+
+fun setUserName(activity: Activity, userName: String) : String{
+    return userName.ifEmpty {
+        activity.resources.getString(R.string.no_user_name)
+    }
+}
+
+fun setMobile(activity: Activity, mobile: String) : String{
+    return mobile.ifEmpty {
+        activity.resources.getString(R.string.no_mobile_added)
+    }
+}
+
+fun setEmail(activity: Activity, email: String) : String{
+    return email.ifEmpty {
+        activity.resources.getString(R.string.no_email_added)
     }
 }
 

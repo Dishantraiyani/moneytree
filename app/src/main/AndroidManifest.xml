@@ -68,6 +68,10 @@
             android:name=".ui.profile.password.NSChangePasswordActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".ui.recharge.NSRechargeActivity"
+            android:exported="false" />
+
         <uses-library android:name="com.google.android.maps" />
         <uses-library
             android:name="org.apache.http.legacy"

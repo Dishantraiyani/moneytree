@@ -11,6 +11,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentTransactionBinding
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -42,7 +43,6 @@ class NSTransactionFragment : NSFragment() {
     private fun viewCreated() {
         with(transactionBinding) {
             with(transactionListModel) {
-                tabPosition = 0
                 setTransactionAdapter()
             }
         }
@@ -69,18 +69,18 @@ class NSTransactionFragment : NSFragment() {
     private fun setTransactionAdapter() {
         with(transactionBinding) {
             with(transactionListModel) {
-                rvTransactionList.layoutManager = LinearLayoutManager(activity)
+                rvTransactions.layoutManager = LinearLayoutManager(activity)
                 transactionListAdapter =
                     NSTransactionRecycleAdapter(activity, object : NSPageChangeCallback{
                         override fun onPageChange() {
                             if (transactionResponse!!.nextPage) {
                                 val page: Int = transactionList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
-                                getTransactionListData(pageIndex, "", true, isBottomProgress = true)
+                                getTransactionListData(pageIndex, "", false, isBottomProgress = true)
                             }
                         }
                     })
-                rvTransactionList.adapter = transactionListAdapter
+                rvTransactions.adapter = transactionListAdapter
                 pageIndex = "1"
                 getTransactionListData(pageIndex, "", true, isBottomProgress = false)
             }
@@ -102,6 +102,11 @@ class NSTransactionFragment : NSFragment() {
         with(transactionListModel) {
             transactionDataManage(isTransaction)
             if (isTransaction) {
+                var amount = "0"
+                if (transactionResponse!!.walletAmount.isValidList()) {
+                    amount = transactionResponse!!.walletAmount[0].amount!!
+                }
+                EventBus.getDefault().post(NSWalletAmount(amount))
                 transactionListAdapter!!.clearData()
                 transactionListAdapter!!.updateData(transactionList)
             }
@@ -115,7 +120,7 @@ class NSTransactionFragment : NSFragment() {
      */
     private fun transactionDataManage(isTransactionVisible: Boolean) {
         with(transactionBinding) {
-            rvTransactionList.visibility = if (isTransactionVisible) View.VISIBLE else View.GONE
+            rvTransactions.visibility = if (isTransactionVisible) View.VISIBLE else View.GONE
             clTransactionNotFound.visibility = if (isTransactionVisible) View.GONE else View.VISIBLE
         }
     }

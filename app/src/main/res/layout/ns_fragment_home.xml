@@ -97,15 +97,60 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <TextView
+                        android:id="@+id/tv_status_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textStyle="normal"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingEnd="@dimen/_5sdp"
+                        android:textColor="@color/black"
+                        android:text="Status: "
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:fontFamily="@font/inter_medium"
+                        android:textStyle="normal"
+                        android:paddingStart="0dp"
+                        android:visibility="gone"
+                        android:paddingEnd="@dimen/_15sdp"
+                        android:textColor="@color/orange"
+                        android:gravity="start|center_vertical"
+                        android:text="No Royalty"
+                        app:layout_constraintStart_toEndOf="@id/tv_status_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <View
+                        android:id="@+id/view_line2"
+                        android:layout_width="0dp"
+                        android:layout_height="0.7dp"
+                        android:background="#eef0f1"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_status"/>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_down_line"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:gravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/cl_voucher"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_line2"
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
@@ -145,12 +190,12 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_voucher"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:gravity="center"
                         app:layout_constraintStart_toEndOf="@id/cl_down_line"
                         app:layout_constraintEnd_toStartOf="@id/cl_join_voucher"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_line2"
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
@@ -190,12 +235,12 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_join_voucher"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:orientation="vertical"
                         android:gravity="center"
                         app:layout_constraintStart_toEndOf="@id/cl_voucher"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view_line2"
                         app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView

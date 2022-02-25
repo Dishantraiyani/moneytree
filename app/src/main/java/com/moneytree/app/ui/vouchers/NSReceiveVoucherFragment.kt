@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.vouchers
 
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.google.android.material.tabs.TabLayout
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentReceiveVouchersBinding
 import com.moneytree.app.databinding.NsFragmentVouchersBinding
@@ -40,6 +42,7 @@ class NSReceiveVoucherFragment : NSFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabSelectEvent(event: NSReceiveEventTab) {
+        Log.d(TAG, "onTabSelectEvent: $event")
         viewCreated()
         setListener()
     }

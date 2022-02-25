@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.downlineReOffer
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSDownlineEventTab
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.NSRoyaltyEventTab
+import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.databinding.NsFragmentDownlineReOfferBinding
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -36,6 +38,7 @@ class NSDownlineReOfferFragment : NSFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabSelectEvent(event: NSDownlineEventTab) {
+        Log.d(TAG, "onTabSelectEvent: $event")
         viewCreated()
         setListener()
     }

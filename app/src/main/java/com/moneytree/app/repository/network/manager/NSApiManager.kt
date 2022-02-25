@@ -5,7 +5,9 @@ import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
+import com.moneytree.app.repository.network.requests.NSChangePasswordRequest
 import com.moneytree.app.repository.network.requests.NSLoginRequest
+import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
 import com.moneytree.app.repository.network.responses.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -168,6 +170,24 @@ class NSApiManager {
     }
 
     /**
+     * To call the update profile API endpoint to update profile
+     *
+     * @param updateRequest The request body
+     * @param callback     The callback for the result
+     */
+    fun updateProfile(updateRequest: NSUpdateProfileRequest, callback: NSRetrofitCallback<NSUserResponse>) {
+        request(unAuthorised3020Client.updateProfile(NSUserManager.getAuthToken()!!,
+            updateRequest.fullName!!,
+            updateRequest.address!!,
+            updateRequest.email!!,
+            updateRequest.mobile!!,
+            updateRequest.panno!!,
+            updateRequest.ifscCode!!,
+            updateRequest.bankName!!,
+            updateRequest.acNo!!), callback)
+    }
+
+    /**
      * To call the logout API endpoint
      *
      * @param callback     The callback for the result
@@ -302,6 +322,35 @@ class NSApiManager {
     fun getLevelWiseTree(callback: NSRetrofitCallback<NSLevelMemberTreeResponse>) {
         request(unAuthorised3020Client.getLevelWiseMemberReportList(NSUserManager.getAuthToken()!!), callback)
     }
+
+    /**
+     * To call the change password API endpoint to change password
+     *
+     * @param changePasswordRequest The request body
+     * @param callback     The callback for the result
+     */
+    fun changePassword(changePasswordRequest: NSChangePasswordRequest, callback: NSRetrofitCallback<NSChangePasswordResponse>) {
+        request(unAuthorised3020Client.changePassword(NSUserManager.getAuthToken()!!, changePasswordRequest.currentPassword!!, changePasswordRequest.newPassword!!), callback)
+    }
+
+    /**
+     * To call the change tran password API endpoint to change tran password
+     *
+     * @param changePasswordRequest The request body
+     * @param callback     The callback for the result
+     */
+    fun changeTranPassword(changePasswordRequest: NSChangePasswordRequest, callback: NSRetrofitCallback<NSChangePasswordResponse>) {
+        request(unAuthorised3020Client.changeTransPassword(NSUserManager.getAuthToken()!!, changePasswordRequest.currentPassword!!, changePasswordRequest.newPassword!!), callback)
+    }
+
+    /**
+     * To call the wallet list data API
+     *
+     * @param callback  The callback for the result
+     */
+    fun getWalletList(pageIndex: String, search: String, callback: NSRetrofitCallback<NSWalletListResponse>) {
+        request(unAuthorised3020Client.getWalletList(NSUserManager.getAuthToken()!!, pageIndex, search), callback)
+    }
 }
 
 /**
@@ -372,6 +421,31 @@ interface RTApiInterface {
     @FormUrlEncoded
     @POST("level-wise-member-report-list")
     fun getLevelWiseMemberReportList(@Field("token_id") token: String): Call<NSLevelMemberTreeResponse>
+
+    /*Change Password*/
+    @FormUrlEncoded
+    @POST("change-password-api")
+    fun changePassword(@Field("token_id") token: String, @Field("current_password") currentPassword: String, @Field("new_password") newPassword: String): Call<NSChangePasswordResponse>
+
+    @FormUrlEncoded
+    @POST("change-transaction-password-api")
+    fun changeTransPassword(@Field("token_id") token: String, @Field("current_password") currentPassword: String, @Field("new_password") newPassword: String): Call<NSChangePasswordResponse>
+
+    @FormUrlEncoded
+    @POST("update-profile-api")
+    fun updateProfile(@Field("token_id") token: String,
+                      @Field("fullname") fullname: String,
+                      @Field("address") address: String,
+                      @Field("email") email: String,
+                      @Field("mobile") mobile: String,
+                      @Field("panno") panno: String,
+                      @Field("ifsc_code") ifscCode: String,
+                      @Field("bank_name") bankName: String,
+                      @Field("ac_no") acNo: String): Call<NSUserResponse>
+
+    @FormUrlEncoded
+    @POST("wallet-list-api")
+    fun getWalletList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String): Call<NSWalletListResponse>
 
     /*@FormUrlEncoded
     @POST("joining-voucher-transfer-info")
