@@ -45,7 +45,8 @@
         <TextView
             android:id="@+id/tv_order_credit"
             style="@style/LoginSubFontsZeroWrap"
-            android:gravity="center|start"
+            android:gravity="center|end"
+            android:lines="1"
             android:textColor="@color/green"
             app:guidelineUseRtl="true"
             android:textSize="@dimen/_11sdp"
@@ -79,12 +80,13 @@
         <TextView
             android:id="@+id/tv_credit_price"
             style="@style/LoginSubFontsZeroWrap"
-            tools:text="100.5"
-            android:textSize="@dimen/_11sdp"
+            android:gravity="center|end"
+            android:lines="1"
             android:textColor="@color/green"
-            android:gravity="center|start"
+            android:textSize="@dimen/_11sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="100.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

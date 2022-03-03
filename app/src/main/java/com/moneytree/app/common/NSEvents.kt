@@ -52,7 +52,9 @@ class BackPressEvent
  *
  * @constructor Create empty Search close event
  */
-class SearchCloseEvent
+class SearchCloseEvent(val position: Int)
+
+class MainSearchCloseEvent()
 
 /**
  * Search string event
@@ -60,7 +62,9 @@ class SearchCloseEvent
  * @property search
  * @constructor Create empty Search string event
  */
-class SearchStringEvent(val search: String)
+class SearchStringEvent(val search: String, val position: Int)
+
+class MainSearchStringEvent(val search: String)
 
 class NSRepurchaseEventTab()
 
@@ -70,14 +74,20 @@ class NSRoyaltyEventTab()
 
 class NSDownlineEventTab()
 
-class NSPendingEventTab()
+class NSPendingEventTab(val isAdded: Boolean)
 
-class NSReceiveEventTab()
+class NSReceiveEventTab(val isAdded: Boolean)
 
-class NSTransferEventTab()
+class NSTransferEventTab(val isAdded: Boolean)
 
 class NSRedemptionEventTab()
 
 class NSTransactionsEventTab()
 
 class NSWalletAmount(val amount: String)
+
+class NSJoiningVoucherEventTab()
+
+class NSProductVoucherEventTab()
+
+class NSSearchClearEvent()

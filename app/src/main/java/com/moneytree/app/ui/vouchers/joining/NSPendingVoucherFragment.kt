@@ -1,59 +1,64 @@
-package com.moneytree.app.ui.vouchers
+package com.moneytree.app.ui.vouchers.joining
 
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.tabs.TabLayout
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSJoiningVoucherCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.databinding.NsFragmentReceiveVouchersBinding
-import com.moneytree.app.databinding.NsFragmentVouchersBinding
-import org.greenrobot.eventbus.EventBus
+import com.moneytree.app.databinding.NsFragmentPendingVouchersBinding
+import com.moneytree.app.ui.vouchers.NSVoucherListRecycleAdapter
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSReceiveVoucherFragment : NSFragment() {
-    private val voucherListModel: NSVouchersViewModel by lazy {
-        ViewModelProvider(this).get(NSVouchersViewModel::class.java)
+class NSPendingVoucherFragment : NSFragment(), NSJoiningVoucherCallback {
+    private val voucherListModel: NSJoiningVouchersViewModel by lazy {
+        ViewModelProvider(this).get(NSJoiningVouchersViewModel::class.java)
     }
-    private var _binding: NsFragmentReceiveVouchersBinding? = null
+    private var _binding: NsFragmentPendingVouchersBinding? = null
 
     private val voucherBinding get() = _binding!!
     private var voucherListAdapter: NSVoucherListRecycleAdapter? = null
     companion object {
-        fun newInstance() = NSReceiveVoucherFragment()
+        fun newInstance() = NSPendingVoucherFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentReceiveVouchersBinding.inflate(inflater, container, false)
+        _binding = NsFragmentPendingVouchersBinding.inflate(inflater, container, false)
         return voucherBinding.root
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onTabSelectEvent(event: NSReceiveEventTab) {
+    fun onTabSelectEvent(event: NSPendingEventTab) {
         Log.d(TAG, "onTabSelectEvent: $event")
-        viewCreated()
-        setListener()
+        if (!event.isAdded) {
+            with(voucherListModel) {
+                isPendingAdded = true
+                viewCreated()
+                setListener()
+            }
+        }
     }
 
     /**
      * View created
      */
     private fun viewCreated() {
-        with(voucherListModel) {
-            tabPosition = 1
-            setVoucherAdapter()
+        with(voucherBinding) {
+            with(voucherListModel) {
+                tabPosition = 0
+                setVoucherAdapter()
+            }
         }
         observeViewModel()
     }
@@ -62,11 +67,11 @@ class NSReceiveVoucherFragment : NSFragment() {
      * Set listener
      */
     private fun setListener() {
-        with(voucherBinding) {
-            with(voucherListModel) {
+        with(voucherListModel) {
+            with(voucherBinding) {
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
-                    getVoucherListData(pageIndex, "", false, isBottomProgress = false)
+                    getVoucherListData(pageIndex, "", false, isBottomProgress = false, this@NSPendingVoucherFragment)
                 }
             }
         }
@@ -85,13 +90,13 @@ class NSReceiveVoucherFragment : NSFragment() {
                             if (voucherResponse!!.nextPage) {
                                 val page: Int = voucherList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
-                                getVoucherListData(pageIndex, "", true, isBottomProgress = true)
+                                getVoucherListData(pageIndex, "", true, isBottomProgress = true, this@NSPendingVoucherFragment)
                             }
                         }
                     })
                 rvVoucherList.adapter = voucherListAdapter
                 pageIndex = "1"
-                getVoucherListData(pageIndex, "", true, isBottomProgress = false)
+                getVoucherListData(pageIndex, "", true, isBottomProgress = false, this@NSPendingVoucherFragment)
             }
         }
     }
@@ -147,12 +152,12 @@ class NSReceiveVoucherFragment : NSFragment() {
                     bottomProgress(isBottomProgressShowing)
                 }
 
-                isVoucherDataAvailable.observe(
+                /*isVoucherDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isVoucher ->
                     srlRefresh.isRefreshing = false
                     setVoucherData(isVoucher)
-                }
+                }*/
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                     srlRefresh.isRefreshing = false
@@ -182,22 +187,39 @@ class NSReceiveVoucherFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
         NSLog.d(tags, "onSearchClose: $event")
-        with(voucherListModel) {
-            pageIndex = "1"
-            if (tempVoucherList.isValidList()) {
-                voucherList.clear()
-                voucherList.addAll(tempVoucherList)
-                tempVoucherList.clear()
-                setVoucherData(voucherList.isValidList())
+        if (event.position == 0) {
+            with(voucherListModel) {
+                pageIndex = "1"
+                if (tempVoucherList.isValidList()) {
+                    voucherList.clear()
+                    voucherList.addAll(tempVoucherList)
+                    tempVoucherList.clear()
+                    setVoucherData(voucherList.isValidList())
+                }
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchStringEvent(event: SearchStringEvent) {
-        with(voucherListModel) {
-            tempVoucherList.addAll(voucherList)
-            getVoucherListData(pageIndex, event.search, true, isBottomProgress = false)
+        if (event.position == 0) {
+            with(voucherListModel) {
+                tempVoucherList.addAll(voucherList)
+                getVoucherListData(
+                    pageIndex,
+                    event.search,
+                    true,
+                    isBottomProgress = false,
+                    this@NSPendingVoucherFragment
+                )
+            }
         }
+    }
+
+    override fun onResponse(isAvailable: Boolean) {
+       with(voucherBinding) {
+           srlRefresh.isRefreshing = false
+           setVoucherData(isAvailable)
+       }
     }
 }

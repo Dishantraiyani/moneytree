@@ -2,7 +2,6 @@ package com.moneytree.app.ui.vouchers
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityReportsBinding
 import com.moneytree.app.databinding.NsActivityVouchersBinding
 
 class NSVouchersActivity : NSActivity() {
@@ -20,6 +19,6 @@ class NSVouchersActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSVoucherFragment.newInstance(), false, reportsBinding.vouchersContainer.id)
+        replaceCurrentFragment(NSMainVoucherFragment.newInstance(), false, reportsBinding.vouchersContainer.id)
     }
 }

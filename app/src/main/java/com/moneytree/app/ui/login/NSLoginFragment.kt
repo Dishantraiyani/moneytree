@@ -10,6 +10,7 @@ import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentLoginBinding
@@ -24,13 +25,14 @@ class NSLoginFragment : NSFragment() {
     private var _binding: NsFragmentLoginBinding? = null
 
     private val loginBinding get() = _binding!!
-
+    private var loginPref: NSLoginPreferences? = null
     companion object {
         fun newInstance() = NSLoginFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = NsFragmentLoginBinding.inflate(inflater, container, false)
+        loginPref = NSLoginPreferences(activity)
         viewCreated()
         setListener()
         return loginBinding.root
@@ -41,6 +43,17 @@ class NSLoginFragment : NSFragment() {
      */
     private fun viewCreated() {
         observeViewModel()
+
+        with(loginBinding) {
+            with(loginViewModel) {
+                if (!loginPref!!.prefUserName.isNullOrEmpty()) {
+                    strUserName = loginPref!!.prefUserName
+                    strPassword = loginPref!!.prefPassword
+                    etUserName.setText(strUserName)
+                    etPassword.setText(strPassword)
+                }
+            }
+        }
     }
 
     /**
@@ -93,6 +106,17 @@ class NSLoginFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onLoginRegisterEvent(loginEvent: NSLoginRegisterEvent) {
         NSConstants.IS_LOGIN_SUCCESS = true
+        with(loginBinding) {
+            with(loginViewModel) {
+                if (cbRememberPassword.isChecked) {
+                    if (strUserName!!.isNotEmpty() && strPassword!!.isNotEmpty()) {
+                        loginPref!!.prefUserName = strUserName
+                        loginPref!!.prefPassword = strPassword
+                    }
+                }
+            }
+        }
+
         switchActivity(
             NSMainActivity::class.java,
             bundleOf(

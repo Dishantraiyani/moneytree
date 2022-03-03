@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.wallets
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,7 @@ class NSWalletFragment : NSFragment() {
                 with(layoutHeader) {
                     tvHeaderBack.text = resources.getString(R.string.wallet)
                     clBack.visibility = View.VISIBLE
+                    ivSearch.visibility = View.VISIBLE
                 }
                 tvTransfer.visibility = View.VISIBLE
                 tvRedeem.visibility = View.GONE
@@ -64,17 +66,48 @@ class NSWalletFragment : NSFragment() {
      */
     private fun setListener() {
         with(mainBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    EventBus.getDefault().post(BackPressEvent())
-                }
+            with(walletModel) {
+                with(layoutHeader) {
+                    clBack.setOnClickListener {
+                        EventBus.getDefault().post(BackPressEvent())
+                    }
 
-                tvRedeem.setOnClickListener {
-                    switchActivity(NSAddRedeemActivity::class.java)
-                }
+                    tvRedeem.setOnClickListener {
+                        switchActivity(NSAddRedeemActivity::class.java)
+                    }
 
-                tvTransfer.setOnClickListener {
-                    switchActivity(NSTransferActivity::class.java)
+                    tvTransfer.setOnClickListener {
+                        switchActivity(NSTransferActivity::class.java)
+                    }
+
+                    ivSearch.setOnClickListener {
+                        cardSearch.visibility = View.VISIBLE
+                    }
+
+                    ivClose.setOnClickListener {
+                        cardSearch.visibility = View.GONE
+                        etSearch.setText("")
+                        hideKeyboard(cardSearch)
+                        EventBus.getDefault().post(SearchCloseEvent(tabPosition))
+                    }
+
+                    etSearch.setOnKeyListener(object: View.OnKeyListener{
+                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
+                            if (event.action == KeyEvent.ACTION_DOWN) {
+                                when (keyCode) {
+                                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
+                                        val strSearch = etSearch.text.toString()
+                                        if (strSearch.isNotEmpty()) {
+                                            hideKeyboard(cardSearch)
+                                            EventBus.getDefault().post(SearchStringEvent(strSearch, tabPosition))
+                                        }
+                                        return true
+                                    }
+                                }
+                            }
+                            return false
+                        }
+                    })
                 }
             }
         }
@@ -94,20 +127,27 @@ class NSWalletFragment : NSFragment() {
                     viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                         override fun onPageSelected(position: Int) {
                             super.onPageSelected(position)
+                            tabPosition = position
                             when (position) {
                                 0 -> {
                                     tvTransfer.visibility = View.VISIBLE
                                     tvRedeem.visibility = View.GONE
-                                    EventBus.getDefault().post(
-                                        NSTransactionsEventTab()
-                                    )
+                                    if (!isTransactionAdded) {
+                                        EventBus.getDefault().post(
+                                            NSTransactionsEventTab()
+                                        )
+                                        isTransactionAdded = true
+                                    }
                                 }
                                 1 -> {
                                     tvTransfer.visibility = View.GONE
                                     tvRedeem.visibility = View.VISIBLE
-                                    EventBus.getDefault().post(
-                                        NSRedemptionEventTab()
-                                    )
+                                    if (!isRedemptionAdded) {
+                                        EventBus.getDefault().post(
+                                            NSRedemptionEventTab()
+                                        )
+                                        isRedemptionAdded = true
+                                    }
                                 }
                             }
                         }

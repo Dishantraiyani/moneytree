@@ -447,8 +447,7 @@ interface RTApiInterface {
     @POST("wallet-list-api")
     fun getWalletList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String): Call<NSWalletListResponse>
 
-    /*@FormUrlEncoded
+    @FormUrlEncoded
     @POST("joining-voucher-transfer-info")
     fun getJoiningVoucherTransferInfo(@Field("token_id") token: String, @Field("memberid") memberId: String): Call<NSJoiningVoucherTransferResponse>
-*/
 }

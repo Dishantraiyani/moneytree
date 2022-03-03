@@ -11,13 +11,11 @@ import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.offers.NSOfferFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
 import com.moneytree.app.ui.register.NSRegisterFragment
-import com.moneytree.app.ui.vouchers.NSVoucherFragment
 import com.moneytree.app.ui.wallets.NSWalletFragment
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class MainFragment : NSFragment() {
-    private val pref = NSApplication.getInstance().getPrefs()
     private var _binding: FragmentMainBinding? = null
     private val mainBinding get() = _binding!!
 

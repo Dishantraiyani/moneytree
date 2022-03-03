@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.moneytree.app.R
 import com.moneytree.app.common.NSViewModel
-import com.moneytree.app.ui.vouchers.NSReceiveVoucherFragment
 import com.moneytree.app.ui.wallets.redeem.NSRedeemFragment
 import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 
@@ -16,6 +15,9 @@ import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 class NSWalletsViewModel(application: Application) : NSViewModel(application) {
     val mFragmentTitleList: MutableList<String> = ArrayList()
     val mFragmentList: MutableList<Fragment> = ArrayList()
+    var tabPosition: Int = 0
+    var isTransactionAdded = false
+    var isRedemptionAdded = false
 
     fun setFragmentData(activity: FragmentActivity) {
         with(activity.resources) {

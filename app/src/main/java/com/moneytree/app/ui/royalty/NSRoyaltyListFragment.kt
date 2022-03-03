@@ -187,24 +187,29 @@ class NSRoyaltyListFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
         NSLog.d(tags, "onSearchClose: $event")
-        with(royaltyListModel) {
-            pageIndex = "1"
-            if (tempRoyaltyList.isValidList()) {
-                royaltyList.clear()
-                royaltyList.addAll(tempRoyaltyList)
-                tempRoyaltyList.clear()
-                setRoyaltyData(royaltyList.isValidList())
+        if(event.position == 2) {
+            with(royaltyListModel) {
+                pageIndex = "1"
+                if (tempRoyaltyList.isValidList()) {
+                    royaltyList.clear()
+                    royaltyList.addAll(tempRoyaltyList)
+                    tempRoyaltyList.clear()
+                    setRoyaltyData(royaltyList.isValidList())
+                }
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchStringEvent(event: SearchStringEvent) {
-        with(royaltyListModel) {
-            tempRoyaltyList.addAll(royaltyList)
-            getRoyaltyListData(pageIndex, event.search, true,
-                isBottomProgress = false
-            )
+        if(event.position == 2) {
+            with(royaltyListModel) {
+                tempRoyaltyList.addAll(royaltyList)
+                getRoyaltyListData(
+                    pageIndex, event.search, true,
+                    isBottomProgress = false
+                )
+            }
         }
     }
 }

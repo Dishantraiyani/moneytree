@@ -32,6 +32,7 @@ android {
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
             buildConfigField 'String', 'PREFERENCE', ' "MoneyTree" '
+            buildConfigField 'String', 'LOGIN_PREFERENCE', ' "MoneyTreeLogin" '
             buildConfigField 'String', 'MAIL_ID', ' "test@gmail.com" '
             buildConfigField 'String', 'PHONE_NUMBER', ' "+12373629297" '
         }

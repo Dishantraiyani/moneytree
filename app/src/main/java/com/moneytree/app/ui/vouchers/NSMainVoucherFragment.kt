@@ -10,25 +10,27 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.databinding.NsFragmentVouchersBinding
+import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class NSVoucherFragment : NSFragment() {
+class NSMainVoucherFragment : NSFragment() {
     private val voucherListModel: NSVouchersViewModel by lazy {
         ViewModelProvider(this).get(NSVouchersViewModel::class.java)
     }
-    private var _binding: NsFragmentVouchersBinding? = null
+    private var _binding: NsFragmentMainVouchersBinding? = null
 
     private val voucherBinding get() = _binding!!
     companion object {
-        fun newInstance() = NSVoucherFragment()
+        fun newInstance() = NSMainVoucherFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentVouchersBinding.inflate(inflater, container, false)
+        _binding = NsFragmentMainVouchersBinding.inflate(inflater, container, false)
         viewCreated()
         setListener()
         return voucherBinding.root
@@ -46,7 +48,7 @@ class NSVoucherFragment : NSFragment() {
                     ivBack.visibility = View.VISIBLE
                     ivSearch.visibility = View.VISIBLE
                 }
-                setFragmentData(activity)
+                setMainFragmentData(activity)
                 setupViewPager(voucherContainer)
             }
         }
@@ -72,7 +74,7 @@ class NSVoucherFragment : NSFragment() {
                         cardSearch.visibility = View.GONE
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
-                        EventBus.getDefault().post(SearchCloseEvent())
+                        EventBus.getDefault().post(MainSearchCloseEvent())
                     }
 
                     etSearch.setOnKeyListener(object: View.OnKeyListener{
@@ -83,7 +85,7 @@ class NSVoucherFragment : NSFragment() {
                                         val strSearch = etSearch.text.toString()
                                         if (strSearch.isNotEmpty()) {
                                             hideKeyboard(cardSearch)
-                                            EventBus.getDefault().post(SearchStringEvent(strSearch))
+                                            EventBus.getDefault().post(MainSearchStringEvent(strSearch))
                                         }
                                         return true
                                     }
@@ -103,36 +105,47 @@ class NSVoucherFragment : NSFragment() {
             with(voucherListModel) {
                 try {
                     val adapter = ViewPagerMDAdapter(requireActivity())
-                    adapter.setFragment(mFragmentList)
+                    adapter.setFragment(mMainFragmentList)
                     viewPager.adapter = adapter
                     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                        tab.text = mFragmentTitleList[position]
+                        tab.text = mMainFragmentTitleList[position]
                     }.attach()
+                    viewPager.isUserInputEnabled = false
                     viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                         override fun onPageSelected(position: Int) {
                             super.onPageSelected(position)
                             when (position) {
                                 0 -> {
-                                    EventBus.getDefault().post(
-                                        NSPendingEventTab()
-                                    )
+                                    if (!isJoiningAdded) {
+                                        EventBus.getDefault().post(
+                                            NSJoiningVoucherEventTab()
+                                        )
+                                        isJoiningAdded = true
+                                    }
                                 }
                                 1 -> {
-                                    EventBus.getDefault().post(
-                                        NSReceiveEventTab()
-                                    )
-                                }
-                                2 -> {
-                                    EventBus.getDefault().post(NSTransferEventTab())
+                                    if (!isProductAdded) {
+                                        EventBus.getDefault().post(
+                                            NSProductVoucherEventTab()
+                                        )
+                                        isProductAdded = true
+                                    }
                                 }
                             }
                         }
                     })
-                    viewPager.offscreenPageLimit = 3
+                    viewPager.offscreenPageLimit = 2
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun clearSearchEvent(event: NSSearchClearEvent) {
+        with(voucherBinding) {
+            layoutHeader.etSearch.setText("")
         }
     }
 }

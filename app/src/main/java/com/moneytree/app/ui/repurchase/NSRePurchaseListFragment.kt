@@ -187,24 +187,29 @@ class NSRePurchaseListFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
         NSLog.d(tags, "onSearchClose: $event")
-        with(repurchaseListModel) {
-            pageIndex = "1"
-            if (tempRePurchaseList.isValidList()) {
-                rePurchaseList.clear()
-                rePurchaseList.addAll(tempRePurchaseList)
-                tempRePurchaseList.clear()
-                setRePurchaseData(rePurchaseList.isValidList())
+        if(event.position == 0) {
+            with(repurchaseListModel) {
+                pageIndex = "1"
+                if (tempRePurchaseList.isValidList()) {
+                    rePurchaseList.clear()
+                    rePurchaseList.addAll(tempRePurchaseList)
+                    tempRePurchaseList.clear()
+                    setRePurchaseData(rePurchaseList.isValidList())
+                }
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchStringEvent(event: SearchStringEvent) {
-        with(repurchaseListModel) {
-            tempRePurchaseList.addAll(rePurchaseList)
-            getRePurchaseListData(pageIndex, event.search, true,
-                isBottomProgress = false
-            )
+        if(event.position == 0) {
+            with(repurchaseListModel) {
+                tempRePurchaseList.addAll(rePurchaseList)
+                getRePurchaseListData(
+                    pageIndex, event.search, true,
+                    isBottomProgress = false
+                )
+            }
         }
     }
 }

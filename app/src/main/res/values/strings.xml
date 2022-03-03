@@ -362,4 +362,9 @@
     <string name="no_email_added">No Email added</string>
     <string name="no_mobile_added">No Mobile added</string>
     <string name="my_earning">₹ My Earning: %1$s</string>
+    <string name="status_royalty">Status: %1$s</string>
+    <string name="remember_password">Remember Password?</string>
+    <string name="product_voucher">Product Voucher</string>
+    <string name="joining_voucher">Joining Voucher</string>
+    <string name="voucher_list">Voucher List</string>
 </resources>

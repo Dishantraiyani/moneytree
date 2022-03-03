@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.vouchers.NSVoucherFragment">
+    tools:context=".ui.vouchers.NSMainVoucherFragment">
 
     <include android:id="@+id/layout_header"
         layout="@layout/layout_header"/>
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@id/layout_header"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"

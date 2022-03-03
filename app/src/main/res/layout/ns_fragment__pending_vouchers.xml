@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.vouchers.NSVoucherFragment">
+    tools:context=".ui.vouchers.joining.NSPendingVoucherFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_voucher_not_found"

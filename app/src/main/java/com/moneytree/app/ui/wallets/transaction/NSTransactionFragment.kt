@@ -1,6 +1,8 @@
 package com.moneytree.app.ui.wallets.transaction
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,12 +43,12 @@ class NSTransactionFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
+        observeViewModel()
         with(transactionBinding) {
             with(transactionListModel) {
                 setTransactionAdapter()
             }
         }
-        observeViewModel()
     }
 
     /**
@@ -82,7 +84,9 @@ class NSTransactionFragment : NSFragment() {
                     })
                 rvTransactions.adapter = transactionListAdapter
                 pageIndex = "1"
-                getTransactionListData(pageIndex, "", true, isBottomProgress = false)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    getTransactionListData(pageIndex, "", true, isBottomProgress = false)
+                }, 200)
             }
         }
     }
@@ -178,22 +182,26 @@ class NSTransactionFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
         NSLog.d(tags, "onSearchClose: $event")
-        with(transactionListModel) {
-            pageIndex = "1"
-            if (tempTransactionList.isValidList()) {
-                transactionList.clear()
-                transactionList.addAll(tempTransactionList)
-                tempTransactionList.clear()
-                setTransactionData(transactionList.isValidList())
+        if(event.position == 0) {
+            with(transactionListModel) {
+                pageIndex = "1"
+                if (tempTransactionList.isValidList()) {
+                    transactionList.clear()
+                    transactionList.addAll(tempTransactionList)
+                    tempTransactionList.clear()
+                    setTransactionData(transactionList.isValidList())
+                }
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchStringEvent(event: SearchStringEvent) {
-        with(transactionListModel) {
-            tempTransactionList.addAll(transactionList)
-            getTransactionListData(pageIndex, event.search, true, isBottomProgress = false)
+        if(event.position == 0) {
+            with(transactionListModel) {
+                tempTransactionList.addAll(transactionList)
+                getTransactionListData(pageIndex, event.search, true, isBottomProgress = false)
+            }
         }
     }
 }

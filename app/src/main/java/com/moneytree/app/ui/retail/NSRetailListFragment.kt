@@ -187,24 +187,29 @@ class NSRetailListFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
         NSLog.d(tags, "onSearchClose: $event")
-        with(retailListModel) {
-            pageIndex = "1"
-            if (tempRetailList.isValidList()) {
-                retailList.clear()
-                retailList.addAll(tempRetailList)
-                tempRetailList.clear()
-                setRetailData(retailList.isValidList())
+        if(event.position == 1) {
+            with(retailListModel) {
+                pageIndex = "1"
+                if (tempRetailList.isValidList()) {
+                    retailList.clear()
+                    retailList.addAll(tempRetailList)
+                    tempRetailList.clear()
+                    setRetailData(retailList.isValidList())
+                }
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchStringEvent(event: SearchStringEvent) {
-        with(retailListModel) {
-            tempRetailList.addAll(retailList)
-            getRetailListData(pageIndex, event.search, true,
-                isBottomProgress = false
-            )
+        if(event.position == 1) {
+            with(retailListModel) {
+                tempRetailList.addAll(retailList)
+                getRetailListData(
+                    pageIndex, event.search, true,
+                    isBottomProgress = false
+                )
+            }
         }
     }
 }

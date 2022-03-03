@@ -2,10 +2,12 @@ package com.moneytree.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -29,6 +31,8 @@ import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.slots.NSSlotsActivity
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import org.greenrobot.eventbus.EventBus
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
@@ -181,6 +185,8 @@ class NSHomeFragment : NSFragment() {
                     tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
                     tvJoinVoucher.text = addText(activity, R.string.dashboard_data, setJoinVoucher())
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
+                    //setBold(setRoyaltyStatus())
+                    tvStatusRoyalty.text = addText(activity, R.string.status_royalty, setRoyaltyStatus())
                     layoutHeader.tvAmountData.text = addText(activity, R.string.my_earning, setEarningAmount())
                     //This is display Message slider
                     /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
@@ -193,6 +199,18 @@ class NSHomeFragment : NSFragment() {
                     }*/
                 }
             }
+        }
+    }
+
+    private fun setBold(value: String) {
+        with(homeBinding) {
+            val html = "Status: <b>${value.lowercase().replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(
+                    Locale.getDefault()
+                ) else it.toString()
+            }}</b>"
+            tvStatusRoyalty.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
+            tvStatusRoyalty.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 

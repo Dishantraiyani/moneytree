@@ -175,22 +175,26 @@ class NSRedeemFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchClose(event: SearchCloseEvent) {
         NSLog.d(tags, "onSearchClose: $event")
-        with(redeemListModel) {
-            pageIndex = "1"
-            if (tempRedeemList.isValidList()) {
-                redeemList.clear()
-                redeemList.addAll(tempRedeemList)
-                tempRedeemList.clear()
-                setRedeemData(redeemList.isValidList())
+        if(event.position == 1) {
+            with(redeemListModel) {
+                pageIndex = "1"
+                if (tempRedeemList.isValidList()) {
+                    redeemList.clear()
+                    redeemList.addAll(tempRedeemList)
+                    tempRedeemList.clear()
+                    setRedeemData(redeemList.isValidList())
+                }
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchStringEvent(event: SearchStringEvent) {
-        with(redeemListModel) {
-            tempRedeemList.addAll(redeemList)
-            getRedeemListData(pageIndex, event.search, true, isBottomProgress = false)
+        if(event.position == 1) {
+            with(redeemListModel) {
+                tempRedeemList.addAll(redeemList)
+                getRedeemListData(pageIndex, event.search, true, isBottomProgress = false)
+            }
         }
     }
 }

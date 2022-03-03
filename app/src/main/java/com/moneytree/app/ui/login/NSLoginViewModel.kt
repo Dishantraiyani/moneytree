@@ -2,6 +2,7 @@ package com.moneytree.app.ui.login
 
 import android.app.Application
 import com.moneytree.app.R
+import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback

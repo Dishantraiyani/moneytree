@@ -59,6 +59,19 @@
                 app:layout_constraintEnd_toStartOf="@id/tv_balance"/>
 
             <TextView
+                android:id="@+id/tv_status_royalty"
+                style="@style/LayoutWidthHeightWrap"
+                android:clipToPadding="false"
+                android:textColor="@color/white"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center|start"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_balance"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
                 android:id="@+id/tv_balance"
                 style="@style/LayoutWidthHeightWrap"
                 android:clipToPadding="false"
@@ -67,7 +80,7 @@
                 android:fontFamily="@font/inter_semi_bold"
                 android:gravity="center|start"
                 android:textSize="@dimen/_18sdp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_status_royalty"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 

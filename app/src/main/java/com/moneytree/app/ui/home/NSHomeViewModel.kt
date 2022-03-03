@@ -1,6 +1,8 @@
 package com.moneytree.app.ui.home
 
 import android.app.Application
+import android.text.method.LinkMovementMethod
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -155,6 +157,16 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
             with(this?.data!!) {
                 return earningAmount.ifEmpty {
                     "0"
+                }
+            }
+        }
+    }
+
+    fun setRoyaltyStatus(): String {
+        with(dashboardData) {
+            with(this?.data!!) {
+                return royaltyName!!.ifEmpty {
+                    "Not Available"
                 }
             }
         }
