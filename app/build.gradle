@@ -71,7 +71,7 @@ ext {
     playServicesMapVersion = '18.0.2'
     playServicesLocationVersion = '19.0.1'
     mapVersion = "3.3.0"
-    roomVersion = '2.4.1'
+    roomVersion = '2.4.3'
 
 }
 

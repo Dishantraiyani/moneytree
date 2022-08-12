@@ -59,5 +59,8 @@ data class NSDataUser(
     var bankHolderName: String? = null,
     @SerializedName("ac_no")
     @Expose
-    var acNo: String? = null
+    var acNo: String? = null,
+	@SerializedName("is_active")
+	@Expose
+	var isActive: String? = null
 )

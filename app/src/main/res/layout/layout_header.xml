@@ -52,6 +52,7 @@
                 android:textColor="@color/white"
                 android:includeFontPadding="false"
                 android:layout_marginStart="@dimen/_10sdp"
+				app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/iv_back"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -77,6 +77,7 @@ class NSVoucherListRecycleAdapter(
                     tvVoucherCode.text = addText(activity, R.string.voucher_code, voucherCode!!)
                     tvMemberId.text = addText(activity, R.string.member_id, memberId!!)
                     tvMemberType.text = addText(activity, R.string.member_type, memberType!!)
+                    tvPackageName.text = packageName!!
                     if (type == 0) {
                         tvDateStatus.text = addText(activity, R.string.voucher_status, voucherStatus!!)
                     } else {

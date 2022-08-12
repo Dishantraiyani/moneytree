@@ -59,10 +59,12 @@
     <string name="delivery_proof">Delivery Proof</string>
     <string name="vendor_item">Vendor: %1$s</string>
 
-    <string name="user_name_register">UserName: %1$s</string>
-    <string name="email_register">Email: %1$s</string>
-    <string name="phone_register">Mobile: %1$s</string>
-    <string name="date_register">Entry Date: %1$s</string>
+    <string name="user_name_register"><b>UserName:</b> %1$s</string>
+    <string name="email_register"><b>Email:</b> %1$s</string>
+    <string name="phone_register"><b>Mobile:</b> %1$s</string>
+	<string name="date_register"><b>Entry Date:</b> %1$s</string>
+	<string name="full_name_value"><b>Full Name:</b> %1$s</string>
+	<string name="package_name"><b>Package Name:</b> %1$s</string>
 
     <string name="logout">Logout</string>
     <string name="wallet">Wallet</string>
@@ -367,4 +369,7 @@
     <string name="product_voucher">Product Voucher</string>
     <string name="joining_voucher">Joining Voucher</string>
     <string name="voucher_list">Voucher List</string>
+	<string name="package_name_title">Package Name:</string>
+	<string name="active">ACTIVE</string>
+	<string name="deActive">INACTIVE</string>
 </resources>

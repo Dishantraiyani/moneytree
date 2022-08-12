@@ -72,10 +72,12 @@ class NSRegisterListRecycleAdapter(
         fun bind(response: NSRegisterListData) {
             with(registerBinding) {
                 with(response) {
-                    tvUserNameRegister.text = addText(activity, R.string.user_name_register, username!!)
-                    tvEmailRegister.text = addText(activity, R.string.email_register, email!!)
-                    tvPhoneRegister.text = addText(activity, R.string.phone_register, mobile!!)
-                    tvDate.text = addText(activity, R.string.date_register, createdAt!!)
+                    tvUserNameRegister.text = username?.let { addText(activity, R.string.user_name_register, it) }
+                    tvEmailRegister.text = email?.let { addText(activity, R.string.email_register, it) }
+                    tvPhoneRegister.text = mobile?.let { addText(activity, R.string.phone_register, it) }
+                    tvDate.text = createdAt?.let { addText(activity, R.string.date_register, it) }
+                    tvFullNameRegister.text = fullName?.let { addText(activity, R.string.full_name_value, it) }
+                    tvPackageName.text = packageName!!
                 }
             }
         }

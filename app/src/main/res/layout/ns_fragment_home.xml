@@ -27,6 +27,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible">
 
+			<TextView
+				android:id="@+id/tv_active_title"
+				style="@style/LayoutWidthHeightWrap"
+				android:text="@string/status_title"
+				android:textSize="@dimen/_7sdp"
+				android:textColor="@color/white"
+				android:includeFontPadding="false"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginStart="@dimen/_3sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				android:visibility="visible"/>
+
+			<TextView
+				android:id="@+id/tv_active"
+				style="@style/LayoutWidthHeightWrap"
+				android:textSize="@dimen/_7sdp"
+				android:textColor="@color/white"
+				android:includeFontPadding="false"
+				android:fontFamily="@font/inter_semi_bold"
+				android:layout_marginStart="@dimen/_3sdp"
+				app:layout_constraintStart_toEndOf="@id/tv_active_title"
+				app:layout_constraintTop_toTopOf="parent"
+				android:visibility="visible"/>
+
             <TextView
                 android:id="@+id/tv_user_name"
                 style="@style/LayoutWidthHeightZeroWrap"
@@ -37,7 +62,7 @@
                 android:gravity="center_vertical|start"
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_active"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:layout_constraintBottom_toTopOf="@+id/tv_account_no"

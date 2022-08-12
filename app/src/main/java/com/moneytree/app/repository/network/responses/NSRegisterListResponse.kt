@@ -45,5 +45,14 @@ data class NSRegisterListData(
     var createdAt: String? = null,
     @SerializedName("set_default")
     @Expose
-    var setDefault: String? = null
+    var setDefault: String? = null,
+	@SerializedName("package_id")
+	@Expose
+	var packageId: String? = null,
+	@SerializedName("package_name")
+	@Expose
+	var packageName: String? = null,
+	@SerializedName("is_active")
+	@Expose
+	var isActive: String? = null
 )

@@ -54,5 +54,11 @@ data class NSVoucherListData(
     var createdId: String? = null,
     @SerializedName("updated_id")
     @Expose
-    var updatedId: String? = null
+    var updatedId: String? = null,
+	@SerializedName("package_id")
+	@Expose
+	var packageId: String? = null,
+	@SerializedName("package_name")
+	@Expose
+	var packageName: String? = null
 )

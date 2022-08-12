@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -40,8 +41,6 @@ class NSApplication : Application() {
         preferences = NSPreferences(this)
         apiManager = NSApiManager()
         MainDatabase.appDatabase(applicationContext)
-
-        startNetworkListener()
         isAlertShown = false
     }
 
@@ -74,39 +73,33 @@ class NSApplication : Application() {
          *
          * @return Whether internet connected or not
          */
-        fun isNetworkConnected(): Boolean = isNetworkConnected
+        fun isNetworkConnected(): Boolean = isOnline(getInstance().applicationContext)
 
-        /**
-         * To start the network connection listener
-         */
-        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-        private fun startNetworkListener() {
-            val connectivityManager =
-                getInstance().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val builder = NetworkRequest.Builder()
-            connectivityManager.registerNetworkCallback(builder.build(),
-                object :
-                    ConnectivityManager.NetworkCallback() {
-                    override fun onAvailable(network: Network) {
-                        isNetworkConnected = true
-                        EventBus.getDefault()
-                            .post(
-                                NSNetworkStateChangeEvent(
-                                    isNetworkConnected
-                                )
-                            )
-                    }
-
-                    override fun onLost(network: Network) {
-                        isNetworkConnected = false
-                        EventBus.getDefault()
-                            .post(
-                                NSNetworkStateChangeEvent(
-                                    isNetworkConnected
-                                )
-                            )
-                    }
-                })
-        }
+		/**
+		 * To start the network connection listener
+		 */
+		private fun isOnline(context: Context): Boolean {
+			val connectivityManager =
+				context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+			val capabilities =
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+					connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+				} else {
+					@Suppress("DEPRECATION") val networkInfo =
+						connectivityManager.activeNetworkInfo ?: return false
+					@Suppress("DEPRECATION")
+					return networkInfo.isConnected
+				}
+			if (capabilities != null) {
+				if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+					return true
+				} else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+					return true
+				} else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+					return true
+				}
+			}
+			return false
+		}
     }
 }

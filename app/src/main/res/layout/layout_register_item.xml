@@ -31,6 +31,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+		<TextView
+			android:id="@+id/tv_full_name_register"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="MoneyTree"
+			android:textSize="@dimen/_11sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_user_name_register" />
+
         <TextView
             android:id="@+id/tv_email_register"
             style="@style/LoginSubFontsZeroWrap"
@@ -46,7 +63,7 @@
             android:paddingEnd="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_user_name_register" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_full_name_register" />
 
         <TextView
             android:id="@+id/tv_phone_register"
@@ -65,6 +82,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_email_register" />
 
+		<TextView
+			android:id="@+id/tv_package_id"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/package_name_title"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_phone_register" />
+
+		<TextView
+			android:id="@+id/tv_package_name"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Notification"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="0dp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tv_package_id"
+			app:layout_constraintTop_toBottomOf="@+id/tv_phone_register" />
+
         <TextView
             android:id="@+id/tv_date"
             style="@style/LoginSubFontsZeroWrap"
@@ -81,7 +131,7 @@
             android:paddingBottom="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_phone_register" />
+            app:layout_constraintTop_toBottomOf="@id/tv_package_id" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
