@@ -1,18 +1,23 @@
 package com.moneytree.app.ui.wallets
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.NSRequestCodes.REQUEST_WALLET_UPDATE
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.FragmentMainBinding
 import com.moneytree.app.databinding.NsFragmentWalletBinding
 import com.moneytree.app.ui.vouchers.NSVouchersViewModel
@@ -28,6 +33,7 @@ class NSWalletFragment : NSFragment() {
     }
     private var _binding: NsFragmentWalletBinding? = null
     private val mainBinding get() = _binding!!
+	private var amountAvailable = "0"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +79,12 @@ class NSWalletFragment : NSFragment() {
                     }
 
                     tvRedeem.setOnClickListener {
-                        switchActivity(NSAddRedeemActivity::class.java)
+						switchResultActivity(
+							dataResult, NSAddRedeemActivity::class.java,
+							bundleOf(
+								NSConstants.KEY_AVAILABLE_BALANCE to amountAvailable
+							)
+						)
                     }
 
                     tvTransfer.setOnClickListener {
@@ -163,9 +174,17 @@ class NSWalletFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun walletAmount(event: NSWalletAmount) {
         with(mainBinding) {
+			amountAvailable = event.amount
             tvTotalBalance.text = addText(requireActivity(), R.string.balance, event.amount)
         }
     }
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onResultEvent(event: NSActivityEvent) {
+		if (event.resultCode == REQUEST_WALLET_UPDATE) {
+			EventBus.getDefault().post(NSRedeemWalletUpdateEvent())
+		}
+	}
 
     companion object {
         fun newInstance() = NSWalletFragment()

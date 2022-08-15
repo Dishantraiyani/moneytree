@@ -11,14 +11,14 @@ class NSAddRedeemActivity : NSActivity() {
         super.onCreate(savedInstanceState)
         addRedeemBinding = ActivityAddRedeemBinding.inflate(layoutInflater)
         setContentView(addRedeemBinding.root)
-        loadInitialFragment()
+        loadInitialFragment(intent.extras)
     }
 
     /**
      * To initialize add redeem fragment
      *
      */
-    private fun loadInitialFragment() {
-        replaceCurrentFragment(NSAddRedeemFragment.newInstance(), false, addRedeemBinding.addRedeemContainer.id)
+    private fun loadInitialFragment(bundle: Bundle?) {
+        replaceCurrentFragment(NSAddRedeemFragment.newInstance(bundle), false, addRedeemBinding.addRedeemContainer.id)
     }
 }

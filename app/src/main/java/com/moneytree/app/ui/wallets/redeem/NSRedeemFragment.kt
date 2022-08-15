@@ -13,6 +13,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRedeemBinding
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -65,6 +66,14 @@ class NSRedeemFragment : NSFragment() {
         }
     }
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onWalletUpdateData(event: NSRedeemWalletUpdateEvent) {
+		with(redeemListModel) {
+			pageIndex = "1"
+			getRedeemListData(pageIndex, "", true, isBottomProgress = false)
+		}
+	}
+
     /**
      * To add data of redeem in list
      */
@@ -104,7 +113,13 @@ class NSRedeemFragment : NSFragment() {
         with(redeemListModel) {
             redeemDataManage(isRedeem)
             if (isRedeem) {
-                redeemListAdapter!!.clearData()
+				var amount = "0"
+				if (redeemResponse!!.walletAmount.isValidList()) {
+					amount = redeemResponse!!.walletAmount[0].amount!!
+				}
+				EventBus.getDefault().post(NSWalletAmount(amount))
+
+				redeemListAdapter!!.clearData()
                 redeemListAdapter!!.updateData(redeemList)
             }
         }

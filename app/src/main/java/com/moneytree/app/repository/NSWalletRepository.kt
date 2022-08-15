@@ -4,9 +4,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
-import com.moneytree.app.repository.network.responses.NSRoyaltyInfoResponse
-import com.moneytree.app.repository.network.responses.NSRoyaltyListResponse
-import com.moneytree.app.repository.network.responses.NSWalletListResponse
+import com.moneytree.app.repository.network.responses.*
 import retrofit2.Response
 
 /**
@@ -37,4 +35,48 @@ object NSWalletRepository {
             }
         })
     }
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getWalletRedeemList(pageIndex: String, search: String,
+									 viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.walletRedeemList(pageIndex, search, object :
+			NSRetrofitCallback<NSRedeemListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REDEEM_LIST_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSRedeemListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun redeemWalletSaveMoney(amount: String, password: String,
+							viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.redeemWalletSave(amount, password, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REDEEM_SAVE_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

@@ -87,9 +87,9 @@ open class NSFragment : Fragment() {
      *
      * @param message The message to show as alert message
      */
-    protected fun showSuccessDialog(title: String?, message: String?) {
+    protected fun showSuccessDialog(title: String?, message: String?, alertKey: String = NSConstants.POSITIVE_CLICK) {
         val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = NSConstants.POSITIVE_CLICK)
+        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey)
     }
 
     /**
@@ -153,4 +153,11 @@ open class NSFragment : Fragment() {
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
+	val dataResult =
+		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+			val resultCode = result.resultCode
+			val data = result.data
+			EventBus.getDefault().post(NSActivityEvent(resultCode, data))
+		}
 }

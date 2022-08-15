@@ -18,9 +18,11 @@ class NSConstants {
         const val MEMBER_TREE_ENABLE = "member_tree_enable"
         const val KEY_SLOTS_INFO = "key_slots_info"
         const val KEY_CHANGE_PASSWORD = "key_change_password"
+		const val KEY_AVAILABLE_BALANCE = "key_available_balance"
 
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"
+        const val REDEEM_SAVE_CLICK = "redeem_save_button_click"
         const val LOGOUT_CLICK = "logout_button_click"
 
         //Pagination

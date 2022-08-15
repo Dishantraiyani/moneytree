@@ -372,4 +372,6 @@
 	<string name="package_name_title">Package Name:</string>
 	<string name="active">ACTIVE</string>
 	<string name="deActive">INACTIVE</string>
+    <string name="please_enter_amount">Please Enter Amount</string>
+	<string name="please_enter_valid_amount">Please Enter Valid Amount</string>
 </resources>

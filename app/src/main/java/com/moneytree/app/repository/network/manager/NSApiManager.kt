@@ -351,6 +351,24 @@ class NSApiManager {
     fun getWalletList(pageIndex: String, search: String, callback: NSRetrofitCallback<NSWalletListResponse>) {
         request(unAuthorised3020Client.getWalletList(NSUserManager.getAuthToken()!!, pageIndex, search), callback)
     }
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun walletRedeemList(pageIndex: String, search: String, callback: NSRetrofitCallback<NSRedeemListResponse>) {
+		request(unAuthorised3020Client.walletRedemptionList(NSUserManager.getAuthToken()!!, pageIndex, search), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun redeemWalletSave(amount: String, password: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.walletRedeemMoney(NSUserManager.getAuthToken()!!, amount, password), callback)
+	}
 }
 
 /**
@@ -450,4 +468,17 @@ interface RTApiInterface {
     @FormUrlEncoded
     @POST("joining-voucher-transfer-info")
     fun getJoiningVoucherTransferInfo(@Field("token_id") token: String, @Field("memberid") memberId: String): Call<NSJoiningVoucherTransferResponse>
+
+	@FormUrlEncoded
+	@POST("wallet-transfer-api")
+	fun walletTransfer(@Field("token_id") token: String, @Field("memberId") memberId: String, @Field("amount") amount: String, @Field("remark") remark: String, @Field("transaction_password") transactionPassword: String): Call<NSJoiningVoucherTransferResponse>
+
+	@FormUrlEncoded
+	@POST("wallet-redemption-api")
+	fun walletRedemptionList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String): Call<NSRedeemListResponse>
+
+	@FormUrlEncoded
+	@POST("save-wallet-redemption-api")
+	fun walletRedeemMoney(@Field("token_id") token: String, @Field("amount") amount: String, @Field("transaction_password") transactionPassword: String): Call<NSSuccessResponse>
+
 }

@@ -9,6 +9,7 @@ import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
 import com.moneytree.app.R
@@ -81,6 +82,20 @@ fun <T : Activity> Fragment.switchActivity(
     destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
 ) {
     startActivity(getIntent(destination, bundle, flags))
+}
+
+/**
+ * Used for switching to an activity from the fragment with additional flags and bundle parameters
+ *
+ * @param destination destination screen to move the user
+ * @param flags       flags needed to be set in the intent
+ * @param bundle      additional information to be carried
+ * @param <T>         represents the common template, able to get calling class using <T> format
+ */
+fun <T : Activity> Fragment.switchResultActivity(launcher: ActivityResultLauncher<Intent?>,
+												 destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
+) {
+	launcher.launch(getIntent(destination, bundle, flags))
 }
 
 /**

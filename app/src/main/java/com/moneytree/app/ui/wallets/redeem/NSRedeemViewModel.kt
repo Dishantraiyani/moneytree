@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSVoucherRepository
+import com.moneytree.app.repository.NSWalletRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
+import com.moneytree.app.repository.network.responses.NSRedeemListResponse
 import com.moneytree.app.repository.network.responses.NSVoucherListData
 import com.moneytree.app.repository.network.responses.NSVoucherListResponse
+import com.moneytree.app.repository.network.responses.NSWalletRedeemData
 
 
 /**
@@ -15,11 +18,11 @@ import com.moneytree.app.repository.network.responses.NSVoucherListResponse
  */
 class NSRedeemViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
-    var redeemList: MutableList<NSVoucherListData> = arrayListOf()
-    var tempRedeemList: MutableList<NSVoucherListData> = arrayListOf()
+    var redeemList: MutableList<NSWalletRedeemData> = arrayListOf()
+    var tempRedeemList: MutableList<NSWalletRedeemData> = arrayListOf()
     var isRedeemDataAvailable = MutableLiveData<Boolean>()
     var pageIndex: String = "1"
-    var redeemResponse: NSVoucherListResponse? = null
+    var redeemResponse: NSRedeemListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
 
@@ -39,7 +42,7 @@ class NSRedeemViewModel(application: Application) : NSViewModel(application),
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-        NSVoucherRepository.getJoiningVoucherPendingData(pageIndex, search, this)
+        NSWalletRepository.getWalletRedeemList(pageIndex, search, this)
     }
 
     override fun <T> onSuccess(data: T) {
@@ -47,7 +50,7 @@ class NSRedeemViewModel(application: Application) : NSViewModel(application),
         if (isBottomProgressShow) {
             isBottomProgressShowing.value = false
         }
-        val voucherMainListData = data as NSVoucherListResponse
+        val voucherMainListData = data as NSRedeemListResponse
         redeemResponse = voucherMainListData
         if (voucherMainListData.data != null) {
             if (voucherMainListData.data.isValidList()) {

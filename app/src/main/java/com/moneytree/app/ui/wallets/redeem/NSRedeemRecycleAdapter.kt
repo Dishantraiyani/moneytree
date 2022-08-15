@@ -13,16 +13,17 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutRedeemBinding
 import com.moneytree.app.databinding.LayoutTransactionBinding
 import com.moneytree.app.repository.network.responses.NSVoucherListData
+import com.moneytree.app.repository.network.responses.NSWalletRedeemData
 
 class NSRedeemRecycleAdapter(
     activityNS: Activity,
     onPageChange: NSPageChangeCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
-    private val redeemData: MutableList<NSVoucherListData> = arrayListOf()
+    private val redeemData: MutableList<NSWalletRedeemData> = arrayListOf()
     private val onPageChangeCallback: NSPageChangeCallback = onPageChange
 
-    fun updateData(redeemList: MutableList<NSVoucherListData>) {
+    fun updateData(redeemList: MutableList<NSWalletRedeemData>) {
         redeemData.addAll(redeemList)
         if (redeemList.isValidList()) {
             notifyItemRangeChanged(0, redeemData.size - 1)
@@ -71,14 +72,14 @@ class NSRedeemRecycleAdapter(
          *
          * @param response The redeem details
          */
-        fun bind(response: NSVoucherListData) {
+        fun bind(response: NSWalletRedeemData) {
             with(redeemBinding) {
                 with(response) {
                     tvEntryDate.text = addText(activity, R.string.entry_date, createdAt!!)
-                    tvAmount.text = "10"
-                    tvAdmin.text = "0.5"
-                    tvTds.text = "0.5"
-                    tvTotal.text = "9"
+                    tvAmount.text = amount
+                    tvAdmin.text = adminCharges
+                    tvTds.text = tdsCharges
+                    tvTotal.text = total
                 }
             }
         }

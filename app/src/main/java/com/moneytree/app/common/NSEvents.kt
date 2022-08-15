@@ -91,3 +91,13 @@ class NSJoiningVoucherEventTab()
 class NSProductVoucherEventTab()
 
 class NSSearchClearEvent()
+
+class NSRedeemWalletUpdateEvent()
+
+/**
+ * Event that triggered when the permission check
+ */
+class NSActivityEvent(
+	val resultCode: Int,
+	val data: Intent?
+)

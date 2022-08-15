@@ -42,19 +42,19 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"/>
 
-            <TextView
-                android:id="@+id/tvTotalBalance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvBalanceTitle"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/inter_semi_bold"
-                android:includeFontPadding="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_18sdp"
-                android:textStyle="bold"
-                tools:text="₹ 200.00" />
+			<TextView
+				android:id="@+id/tvTotalBalance"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/tvBalanceTitle"
+				android:layout_marginStart="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_5sdp"
+				android:fontFamily="@font/inter_semi_bold"
+				android:includeFontPadding="false"
+				android:textColor="@color/white"
+				android:textSize="@dimen/_18sdp"
+				android:textStyle="bold"
+				tools:text="₹ 200.00" />
 
             <TextView
                 android:id="@+id/tv_transfer"
