@@ -60,8 +60,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:contentDescription="@string/username_title" />
 
-                <TextView
-                    android:id="@+id/tv_wallet_amount"
+                <EditText
+                    android:id="@+id/et_transaction_id"
                     style="@style/LoginSubFontsZeroWrap"
                     android:minHeight="@dimen/_38sdp"
                     android:textColor="@color/black"
@@ -80,6 +80,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+			android:id="@+id/tv_amount_title"
             style="@style/LoginSubFontsWrap"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
@@ -142,6 +143,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+			android:id="@+id/tv_remark"
             style="@style/LoginSubFontsWrap"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
@@ -204,6 +206,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+			android:id="@+id/tv_password"
             style="@style/LoginSubFontsWrap"
             android:text="@string/transaction_password"
             android:textColor="@color/black"

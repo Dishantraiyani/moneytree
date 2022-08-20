@@ -94,6 +94,8 @@ class NSSearchClearEvent()
 
 class NSRedeemWalletUpdateEvent()
 
+class NSRedeemWalletUpdateTransferEvent()
+
 /**
  * Event that triggered when the permission check
  */

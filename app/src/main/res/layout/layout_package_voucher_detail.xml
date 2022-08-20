@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/cl_notification" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_voucher_detail"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingVertical="@dimen/_10sdp"
+		android:paddingHorizontal="@dimen/_10sdp"
+		app:layout_constraintBottom_toTopOf="@id/view_line"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:id="@+id/tv_voucher_id"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="UserName"
+			android:gravity="start|center"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textStyle="bold"
+			android:fontFamily="@font/inter_semi_bold"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toStartOf="@id/tv_voucher_code"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+
+		<TextView
+			android:id="@+id/tv_voucher_code"
+			style="@style/LoginSubFontsZeroWrap"
+			android:text="@string/package_name_title"
+			android:gravity="end|center"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toEndOf="@id/tv_voucher_id"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<View
+		android:id="@+id/view_line"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_color"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

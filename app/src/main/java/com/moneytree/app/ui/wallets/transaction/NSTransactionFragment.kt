@@ -65,6 +65,14 @@ class NSTransactionFragment : NSFragment() {
         }
     }
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onWalletUpdateData(event: NSRedeemWalletUpdateTransferEvent) {
+		with(transactionListModel) {
+			pageIndex = "1"
+			getTransactionListData(pageIndex, "", true, isBottomProgress = false)
+		}
+	}
+
     /**
      * To add data of vouchers in list
      */

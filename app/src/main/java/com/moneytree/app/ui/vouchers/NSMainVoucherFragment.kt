@@ -10,7 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
+import com.moneytree.app.ui.packageVoucher.packageList.NSPackageListActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -94,6 +96,10 @@ class NSMainVoucherFragment : NSFragment() {
                             return false
                         }
                     })
+
+					voucherBinding.btnSubmit.setOnClickListener {
+						switchActivity(NSPackageListActivity::class.java)
+					}
                 }
             }
         }

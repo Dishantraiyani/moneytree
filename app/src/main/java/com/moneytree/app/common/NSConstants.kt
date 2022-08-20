@@ -19,6 +19,11 @@ class NSConstants {
         const val KEY_SLOTS_INFO = "key_slots_info"
         const val KEY_CHANGE_PASSWORD = "key_change_password"
 		const val KEY_AVAILABLE_BALANCE = "key_available_balance"
+		const val KEY_WALLET_VERIFY = "key_wallet_verify"
+		const val KEY_PACKAGE_DETAIL = "key_package_detail"
+		const val KEY_IS_VOUCHER_FROM_TRANSFER = "key_voucher_from_transfer"
+		const val KEY_IS_PACKAGE_ID = "key_voucher_package_id"
+		const val KEY_IS_VOUCHER_QUANTITY = "key_voucher_quantity"
 
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"

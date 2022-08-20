@@ -11,14 +11,14 @@ class NSTransferActivity : NSActivity() {
         super.onCreate(savedInstanceState)
         transferBinding = ActivityTransferBinding.inflate(layoutInflater)
         setContentView(transferBinding.root)
-        loadInitialFragment()
+        loadInitialFragment(intent.extras)
     }
 
     /**
      * To initialize transfer fragment
      *
      */
-    private fun loadInitialFragment() {
-        replaceCurrentFragment(NSTransferFragment.newInstance(), false, transferBinding.transferContainer.id)
+    private fun loadInitialFragment(bundle: Bundle?) {
+        replaceCurrentFragment(NSTransferFragment.newInstance(bundle), false, transferBinding.transferContainer.id)
     }
 }

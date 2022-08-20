@@ -9,6 +9,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.databinding.FragmentMainBinding
 import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.offers.NSOfferFragment
+import com.moneytree.app.ui.packageVoucher.packageList.NSPackageListFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
 import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.wallets.NSWalletFragment
@@ -61,6 +62,7 @@ class MainFragment : NSFragment() {
                     }
                     R.id.tb_register -> {
                         replaceFragment(NSRegisterFragment.newInstance(), false, fragmentMainContainer.id)
+						//replaceFragment(NSPackageListFragment.newInstance(), false, fragmentMainContainer.id)
                     }
                     R.id.tb_offers -> {
                         pref.offerTabPosition = 0

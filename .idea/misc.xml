@@ -7,12 +7,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_add_redeem.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_package_list.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_verify_member.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_redeem.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_add_redeem.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_main_vouchers.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_offers.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_redeem.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_register.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_reports.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_repurchase_info.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_retail_info.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_royalty_list.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_transaction.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_transfer.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_transfer_vouchers.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_wallet.xml" value="0.32083333333333336" />
       </map>
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

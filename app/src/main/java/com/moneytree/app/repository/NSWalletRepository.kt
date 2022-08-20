@@ -79,4 +79,26 @@ object NSWalletRepository {
 			}
 		})
 	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun transferWalletMoney(transactionId: String, amount: String, remark: String, password: String,
+							  viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.transferWalletAmount(transactionId, amount, remark, password, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_TRANSFER_WALLET_AMOUNT) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

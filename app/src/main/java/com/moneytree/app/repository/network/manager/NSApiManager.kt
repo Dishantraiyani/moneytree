@@ -369,6 +369,51 @@ class NSApiManager {
 	fun redeemWalletSave(amount: String, password: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(unAuthorised3020Client.walletRedeemMoney(NSUserManager.getAuthToken()!!, amount, password), callback)
 	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun transferWalletAmount(transactionId: String, amount: String, remark: String, password: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.transferWalletMoney(NSUserManager.getAuthToken()!!, transactionId, amount, remark, password), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getMemberDetail(memberId: String, callback: NSRetrofitCallback<NSMemberDetailResponse>) {
+		request(unAuthorised3020Client.verifyWalletMember(NSUserManager.getAuthToken()!!, memberId), callback)
+	}
+
+	/**
+	 * To call the package list data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getPackageMasterList(callback: NSRetrofitCallback<NSPackageResponse>) {
+		request(unAuthorised3020Client.packageMaster(NSUserManager.getAuthToken()!!), callback)
+	}
+
+	/**
+	 * To call the package vise Voucher Quantity data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getPackageViseVoucherQty(packageId: String, callback: NSRetrofitCallback<NSPackageVoucherQntResponse>) {
+		request(unAuthorised3020Client.packageViseVoucherQuantity(NSUserManager.getAuthToken()!!, packageId), callback)
+	}
+
+	/**
+	 * To call the package vise Voucher Quantity data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun joiningVoucherTransfer(transferId: String, packageId: String, voucherQty: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.joiningVoucherTransferSave(NSUserManager.getAuthToken()!!, transferId, packageId, voucherQty), callback)
+	}
 }
 
 /**
@@ -470,10 +515,6 @@ interface RTApiInterface {
     fun getJoiningVoucherTransferInfo(@Field("token_id") token: String, @Field("memberid") memberId: String): Call<NSJoiningVoucherTransferResponse>
 
 	@FormUrlEncoded
-	@POST("wallet-transfer-api")
-	fun walletTransfer(@Field("token_id") token: String, @Field("memberId") memberId: String, @Field("amount") amount: String, @Field("remark") remark: String, @Field("transaction_password") transactionPassword: String): Call<NSJoiningVoucherTransferResponse>
-
-	@FormUrlEncoded
 	@POST("wallet-redemption-api")
 	fun walletRedemptionList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String): Call<NSRedeemListResponse>
 
@@ -481,4 +522,23 @@ interface RTApiInterface {
 	@POST("save-wallet-redemption-api")
 	fun walletRedeemMoney(@Field("token_id") token: String, @Field("amount") amount: String, @Field("transaction_password") transactionPassword: String): Call<NSSuccessResponse>
 
+	@FormUrlEncoded
+	@POST("wallet-transfer-api")
+	fun transferWalletMoney(@Field("token_id") token: String, @Field("transfer_id") transferId: String, @Field("amount") amount: String, @Field("remark") remark: String, @Field("transaction_password") transactionPassword: String): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("member-info-api")
+	fun verifyWalletMember(@Field("token_id") token: String, @Field("memberid") memberId: String): Call<NSMemberDetailResponse>
+
+	@FormUrlEncoded
+	@POST("package-master-api")
+	fun packageMaster(@Field("token_id") token: String): Call<NSPackageResponse>
+
+	@FormUrlEncoded
+	@POST("package-wise-voucher-qty-api")
+	fun packageViseVoucherQuantity(@Field("token_id") token: String, @Field("package_id") packageId: String): Call<NSPackageVoucherQntResponse>
+
+	@FormUrlEncoded
+	@POST("package-wise-voucher-qty-api")
+	fun joiningVoucherTransferSave(@Field("token_id") token: String, @Field("transfer_id") transferId: String, @Field("package_id") packageId: String, @Field("voucher_qty") voucherQty: String): Call<NSSuccessResponse>
 }

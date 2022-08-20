@@ -8,6 +8,7 @@ import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.requests.NSLoginRequest
 import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
 import com.moneytree.app.repository.network.responses.NSLogoutResponse
+import com.moneytree.app.repository.network.responses.NSMemberDetailResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
 import retrofit2.Response
 
@@ -101,4 +102,25 @@ object NSUserRepository {
             }
         })
     }
+
+	/**
+	 * To make logout
+	 *
+	 * @param viewModelCallback The callback to communicate back to view model
+	 */
+	fun getMemberDetail(memberId: String, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getMemberDetail(memberId, object : NSRetrofitCallback<NSMemberDetailResponse>(
+			viewModelCallback, NSApiErrorHandler.ERROR_MEMBER_DETAIL
+		) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSMemberDetailResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.register.NSRegisterFragment">
+
+    <include android:id="@+id/layout_header"
+        layout="@layout/layout_header"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_package_not_found"
+        style="@style/LayoutWidthHeightZero"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_package_not_found"
+            style="@style/LayoutWidthHeightZero"
+            android:paddingVertical="@dimen/_6sdp"
+            android:clipToPadding="false"
+            android:text="@string/no_item"
+            android:textColor="@color/black"
+            android:gravity="center|bottom"
+            android:textSize="@dimen/_18sdp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_package_not_found_sub"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_package_not_found_sub"
+            style="@style/LayoutWidthHeightZero"
+            android:clipToPadding="false"
+            android:text="@string/no_package_available"
+            android:textColor="@color/gray_text"
+            android:gravity="center|top"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_package_not_found"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+	<ScrollView
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<androidx.cardview.widget.CardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="@dimen/_15sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				app:cardCornerRadius="@dimen/_5sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:paddingVertical="@dimen/_15sdp">
+
+						<TextView
+							style="@style/LoginSubFontsWrap"
+							android:layout_marginStart="@dimen/_5sdp"
+							android:text="@string/voucher_qty"
+							android:textColor="@color/orange"
+							android:textStyle="bold"
+							android:textSize="@dimen/_12sdp" />
+
+						<TextView
+							android:id="@+id/tv_voucher_qty"
+							style="@style/LoginSubFontsZeroWrap"
+							android:layout_width="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/_12sdp"
+							android:background="@drawable/phone_white_background"
+							android:gravity="start|center_vertical"
+							android:paddingHorizontal="@dimen/_5sdp"
+							android:textColor="@color/orange"
+							android:textStyle="bold" />
+					</LinearLayout>
+
+					<View
+						android:id="@+id/view_line"
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/line_color" />
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="horizontal"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:paddingVertical="@dimen/_10sdp">
+
+						<TextView
+							style="@style/LoginSubFontsWrap"
+							android:layout_width="0dp"
+							android:layout_marginStart="@dimen/_5sdp"
+							android:layout_weight="1"
+							android:text="@string/voucher_id"
+							android:textColor="@color/black"
+							android:textStyle="bold"
+							android:gravity="start|center_vertical"
+							android:textSize="@dimen/_11sdp" />
+
+						<TextView
+							style="@style/LoginSubFontsZeroWrap"
+							android:layout_width="0dp"
+							android:layout_weight="1"
+							android:textSize="@dimen/_10sdp"
+							android:text="@string/voucher_code_"
+							android:background="@drawable/phone_white_background"
+							android:gravity="end|center_vertical"
+							android:paddingHorizontal="@dimen/_5sdp"
+							android:textColor="@color/black"
+							android:textStyle="bold" />
+					</LinearLayout>
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/rv_package_list"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:clipToPadding="false"
+						android:visibility="gone"/>
+
+				</LinearLayout>
+
+			</androidx.cardview.widget.CardView>
+
+			<Button
+				android:id="@+id/btn_submit"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:layout_width="match_parent"
+				android:layout_marginHorizontal="@dimen/_15sdp"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:background="@drawable/login_button_border"
+				android:fontFamily="@font/inter_regular"
+				android:text="@string/voucher_transfer"
+				android:textAllCaps="true"
+				android:textColor="@color/white"
+				android:textSize="@dimen/_12sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/card_transaction_password" />
+
+
+		</LinearLayout>
+
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

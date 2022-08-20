@@ -5,4 +5,5 @@ package com.moneytree.app.common
  */
 object NSRequestCodes {
     const val REQUEST_WALLET_UPDATE = 101
+    const val REQUEST_WALLET_UPDATE_TRANSFER = 102
 }

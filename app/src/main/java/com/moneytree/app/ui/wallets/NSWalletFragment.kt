@@ -15,6 +15,7 @@ import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.NSRequestCodes.REQUEST_WALLET_UPDATE
+import com.moneytree.app.common.NSRequestCodes.REQUEST_WALLET_UPDATE_TRANSFER
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
@@ -88,7 +89,7 @@ class NSWalletFragment : NSFragment() {
                     }
 
                     tvTransfer.setOnClickListener {
-                        switchActivity(NSTransferActivity::class.java)
+                        switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false))
                     }
 
                     ivSearch.setOnClickListener {
@@ -183,7 +184,14 @@ class NSWalletFragment : NSFragment() {
 	fun onResultEvent(event: NSActivityEvent) {
 		if (event.resultCode == REQUEST_WALLET_UPDATE) {
 			EventBus.getDefault().post(NSRedeemWalletUpdateEvent())
-		}
+		} else if (event.resultCode == REQUEST_WALLET_UPDATE_TRANSFER) {
+            EventBus.getDefault().post(NSRedeemWalletUpdateTransferEvent())
+        }
+        with(mainBinding.layoutHeader) {
+            cardSearch.visibility = View.GONE
+            etSearch.setText("")
+            hideKeyboard(cardSearch)
+        }
 	}
 
     companion object {

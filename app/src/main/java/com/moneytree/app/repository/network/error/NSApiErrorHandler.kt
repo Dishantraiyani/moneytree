@@ -28,12 +28,17 @@ class NSApiErrorHandler {
         const val ERROR_MEMBER_TREE = "error_member_tree"
         const val ERROR_LEVEL_WISE_MEMBER_TREE = "error_level_wise_member_tree"
         const val ERROR_LOGOUT = "error_logout"
+        const val ERROR_MEMBER_DETAIL = "error_member_detail"
         const val ERROR_CHANGE_PASSWORD = "error_change_password"
         const val ERROR_CHANGE_TRAN_PASSWORD = "error_change_tran_password"
         const val ERROR_UPDATE_PROFILE = "error_update_profile"
         const val ERROR_WALLET_LIST_DATA = "error_wallet_list_data"
 		const val ERROR_REDEEM_LIST_DATA = "error_redeem_list_data"
 		const val ERROR_REDEEM_SAVE_DATA = "error_redeem_save_data"
+		const val ERROR_TRANSFER_WALLET_AMOUNT = "error_transfer_wallet_amount"
+		const val ERROR_PACKAGE_MASTER_LIST = "error_package_master_list"
+		const val ERROR_PACKAGE_VISE_QUANTITY = "error_package_vise_quantity"
+		const val ERROR_PACKAGE_VISE_TRANSFER = "error_voucher_vise_transfer"
 
         /**
          * To get the error messages from API endpoints
@@ -47,7 +52,7 @@ class NSApiErrorHandler {
         ) {
             val context: Context = NSApplication.getInstance().applicationContext
             errorMessageList = mutableListOf()
-
+			errorMessageList.clear()
             if (rawErrorResponse.body() == null && rawErrorResponse.errorBody() == null) {
                 val errorString = "Session TimeOut!!\n"
                 errorMessageList.add(errorString)
@@ -59,17 +64,20 @@ class NSApiErrorHandler {
                             viewModelCallback.onFailure(REFRESH_TOKEN_ENABLE)
                         } else {
                             val errorString = context.getString(R.string.error_01, responseErrorCode)
+							errorMessageList.clear()
                             errorMessageList.add(rawErrorResponse.message())
                             errorMessageList.add(errorString)
                         }
                     }
                     in 500..503 -> {
                         val errorString = context.getString(R.string.error_01, responseErrorCode)
+						errorMessageList.clear()
                         errorMessageList.add(rawErrorResponse.message())
                         errorMessageList.add(errorString)
                     }
                     else -> {
                         val errorString = context.getString(R.string.error_01, responseErrorCode)
+						errorMessageList.clear()
                         errorMessageList.add(rawErrorResponse.message())
                         errorMessageList.add(errorString)
                     }
