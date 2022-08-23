@@ -88,12 +88,11 @@ class VerifyMemberFragment : NSFragment() {
 							val remark = verifyTransferModel!!.remark
 							val amount = verifyTransferModel!!.amount
 							if (verifyTransferModel!!.isVoucherAvailable == true) {
-								/*verifyModel.transferVoucherTransfer(
+								verifyModel.transferVoucherTransfer(
 									transactionId!!,
-									amount!!,
+									verifyTransferModel!!.voucherQty!!.toString(),
 									true
-								)*/
-								showSuccessDialog(activity.resources.getString(R.string.app_name), "", NSConstants.REDEEM_SAVE_CLICK)
+								)
 							} else {
 								verifyModel.transferWalletAmount(
 									transactionId!!,
@@ -149,8 +148,8 @@ class VerifyMemberFragment : NSFragment() {
 				) { isRedeem ->
 					if (isRedeem) {
 						if (verifyTransferModel != null) {
-							tvAmountTitle.text = activity.resources.getString(R.string.voucher_qty)
 							if (verifyTransferModel!!.isVoucherAvailable == true) {
+								tvAmountTitle.text = activity.resources.getString(R.string.voucher_qty)
 								llRemark.gone()
 								tvAmount.text = verifyTransferModel!!.amount
 							} else {

@@ -539,6 +539,6 @@ interface RTApiInterface {
 	fun packageViseVoucherQuantity(@Field("token_id") token: String, @Field("package_id") packageId: String): Call<NSPackageVoucherQntResponse>
 
 	@FormUrlEncoded
-	@POST("package-wise-voucher-qty-api")
+	@POST("joining-voucher-transfer-save")
 	fun joiningVoucherTransferSave(@Field("token_id") token: String, @Field("transfer_id") transferId: String, @Field("package_id") packageId: String, @Field("voucher_qty") voucherQty: String): Call<NSSuccessResponse>
 }

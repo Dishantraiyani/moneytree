@@ -152,13 +152,13 @@ class NSHomeFragment : NSFragment() {
                 )
             }
 
-            clSlotsBtn.setOnClickListener {
-                switchActivity(
+            clCoinBtn.setOnClickListener {
+                /*switchActivity(
                     NSSlotsActivity::class.java,
                     bundleOf(
                         NSConstants.KEY_SLOTS_INFO to Gson().toJson(homeModel.dashboardData!!.data!!.slotList)
                     )
-                )
+                )*/
             }
         }
     }

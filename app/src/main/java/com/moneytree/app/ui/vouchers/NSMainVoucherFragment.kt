@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -13,6 +14,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
 import com.moneytree.app.ui.packageVoucher.packageList.NSPackageListActivity
+import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -98,7 +100,8 @@ class NSMainVoucherFragment : NSFragment() {
                     })
 
 					voucherBinding.btnSubmit.setOnClickListener {
-						switchActivity(NSPackageListActivity::class.java)
+						switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true))
+						//switchActivity(NSPackageListActivity::class.java)
 					}
                 }
             }

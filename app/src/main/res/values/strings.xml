@@ -142,6 +142,7 @@
 	<string name="please_turn_on_gps">Please turn on GPS</string>
 
 	<string name="no_transaction_available">No Transaction Available</string>
+	<string name="voucher_available">Voucher Available (%1$s)</string>
 
 	<!--QR code-->
 	<string name="qr_code">QR Code</string>
@@ -397,4 +398,7 @@
 	<string name="voucher_transfer">Voucher Transfer</string>
 	<string name="enter_voucher_qty">Enter Voucher Quantity</string>
 	<string name="please_enter_voucher_qty">Please Enter Voucher Quantity</string>
+    <string name="package_name_">Package Name</string>
+	<string name="please_select_package_name">Please Select Package Name</string>
+	<string name="insufficient_voucher">Insufficient Voucher</string>
 </resources>

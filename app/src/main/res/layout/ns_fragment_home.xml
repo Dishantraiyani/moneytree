@@ -408,7 +408,7 @@
                             android:layout_height="match_parent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/cl_slots_btn"
+                                android:id="@+id/cl_coin_btn"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
@@ -436,7 +436,7 @@
                                     android:id="@+id/tv_slots_title"
                                     style="@style/LayoutWidthHeightWrap"
                                     android:textSize="@dimen/_9sdp"
-                                    android:text="@string/slots"
+                                    android:text="@string/coins"
                                     android:textColor="@color/black"
                                     android:fontFamily="@font/inter_regular"
                                     android:layout_gravity="center"
@@ -455,7 +455,7 @@
                                 android:layout_height="match_parent"
                                 android:orientation="vertical"
                                 android:gravity="center"
-                                app:layout_constraintStart_toEndOf="@id/cl_slots_btn"
+                                app:layout_constraintStart_toEndOf="@id/cl_coin_btn"
                                 app:layout_constraintEnd_toStartOf="@id/cl_reports"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent">
