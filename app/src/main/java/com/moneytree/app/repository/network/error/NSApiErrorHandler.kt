@@ -16,6 +16,7 @@ class NSApiErrorHandler {
         const val ERROR_LOGIN = "error_login"
         const val ERROR_DASHBOARD = "error_dashboard"
         const val ERROR_REGISTER_LIST_DATA = "error_register_list_data"
+        const val ERROR_REGISTER_SAVE_DATA = "error_register_save_data"
         const val ERROR_VOUCHER_PENDING_DATA = "error_voucher_pending_data"
         const val ERROR_VOUCHER_RECEIVE_DATA = "error_voucher_receive_data"
         const val ERROR_VOUCHER_TRANSFER_DATA = "error_voucher_transfer_data"

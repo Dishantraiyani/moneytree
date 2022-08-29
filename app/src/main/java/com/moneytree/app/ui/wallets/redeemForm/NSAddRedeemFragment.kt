@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
-import com.moneytree.app.common.NSAlertButtonClickEvent
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSRequestCodes
+import com.moneytree.app.common.*
 import com.moneytree.app.databinding.NsFragmentAddRedeemBinding
 import com.moneytree.app.ui.levelMember.LevelMemberTreeFragment
 import com.moneytree.app.ui.wallets.redeem.NSRedeemViewModel
@@ -23,14 +20,14 @@ class NSAddRedeemFragment : NSFragment() {
 	private val redeemModel: NSRedeemSaveViewModel by lazy {
 		ViewModelProvider(this).get(NSRedeemSaveViewModel::class.java)
 	}
-    private var _binding: NsFragmentAddRedeemBinding? = null
-    private val adBinding get() = _binding!!
+	private var _binding: NsFragmentAddRedeemBinding? = null
+	private val adBinding get() = _binding!!
 
-    companion object {
+	companion object {
 		fun newInstance(bundle: Bundle?) = NSAddRedeemFragment().apply {
 			arguments = bundle
 		}
-    }
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -41,61 +38,75 @@ class NSAddRedeemFragment : NSFragment() {
 		}
 	}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = NsFragmentAddRedeemBinding.inflate(inflater, container, false)
-        viewCreated()
-        setListener()
+	override fun onCreateView(
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		_binding = NsFragmentAddRedeemBinding.inflate(inflater, container, false)
+		viewCreated()
+		setListener()
 		observeViewModel()
-        return adBinding.root
-    }
+		return adBinding.root
+	}
 
-    /**
-     * View created
-     */
-    private fun viewCreated() {
-        with(adBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.redeem)
-                ivBack.visibility = View.VISIBLE
-				tvWalletAmount.text = if (redeemModel.availableBalance.isNullOrEmpty()) "0" else redeemModel.availableBalance
-            }
-        }
-    }
+	/**
+	 * View created
+	 */
+	private fun viewCreated() {
+		with(adBinding) {
+			with(layoutHeader) {
+				clBack.visibility = View.VISIBLE
+				tvHeaderBack.text = activity.resources.getString(R.string.redeem)
+				ivBack.visibility = View.VISIBLE
+				tvWalletAmount.text =
+					if (redeemModel.availableBalance.isNullOrEmpty()) "0" else redeemModel.availableBalance
+			}
+		}
+	}
 
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-        with(adBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
-
-				btnSubmit.setOnClickListener {
-					if (etAmount.text.toString().isEmpty()) {
-						etAmount.error = activity.resources.getString(R.string.please_enter_amount)
-						return@setOnClickListener
-					} else if (etTransactionPassword.text.toString().isEmpty()) {
-						etTransactionPassword.error = activity.resources.getString(R.string.please_enter_password)
-						return@setOnClickListener
-					} else {
-						val amount = etAmount.text.toString()
-						if (amount.toDouble() > 0) {
-							redeemModel.redeemAmountSave(amount, etTransactionPassword.text.toString(), true)
-						} else {
-							Toast.makeText(activity, activity.resources.getString(R.string.please_enter_valid_amount), Toast.LENGTH_SHORT).show()
-						}
-					}
+	/**
+	 * Set listener
+	 */
+	private fun setListener() {
+		with(adBinding) {
+			with(layoutHeader) {
+				clBack.setOnClickListener {
+					onBackPress()
 				}
 
-            }
-        }
-    }
+				btnSubmit.setOnClickListener (
+					object : OnSingleClickListener() {
+						override fun onSingleClick(v: View?) {
+							if (etAmount.text.toString().isEmpty()) {
+								etAmount.error =
+									activity.resources.getString(R.string.please_enter_amount)
+								return
+							} else if (etTransactionPassword.text.toString().isEmpty()) {
+								etTransactionPassword.error =
+									activity.resources.getString(R.string.please_enter_password)
+								return
+							} else {
+								val amount = etAmount.text.toString()
+								if (amount.toDouble() > 0) {
+									redeemModel.redeemAmountSave(
+										amount,
+										etTransactionPassword.text.toString(),
+										true
+									)
+								} else {
+									Toast.makeText(
+										activity,
+										activity.resources.getString(R.string.please_enter_valid_amount),
+										Toast.LENGTH_SHORT
+									).show()
+								}
+							}
+						}
+					})
+
+			}
+		}
+	}
 
 	/**
 	 * To observe the view model for data changes
@@ -114,7 +125,11 @@ class NSAddRedeemFragment : NSFragment() {
 				) { isRedeem ->
 					if (isRedeem) {
 						if (successResponse?.status == true) {
-							showSuccessDialog(activity.resources.getString(R.string.app_name), successResponse?.message, NSConstants.REDEEM_SAVE_CLICK)
+							showSuccessDialog(
+								activity.resources.getString(R.string.app_name),
+								successResponse?.message,
+								NSConstants.REDEEM_SAVE_CLICK
+							)
 						}
 					}
 				}

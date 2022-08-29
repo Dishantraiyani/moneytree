@@ -77,7 +77,7 @@ class NSRegisterListRecycleAdapter(
                     tvPhoneRegister.text = mobile?.let { addText(activity, R.string.phone_register, it) }
                     tvDate.text = createdAt?.let { addText(activity, R.string.date_register, it) }
                     tvFullNameRegister.text = fullName?.let { addText(activity, R.string.full_name_value, it) }
-                    tvPackageName.text = packageName!!
+                    tvPackageName.text = if (packageName == null) "" else packageName
                 }
             }
         }

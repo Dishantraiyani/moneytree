@@ -99,10 +99,13 @@ class NSMainVoucherFragment : NSFragment() {
                         }
                     })
 
-					voucherBinding.btnSubmit.setOnClickListener {
-						switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true))
+					voucherBinding.btnSubmit.setOnClickListener ( object : OnSingleClickListener() {
+						override fun onSingleClick(v: View?) {
+							switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true))
+						}
+					})
+
 						//switchActivity(NSPackageListActivity::class.java)
-					}
                 }
             }
         }

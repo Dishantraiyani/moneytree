@@ -10,6 +10,7 @@ import com.moneytree.app.repository.NSRegisterRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 import com.moneytree.app.repository.network.responses.NSRegisterListResponse
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
 
 
 /**
@@ -20,6 +21,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
     var registerList: MutableList<NSRegisterListData> = arrayListOf()
     var tempRegisterList: MutableList<NSRegisterListData> = arrayListOf()
     var isRegisterDataAvailable = MutableLiveData<Boolean>()
+    var isRegisterSuccessAvailable = MutableLiveData<Boolean>()
     var pageIndex: String = "1"
     var registerResponse: NSRegisterListResponse? = null
     private var isBottomProgressShow: Boolean = false
@@ -27,6 +29,36 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 
     //Spinner value for registration form
     var registrationType: MutableList<String> = arrayListOf()
+
+	/**
+	 * Get register list data
+	 *
+	 */
+	fun saveRegisterData(fullName: String, email: String, mobile: String, password: String, isShowProgress: Boolean) {
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSRegisterRepository.saveRegisterApi(fullName, email, mobile, password, object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+				val registerMainData = data as NSSuccessResponse
+				isRegisterSuccessAvailable.value = true
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+
+		})
+	}
 
     /**
      * Get register list data

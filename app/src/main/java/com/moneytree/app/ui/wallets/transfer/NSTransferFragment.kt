@@ -29,8 +29,8 @@ class NSTransferFragment : NSFragment() {
 	private val transferModel: NSTransferModel by lazy {
 		ViewModelProvider(this).get(NSTransferModel::class.java)
 	}
-    private var _binding: NsFragmentTransferBinding? = null
-    private val adBinding get() = _binding!!
+	private var _binding: NsFragmentTransferBinding? = null
+	private val adBinding get() = _binding!!
 	private var isTransferFromVoucher: Boolean = false
 	private var packageId: String? = null
 	private var voucherQty: Int = 0
@@ -52,25 +52,25 @@ class NSTransferFragment : NSFragment() {
 		}
 	}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = NsFragmentTransferBinding.inflate(inflater, container, false)
-        viewCreated()
-        setListener()
+	override fun onCreateView(
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		_binding = NsFragmentTransferBinding.inflate(inflater, container, false)
+		viewCreated()
+		setListener()
 		observeViewModel()
-        return adBinding.root
-    }
+		return adBinding.root
+	}
 
-    /**
-     * View created
-     */
-    private fun viewCreated() {
-        with(adBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                ivBack.visibility = View.VISIBLE
+	/**
+	 * View created
+	 */
+	private fun viewCreated() {
+		with(adBinding) {
+			with(layoutHeader) {
+				clBack.visibility = View.VISIBLE
+				ivBack.visibility = View.VISIBLE
 				if (isTransferFromVoucher) {
 					tvAmountTitle.text = activity.resources.getString(R.string.voucher_qty)
 					etAmount.hint = activity.resources.getString(R.string.enter_voucher_qty)
@@ -85,63 +85,89 @@ class NSTransferFragment : NSFragment() {
 				} else {
 					tvHeaderBack.text = activity.resources.getString(R.string.wallet_transfer)
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-        with(adBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
+	/**
+	 * Set listener
+	 */
+	private fun setListener() {
+		with(adBinding) {
+			with(layoutHeader) {
+				clBack.setOnClickListener {
+					onBackPress()
+				}
 
-				btnSubmit.setOnClickListener {
-					val transactionId = etTransactionId.text.toString()
-					val password = etTransactionPassword.text.toString()
-					val remark = etRemark.text.toString()
-					val amount = etAmount.text.toString()
+				btnSubmit.setOnClickListener(object : OnSingleClickListener() {
+					override fun onSingleClick(v: View?) {
+						val transactionId = etTransactionId.text.toString()
+						val password = etTransactionPassword.text.toString()
+						val remark = etRemark.text.toString()
+						val amount = etAmount.text.toString()
 
-					if (transactionId.isEmpty()) {
-						etTransactionId.error = activity.resources.getString(R.string.please_enter_transation_id)
-						return@setOnClickListener
-					} else if (isTransferFromVoucher && spinnerPackage.selectedItemPosition == 0) {
-						Toast.makeText(activity, activity.resources.getString(R.string.please_select_package_name), Toast.LENGTH_SHORT).show()
-						return@setOnClickListener
-					} else if (amount.isEmpty()) {
-						if (isTransferFromVoucher) {
-							etAmount.error =
-								activity.resources.getString(R.string.please_enter_voucher_qty)
-						} else {
-							etAmount.error =
-								activity.resources.getString(R.string.please_enter_amount)
-						}
-						return@setOnClickListener
-					} else if (password.isEmpty() && !isTransferFromVoucher) {
-						etTransactionPassword.error = activity.resources.getString(R.string.please_enter_password)
-						return@setOnClickListener
-					} else {
-						if (amount.toDouble() > 0) {
-							if (isTransferFromVoucher && amount.toDouble() > voucherQty) {
-								Toast.makeText(activity, activity.resources.getString(R.string.insufficient_voucher), Toast.LENGTH_SHORT).show()
-								return@setOnClickListener
+						if (transactionId.isEmpty()) {
+							etTransactionId.error =
+								activity.resources.getString(R.string.please_enter_transation_id)
+							return
+						} else if (isTransferFromVoucher && spinnerPackage.selectedItemPosition == 0) {
+							Toast.makeText(
+								activity,
+								activity.resources.getString(R.string.please_select_package_name),
+								Toast.LENGTH_SHORT
+							).show()
+							return
+						} else if (amount.isEmpty()) {
+							if (isTransferFromVoucher) {
+								etAmount.error =
+									activity.resources.getString(R.string.please_enter_voucher_qty)
+							} else {
+								etAmount.error =
+									activity.resources.getString(R.string.please_enter_amount)
 							}
-							val model = NSWalletTransferModel(transactionId, password, remark, amount, isTransferFromVoucher, packageId, amount.toInt())
-							switchResultActivity(dataResult, VerifyMemberActivity::class.java, bundleOf(
-								NSConstants.KEY_WALLET_VERIFY to Gson().toJson(model)
-							)
-							)
+							return
+						} else if (password.isEmpty() && !isTransferFromVoucher) {
+							etTransactionPassword.error =
+								activity.resources.getString(R.string.please_enter_password)
+							return
 						} else {
-							Toast.makeText(activity, activity.resources.getString(R.string.please_enter_valid_amount), Toast.LENGTH_SHORT).show()
+							if (amount.toDouble() > 0) {
+								if (isTransferFromVoucher && amount.toDouble() > voucherQty) {
+									Toast.makeText(
+										activity,
+										activity.resources.getString(R.string.insufficient_voucher),
+										Toast.LENGTH_SHORT
+									).show()
+									return
+								}
+								val model = NSWalletTransferModel(
+									transactionId,
+									password,
+									remark,
+									amount,
+									isTransferFromVoucher,
+									packageId,
+									amount.toInt()
+								)
+								switchResultActivity(
+									dataResult, VerifyMemberActivity::class.java, bundleOf(
+										NSConstants.KEY_WALLET_VERIFY to Gson().toJson(model)
+									)
+								)
+							} else {
+								Toast.makeText(
+									activity,
+									activity.resources.getString(R.string.please_enter_valid_amount),
+									Toast.LENGTH_SHORT
+								).show()
+							}
 						}
 					}
-				}
-            }
-        }
-    }
+
+				})
+			}
+		}
+	}
 
 	/**
 	 * Set register data
@@ -160,7 +186,8 @@ class NSTransferFragment : NSFragment() {
 						if (p2 == 0) {
 							packageId = ""
 							adBinding.tvQuantity.gone()
-							adBinding.tvQuantity.text = addText(activity, R.string.voucher_available, "0")
+							adBinding.tvQuantity.text =
+								addText(activity, R.string.voucher_available, "0")
 						} else {
 							packageId = packageList[p2 - 1].packageId!!
 							adBinding.tvQuantity.visible()
@@ -197,8 +224,9 @@ class NSTransferFragment : NSFragment() {
 				isVoucherDataAvailable.observe(
 					viewLifecycleOwner
 				) { isNotification ->
-					voucherQty = if(voucherQuantity == null) 0 else voucherQuantity!!.toInt()
-					adBinding.tvQuantity.text = addText(activity, R.string.voucher_available, voucherQuantity!!)
+					voucherQty = if (voucherQuantity == null) 0 else voucherQuantity!!.toInt()
+					adBinding.tvQuantity.text =
+						addText(activity, R.string.voucher_available, voucherQuantity!!)
 				}
 
 				failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

@@ -8,10 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSLoginPreferences
-import com.moneytree.app.common.NSLoginRegisterEvent
+import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentLoginBinding
 import com.moneytree.app.ui.main.NSMainActivity
@@ -19,109 +16,117 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class NSLoginFragment : NSFragment() {
-    private val loginViewModel: NSLoginViewModel by lazy {
-        ViewModelProvider(this).get(NSLoginViewModel::class.java)
-    }
-    private var _binding: NsFragmentLoginBinding? = null
+	private val loginViewModel: NSLoginViewModel by lazy {
+		ViewModelProvider(this).get(NSLoginViewModel::class.java)
+	}
+	private var _binding: NsFragmentLoginBinding? = null
 
-    private val loginBinding get() = _binding!!
-    private var loginPref: NSLoginPreferences? = null
-    companion object {
-        fun newInstance() = NSLoginFragment()
-    }
+	private val loginBinding get() = _binding!!
+	private var loginPref: NSLoginPreferences? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = NsFragmentLoginBinding.inflate(inflater, container, false)
-        loginPref = NSLoginPreferences(activity)
-        viewCreated()
-        setListener()
-        return loginBinding.root
-    }
+	companion object {
+		fun newInstance() = NSLoginFragment()
+	}
 
-    /**
-     * View created
-     */
-    private fun viewCreated() {
-        observeViewModel()
+	override fun onCreateView(
+		inflater: LayoutInflater,
+		container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		_binding = NsFragmentLoginBinding.inflate(inflater, container, false)
+		loginPref = NSLoginPreferences(activity)
+		viewCreated()
+		setListener()
+		return loginBinding.root
+	}
 
-        with(loginBinding) {
-            with(loginViewModel) {
-                if (!loginPref!!.prefUserName.isNullOrEmpty()) {
-                    strUserName = loginPref!!.prefUserName
-                    strPassword = loginPref!!.prefPassword
-                    etUserName.setText(strUserName)
-                    etPassword.setText(strPassword)
-                }
-            }
-        }
-    }
+	/**
+	 * View created
+	 */
+	private fun viewCreated() {
+		observeViewModel()
 
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-        with(loginBinding) {
-            with(loginViewModel) {
-                btnLogin.setOnClickListener {
-                    strUserName = etUserName.text.toString()
-                    strPassword = etPassword.text.toString()
-                    login()
-                 }
-            }
-        }
-    }
+		with(loginBinding) {
+			with(loginViewModel) {
+				if (!loginPref!!.prefUserName.isNullOrEmpty()) {
+					strUserName = loginPref!!.prefUserName
+					strPassword = loginPref!!.prefPassword
+					etUserName.setText(strUserName)
+					etPassword.setText(strPassword)
+				}
+			}
+		}
+	}
 
-    /**
-     * To observe the view model for data changes
-     */
-    private fun observeViewModel() {
-        with(loginViewModel) {
-            isProgressShowing.observe(
-                viewLifecycleOwner
-            ) { shouldShowProgress ->
-                updateProgress(shouldShowProgress)
-            }
+	/**
+	 * Set listener
+	 */
+	private fun setListener() {
+		with(loginBinding) {
+			with(loginViewModel) {
+				btnLogin.setOnClickListener (
+					object : OnSingleClickListener() {
+						override fun onSingleClick(v: View?) {
+							strUserName = etUserName.text.toString()
+							strPassword = etPassword.text.toString()
+							login()
+						}
+					})
+				}
+			}
+	}
 
-            failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
-                showAlertDialog(errorMessage)
-            }
+	/**
+	 * To observe the view model for data changes
+	 */
+	private fun observeViewModel() {
+		with(loginViewModel) {
+			isProgressShowing.observe(
+				viewLifecycleOwner
+			) { shouldShowProgress ->
+				updateProgress(shouldShowProgress)
+			}
 
-            apiErrors.observe(viewLifecycleOwner) { apiErrors ->
-                parseAndShowApiError(apiErrors)
-            }
+			failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
+				showAlertDialog(errorMessage)
+			}
 
-            noNetworkAlert.observe(viewLifecycleOwner) {
-                showNoNetworkAlertDialog(
-                    getString(R.string.no_network_available),
-                    getString(R.string.network_unreachable)
-                )
-            }
+			apiErrors.observe(viewLifecycleOwner) { apiErrors ->
+				parseAndShowApiError(apiErrors)
+			}
 
-            validationErrorId.observe(viewLifecycleOwner) { errorId ->
-                showAlertDialog(getString(errorId))
-            }
-        }
-    }
+			noNetworkAlert.observe(viewLifecycleOwner) {
+				showNoNetworkAlertDialog(
+					getString(R.string.no_network_available),
+					getString(R.string.network_unreachable)
+				)
+			}
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onLoginRegisterEvent(loginEvent: NSLoginRegisterEvent) {
-        NSConstants.IS_LOGIN_SUCCESS = true
-        with(loginBinding) {
-            with(loginViewModel) {
-                if (cbRememberPassword.isChecked) {
-                    if (strUserName!!.isNotEmpty() && strPassword!!.isNotEmpty()) {
-                        loginPref!!.prefUserName = strUserName
-                        loginPref!!.prefPassword = strPassword
-                    }
-                }
-            }
-        }
+			validationErrorId.observe(viewLifecycleOwner) { errorId ->
+				showAlertDialog(getString(errorId))
+			}
+		}
+	}
 
-        switchActivity(
-            NSMainActivity::class.java,
-            bundleOf(
-                NSConstants.KEY_LOGIN_DATA to Gson().toJson(loginEvent.data)
-            )
-        )
-    }
+	@Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+	fun onLoginRegisterEvent(loginEvent: NSLoginRegisterEvent) {
+		NSConstants.IS_LOGIN_SUCCESS = true
+		with(loginBinding) {
+			with(loginViewModel) {
+				if (cbRememberPassword.isChecked) {
+					if (strUserName!!.isNotEmpty() && strPassword!!.isNotEmpty()) {
+						loginPref!!.prefUserName = strUserName
+						loginPref!!.prefPassword = strPassword
+					}
+				}
+			}
+		}
+
+		switchActivity(
+			NSMainActivity::class.java,
+			bundleOf(
+				NSConstants.KEY_LOGIN_DATA to Gson().toJson(loginEvent.data)
+			)
+		)
+	}
 }

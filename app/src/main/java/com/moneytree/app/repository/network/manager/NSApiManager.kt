@@ -323,6 +323,15 @@ class NSApiManager {
         request(unAuthorised3020Client.getLevelWiseMemberReportList(NSUserManager.getAuthToken()!!), callback)
     }
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun saveRegisterApi(fullName: String, email: String, mobile: String, password: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.saveRegistrationApi(NSUserManager.getAuthToken()!!, fullName, email, mobile, password), callback)
+	}
+
     /**
      * To call the change password API endpoint to change password
      *
@@ -525,6 +534,10 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("wallet-transfer-api")
 	fun transferWalletMoney(@Field("token_id") token: String, @Field("transfer_id") transferId: String, @Field("amount") amount: String, @Field("remark") remark: String, @Field("transaction_password") transactionPassword: String): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("save-registration-api")
+	fun saveRegistrationApi(@Field("token_id") token: String, @Field("fullname") fullName: String, @Field("email") email: String, @Field("mobile") mobile: String, @Field("password") password: String): Call<NSSuccessResponse>
 
 	@FormUrlEncoded
 	@POST("member-info-api")

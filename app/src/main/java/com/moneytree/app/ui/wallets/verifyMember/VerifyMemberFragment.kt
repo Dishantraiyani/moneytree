@@ -10,10 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSAlertButtonClickEvent
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSRequestCodes
+import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.switchResultActivity
@@ -80,33 +77,41 @@ class VerifyMemberFragment : NSFragment() {
 					onBackPress()
 				}
 
-				btnSubmit.setOnClickListener {
-					with(verifyModel) {
-						if (memberDetailModel != null && verifyTransferModel != null) {
-							val transactionId = verifyTransferModel!!.transactionId
-							val password = verifyTransferModel!!.password
-							val remark = verifyTransferModel!!.remark
-							val amount = verifyTransferModel!!.amount
-							if (verifyTransferModel!!.isVoucherAvailable == true) {
-								verifyModel.transferVoucherTransfer(
-									transactionId!!,
-									verifyTransferModel!!.voucherQty!!.toString(),
-									true
-								)
-							} else {
-								verifyModel.transferWalletAmount(
-									transactionId!!,
-									amount!!,
-									remark!!,
-									password!!,
-									true
-								)
+				btnSubmit.setOnClickListener (
+					object : OnSingleClickListener() {
+						override fun onSingleClick(v: View?) {
+							with(verifyModel) {
+								if (memberDetailModel != null && verifyTransferModel != null) {
+									val transactionId = verifyTransferModel!!.transactionId
+									val password = verifyTransferModel!!.password
+									val remark = verifyTransferModel!!.remark
+									val amount = verifyTransferModel!!.amount
+									if (verifyTransferModel!!.isVoucherAvailable == true) {
+										verifyModel.transferVoucherTransfer(
+											transactionId!!,
+											verifyTransferModel!!.voucherQty!!.toString(),
+											true
+										)
+									} else {
+										verifyModel.transferWalletAmount(
+											transactionId!!,
+											amount!!,
+											remark!!,
+											password!!,
+											true
+										)
+									}
+								} else {
+									showSuccessDialog(
+										activity.resources.getString(R.string.app_name),
+										activity.resources.getString(R.string.please_try_again),
+										NSConstants.REDEEM_SAVE_CLICK
+									)
+								}
 							}
-						} else {
-							showSuccessDialog(activity.resources.getString(R.string.app_name), activity.resources.getString(R.string.please_try_again), NSConstants.REDEEM_SAVE_CLICK)
 						}
-					}
-				}
+
+					})
 			}
 		}
 	}
@@ -128,7 +133,11 @@ class VerifyMemberFragment : NSFragment() {
 				) { isRedeem ->
 					if (isRedeem) {
 						if (successResponse?.status == true) {
-							showSuccessDialog(activity.resources.getString(R.string.app_name), successResponse?.message, NSConstants.REDEEM_SAVE_CLICK)
+							showSuccessDialog(
+								activity.resources.getString(R.string.app_name),
+								successResponse?.message,
+								NSConstants.REDEEM_SAVE_CLICK
+							)
 						}
 					}
 				}
@@ -136,9 +145,14 @@ class VerifyMemberFragment : NSFragment() {
 				isMemberDetailGet.observe(viewLifecycleOwner) {
 					if (it) {
 						if (memberDetailModel != null) {
-							tvEmail.text = memberDetailModel!!.email!!.ifEmpty { activity.resources.getString(R.string.not_available) }
-							tvName.text = memberDetailModel!!.fullname!!.ifEmpty { activity.resources.getString(R.string.not_available) }
-							tvMobile.text = memberDetailModel!!.mobile!!.ifEmpty { activity.resources.getString(R.string.not_available) }
+							tvEmail.text =
+								memberDetailModel!!.email!!.ifEmpty { activity.resources.getString(R.string.not_available) }
+							tvName.text = memberDetailModel!!.fullname!!.ifEmpty {
+								activity.resources.getString(R.string.not_available)
+							}
+							tvMobile.text = memberDetailModel!!.mobile!!.ifEmpty {
+								activity.resources.getString(R.string.not_available)
+							}
 						}
 					}
 				}
@@ -149,7 +163,8 @@ class VerifyMemberFragment : NSFragment() {
 					if (isRedeem) {
 						if (verifyTransferModel != null) {
 							if (verifyTransferModel!!.isVoucherAvailable == true) {
-								tvAmountTitle.text = activity.resources.getString(R.string.voucher_qty)
+								tvAmountTitle.text =
+									activity.resources.getString(R.string.voucher_qty)
 								llRemark.gone()
 								tvAmount.text = verifyTransferModel!!.amount
 							} else {
@@ -163,8 +178,12 @@ class VerifyMemberFragment : NSFragment() {
 								}
 							}
 
-							tvRemark.text = verifyTransferModel!!.remark!!.ifEmpty { activity.resources.getString(R.string.not_available) }
-							tvTransactionId.text = verifyTransferModel!!.transactionId!!.ifEmpty { activity.resources.getString(R.string.not_available) }
+							tvRemark.text = verifyTransferModel!!.remark!!.ifEmpty {
+								activity.resources.getString(R.string.not_available)
+							}
+							tvTransactionId.text = verifyTransferModel!!.transactionId!!.ifEmpty {
+								activity.resources.getString(R.string.not_available)
+							}
 							verifyModel.getMemberDetail(verifyTransferModel!!.transactionId!!, true)
 						}
 					}
