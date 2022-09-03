@@ -18,11 +18,93 @@
             layout="@layout/layout_header"/>
 
     </RelativeLayout>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_top"
+		android:layout_width="0dp"
+		android:layout_height="@dimen/_40sdp"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<TextView
+			android:id="@+id/tv_member_id_title"
+			style="@style/LayoutWidthHeightZero"
+			android:clipToPadding="false"
+			android:text="@string/member_id_title_"
+			android:textColor="@color/orange"
+			android:gravity="center"
+			android:textSize="@dimen/_12sdp"
+			android:fontFamily="@font/inter_medium"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/view_line1"/>
+
+		<View
+			android:id="@+id/view_line1"
+			android:layout_width="1dp"
+			android:layout_height="0dp"
+			android:background="@color/line_color"
+			app:layout_constraintStart_toEndOf="@id/tv_member_id_title"
+			app:layout_constraintEnd_toStartOf="@+id/tv_level_no_title"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+
+		<TextView
+			android:id="@+id/tv_level_no_title"
+			style="@style/LayoutWidthHeightZero"
+			android:clipToPadding="false"
+			android:text="@string/level_no_"
+			android:textColor="@color/orange"
+			android:gravity="center"
+			android:textSize="@dimen/_12sdp"
+			android:fontFamily="@font/inter_medium"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/view_line1"
+			app:layout_constraintEnd_toStartOf="@id/view_line2"/>
+
+		<View
+			android:id="@+id/view_line2"
+			android:layout_width="1dp"
+			android:layout_height="0dp"
+			android:background="@color/line_color"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tv_level_no_title"
+			app:layout_constraintEnd_toStartOf="@+id/tv_is_active_title"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+
+		<TextView
+			android:id="@+id/tv_is_active_title"
+			style="@style/LayoutWidthHeightZero"
+			android:clipToPadding="false"
+			android:text="@string/is_active_"
+			android:textColor="@color/orange"
+			android:gravity="center"
+			android:textSize="@dimen/_12sdp"
+			android:fontFamily="@font/inter_medium"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/view_line2"
+			app:layout_constraintEnd_toEndOf="parent"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<View
+		android:id="@+id/view_line3"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:background="@color/line_color"
+		app:layout_constraintTop_toBottomOf="@id/cl_top"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_member_not_found"
         style="@style/LayoutWidthHeightZero"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_line3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone">
@@ -60,8 +142,9 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_refresh"
         style="@style/LayoutWidthHeightZero"
+		android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/view_line3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -69,9 +152,6 @@
             android:id="@+id/rv_member_tree_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="@dimen/_10sdp"
-            android:paddingTop="@dimen/_10sdp"
-            android:paddingBottom="0dp"
             android:clipToPadding="false"
             android:visibility="gone"/>
 

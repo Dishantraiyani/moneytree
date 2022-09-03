@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus
 class NSApplication : Application() {
     private lateinit var preferences: NSPreferences
     private lateinit var apiManager: NSApiManager
+    private lateinit var walletBalance: String
 
     override fun onCreate() {
         super.onCreate()
@@ -53,6 +54,15 @@ class NSApplication : Application() {
      * To get instance of Api manager
      */
     fun getApiManager(): NSApiManager = apiManager
+
+	/**
+	 * To get instances of shared preferences
+	 */
+	fun getWalletBalance(): String = walletBalance
+
+	fun setWalletBalance(balance: String) {
+		walletBalance = balance
+	}
 
     companion object {
         private lateinit var instance: NSApplication

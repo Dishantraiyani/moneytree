@@ -376,6 +376,7 @@
 	<string name="voucher_list">Voucher List</string>
 	<string name="package_name_title">Package Name:</string>
 	<string name="active">ACTIVE</string>
+	<string name="is_active">Is Active: %1$s</string>
 	<string name="deActive">INACTIVE</string>
 	<string name="please_enter_amount">Please Enter Amount</string>
 	<string name="please_enter_valid_amount">Please Enter Valid Amount</string>
@@ -414,4 +415,13 @@
     <string name="no_products_available">No Products Available</string>
 	<string name="categories">Product Categories</string>
 	<string name="description">Description:</string>
+	<string name="activate">Activate</string>
+    <string name="no_data_available">No Data Available</string>
+	<string name="activation_detail">Activation Detail</string>
+	<string name="activation">Activation</string>
+    <string name="member_activation">Member Activation</string>
+	<string name="please_select_activation_type">Please Select Activation Type</string>
+	<string name="member_id_title_">Member Id</string>
+	<string name="level_no_">Level No</string>
+	<string name="is_active_">Is Active</string>
 </resources>

@@ -10,15 +10,17 @@ import com.moneytree.app.R
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutMemberTreeBinding
+import com.moneytree.app.databinding.LayoutUpLineMemberBinding
 import com.moneytree.app.repository.network.responses.NSMemberTreeData
+import com.moneytree.app.repository.network.responses.NSUpLineData
 
 class MemberTreeRecycleAdapter(
     activityNS: Activity
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
-    private val memberData: MutableList<NSMemberTreeData> = arrayListOf()
+    private val memberData: MutableList<NSUpLineData> = arrayListOf()
 
-    fun updateData(memberList: MutableList<NSMemberTreeData>) {
+    fun updateData(memberList: MutableList<NSUpLineData>) {
         memberData.addAll(memberList)
         if (memberList.isValidList()) {
             notifyItemRangeChanged(0, memberData.size - 1)
@@ -33,7 +35,7 @@ class MemberTreeRecycleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val memberView = LayoutMemberTreeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val memberView = LayoutUpLineMemberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NSMemberTreeViewHolder(memberView)
     }
 
@@ -53,7 +55,7 @@ class MemberTreeRecycleAdapter(
      *
      * @property voucherBinding The member tree list view binding
      */
-    inner class NSMemberTreeViewHolder(private val voucherBinding: LayoutMemberTreeBinding) :
+    inner class NSMemberTreeViewHolder(private val voucherBinding: LayoutUpLineMemberBinding) :
         RecyclerView.ViewHolder(voucherBinding.root) {
 
         /**
@@ -61,29 +63,14 @@ class MemberTreeRecycleAdapter(
          *
          * @param response The member tree details
          */
-        fun bind(response: NSMemberTreeData) {
+        fun bind(response: NSUpLineData) {
             with(voucherBinding) {
                 with(response) {
-                    tvMemberId.text = addText(activity, R.string.member_id, memberid!!)
-                    setImage(ivSlot1, true)
-                    setImage(ivSlot2, slot2 != null && slot2 != false)
-                    setImage(ivSlot3, slot3 != null && slot3 != false)
-                    setImage(ivSlot4, slot4 != null && slot4 != false)
-                    setImage(ivSlot5, slot5 != null && slot5 != false)
-                    setImage(ivSlot6, slot6 != null && slot6 != false)
-                    setImage(ivSlot7, slot7 != null && slot7 != false)
-                    setImage(ivSlot8, slot8 != null && slot8 != false)
-                    setImage(ivSlot9, slot9 != null && slot9 != false)
-                    setImage(ivSlot10, slot10 != null && slot10 != false)
-                    setImage(ivSlot11, slot11 != null && slot11 != false)
-                    setImage(ivSlot12, slot12 != null && slot12 != false)
+                    tvMemberId.text = earnedId
+                    tvLevelNo.text = levelNo
+                    tvIsActive.text = isActive
                 }
             }
         }
-    }
-
-    private fun setImage(ivTick: ImageView, isEnable: Boolean) {
-        ivTick.setImageResource(if (isEnable) R.drawable.correct else R.drawable.ic_close_s)
-        ivTick.setPadding(if(!isEnable) 8 else 0)
     }
 }

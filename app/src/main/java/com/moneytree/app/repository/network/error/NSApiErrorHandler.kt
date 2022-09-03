@@ -42,6 +42,10 @@ class NSApiErrorHandler {
 		const val ERROR_PACKAGE_VISE_TRANSFER = "error_voucher_vise_transfer"
 		const val ERROR_CATEGORY_PRODUCT = "error_category_product"
 		const val ERROR_PRODUCT_LIST = "error_product_list"
+		const val ERROR_ACTIVATION_LIST = "error_activation_list"
+		const val ERROR_ACTIVATION_PACKAGE_LIST = "error_activation_package_list"
+		const val ERROR_ACTIVATION_PACKAGE_SAVE = "error_activation_package_save"
+		const val ERROR_UP_LINE_MEMBER_TREE = "error_up_line_member_tree"
 
         /**
          * To get the error messages from API endpoints

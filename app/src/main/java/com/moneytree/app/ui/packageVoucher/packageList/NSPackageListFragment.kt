@@ -1,7 +1,6 @@
 package com.moneytree.app.ui.packageVoucher.packageList
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +12,11 @@ import com.moneytree.app.R
 import com.moneytree.app.common.BackPressEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSFragmentChange
 import com.moneytree.app.common.callbacks.NSPackageClickCallback
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentPackageListBinding
 import com.moneytree.app.repository.network.responses.NSPackageData
 import com.moneytree.app.ui.packageVoucher.packageDetail.PackageDetailActivity
-import com.moneytree.app.ui.register.NSAddRegisterFragment
 import org.greenrobot.eventbus.EventBus
 
 class NSPackageListFragment : NSFragment() {

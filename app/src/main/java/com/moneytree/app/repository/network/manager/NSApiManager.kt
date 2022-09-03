@@ -441,6 +441,42 @@ class NSApiManager {
 	fun getProductList(pageIndex: String, search: String, categoryId: String, callback: NSRetrofitCallback<NSProductListResponse>) {
 		request(unAuthorised3020Client.productList(NSUserManager.getAuthToken()!!, pageIndex, search, categoryId), callback)
 	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getActivationList(pageIndex: String, search: String, callback: NSRetrofitCallback<NSActivationListResponse>) {
+		request(unAuthorised3020Client.activateList(NSUserManager.getAuthToken()!!, pageIndex, search), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getActivationPackageList(callback: NSRetrofitCallback<NSActivationPackageResponse>) {
+		request(unAuthorised3020Client.activationPackage(NSUserManager.getAuthToken()!!), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun activationSave(registrationType: String, packageId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.activationSave(NSUserManager.getAuthToken()!!, registrationType, packageId), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getUpLineMembers(callback: NSRetrofitCallback<NSUpLineListResponse>) {
+		request(unAuthorised3020Client.upLineMemberList(NSUserManager.getAuthToken()!!), callback)
+	}
 }
 
 /**
@@ -581,5 +617,22 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("product-master-api")
 	fun productList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String, @Field("category_id") categoryId: String): Call<NSProductListResponse>
+
+	@FormUrlEncoded
+	@POST("activation-list-api")
+	fun activateList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String): Call<NSActivationListResponse>
+
+	@FormUrlEncoded
+	@POST("activation-package-api")
+	fun activationPackage(@Field("token_id") token: String): Call<NSActivationPackageResponse>
+
+	@FormUrlEncoded
+	@POST("activation-save-api")
+	fun activationSave(@Field("token_id") token: String, @Field("registration_type") registrationType: String, @Field("package_id") packageId: String): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("upline-member-list-api")
+	fun upLineMemberList(@Field("token_id") token: String): Call<NSUpLineListResponse>
+
 
 }

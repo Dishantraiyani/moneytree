@@ -7,11 +7,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSDashboardRepository
+import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
 import com.moneytree.app.ui.slide.SliderFragment
@@ -30,6 +32,7 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     private val mFragmentTitleList: MutableList<String> = ArrayList()
     val mFragmentList: MutableList<Fragment> = ArrayList()
     var fieldName: Array<String> = arrayOf()
+	var isLogout = MutableLiveData<Boolean>()
     var fieldImage = arrayOf(
         R.drawable.ic_mobile_ico,
         R.drawable.ic_dth,
@@ -171,4 +174,28 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
             }
         }
     }
+
+	/**
+	 * logout data
+	 *
+	 */
+	fun logout() {
+		NSUserRepository.logout(object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isLogout.value = true
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+		})
+	}
 }

@@ -1,29 +1,22 @@
 package com.moneytree.app.ui.register
 
 import android.os.Bundle
-import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
-import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentAddRegisterBinding
-import com.moneytree.app.repository.network.requests.NSWalletTransferModel
-import com.moneytree.app.ui.wallets.verifyMember.VerifyMemberActivity
+import com.moneytree.app.ui.activationForm.NSActivationFormFragment
 
 
 class NSAddRegisterFragment : NSFragment() {
@@ -34,7 +27,7 @@ class NSAddRegisterFragment : NSFragment() {
 	private val registerAddBinding get() = _binding!!
 
 	companion object {
-		fun newInstance() = NSAddRegisterFragment()
+		fun newInstance() = NSActivationFormFragment()
 	}
 
 	override fun onCreateView(

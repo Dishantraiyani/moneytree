@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/cl_notification" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_2sdp"
+    app:cardUseCompatPadding="true"
+    android:layout_marginBottom="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_activation_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_8sdp"
+        android:paddingHorizontal="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/tv_package_name"
+            style="@style/LoginSubFontsZeroWrap"
+            tools:text="UserName"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/orange"
+            android:paddingStart="@dimen/_10sdp"
+            android:lines="1"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter_semi_bold"
+            android:paddingEnd="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/tv_ac_date"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="MoneyTree"
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_4sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_package_name" />
+
+        <TextView
+            android:id="@+id/tv_voucher_code"
+            style="@style/LoginSubFontsZeroWrap"
+            tools:text="abc@gmail.com"
+            android:textSize="@dimen/_10sdp"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/gray_text"
+            android:paddingStart="@dimen/_10sdp"
+            android:lines="1"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/inter_medium"
+            android:paddingEnd="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ac_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

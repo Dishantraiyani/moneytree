@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/cl_top"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/_40sdp"
+	app:layout_constraintTop_toTopOf="parent"
+	app:layout_constraintStart_toStartOf="parent"
+	app:layout_constraintEnd_toEndOf="parent"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<TextView
+		android:id="@+id/tv_member_id"
+		style="@style/LayoutWidthHeightZero"
+		android:clipToPadding="false"
+		android:text="@string/member_id_title_"
+		android:textColor="@color/black"
+		android:gravity="center"
+		android:textSize="@dimen/_11sdp"
+		android:fontFamily="@font/inter_semi_bold"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/view_line3"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toStartOf="@id/view_line1"/>
+
+	<View
+		android:id="@+id/view_line1"
+		android:layout_width="1dp"
+		android:layout_height="0dp"
+		android:background="@color/line_color"
+		android:visibility="visible"
+		app:layout_constraintStart_toEndOf="@id/tv_member_id"
+		app:layout_constraintEnd_toStartOf="@+id/tv_level_no"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/view_line3"/>
+
+	<TextView
+		android:id="@+id/tv_level_no"
+		style="@style/LayoutWidthHeightZero"
+		android:clipToPadding="false"
+		android:text="@string/level_no_"
+		android:textColor="@color/black"
+		android:gravity="center"
+		android:textSize="@dimen/_11sdp"
+		android:fontFamily="@font/inter_regular"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/view_line3"
+		app:layout_constraintStart_toEndOf="@id/view_line1"
+		app:layout_constraintEnd_toStartOf="@id/view_line2"/>
+
+	<View
+		android:id="@+id/view_line2"
+		android:layout_width="1dp"
+		android:layout_height="0dp"
+		android:background="@color/line_color"
+		android:visibility="visible"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintStart_toEndOf="@id/tv_level_no"
+		app:layout_constraintEnd_toStartOf="@+id/tv_is_active"
+		app:layout_constraintBottom_toTopOf="@id/view_line3"/>
+
+	<TextView
+		android:id="@+id/tv_is_active"
+		style="@style/LayoutWidthHeightZero"
+		android:clipToPadding="false"
+		android:text="@string/is_active_"
+		android:textColor="@color/black"
+		android:gravity="center"
+		android:textSize="@dimen/_11sdp"
+		android:fontFamily="@font/inter_regular"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/view_line3"
+		app:layout_constraintStart_toEndOf="@id/view_line2"
+		app:layout_constraintEnd_toEndOf="parent"/>
+
+	<View
+		android:id="@+id/view_line3"
+		android:layout_width="0dp"
+		android:layout_height="1dp"
+		android:background="@color/line_color"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

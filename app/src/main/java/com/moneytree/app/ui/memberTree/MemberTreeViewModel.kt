@@ -6,9 +6,7 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSMemberTreeRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.NSLevelMemberTreeResponse
-import com.moneytree.app.repository.network.responses.NSMemberTreeData
-import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
+import com.moneytree.app.repository.network.responses.*
 
 
 /**
@@ -17,9 +15,9 @@ import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
 class MemberTreeViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var isMemberTree: Boolean? = false
-    var memberList: MutableList<NSMemberTreeData> = arrayListOf()
+    var memberList: MutableList<NSUpLineData> = arrayListOf()
     var isMemberDataAvailable = MutableLiveData<Boolean>()
-    private var memberResponse: NSMemberTreeResponse? = null
+    private var memberResponse: NSUpLineListResponse? = null
 
     /**
      * Get member tree data
@@ -31,12 +29,12 @@ class MemberTreeViewModel(application: Application) : NSViewModel(application),
             isProgressShowing.value = true
         }
 
-        NSMemberTreeRepository.getMemberTree(this)
+        NSMemberTreeRepository.getUpLineMemberList(this)
     }
 
     override fun <T> onSuccess(data: T) {
         isProgressShowing.value = false
-        val memberMainListData = data as NSMemberTreeResponse
+        val memberMainListData = data as NSUpLineListResponse
         memberResponse = memberMainListData
         if (memberMainListData.data != null) {
             if (memberMainListData.data.isValidList()) {

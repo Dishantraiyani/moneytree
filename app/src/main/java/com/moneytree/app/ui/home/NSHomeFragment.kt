@@ -15,15 +15,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSTabChange
-import com.moneytree.app.common.ViewPagerMDAdapter
+import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
+import com.moneytree.app.repository.NSUserRepository.logout
 import com.moneytree.app.repository.network.responses.GridModel
+import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
@@ -32,6 +31,8 @@ import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.slots.NSSlotsActivity
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -192,6 +193,7 @@ class NSHomeFragment : NSFragment() {
                     tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
                     tvJoinVoucher.text = addText(activity, R.string.dashboard_data, setJoinVoucher())
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
+					NSApplication.getInstance().setWalletBalance(setWallet())
                     //setBold(setRoyaltyStatus())
                     tvStatusRoyalty.text = addText(activity, R.string.status_royalty, setRoyaltyStatus())
                     layoutHeader.tvAmountData.text = addText(activity, R.string.my_earning, setEarningAmount())
@@ -236,6 +238,10 @@ class NSHomeFragment : NSFragment() {
                             tvIcon.text = getString(R.string.app_first)
                         }
 
+						llHome.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+						}
+
                         //Click
                         llRegister.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_register))
@@ -249,9 +255,21 @@ class NSHomeFragment : NSFragment() {
 							switchActivity(NSProductsCategoryActivity::class.java)
 						}
 
+						llActivate.setOnClickListener {
+							switchActivity(NSActivateActivity::class.java)
+						}
+
                         llRePurchase.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_offers))
                         }
+
+						llLogout.setOnClickListener(object : SingleClickListener() {
+							override fun performClick(v: View?) {
+								with(activity.resources) {
+									showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
+								}
+							}
+						})
                     }
                 }
             }
@@ -281,6 +299,17 @@ class NSHomeFragment : NSFragment() {
                 setDashboardData(isDashboardDataAvailable)
             }
 
+			isLogout.observe(
+				viewLifecycleOwner
+			) { isLogout ->
+				NSLog.d(tags, "observeViewModel: $isLogout")
+				NSApplication.getInstance().getPrefs().clearPrefData()
+				switchActivity(
+					NSLoginActivity::class.java,
+					flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+				)
+			}
+
             failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                 showAlertDialog(errorMessage)
             }
@@ -302,4 +331,13 @@ class NSHomeFragment : NSFragment() {
             }
         }
     }
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
+		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_NEGATIVE && event.alertKey == NSConstants.LOGOUT_CLICK) {
+			with(homeModel) {
+				logout()
+			}
+		}
+	}
 }

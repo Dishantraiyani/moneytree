@@ -6,6 +6,7 @@ import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.responses.NSLevelMemberTreeResponse
 import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
+import com.moneytree.app.repository.network.responses.NSUpLineListResponse
 import retrofit2.Response
 
 /**
@@ -50,4 +51,25 @@ object NSMemberTreeRepository {
             }
         })
     }
+
+	/**
+	 * To get member tree data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getUpLineMemberList(viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getUpLineMembers(object :
+			NSRetrofitCallback<NSUpLineListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_UP_LINE_MEMBER_TREE) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSUpLineListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }
