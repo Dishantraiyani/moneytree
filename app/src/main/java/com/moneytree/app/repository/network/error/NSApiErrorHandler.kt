@@ -40,6 +40,8 @@ class NSApiErrorHandler {
 		const val ERROR_PACKAGE_MASTER_LIST = "error_package_master_list"
 		const val ERROR_PACKAGE_VISE_QUANTITY = "error_package_vise_quantity"
 		const val ERROR_PACKAGE_VISE_TRANSFER = "error_voucher_vise_transfer"
+		const val ERROR_CATEGORY_PRODUCT = "error_category_product"
+		const val ERROR_PRODUCT_LIST = "error_product_list"
 
         /**
          * To get the error messages from API endpoints

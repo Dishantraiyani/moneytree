@@ -25,6 +25,7 @@ import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
@@ -243,6 +244,10 @@ class NSHomeFragment : NSFragment() {
                         llWallet.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
                         }
+
+						llProducts.setOnClickListener {
+							switchActivity(NSProductsCategoryActivity::class.java)
+						}
 
                         llRePurchase.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_offers))

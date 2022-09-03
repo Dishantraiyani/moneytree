@@ -264,6 +264,8 @@
 	<string name="total">Total: </string>
 	<string name="amount">Amount: </string>
 	<string name="_zero">₹0</string>
+	<string name="price">Price:</string>
+	<string name="price_value">₹%1$s</string>
 	<string name="offers">Offers</string>
 
 	<string name="payout_no">Payout No: %1$s</string>
@@ -407,4 +409,9 @@
 	<string name="please_enter_email">Please enter Email</string>
 	<string name="password_not_match">Please Enter Same Password</string>
 	<string name="please_accept_terms"><![CDATA[Please Accept Terms & Conditions]]></string>
+	<string name="products">Products</string>
+	<string name="no_category_available">No Category Available</string>
+    <string name="no_products_available">No Products Available</string>
+	<string name="categories">Product Categories</string>
+	<string name="description">Description:</string>
 </resources>

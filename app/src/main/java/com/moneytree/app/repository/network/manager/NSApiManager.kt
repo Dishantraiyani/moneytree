@@ -423,6 +423,24 @@ class NSApiManager {
 	fun joiningVoucherTransfer(transferId: String, packageId: String, voucherQty: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(unAuthorised3020Client.joiningVoucherTransferSave(NSUserManager.getAuthToken()!!, transferId, packageId, voucherQty), callback)
 	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getProductCategory(callback: NSRetrofitCallback<NSCategoryListResponse>) {
+		request(unAuthorised3020Client.productCategory(NSUserManager.getAuthToken()!!), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getProductList(pageIndex: String, search: String, categoryId: String, callback: NSRetrofitCallback<NSProductListResponse>) {
+		request(unAuthorised3020Client.productList(NSUserManager.getAuthToken()!!, pageIndex, search, categoryId), callback)
+	}
 }
 
 /**
@@ -554,4 +572,14 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("joining-voucher-transfer-save")
 	fun joiningVoucherTransferSave(@Field("token_id") token: String, @Field("transfer_id") transferId: String, @Field("package_id") packageId: String, @Field("voucher_qty") voucherQty: String): Call<NSSuccessResponse>
+
+	/*Products*/
+	@FormUrlEncoded
+	@POST("category-master-api")
+	fun productCategory(@Field("token_id") token: String): Call<NSCategoryListResponse>
+
+	@FormUrlEncoded
+	@POST("product-master-api")
+	fun productList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String, @Field("category_id") categoryId: String): Call<NSProductListResponse>
+
 }

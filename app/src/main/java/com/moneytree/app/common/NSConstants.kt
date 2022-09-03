@@ -24,6 +24,9 @@ class NSConstants {
 		const val KEY_IS_VOUCHER_FROM_TRANSFER = "key_voucher_from_transfer"
 		const val KEY_IS_PACKAGE_ID = "key_voucher_package_id"
 		const val KEY_IS_VOUCHER_QUANTITY = "key_voucher_quantity"
+		const val KEY_PRODUCT_CATEGORY = "key_product_category"
+		const val KEY_PRODUCT_CATEGORY_NAME = "key_product_category_name"
+		const val KEY_PRODUCT_DETAIL = "key_product_detail"
 
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"
