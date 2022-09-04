@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
@@ -67,7 +68,7 @@ class NSProductDetailFragment : NSFragment() {
 				clBack.visible()
 				with(productDetail!!) {
 					tvHeaderBack.text = productName
-					Glide.with(activity).load(productImage).placeholder(R.drawable.placeholder)
+					Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE+productImage).placeholder(R.drawable.placeholder)
 						.error(R.drawable.placeholder).into(ivProductImg)
 					tvProductName.text = productName
 					tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)

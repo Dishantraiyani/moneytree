@@ -205,7 +205,7 @@
 		<ImageView
 			android:layout_width="@dimen/_18sdp"
 			android:layout_height="@dimen/_18sdp"
-			android:src="@drawable/ic_vouchers"
+			android:src="@drawable/ic_product"
 			android:tint="@color/orange"
 			tools:ignore="UseAppTint"
 			android:contentDescription="@string/vouchers"/>
@@ -311,7 +311,7 @@
 		<ImageView
 			android:layout_width="@dimen/_18sdp"
 			android:layout_height="@dimen/_18sdp"
-			android:src="@drawable/ic_vouchers"
+			android:src="@drawable/activate"
 			android:tint="@color/orange"
 			tools:ignore="UseAppTint"
 			android:contentDescription="@string/vouchers"/>

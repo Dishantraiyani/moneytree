@@ -46,6 +46,7 @@
         <entry key="app/src/main/res/layout/ns_fragment_product_category.xml" value="0.20885416666666667" />
         <entry key="app/src/main/res/layout/ns_fragment_product_detail.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_products.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_profile.xml" value="0.18" />
         <entry key="app/src/main/res/layout/ns_fragment_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_redeem.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_register.xml" value="0.32083333333333336" />
@@ -53,6 +54,7 @@
         <entry key="app/src/main/res/layout/ns_fragment_repurchase_info.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_retail_info.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_royalty_list.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_sub_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_transaction.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_transfer.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_transfer_vouchers.xml" value="0.32083333333333336" />

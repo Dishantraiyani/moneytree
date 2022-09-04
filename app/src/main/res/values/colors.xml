@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="orange">#eba94a</color>
+    <string name="orange">#eba94a</string>
     <color name="gray">#555555</color>
     <color name="hint_color">#C4C4C6</color>
     <color name="phone_background">#E5E5EA</color>
@@ -35,4 +36,5 @@
     <color name="gray_background">#E9ECEF</color>
     <color name="dark_black_sec">#444445</color>
     <color name="green_light">#13c600</color>
+    <color name="icon_tint_gray">#C4C4C6</color>
 </resources>

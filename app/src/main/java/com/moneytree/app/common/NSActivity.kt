@@ -1,6 +1,8 @@
 package com.moneytree.app.common
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -9,6 +11,7 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.moneytree.app.R
 import com.moneytree.app.common.callbacks.NSProgressCallback
 import com.moneytree.app.common.callbacks.NSReplaceFragmentCallback
 import com.moneytree.app.common.utils.switchActivity
@@ -105,6 +108,7 @@ open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgre
             val progressBar = ProgressBar(this).apply { //don't set style with material design
                 isIndeterminate = true
             }
+			progressBar.indeterminateTintList = ColorStateList.valueOf(Color.parseColor(resources.getString(R.string.orange)))
             val paramsForProgressBar = RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )

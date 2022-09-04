@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.OnSingleClickListener
@@ -156,8 +157,7 @@ class NSAddRegisterFragment : NSFragment() {
 
 	private fun setTerms() {
 		with(registerAddBinding) {
-			val html =
-				"I agree to the <a href=\"http://www.google.com\">Terms & Conditions</a> and <a href=\"http://www.google.com\">Privacy Policy</a>"
+			val html = "I agree to the <a href=${BuildConfig.TERMS}>Terms & Conditions</a> and <a href=${BuildConfig.PRIVACY}>Privacy Policy</a>"
 			tvTermsConditions.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 			tvTermsConditions.movementMethod = LinkMovementMethod.getInstance()
 		}

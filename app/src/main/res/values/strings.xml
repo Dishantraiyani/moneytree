@@ -243,7 +243,7 @@
 	</string-array>
 
 	<string-array name="reports">
-		<item>Member Tree</item>
+		<item>UpLine Member</item>
 		<item>Level Wise Member</item>
 	</string-array>
 
@@ -424,4 +424,5 @@
 	<string name="member_id_title_">Member Id</string>
 	<string name="level_no_">Level No</string>
 	<string name="is_active_">Is Active</string>
+	<string name="refund">Return &amp; Refund</string>
 </resources>

@@ -1,11 +1,18 @@
 package com.moneytree.app.ui.products
 
 import android.app.Activity
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
@@ -15,6 +22,7 @@ import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
+import com.squareup.picasso.Picasso
 
 class NSProductListRecycleAdapter(
     activityNS: Activity,
@@ -77,7 +85,8 @@ class NSProductListRecycleAdapter(
         fun bind(response: ProductDataDTO) {
             with(productBinding) {
                 with(response) {
-					Glide.with(activity).load(productImage).placeholder(R.drawable.placeholder).error(R.drawable.placeholder).into(ivProductImg)
+					val url = BuildConfig.BASE_URL_IMAGE+productImage
+					Glide.with(activity).load(url).error(R.drawable.placeholder).into(ivProductImg)
                     tvProductName.text = productName
                     tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
                     tvRate.text = addText(activity, R.string.rate_title, rate!!)

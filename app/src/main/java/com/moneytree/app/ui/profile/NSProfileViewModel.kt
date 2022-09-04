@@ -38,6 +38,7 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
                 profileItemList.add(getString(R.string.update))
                 profileItemList.add(getString(R.string.terms))
                 profileItemList.add(getString(R.string.policy))
+                profileItemList.add(getString(R.string.refund))
                 profileItemList.add(getString(R.string.logout))
                 getProfileIconListData(activity)
             }
@@ -55,6 +56,7 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
                 profileIconList.add(R.drawable.ic_refresh)
                 profileIconList.add(R.drawable.ic_terms)
                 profileIconList.add(R.drawable.ic_policy)
+				profileIconList.add(R.drawable.ic_refund)
                 profileIconList.add(R.drawable.ic_logout)
             }
         }

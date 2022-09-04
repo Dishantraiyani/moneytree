@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
@@ -132,12 +133,15 @@ class NSProfileFragment : NSFragment() {
                 activity.startActivity(intent)
             }
             5 -> {
-                NSUtilities.openBrowser(activity, "https://www.google.com")
+                NSUtilities.openBrowser(activity, BuildConfig.TERMS)
             }
             6 -> {
-                NSUtilities.openBrowser(activity, "https://www.google.com")
+                NSUtilities.openBrowser(activity, BuildConfig.PRIVACY)
             }
-            7 -> {
+			7 -> {
+				NSUtilities.openBrowser(activity, BuildConfig.REFUND)
+			}
+            8 -> {
                 with(activity.resources) {
                     showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
                 }

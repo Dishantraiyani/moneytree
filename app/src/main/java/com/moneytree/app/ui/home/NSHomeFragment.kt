@@ -247,15 +247,24 @@ class NSHomeFragment : NSFragment() {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_register))
                         }
 
+						llVouchers.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(
+								NSVouchersActivity::class.java
+							)
+						}
+
                         llWallet.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
                         }
 
 						llProducts.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
 							switchActivity(NSProductsCategoryActivity::class.java)
 						}
 
 						llActivate.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
 							switchActivity(NSActivateActivity::class.java)
 						}
 
