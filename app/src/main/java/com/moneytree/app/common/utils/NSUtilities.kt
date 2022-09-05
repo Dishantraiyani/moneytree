@@ -34,13 +34,13 @@ object NSUtilities {
      * Method call to open Browser
      */
     fun openBrowser(activity: Activity, link: String) {
-        var link = link
-        if (link == "") {
-            link = "https://www.google.com"
+        var linkValue = link
+        if (linkValue == "") {
+			linkValue = "https://www.google.com"
         }
         val packageName = "com.android.chrome"
         val isAppInstalled: Boolean = appInstalledOrNot(activity, packageName)
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkValue))
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         if (isAppInstalled) intent.setPackage("com.android.chrome")
         try {

@@ -78,6 +78,7 @@ class NSOfferFragment : NSFragment() {
                             super.onPageSelected(position)
                             tabPosition = position
                             layoutHeader.etSearch.setText("")
+							layoutHeader.ivSearch.visibility = View.VISIBLE
                             when (position) {
                                 0 -> {
                                     if (!isRepurchaseAdded) {
@@ -99,6 +100,7 @@ class NSOfferFragment : NSFragment() {
                                 }
                                 3 -> {
                                     if (!isDownlineAdded) {
+										layoutHeader.ivSearch.visibility = View.GONE
                                         EventBus.getDefault().post(NSDownlineEventTab())
                                         isDownlineAdded = true
                                     }

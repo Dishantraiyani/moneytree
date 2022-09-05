@@ -28,7 +28,7 @@ class NSAddRegisterFragment : NSFragment() {
 	private val registerAddBinding get() = _binding!!
 
 	companion object {
-		fun newInstance() = NSActivationFormFragment()
+		fun newInstance() = NSAddRegisterFragment()
 	}
 
 	override fun onCreateView(
