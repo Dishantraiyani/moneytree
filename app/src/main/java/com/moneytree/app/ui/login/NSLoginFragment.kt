@@ -1,5 +1,6 @@
 package com.moneytree.app.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -126,7 +127,8 @@ class NSLoginFragment : NSFragment() {
 			NSMainActivity::class.java,
 			bundleOf(
 				NSConstants.KEY_LOGIN_DATA to Gson().toJson(loginEvent.data)
-			)
+			),
+			flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 		)
 	}
 }
