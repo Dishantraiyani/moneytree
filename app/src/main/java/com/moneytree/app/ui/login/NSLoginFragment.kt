@@ -2,17 +2,22 @@ package com.moneytree.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.RemoteException
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentLoginBinding
 import com.moneytree.app.ui.main.NSMainActivity
+import com.moneytree.app.ui.signup.SignUpActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -24,6 +29,7 @@ class NSLoginFragment : NSFragment() {
 
 	private val loginBinding get() = _binding!!
 	private var loginPref: NSLoginPreferences? = null
+
 
 	companion object {
 		fun newInstance() = NSLoginFragment()
@@ -46,7 +52,6 @@ class NSLoginFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		observeViewModel()
-
 		with(loginBinding) {
 			with(loginViewModel) {
 				if (!loginPref!!.prefUserName.isNullOrEmpty()) {
@@ -74,6 +79,14 @@ class NSLoginFragment : NSFragment() {
 						}
 					})
 				}
+
+				tvSignup.setOnClickListener(object : OnSingleClickListener() {
+					override fun onSingleClick(v: View?) {
+						switchActivity(
+							SignUpActivity::class.java
+						)
+					}
+				})
 			}
 	}
 

@@ -126,10 +126,11 @@ class NSProfileFragment : NSFragment() {
                 )
             }
             2 -> {
-                NSUtilities.shareAll(activity, Uri.parse("market://details?id=" + activity.packageName).toString())
+				val url = "https://play.google.com/store/apps/details?id=${activity.packageName}&referrer=${profileModel.nsUserData?.sponsorId}"
+                NSUtilities.shareAll(activity, Uri.parse(url).toString())
             }
             3, 4 -> {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + activity.packageName))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + activity.packageName))
                 activity.startActivity(intent)
             }
             5 -> {
