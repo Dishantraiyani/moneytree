@@ -109,7 +109,7 @@ class NSSignUpFragment : NSFragment() {
 									).show()
 									return
 								} else {
-									//saveRegisterData(fullName, email, phone, password, true)
+									saveRegisterData(etRefer.text.toString(), fullName, email, phone, password, true)
 								}
 							}
 						}
@@ -173,7 +173,7 @@ class NSSignUpFragment : NSFragment() {
 		}
 	}
 
-	fun getReferrerCode() {
+	private fun getReferrerCode() {
 		referrerClient = InstallReferrerClient.newBuilder(activity).build()
 		referrerClient?.startConnection(object : InstallReferrerStateListener {
 			override fun onInstallReferrerSetupFinished(responseCode: Int) {
@@ -183,6 +183,7 @@ class NSSignUpFragment : NSFragment() {
 						val referrerDetails = referrerClient?.installReferrer
 						if (!referrerDetails?.installReferrer?.contains("utm_source")!!) {
 							referCode = referrerDetails.installReferrer
+							signUpBinding.etRefer.setText(referCode)
 						}
 						referrerClient?.endConnection()
 					} catch (e: RemoteException) {

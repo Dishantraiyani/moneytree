@@ -16,6 +16,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentActivationFormBinding
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -39,6 +40,11 @@ class NSActivationFormFragment : NSFragment() {
 		arguments?.let {
 			with(activationFormModel) {
 				activationFormDetail = it.getString(NSConstants.KEY_MEMBER_ACTIVATION_FORM)
+				isMemberFormActive = it.getBoolean(NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM)
+				if (isMemberFormActive) {
+					memberFormDetail = it.getString(NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL)
+					getMemberDetail()
+				}
 				getActivationDetail()
 			}
 		}
@@ -66,6 +72,12 @@ class NSActivationFormFragment : NSFragment() {
                     ivBack.visibility = View.VISIBLE
 					tvAmount.text = addText(activity, R.string.balance, NSApplication.getInstance().getWalletBalance())
                 }
+				if (isMemberFormActive) {
+					cardMemberId.visible()
+					cardFullName.visible()
+					tvMemberId.text = memberListData!!.username
+					tvFullName.text = memberListData!!.fullName
+				}
                 addRegistrationType(activity)
                 setSpinner()
                 setTerms()

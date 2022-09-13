@@ -30,6 +30,7 @@ class NSProfileFragment : NSFragment() {
 
     private val profileBinding get() = _binding!!
     private var profileAdapter: ProfileRecycleAdapter? = null
+	private var referralCode: String? = ""
 
     companion object {
         fun newInstance() = NSProfileFragment()
@@ -126,7 +127,7 @@ class NSProfileFragment : NSFragment() {
                 )
             }
             2 -> {
-				val url = "https://play.google.com/store/apps/details?id=${activity.packageName}&referrer=${profileModel.nsUserData?.sponsorId}"
+				val url = "https://play.google.com/store/apps/details?id=${activity.packageName}&referrer=${referralCode}"
                 NSUtilities.shareAll(activity, Uri.parse(url).toString())
             }
             3, 4 -> {
@@ -159,6 +160,7 @@ class NSProfileFragment : NSFragment() {
                         tvUserName.text = setUserName(activity, userName!!)
                         tvMobile.text = setMobile(activity, mobile!!)
                         tvEmailId.text = setEmail(activity, email!!)
+						referralCode = nsUserData!!.referCode
                         if (!email.isNullOrEmpty()) {
                             tvIcon.text = email!!.substring(0, 1).uppercase()
                         } else {

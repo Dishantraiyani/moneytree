@@ -191,6 +191,59 @@
 			</androidx.cardview.widget.CardView>
 
 			<androidx.cardview.widget.CardView
+				android:id="@+id/card_refer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:cardCornerRadius="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/card_email">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_refer"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/_1sdp"
+					app:guidelineUseRtl="true"
+					app:chainUseRtl="true"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+
+					<ImageView
+						android:id="@+id/iv_refer"
+						android:layout_width="@dimen/_15sdp"
+						android:layout_height="@dimen/_15sdp"
+						android:src="@drawable/ic_refer"
+						android:layout_marginStart="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						android:contentDescription="@string/password_title" />
+
+					<EditText
+						android:id="@+id/et_refer"
+						style="@style/LoginSubFontsZeroWrap"
+						android:minHeight="@dimen/_38sdp"
+						android:textColor="@color/black"
+						android:background="@drawable/phone_white_background"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:hint="@string/refer_code"
+						android:textColorHint="@color/hint_color"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toEndOf="@id/iv_refer"
+						app:layout_constraintEnd_toEndOf="parent"
+						android:inputType="text"
+						android:imeOptions="actionNext"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.cardview.widget.CardView>
+
+			<androidx.cardview.widget.CardView
 				android:id="@+id/card_password"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
@@ -199,7 +252,7 @@
 				android:layout_marginHorizontal="@dimen/_5sdp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toBottomOf="@id/card_email">
+				app:layout_constraintTop_toBottomOf="@id/card_refer">
 
 				<androidx.constraintlayout.widget.ConstraintLayout
 					android:id="@+id/cl_password"

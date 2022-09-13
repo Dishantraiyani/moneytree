@@ -20,11 +20,20 @@ class NSActivationFormModel(application: Application) : NSViewModel(application)
 	var strPackageList: MutableList<String> = arrayListOf()
 	var isPackageDataAvailable = MutableLiveData<Boolean>()
 	var isActivePackageForm = MutableLiveData<Boolean>()
+	var isMemberFormActive: Boolean = false
 	var activationFormDetail: String? = null
+	var memberFormDetail: String? = null
 	var activationPackageResponse: NSActivationPackageResponse? = null
 	//Spinner value for registration form
 	var registrationType: MutableList<String> = arrayListOf()
 	var activationResponse: NSSuccessResponse? = null
+	var memberListData: NSRegisterListData? = null
+
+	fun getMemberDetail() {
+		if (memberFormDetail != null) {
+			memberListData = Gson().fromJson(memberFormDetail, NSRegisterListData::class.java)
+		}
+	}
 
 	fun getActivationDetail() {
 		if (activationFormDetail != null) {

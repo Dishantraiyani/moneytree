@@ -2,11 +2,15 @@ package com.moneytree.app.ui.register
 
 import android.app.Activity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutRegisterItemBinding
@@ -14,6 +18,7 @@ import com.moneytree.app.repository.network.responses.NSRegisterListData
 
 class NSRegisterListRecycleAdapter(
     activityNS: Activity,
+	private val packageActiveCallback: NSMemberActiveSelectCallback,
     onPageChange: NSPageChangeCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
@@ -78,6 +83,16 @@ class NSRegisterListRecycleAdapter(
                     tvDate.text = createdAt?.let { addText(activity, R.string.date_register, it) }
                     tvFullNameRegister.text = fullName?.let { addText(activity, R.string.full_name_value, it) }
                     tvPackageName.text = if (packageName == null) "" else packageName
+
+					val isActive = directActivation.equals("NOT REQUIRED")
+					btnActive.isEnabled = !isActive
+					btnActive.setBackgroundResource(if (isActive) R.drawable.gray_button_order_border else R.drawable.blue_button_order_border)
+					btnActive.text = directActivation
+					btnActive.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							packageActiveCallback.onClick(response)
+						}
+					})
                 }
             }
         }

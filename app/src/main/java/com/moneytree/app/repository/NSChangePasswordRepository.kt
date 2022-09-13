@@ -37,6 +37,7 @@ object NSChangePasswordRepository {
                 if (data.status) {
                     viewModelCallback.onSuccess(response.body())
                 } else {
+					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
@@ -64,6 +65,7 @@ object NSChangePasswordRepository {
                 if (data.status) {
                     viewModelCallback.onSuccess(response.body())
                 } else {
+					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }

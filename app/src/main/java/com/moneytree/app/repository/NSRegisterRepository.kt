@@ -30,6 +30,7 @@ object NSRegisterRepository {
                 if (data.status) {
                     viewModelCallback.onSuccess(response.body())
                 } else {
+					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
@@ -52,6 +53,31 @@ object NSRegisterRepository {
 				if (data.status) {
 					viewModelCallback.onSuccess(response.body())
 				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+
+	/**
+	 * To save register data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun saveRegisterDirectApi(referCode: String, fullName: String, email: String, mobile: String, password: String,
+						viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.saveDirectRegisterApi(referCode, fullName, email, mobile, password, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_DIRECT_REGISTER_SAVE_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
 					errorMessageList.add(data.message!!)
 					viewModelCallback.onError(errorMessageList)
 				}

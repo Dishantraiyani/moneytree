@@ -332,6 +332,15 @@ class NSApiManager {
 		request(unAuthorised3020Client.saveRegistrationApi(NSUserManager.getAuthToken()!!, fullName, email, mobile, password), callback)
 	}
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun saveDirectRegisterApi(referalCode: String, fullName: String, email: String, mobile: String, password: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.saveRegistrationDirectApi(referalCode, fullName, email, mobile, password), callback)
+	}
+
     /**
      * To call the change password API endpoint to change password
      *
@@ -592,6 +601,10 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("save-registration-api")
 	fun saveRegistrationApi(@Field("token_id") token: String, @Field("fullname") fullName: String, @Field("email") email: String, @Field("mobile") mobile: String, @Field("password") password: String): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("save-registration-direct-api")
+	fun saveRegistrationDirectApi(@Field("referral_code") referalCode: String, @Field("fullname") fullName: String, @Field("email") email: String, @Field("mobile") mobile: String, @Field("password") password: String): Call<NSSuccessResponse>
 
 	@FormUrlEncoded
 	@POST("member-info-api")

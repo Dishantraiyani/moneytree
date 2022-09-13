@@ -425,4 +425,5 @@
 	<string name="level_no_">Level No</string>
 	<string name="is_active_">Is Active</string>
 	<string name="refund">Return &amp; Refund</string>
+    <string name="refer_code">Referral Code</string>
 </resources>

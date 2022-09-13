@@ -6,11 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.R
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.NSRegisterRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.NSRegisterListData
-import com.moneytree.app.repository.network.responses.NSRegisterListResponse
-import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import com.moneytree.app.repository.network.responses.*
 
 
 /**
@@ -26,8 +25,12 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
     var registerResponse: NSRegisterListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
+	var activationPackageResponse: NSActivationPackageResponse? = null
+	var activationPackageList: MutableList<NSActivationPackageData> = arrayListOf()
+	var isActivationPackageDataAvailable = MutableLiveData<Boolean>()
+	var dataMember: NSRegisterListData? = null
 
-    //Spinner value for registration form
+	//Spinner value for registration form
     var registrationType: MutableList<String> = arrayListOf()
 
 	/**
@@ -118,4 +121,39 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
             }
         }
     }
+
+	fun getActivationPackage(isShowProgress: Boolean) {
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSProductRepository.getActivatePackage(object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+				if (isBottomProgressShow) {
+					isBottomProgressShowing.value = false
+				}
+				val activationListData = data as NSActivationPackageResponse
+				if (activationListData.data != null) {
+					activationPackageResponse = activationListData
+					if (activationListData.data.isValidList()) {
+						activationPackageList.addAll(activationListData.data)
+					}
+				}
+				isActivationPackageDataAvailable.value = activationPackageList.isValidList()
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+
+		})
+	}
 }

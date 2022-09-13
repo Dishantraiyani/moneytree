@@ -5,16 +5,24 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.BackPressEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.NSFragmentChange
+import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
+import com.moneytree.app.repository.NSRegisterRepository.getRegisterListData
+import com.moneytree.app.repository.network.responses.NSRegisterListData
+import com.moneytree.app.ui.activationForm.NSActivationFormActivity
 import org.greenrobot.eventbus.EventBus
 
 class NSRegisterFragment : NSFragment() {
@@ -49,7 +57,9 @@ class NSRegisterFragment : NSFragment() {
                 tvHeaderBack.text = activity.resources.getString(R.string.register)
                 ivBack.visibility = View.VISIBLE
                 ivSearch.visibility = View.VISIBLE
-                ivAddNew.visibility = View.VISIBLE
+				if (pref.isActive) {
+					ivAddNew.visibility = View.VISIBLE
+				}
             }
             setRegisterAdapter()
         }
@@ -77,7 +87,8 @@ class NSRegisterFragment : NSFragment() {
                     }
 
                     ivAddNew.setOnClickListener {
-                        EventBus.getDefault().post(NSFragmentChange(NSAddRegisterFragment.newInstance()))
+						EventBus.getDefault()
+							.post(NSFragmentChange(NSAddRegisterFragment.newInstance()))
                     }
 
                     ivClose.setOnClickListener {
@@ -125,16 +136,21 @@ class NSRegisterFragment : NSFragment() {
         with(registerBinding) {
             with(registerListModel) {
                 rvRegisterList.layoutManager = LinearLayoutManager(activity)
-                registerListAdapter =
-                    NSRegisterListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
-                            if (registerResponse!!.nextPage) {
-                                val page: Int = registerList.size/NSConstants.PAGINATION + 1
-                                pageIndex = page.toString()
-                                getRegisterListData(pageIndex, "", true, isBottomProgress = true)
-                            }
-                        }
-                    })
+				registerListAdapter = NSRegisterListRecycleAdapter(activity, object: NSMemberActiveSelectCallback {
+					override fun onClick(data: NSRegisterListData) {
+						dataMember = data
+						getActivationPackage(true)
+					}
+				}, object : NSPageChangeCallback {
+					override fun onPageChange() {
+						if (registerResponse!!.nextPage) {
+							val page: Int = registerList.size/NSConstants.PAGINATION + 1
+							pageIndex = page.toString()
+							getRegisterListData(pageIndex, "", true, isBottomProgress = true)
+						}
+					}
+				})
+
                 rvRegisterList.adapter = registerListAdapter
                 pageIndex = "1"
                 getRegisterListData(pageIndex, "", true, isBottomProgress = false)
@@ -192,6 +208,27 @@ class NSRegisterFragment : NSFragment() {
                 ) { isBottomProgressShowing ->
                     bottomProgress(isBottomProgressShowing)
                 }
+
+				isActivationPackageDataAvailable.observe(
+					viewLifecycleOwner
+				) { isActivation ->
+					srlRefresh.isRefreshing = false
+					if (isActivation) {
+						if (activationPackageList.isValidList()) {
+							switchResultActivity(dataResult,
+								NSActivationFormActivity::class.java,
+								bundleOf(
+									NSConstants.KEY_MEMBER_ACTIVATION_FORM to Gson().toJson(
+										activationPackageResponse
+									),
+									NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL to if (dataMember != null) Gson().toJson(dataMember) else "",
+									NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM to true
+								)
+							)
+						}
+						isActivationPackageDataAvailable.value = false
+					}
+				}
 
                 isRegisterDataAvailable.observe(
                     viewLifecycleOwner

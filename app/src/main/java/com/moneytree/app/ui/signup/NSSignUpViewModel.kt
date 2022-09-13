@@ -19,14 +19,13 @@ class NSSignUpViewModel(application: Application) : NSViewModel(application) {
 	 * Get register list data
 	 *
 	 */
-	fun saveRegisterData(fullName: String, email: String, mobile: String, password: String, isShowProgress: Boolean) {
+	fun saveRegisterData(referCode: String, fullName: String, email: String, mobile: String, password: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
-		NSRegisterRepository.saveRegisterApi(fullName, email, mobile, password, object : NSGenericViewModelCallback {
+		NSRegisterRepository.saveRegisterDirectApi(referCode, fullName, email, mobile, password, object : NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
-				val registerMainData = data as NSSuccessResponse
 				isRegisterSuccessAvailable.value = true
 			}
 

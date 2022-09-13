@@ -5,13 +5,21 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.net.Uri
+import android.view.View
+import com.moneytree.app.R
 
 
 /**
  * The utility class that handles tasks that are common throughout the application
  */
 object NSUtilities {
+
+	val statesEnableDisable = arrayOf(
+		intArrayOf(android.R.attr.state_enabled),
+		intArrayOf(-android.R.attr.state_enabled)
+	)
 
     /**
      * To parse api error list and get string message from resource id
@@ -76,4 +84,16 @@ object NSUtilities {
             e.printStackTrace()
         }
     }
+
+	fun setViewEnableDisableTint(view: View) {
+		view.backgroundTintList = getViewEnableDisableState()
+	}
+
+	private fun getViewEnableDisableState(): ColorStateList {
+		val colors = intArrayOf(
+			R.color.orange,
+			R.color.hint_color
+		)
+		return ColorStateList(statesEnableDisable, colors)
+	}
 }

@@ -28,6 +28,8 @@ class NSConstants {
 		const val KEY_PRODUCT_CATEGORY_NAME = "key_product_category_name"
 		const val KEY_PRODUCT_DETAIL = "key_product_detail"
 		const val KEY_MEMBER_ACTIVATION_FORM = "key_member_activation_form"
+		const val KEY_MEMBER_FORM_ACTIVATION_FORM = "key_member_form_activation_form"
+		const val KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL = "key_member_form_activation_form_detail"
 
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"

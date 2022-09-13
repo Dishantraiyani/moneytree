@@ -19,6 +19,7 @@ class NSPreferences(context: Context) {
         private const val KEY_AUTH_TOKEN = "token"
         private const val KEY_USER_DATA = "key_user_data"
         private const val KEY_OFFER_TAB_POSITION = "key_offer_tab_position"
+        private const val KEY_IS_ACTIVE_USER = "key_is_active_user"
     }
 
     /**
@@ -27,6 +28,10 @@ class NSPreferences(context: Context) {
     var authToken: String?
         get() = preference.getString(KEY_AUTH_TOKEN, null)
         set(token) = prefEdit.putString(KEY_AUTH_TOKEN, token).apply()
+
+	var isActive: Boolean
+        get() = preference.getBoolean(KEY_IS_ACTIVE_USER, false)
+        set(active) = prefEdit.putBoolean(KEY_IS_ACTIVE_USER, active).apply()
 
     /**
      * Property that contains login user data

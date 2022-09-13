@@ -40,6 +40,7 @@ object NSUserRepository {
                     NSUserManager.saveHeadersInPreference(response)
                     viewModelCallback.onSuccess(response.body())
                 } else {
+					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
@@ -74,6 +75,7 @@ object NSUserRepository {
                     NSUserManager.saveUserInPreference(response)
                     viewModelCallback.onSuccess(response.body())
                 } else {
+					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
@@ -96,6 +98,7 @@ object NSUserRepository {
                     NSApplication.getInstance().getPrefs().clearPrefData()
                     viewModelCallback.onSuccess(response.body())
                 } else {
+					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
@@ -117,6 +120,7 @@ object NSUserRepository {
 				if (data.status) {
 					viewModelCallback.onSuccess(response.body())
 				} else {
+					errorMessageList.clear()
 					errorMessageList.add(data.message!!)
 					viewModelCallback.onError(errorMessageList)
 				}

@@ -54,5 +54,8 @@ data class NSRegisterListData(
 	var packageName: String? = null,
 	@SerializedName("is_active")
 	@Expose
-	var isActive: String? = null
+	var isActive: String? = null,
+	@SerializedName("direct_activation")
+	@Expose
+	var directActivation: String? = null
 )

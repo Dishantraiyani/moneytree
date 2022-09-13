@@ -19,6 +19,109 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_member_id"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/_18sdp"
+			app:cardCornerRadius="@dimen/_5sdp"
+			android:visibility="gone"
+			app:cardBackgroundColor="@color/gray_background"
+			android:layout_marginHorizontal="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_member_id"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/_1sdp"
+				app:guidelineUseRtl="true"
+				app:chainUseRtl="true"
+				>
+
+				<ImageView
+					android:id="@+id/iv_member_id"
+					android:layout_width="@dimen/_15sdp"
+					android:layout_height="@dimen/_15sdp"
+					android:src="@drawable/tab_profile"
+					android:layout_marginStart="@dimen/_10sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					android:contentDescription="@string/username_title" />
+
+				<TextView
+					android:id="@+id/tv_member_id"
+					style="@style/LoginSubFontsZeroWrap"
+					android:minHeight="@dimen/_40sdp"
+					android:textColor="@color/black"
+					android:background="@color/gray_background"
+					android:paddingHorizontal="@dimen/_10sdp"
+					android:hint="@string/member_id_title_"
+					android:gravity="center_vertical"
+					android:textColorHint="@color/hint_color"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toEndOf="@id/iv_member_id"
+					app:layout_constraintEnd_toEndOf="parent" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</androidx.cardview.widget.CardView>
+
+		<androidx.cardview.widget.CardView
+			android:id="@+id/card_full_name"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/_18sdp"
+			app:cardCornerRadius="@dimen/_5sdp"
+			android:visibility="gone"
+			app:cardBackgroundColor="@color/gray_background"
+			android:layout_marginHorizontal="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/card_member_id">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_full_name"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/_1sdp"
+				app:guidelineUseRtl="true"
+				app:chainUseRtl="true">
+
+				<ImageView
+					android:id="@+id/iv_full_name"
+					android:layout_width="@dimen/_15sdp"
+					android:layout_height="@dimen/_15sdp"
+					android:src="@drawable/tab_profile"
+					android:layout_marginStart="@dimen/_10sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					android:contentDescription="@string/username_title" />
+
+				<TextView
+					android:id="@+id/tv_full_name"
+					style="@style/LoginSubFontsZeroWrap"
+					android:minHeight="@dimen/_40sdp"
+					android:textColor="@color/black"
+					android:background="@color/gray_background"
+					android:paddingHorizontal="@dimen/_10sdp"
+					android:hint="@string/full_name"
+					android:gravity="center_vertical"
+					android:textColorHint="@color/hint_color"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toEndOf="@id/iv_full_name"
+					app:layout_constraintEnd_toEndOf="parent" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</androidx.cardview.widget.CardView>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card_register_type"
             android:layout_width="match_parent"
@@ -28,7 +131,7 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/card_full_name">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_register_type"

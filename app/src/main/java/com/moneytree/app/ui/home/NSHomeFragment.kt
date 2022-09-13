@@ -174,9 +174,12 @@ class NSHomeFragment : NSFragment() {
                         tvAccountNo.text = addText(activity, R.string.ac_no, acNo!!)
                         navigationView()
 						tvActive.visible()
+
 						if (nsUserData!!.isActive.equals("Y")) {
+							pref.isActive = true
 							tvActive.text = activity.resources.getString(R.string.active)
 						} else {
+							pref.isActive = false
 							tvActive.text = activity.resources.getString(R.string.deActive)
 						}
                     }
