@@ -131,192 +131,201 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_home_top"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintBottom_toTopOf="@id/cl_top_home">
 
-                    <TextView
-                        android:id="@+id/tv_status_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_9sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/inter_medium"
-                        android:textStyle="normal"
-                        android:paddingStart="@dimen/_15sdp"
-                        android:paddingEnd="@dimen/_5sdp"
-                        android:textColor="@color/black"
-                        android:text="Status: "
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+					<TextView
+						android:id="@+id/tv_status_title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/_9sdp"
+						android:layout_marginTop="@dimen/_5sdp"
+						android:fontFamily="@font/inter_medium"
+						android:textStyle="normal"
+						android:paddingStart="@dimen/_15sdp"
+						android:paddingEnd="@dimen/_5sdp"
+						android:textColor="@color/black"
+						android:text="Status: "
+						android:visibility="gone"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
 
-                    <TextView
-                        android:id="@+id/tv_status"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_9sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="@font/inter_medium"
-                        android:textStyle="normal"
-                        android:paddingStart="0dp"
-                        android:visibility="gone"
-                        android:paddingEnd="@dimen/_15sdp"
-                        android:textColor="@color/orange"
-                        android:gravity="start|center_vertical"
-                        android:text="No Royalty"
-                        app:layout_constraintStart_toEndOf="@id/tv_status_title"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+					<TextView
+						android:id="@+id/tv_status"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:textSize="@dimen/_9sdp"
+						android:layout_marginTop="@dimen/_5sdp"
+						android:fontFamily="@font/inter_medium"
+						android:textStyle="normal"
+						android:paddingStart="0dp"
+						android:visibility="gone"
+						android:paddingEnd="@dimen/_15sdp"
+						android:textColor="@color/orange"
+						android:gravity="start|center_vertical"
+						android:text="No Royalty"
+						app:layout_constraintStart_toEndOf="@id/tv_status_title"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
 
-                    <View
-                        android:id="@+id/view_line2"
-                        android:layout_width="0dp"
-                        android:layout_height="0.7dp"
-                        android:background="#eef0f1"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_status"/>
+					<View
+						android:id="@+id/view_line2"
+						android:layout_width="0dp"
+						android:layout_height="0.7dp"
+						android:background="#eef0f1"
+						android:visibility="gone"
+						android:layout_marginTop="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_status"/>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_down_line"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/cl_voucher"
-                        app:layout_constraintTop_toBottomOf="@id/view_line2"
-                        app:layout_constraintBottom_toBottomOf="parent">
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/cl_down_line"
+						android:layout_width="0dp"
+						android:layout_height="0dp"
+						android:orientation="vertical"
+						android:gravity="center"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toStartOf="@id/cl_voucher"
+						app:layout_constraintTop_toBottomOf="@id/view_line2"
+						app:layout_constraintBottom_toBottomOf="parent">
 
-                        <TextView
-                            android:id="@+id/tv_downline"
-                            style="@style/LayoutWidthHeightWrap"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="@string/zero"
-                            android:textColor="@color/orange"
-                            android:fontFamily="@font/inter_medium"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:includeFontPadding="false"
-                            android:visibility="visible"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toTopOf="@id/tv_down_line_title"
-                            app:layout_constraintTop_toTopOf="parent"/>
+						<TextView
+							android:id="@+id/tv_downline"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_14sdp"
+							android:text="@string/zero"
+							android:textColor="@color/orange"
+							android:fontFamily="@font/inter_medium"
+							android:textStyle="bold"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:visibility="visible"
+							app:layout_constraintVertical_chainStyle="packed"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toTopOf="@id/tv_down_line_title"
+							app:layout_constraintTop_toTopOf="parent"/>
 
-                        <TextView
-                            android:id="@+id/tv_down_line_title"
-                            style="@style/LayoutWidthHeightWrap"
-                            android:textSize="@dimen/_9sdp"
-                            android:text="@string/my_downline"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/inter_regular"
-                            android:layout_gravity="center"
-                            android:includeFontPadding="false"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:visibility="visible"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+						<TextView
+							android:id="@+id/tv_down_line_title"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_9sdp"
+							android:text="@string/my_downline"
+							android:textColor="@color/black"
+							android:fontFamily="@font/inter_regular"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:layout_marginTop="@dimen/_8sdp"
+							android:visibility="visible"
+							app:layout_constraintTop_toBottomOf="@id/tv_downline"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+					</androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_voucher"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        app:layout_constraintStart_toEndOf="@id/cl_down_line"
-                        app:layout_constraintEnd_toStartOf="@id/cl_join_voucher"
-                        app:layout_constraintTop_toBottomOf="@id/view_line2"
-                        app:layout_constraintBottom_toBottomOf="parent">
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/cl_voucher"
+						android:layout_width="0dp"
+						android:layout_height="0dp"
+						android:orientation="vertical"
+						android:gravity="center"
+						app:layout_constraintStart_toEndOf="@id/cl_down_line"
+						app:layout_constraintEnd_toStartOf="@id/cl_join_voucher"
+						app:layout_constraintTop_toBottomOf="@id/view_line2"
+						app:layout_constraintBottom_toBottomOf="parent">
 
-                        <TextView
-                            android:id="@+id/tv_voucher"
-                            style="@style/LayoutWidthHeightWrap"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="@string/zero"
-                            android:textColor="@color/orange"
-                            android:fontFamily="@font/inter_medium"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:includeFontPadding="false"
-                            android:visibility="visible"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toTopOf="@id/tv_voucher_title"
-                            app:layout_constraintTop_toTopOf="parent"/>
+						<TextView
+							android:id="@+id/tv_voucher"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_14sdp"
+							android:text="@string/zero"
+							android:textColor="@color/orange"
+							android:fontFamily="@font/inter_medium"
+							android:textStyle="bold"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:visibility="visible"
+							app:layout_constraintVertical_chainStyle="packed"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toTopOf="@id/tv_voucher_title"
+							app:layout_constraintTop_toTopOf="parent"/>
 
-                        <TextView
-                            android:id="@+id/tv_voucher_title"
-                            style="@style/LayoutWidthHeightWrap"
-                            android:textSize="@dimen/_9sdp"
-                            android:text="@string/vouchers"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/inter_regular"
-                            android:layout_gravity="center"
-                            android:includeFontPadding="false"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:visibility="visible"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+						<TextView
+							android:id="@+id/tv_voucher_title"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_9sdp"
+							android:text="@string/vouchers"
+							android:textColor="@color/black"
+							android:fontFamily="@font/inter_regular"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:layout_marginTop="@dimen/_8sdp"
+							android:visibility="visible"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/tv_voucher"
+							app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+					</androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/cl_join_voucher"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        app:layout_constraintStart_toEndOf="@id/cl_voucher"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/view_line2"
-                        app:layout_constraintBottom_toBottomOf="parent">
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/cl_join_voucher"
+						android:layout_width="0dp"
+						android:layout_height="0dp"
+						android:orientation="vertical"
+						android:gravity="center"
+						app:layout_constraintStart_toEndOf="@id/cl_voucher"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/view_line2"
+						app:layout_constraintBottom_toBottomOf="parent">
 
-                        <TextView
-                            android:id="@+id/tv_join_voucher"
-                            style="@style/LayoutWidthHeightWrap"
-                            android:textSize="@dimen/_14sdp"
-                            android:text="@string/zero"
-                            android:textColor="@color/orange"
-                            android:fontFamily="@font/inter_medium"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"
-                            android:includeFontPadding="false"
-                            android:visibility="visible"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toTopOf="@id/tv_join_voucher_title"
-                            app:layout_constraintTop_toTopOf="parent"/>
+						<TextView
+							android:id="@+id/tv_join_voucher"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_14sdp"
+							android:text="@string/zero"
+							android:textColor="@color/orange"
+							android:fontFamily="@font/inter_medium"
+							android:textStyle="bold"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:visibility="visible"
+							app:layout_constraintVertical_chainStyle="packed"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toTopOf="@id/tv_join_voucher_title"
+							app:layout_constraintTop_toTopOf="parent"/>
 
-                        <TextView
-                            android:id="@+id/tv_join_voucher_title"
-                            style="@style/LayoutWidthHeightWrap"
-                            android:textSize="@dimen/_9sdp"
-                            android:text="@string/join_vouchers"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/inter_regular"
-                            android:layout_gravity="center"
-                            android:includeFontPadding="false"
-                            android:layout_marginBottom="@dimen/_8sdp"
-                            android:visibility="visible"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+						<TextView
+							android:id="@+id/tv_join_voucher_title"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_9sdp"
+							android:text="@string/join_vouchers"
+							android:textColor="@color/black"
+							android:fontFamily="@font/inter_regular"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:layout_marginTop="@dimen/_8sdp"
+							android:visibility="visible"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/tv_join_voucher"
+							app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+					</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.cardview.widget.CardView>
 
@@ -382,6 +391,88 @@
                         app:ci_width="4dp"
                         app:ci_height="4dp"/>
                 </RelativeLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:visibility="gone"
+					android:layout_marginBottom="@dimen/_10sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+					<androidx.cardview.widget.CardView
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/_60sdp"
+						app:cardCornerRadius="@dimen/_3sdp"
+						app:cardElevation="@dimen/_2sdp"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent">
+
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:id="@+id/cl_top_home"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:paddingStart="@dimen/_20sdp"
+							android:paddingEnd="@dimen/_10sdp"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toBottomOf="@+id/view_line_home">
+
+							<TextView
+								android:id="@+id/tv_package_name_title"
+								style="@style/LayoutWidthHeightWrap"
+								android:text="@string/package_name_title"
+								android:textSize="@dimen/_8sdp"
+								android:textColor="@color/gray_text"
+								android:includeFontPadding="false"
+								android:fontFamily="@font/inter_regular"
+								android:layout_marginStart="@dimen/_3sdp"
+								app:layout_constraintVertical_chainStyle="packed"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintBottom_toTopOf="@id/tv_package_name"
+								android:visibility="visible"/>
+
+							<TextView
+								android:id="@+id/tv_package_name"
+								style="@style/LayoutWidthHeightWrap"
+								android:textSize="@dimen/_11sdp"
+								android:textColor="@color/orange"
+								android:includeFontPadding="false"
+								android:text="ACTIVATION 1100"
+								android:layout_marginTop="@dimen/_5sdp"
+								android:fontFamily="@font/inter_semi_bold"
+								android:layout_marginStart="@dimen/_3sdp"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/tv_package_name_title"
+								app:layout_constraintBottom_toBottomOf="parent"
+								android:visibility="visible"/>
+
+							<TextView
+								android:id="@+id/tv_update"
+								style="@style/LayoutWidthHeightWrap"
+								android:textSize="@dimen/_9sdp"
+								android:textColor="@color/white"
+								android:background="@drawable/blue_button_order_border"
+								android:includeFontPadding="false"
+								android:text="Upgrade"
+								android:paddingVertical="@dimen/_7sdp"
+								android:paddingHorizontal="@dimen/_12sdp"
+								android:fontFamily="@font/inter_semi_bold"
+								android:layout_marginStart="@dimen/_3sdp"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintBottom_toBottomOf="parent"
+								android:visibility="visible"/>
+
+						</androidx.constraintlayout.widget.ConstraintLayout>
+
+					</androidx.cardview.widget.CardView>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_slot_voucher"

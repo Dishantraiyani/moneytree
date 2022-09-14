@@ -229,6 +229,11 @@
 		<item>Voucher Register</item>
 	</string-array>
 
+	<string-array name="registration_type_voucher">
+		<item>Select Register Type</item>
+		<item>Voucher Register</item>
+	</string-array>
+
 	<string-array name="voucher_tab">
 		<item>Pending</item>
 		<item>Receive</item>
@@ -426,4 +431,20 @@
 	<string name="is_active_">Is Active</string>
 	<string name="refund">Return &amp; Refund</string>
     <string name="refer_code">Referral Code</string>
+	<string name="member_id_not_available">Member Id Not Available</string>
+	<string name="invite">Invite</string>
+
+	<string name="refer_your_friends">Refer your friends</string>
+	<string name="invite_msg">Invite your friends and get 200 Coins</string>
+	<string name="your_refer_code">Your Refer code</string>
+	<string name="facebook_share_title">Share With Facebook</string>
+	<string name="facebook_share_msg">Share your reffer code with your facebook friends</string>
+	<string name="whatsapp_share_title">Share With WhatsApp</string>
+	<string name="whatsapp_share_msg">Share reffer code with whatsapp friends and family</string>
+	<string name="share_others_title">Share With Others</string>
+	<string name="share_other_msg">Share reffer code with your friends</string>
+	<string name="whatsapp_support">WhatsApp</string>
+	<string name="update_available">Update Available</string>
+	<string name="update_description">Update new version, Improved performance</string>
+
 </resources>

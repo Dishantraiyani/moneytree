@@ -108,10 +108,55 @@ object NSProductRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
+	fun getMemberActivatePackage(memberId: String, viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getMemberActivationPackageList(memberId, object :
+			NSRetrofitCallback<NSActivationPackageResponse>(viewModelCallback, NSApiErrorHandler.ERROR_ACTIVATION_PACKAGE_LIST) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSActivationPackageResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
 	fun getActivateSave(registrationType: String, packageId: String,
 						viewModelCallback: NSGenericViewModelCallback
 	) {
 		apiManager.activationSave(registrationType, packageId, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_ACTIVATION_PACKAGE_SAVE) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getActivateDirectSave(memberId: String, registrationType: String, packageId: String,
+						viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.activationDirectSave(memberId, registrationType, packageId, object :
 			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_ACTIVATION_PACKAGE_SAVE) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse

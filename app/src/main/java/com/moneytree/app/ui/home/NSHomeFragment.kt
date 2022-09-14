@@ -162,6 +162,12 @@ class NSHomeFragment : NSFragment() {
                     )
                 )*/
             }
+
+			tvUpdate.setOnClickListener(object : SingleClickListener() {
+				override fun performClick(v: View?) {
+					switchActivity(NSActivateActivity::class.java)
+				}
+			})
         }
     }
 
@@ -351,5 +357,10 @@ class NSHomeFragment : NSFragment() {
 				logout()
 			}
 		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+	//	NSUtilities.showUpdateDialog(activity, false)
 	}
 }

@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.BackPressEvent
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSFragmentChange
+import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
@@ -23,7 +20,10 @@ import com.moneytree.app.databinding.NsFragmentRegisterBinding
 import com.moneytree.app.repository.NSRegisterRepository.getRegisterListData
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 import com.moneytree.app.ui.activationForm.NSActivationFormActivity
+import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NSRegisterFragment : NSFragment() {
     private val registerListModel: NSRegisterViewModel by lazy {
@@ -139,7 +139,7 @@ class NSRegisterFragment : NSFragment() {
 				registerListAdapter = NSRegisterListRecycleAdapter(activity, object: NSMemberActiveSelectCallback {
 					override fun onClick(data: NSRegisterListData) {
 						dataMember = data
-						getActivationPackage(true)
+						getActivationPackage(data.username!!, true)
 					}
 				}, object : NSPageChangeCallback {
 					override fun onPageChange() {
@@ -216,7 +216,7 @@ class NSRegisterFragment : NSFragment() {
 					if (isActivation) {
 						if (activationPackageList.isValidList()) {
 							switchResultActivity(dataResult,
-								NSActivationFormActivity::class.java,
+								NSMemberActivationFormActivity::class.java,
 								bundleOf(
 									NSConstants.KEY_MEMBER_ACTIVATION_FORM to Gson().toJson(
 										activationPackageResponse
@@ -262,4 +262,13 @@ class NSRegisterFragment : NSFragment() {
         }
     }
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onResultEvent(event: NSActivityEvent) {
+		if (event.resultCode == NSRequestCodes.REQUEST_MEMBER_ACTIVATION_FORM) {
+			with(registerListModel) {
+				pageIndex = "1"
+				getRegisterListData(pageIndex, "", true, isBottomProgress = false)
+			}
+		}
+	}
 }

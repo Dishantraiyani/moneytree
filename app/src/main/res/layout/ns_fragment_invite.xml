@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.invite.NSInviteFragment">
+
+    <include android:id="@+id/layout_header"
+        layout="@layout/layout_header"/>
+
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/nsv_scroll"
+		android:layout_width="0dp"
+		android:overScrollMode="never"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<ImageView
+				android:contentDescription="@string/invite"
+				android:id="@+id/iv_invite_icon"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_90sdp"
+				android:layout_marginTop="@dimen/_20sdp"
+				android:src="@drawable/invite_ic"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<TextView
+				android:id="@+id/tv_refer_title"
+				style="@style/QueThemeVertical"
+				android:fontFamily="@font/inter_semi_bold"
+				android:gravity="center"
+				android:text="@string/refer_your_friends"
+				android:textSize="@dimen/_14sdp"
+				android:layout_marginTop="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/iv_invite_icon" />
+
+			<TextView
+				android:id="@+id/tv_refer_msg"
+				style="@style/QueThemeVertical"
+				android:layout_marginTop="@dimen/_1sdp"
+				android:fontFamily="@font/inter_regular"
+				android:gravity="center"
+				android:text="@string/invite_msg"
+				android:visibility="gone"
+				android:textSize="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_refer_title" />
+
+			<TextView
+				android:id="@+id/tv_refer_code_title"
+				style="@style/QueThemeVertical"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:fontFamily="@font/inter_medium"
+				android:gravity="center"
+				android:text="@string/your_refer_code"
+				android:textSize="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_refer_msg" />
+
+			<TextView
+				android:id="@+id/tv_invite_code"
+				style="@style/QueThemeWrap"
+				android:layout_gravity="center_horizontal"
+				android:layout_marginTop="@dimen/_6sdp"
+				android:background="@drawable/gray_round_second"
+				android:fontFamily="@font/inter_semi_bold"
+				android:gravity="center"
+				android:minWidth="@dimen/_145sdp"
+				android:paddingVertical="@dimen/_8sdp"
+				android:textSize="@dimen/_16sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_refer_code_title" />
+
+			<View
+				android:id="@+id/view_line4"
+				android:layout_marginTop="@dimen/_20sdp"
+				android:layout_marginStart="@dimen/_10sdp"
+				android:layout_marginEnd="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tv_invite_code"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:background="@color/line_color"/>
+
+			<LinearLayout
+				android:id="@+id/ll_facebook_click_layout"
+				style="@style/QueThemeVertical"
+				android:layout_marginTop="@dimen/_5sdp"
+				android:orientation="horizontal"
+				android:paddingHorizontal="@dimen/_10sdp"
+				android:paddingVertical="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/view_line4">
+
+				<ImageView
+					android:id="@+id/iv_facebook"
+					android:layout_width="@dimen/_23sdp"
+					android:layout_height="@dimen/_23sdp"
+					android:layout_gravity="center_vertical"
+					android:gravity="center"
+					android:src="@drawable/ic_facebook"
+					android:contentDescription="@string/facebook_share_msg" />
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"
+					android:layout_weight="1"
+					android:orientation="vertical"
+					android:paddingStart="@dimen/_12sdp"
+					android:paddingEnd="0dp">
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="start"
+						android:text="@string/facebook_share_title"
+						android:textAlignment="textStart"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_12sdp" />
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:gravity="start"
+						android:text="@string/facebook_share_msg"
+						android:textAlignment="textStart"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_9sdp" />
+
+				</LinearLayout>
+
+				<ImageView
+					android:layout_width="@dimen/_12sdp"
+					android:layout_height="@dimen/_12sdp"
+					android:layout_gravity="center_vertical"
+					android:alpha="0.2"
+					android:layerType="software"
+					android:src="@drawable/arrow_right"
+					android:contentDescription="@string/facebook_share_title" />
+
+			</LinearLayout>
+
+			<View
+				android:id="@+id/view_line2"
+				android:layout_marginStart="@dimen/_10sdp"
+				android:layout_marginEnd="@dimen/_10sdp"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:background="@color/line_color"
+				android:layout_marginTop="@dimen/_5sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/ll_facebook_click_layout" />
+
+			<LinearLayout
+				android:id="@+id/ll_whats_app_click_layout"
+				style="@style/QueThemeVertical"
+				android:layout_marginTop="@dimen/_5sdp"
+				android:orientation="horizontal"
+				android:paddingHorizontal="@dimen/_10sdp"
+				android:paddingVertical="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/view_line2">
+
+				<ImageView
+					android:layout_width="@dimen/_23sdp"
+					android:layout_height="@dimen/_23sdp"
+					android:layout_gravity="center_vertical"
+					android:gravity="center"
+					android:src="@drawable/ic_whatsapp"
+					android:contentDescription="@string/whatsapp_support" />
+
+				<LinearLayout
+					style="@style/QueThemeVertical"
+					android:layout_gravity="center_vertical"
+					android:layout_weight="1"
+					android:orientation="vertical"
+					android:paddingStart="@dimen/_12sdp"
+					android:paddingEnd="0dp">
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="start"
+						android:text="@string/whatsapp_share_title"
+						android:textAlignment="textStart"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_12sdp" />
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:gravity="start"
+						android:text="@string/whatsapp_share_msg"
+						android:textAlignment="textStart"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_9sdp" />
+
+				</LinearLayout>
+
+				<ImageView
+					android:layout_width="@dimen/_12sdp"
+					android:layout_height="@dimen/_12sdp"
+					android:layout_gravity="center_vertical"
+					android:alpha="0.2"
+					android:layerType="software"
+					android:src="@drawable/arrow_right"
+					android:contentDescription="@string/whatsapp_share_title" />
+
+			</LinearLayout>
+
+			<View
+				android:id="@+id/view_line3"
+				android:layout_marginStart="@dimen/_10sdp"
+				android:layout_marginEnd="@dimen/_10sdp"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:background="@color/line_color"
+				android:layout_marginTop="@dimen/_5sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/ll_whats_app_click_layout" />
+
+			<LinearLayout
+				android:id="@+id/ll_others_click_layout"
+				style="@style/QueThemeVertical"
+				android:layout_marginTop="@dimen/_5sdp"
+				android:orientation="horizontal"
+				android:paddingHorizontal="@dimen/_10sdp"
+				android:paddingVertical="@dimen/_10sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/view_line3">
+
+				<ImageView
+					android:layout_width="@dimen/_23sdp"
+					android:layout_height="@dimen/_23sdp"
+					android:layout_gravity="center_vertical"
+					android:gravity="center"
+					android:src="@drawable/ic_more"
+					android:contentDescription="@string/share_others_title" />
+
+				<LinearLayout
+					style="@style/QueThemeVertical"
+					android:layout_gravity="center_vertical"
+					android:layout_weight="1"
+					android:orientation="vertical"
+					android:paddingStart="@dimen/_12sdp"
+					android:paddingEnd="0dp">
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="start"
+						android:text="@string/share_others_title"
+						android:textAlignment="textStart"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_12sdp" />
+
+					<TextView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:gravity="start"
+						android:text="@string/share_other_msg"
+						android:textAlignment="textStart"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_9sdp" />
+
+				</LinearLayout>
+
+				<ImageView
+					android:layout_width="@dimen/_12sdp"
+					android:layout_height="@dimen/_12sdp"
+					android:layout_gravity="center_vertical"
+					android:alpha="0.2"
+					android:layerType="software"
+					android:src="@drawable/arrow_right"
+					android:contentDescription="@string/share_others_title" />
+
+			</LinearLayout>
+
+			<View
+				android:layout_marginStart="@dimen/_10sdp"
+				android:layout_marginEnd="@dimen/_10sdp"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:background="@color/line_color"
+				android:layout_marginTop="@dimen/_5sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/ll_others_click_layout" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

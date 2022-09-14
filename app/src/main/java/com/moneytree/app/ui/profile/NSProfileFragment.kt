@@ -15,6 +15,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentProfileBinding
+import com.moneytree.app.ui.invite.NSInviteActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.profile.edit.NSEditActivity
 import com.moneytree.app.ui.profile.password.NSChangePasswordActivity
@@ -127,8 +128,7 @@ class NSProfileFragment : NSFragment() {
                 )
             }
             2 -> {
-				val url = "https://play.google.com/store/apps/details?id=${activity.packageName}&referrer=${referralCode}"
-                NSUtilities.shareAll(activity, Uri.parse(url).toString())
+				switchActivity(NSInviteActivity::class.java)
             }
             3, 4 -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + activity.packageName))

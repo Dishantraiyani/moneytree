@@ -474,8 +474,26 @@ class NSApiManager {
 	 *
 	 * @param callback  The callback for the result
 	 */
+	fun getMemberActivationPackageList(memberId: String, callback: NSRetrofitCallback<NSActivationPackageResponse>) {
+		request(unAuthorised3020Client.memberActivationPackage(NSUserManager.getAuthToken()!!, memberId), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
 	fun activationSave(registrationType: String, packageId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(unAuthorised3020Client.activationSave(NSUserManager.getAuthToken()!!, registrationType, packageId), callback)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun activationDirectSave(memberId: String, registrationType: String, packageId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.activationDirectSave(NSUserManager.getAuthToken()!!, memberId, registrationType, packageId), callback)
 	}
 
 	/**
@@ -647,5 +665,12 @@ interface RTApiInterface {
 	@POST("upline-member-list-api")
 	fun upLineMemberList(@Field("token_id") token: String): Call<NSUpLineListResponse>
 
+	@FormUrlEncoded
+	@POST("activation-direct-package-api")
+	fun memberActivationPackage(@Field("token_id") token: String, @Field("memberid") memberId: String): Call<NSActivationPackageResponse>
+
+	@FormUrlEncoded
+	@POST("activation-direct-save-api")
+	fun activationDirectSave(@Field("token_id") token: String, @Field("memberid") memberId: String, @Field("registration_type") registrationType: String, @Field("package_id") packageId: String): Call<NSSuccessResponse>
 
 }

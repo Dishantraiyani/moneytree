@@ -122,11 +122,11 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
         }
     }
 
-	fun getActivationPackage(isShowProgress: Boolean) {
+	fun getActivationPackage(memberId: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
-		NSProductRepository.getActivatePackage(object : NSGenericViewModelCallback {
+		NSProductRepository.getMemberActivatePackage(memberId, object : NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				if (isBottomProgressShow) {

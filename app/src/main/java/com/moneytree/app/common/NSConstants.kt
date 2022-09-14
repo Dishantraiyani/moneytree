@@ -35,6 +35,7 @@ class NSConstants {
         const val POSITIVE_CLICK = "positive_button_click"
         const val REDEEM_SAVE_CLICK = "redeem_save_button_click"
         const val MEMBER_ACTIVATE_CLICK = "member_activate_button_click"
+        const val MEMBER_TH_ACTIVATE_CLICK = "member_th_activate_button_click"
         const val LOGOUT_CLICK = "logout_button_click"
 
         //Pagination

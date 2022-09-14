@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="orange">#eba94a</color>
+    <color name="orange_alpha">#20eba94a</color>
     <string name="orange">#eba94a</string>
     <color name="gray">#555555</color>
     <color name="hint_color">#C4C4C6</color>
