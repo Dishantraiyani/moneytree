@@ -95,7 +95,7 @@ class NSInviteFragment : NSFragment() {
 			MainDatabase.getUserData(object : NSUserDataCallback {
 				override fun onResponse(userDetail: NSDataUser) {
 					nsUserData = userDetail
-					activationFormBinding.tvInviteCode.text = nsUserData!!.userName
+					activationFormBinding.tvInviteCode.text = nsUserData!!.referCode
 				}
 			})
 		}
