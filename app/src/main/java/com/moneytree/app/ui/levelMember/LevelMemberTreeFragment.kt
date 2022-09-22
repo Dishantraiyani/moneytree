@@ -47,6 +47,10 @@ class LevelMemberTreeFragment : NSFragment() {
                 clBack.setOnClickListener {
                     onBackPress()
                 }
+
+				srlRefresh.setOnRefreshListener {
+					levelMemberTreeViewModel.getMemberTreeData(false)
+				}
             }
         }
     }

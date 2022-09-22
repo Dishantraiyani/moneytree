@@ -84,7 +84,7 @@ class MainFragment : NSFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFragmentEvent(event: NSFragmentChange) {
         with(mainBinding) {
-            replaceFragment(event.fragment, true, fragmentMainContainer.id)
+            replaceFragment(event.fragment, event.isBackStack, fragmentMainContainer.id)
         }
     }
 

@@ -155,7 +155,7 @@ object NSUtilities {
 		}
 	}
 
-	fun showUpdateDialog(activity: Activity, isSkip: Boolean) {
+	fun showUpdateDialog(activity: Activity, isSkip: Boolean,urlLink:String?) {
 		val builder = AlertDialog.Builder(activity)
 		val view: View = activity.layoutInflater.inflate(R.layout.dialog_update, null)
 		builder.setView(view)
@@ -175,9 +175,10 @@ object NSUtilities {
 		bind.tvOk.setOnClickListener { v ->
 			dialog.dismiss()
 			activity.startActivity(
+				//todo change
 				Intent(
 					Intent.ACTION_VIEW,
-					Uri.parse("https://play.google.com/store/apps/details?id=" + activity.packageName)
+					Uri.parse(urlLink ?: ("https://play.google.com/store/apps/details?id=" + activity.packageName))
 				)
 			)
 		}

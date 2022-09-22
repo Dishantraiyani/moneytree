@@ -65,5 +65,8 @@ data class NSDataUser(
 	var isActive: String? = null,
 	@SerializedName("referral_code")
 	@Expose
-	var referCode: String? = null
+	var referCode: String? = null,
+	@SerializedName("package_name")
+	@Expose
+	var packageName: String? = null
 )

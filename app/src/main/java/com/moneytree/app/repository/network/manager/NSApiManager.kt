@@ -19,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -324,6 +325,15 @@ class NSApiManager {
     }
 
 	/**
+	 * To call the downline direct reOffer API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getLevelWiseDetailTree(levelNo: String, callback: NSRetrofitCallback<NSLevelMemberTreeDetailResponse>) {
+		request(unAuthorised3020Client.getLevelWiseMemberReportListDetail(NSUserManager.getAuthToken()!!, levelNo), callback)
+	}
+
+	/**
 	 * To call the user detail data API
 	 *
 	 * @param callback  The callback for the result
@@ -504,6 +514,10 @@ class NSApiManager {
 	fun getUpLineMembers(callback: NSRetrofitCallback<NSUpLineListResponse>) {
 		request(unAuthorised3020Client.upLineMemberList(NSUserManager.getAuthToken()!!), callback)
 	}
+
+    fun checkVersion(callback: NSRetrofitCallback<NSCheckVersionResponse>) {
+        request(unAuthorised3020Client.checkVersion(), callback)
+    }
 }
 
 /**
@@ -574,6 +588,10 @@ interface RTApiInterface {
     @FormUrlEncoded
     @POST("level-wise-member-report-list")
     fun getLevelWiseMemberReportList(@Field("token_id") token: String): Call<NSLevelMemberTreeResponse>
+
+	@FormUrlEncoded
+	@POST("level-wise-member-report-list")
+	fun getLevelWiseMemberReportListDetail(@Field("token_id") token: String, @Field("levelno") levelNo: String): Call<NSLevelMemberTreeDetailResponse>
 
     /*Change Password*/
     @FormUrlEncoded
@@ -673,4 +691,6 @@ interface RTApiInterface {
 	@POST("activation-direct-save-api")
 	fun activationDirectSave(@Field("token_id") token: String, @Field("memberid") memberId: String, @Field("registration_type") registrationType: String, @Field("package_id") packageId: String): Call<NSSuccessResponse>
 
+    @GET("check-version")
+    fun checkVersion() : Call<NSCheckVersionResponse>
 }

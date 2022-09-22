@@ -6,29 +6,30 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.gson.Gson
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
 import com.moneytree.app.common.utils.*
+import com.moneytree.app.common.utils.NSUtilities.showUpdateDialog
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
-import com.moneytree.app.repository.NSUserRepository.logout
 import com.moneytree.app.repository.network.responses.GridModel
+import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
-import com.moneytree.app.ui.recharge.NSRechargeActivity
+import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.reports.NSReportsActivity
+import com.moneytree.app.ui.retailInfo.NSRetailInfoFragment
 import com.moneytree.app.ui.slide.GridRecycleAdapter
-import com.moneytree.app.ui.slots.NSSlotsActivity
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -84,6 +85,7 @@ class NSHomeFragment : NSFragment() {
                     tvAmountData.visibility = View.VISIBLE
                 }
                 getUserDetail()
+                checkVersion()
                 setFragmentData()
                 getDashboardData(true)
                 setupViewPager(viewPager)
@@ -123,9 +125,14 @@ class NSHomeFragment : NSFragment() {
                     homeListModelClassArrayList1!!.add(gridModel)
                 }
                 bAdapterNS = GridRecycleAdapter(
-                    homeListModelClassArrayList1!!, object : NSRechargeSelectCallback{
+                    homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
                         override fun onClick(position: Int) {
-                            switchActivity(NSRechargeActivity::class.java)
+                            //todo change
+                            //switchActivity(NSRechargeActivity::class.java)
+                            Toast.makeText(activity,
+                                activity.resources.getString(R.string.coming_soon),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 )
@@ -154,6 +161,10 @@ class NSHomeFragment : NSFragment() {
                 )
             }
 
+			clDownLine.setOnClickListener {
+				EventBus.getDefault().post(NSTabChange(R.id.tb_register))
+			}
+
             clCoinBtn.setOnClickListener {
                 /*switchActivity(
                     NSSlotsActivity::class.java,
@@ -163,11 +174,11 @@ class NSHomeFragment : NSFragment() {
                 )*/
             }
 
-			tvUpdate.setOnClickListener(object : SingleClickListener() {
-				override fun performClick(v: View?) {
-					switchActivity(NSActivateActivity::class.java)
-				}
-			})
+            tvUpdate.setOnClickListener(object : SingleClickListener() {
+                override fun performClick(v: View?) {
+                    switchActivity(NSActivateActivity::class.java)
+                }
+            })
         }
     }
 
@@ -179,15 +190,15 @@ class NSHomeFragment : NSFragment() {
                         tvUserName.text = addText(activity, R.string.name, userName!!)
                         tvAccountNo.text = addText(activity, R.string.ac_no, acNo!!)
                         navigationView()
-						tvActive.visible()
+                        tvActive.visible()
 
-						if (nsUserData!!.isActive.equals("Y")) {
-							pref.isActive = true
-							tvActive.text = activity.resources.getString(R.string.active)
-						} else {
-							pref.isActive = false
-							tvActive.text = activity.resources.getString(R.string.deActive)
-						}
+                        if (nsUserData!!.isActive.equals("Y")) {
+                            pref.isActive = true
+                            tvActive.text = "${nsUserData?.packageName?.uppercase()} (${activity.resources.getString(R.string.active)})"
+                        } else {
+                            pref.isActive = false
+                            tvActive.text = activity.resources.getString(R.string.deActive)
+                        }
                     }
                 }
             }
@@ -200,12 +211,15 @@ class NSHomeFragment : NSFragment() {
                 if (isDashboardData) {
                     tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
                     tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
-                    tvJoinVoucher.text = addText(activity, R.string.dashboard_data, setJoinVoucher())
+                    tvJoinVoucher.text =
+                        addText(activity, R.string.dashboard_data, setJoinVoucher())
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
-					NSApplication.getInstance().setWalletBalance(setWallet())
+                    NSApplication.getInstance().setWalletBalance(setWallet())
                     //setBold(setRoyaltyStatus())
-                    tvStatusRoyalty.text = addText(activity, R.string.status_royalty, setRoyaltyStatus())
-                    layoutHeader.tvAmountData.text = addText(activity, R.string.my_earning, setEarningAmount())
+                    tvStatusRoyalty.text =
+                        addText(activity, R.string.status_royalty, setRoyaltyStatus())
+                    layoutHeader.tvAmountData.text =
+                        addText(activity, R.string.my_earning, setEarningAmount())
                     //This is display Message slider
                     /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
                         tvMessage.setTextColor(Color.parseColor(data!!.colour))
@@ -222,11 +236,13 @@ class NSHomeFragment : NSFragment() {
 
     private fun setBold(value: String) {
         with(homeBinding) {
-            val html = "Status: <b>${value.lowercase().replaceFirstChar {
-                if (it.isLowerCase()) it.titlecase(
-                    Locale.getDefault()
-                ) else it.toString()
-            }}</b>"
+            val html = "Status: <b>${
+                value.lowercase().replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                }
+            }</b>"
             tvStatusRoyalty.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
             tvStatusRoyalty.movementMethod = LinkMovementMethod.getInstance()
         }
@@ -247,47 +263,52 @@ class NSHomeFragment : NSFragment() {
                             tvIcon.text = getString(R.string.app_first)
                         }
 
-						llHome.setOnClickListener {
-							drawer.closeDrawer(GravityCompat.START)
-						}
+                        llHome.setOnClickListener {
+                            drawer.closeDrawer(GravityCompat.START)
+                        }
 
                         //Click
                         llRegister.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_register))
                         }
 
-						llVouchers.setOnClickListener {
-							drawer.closeDrawer(GravityCompat.START)
-							switchActivity(
-								NSVouchersActivity::class.java
-							)
-						}
+                        llVouchers.setOnClickListener {
+                            drawer.closeDrawer(GravityCompat.START)
+                            switchActivity(
+                                NSVouchersActivity::class.java
+                            )
+                        }
 
                         llWallet.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
                         }
 
-						llProducts.setOnClickListener {
-							drawer.closeDrawer(GravityCompat.START)
-							switchActivity(NSProductsCategoryActivity::class.java)
-						}
+                        llProducts.setOnClickListener {
+                            drawer.closeDrawer(GravityCompat.START)
+                            switchActivity(NSProductsCategoryActivity::class.java)
+                        }
 
-						llActivate.setOnClickListener {
-							drawer.closeDrawer(GravityCompat.START)
-							switchActivity(NSActivateActivity::class.java)
-						}
+                        llActivate.setOnClickListener {
+                            drawer.closeDrawer(GravityCompat.START)
+                            switchActivity(NSActivateActivity::class.java)
+                        }
 
                         llRePurchase.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_offers))
                         }
 
-						llLogout.setOnClickListener(object : SingleClickListener() {
-							override fun performClick(v: View?) {
-								with(activity.resources) {
-									showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
-								}
-							}
-						})
+                        llLogout.setOnClickListener(object : SingleClickListener() {
+                            override fun performClick(v: View?) {
+                                with(activity.resources) {
+                                    showLogoutDialog(
+                                        getString(R.string.logout),
+                                        getString(R.string.logout_message),
+                                        getString(R.string.no_title),
+                                        getString(R.string.yes_title)
+                                    )
+                                }
+                            }
+                        })
                     }
                 }
             }
@@ -317,16 +338,16 @@ class NSHomeFragment : NSFragment() {
                 setDashboardData(isDashboardDataAvailable)
             }
 
-			isLogout.observe(
-				viewLifecycleOwner
-			) { isLogout ->
-				NSLog.d(tags, "observeViewModel: $isLogout")
-				NSApplication.getInstance().getPrefs().clearPrefData()
-				switchActivity(
-					NSLoginActivity::class.java,
-					flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-				)
-			}
+            isLogout.observe(
+                viewLifecycleOwner
+            ) { isLogout ->
+                NSLog.d(tags, "observeViewModel: $isLogout")
+                NSApplication.getInstance().getPrefs().clearPrefData()
+                switchActivity(
+                    NSLoginActivity::class.java,
+                    flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+            }
 
             failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                 showAlertDialog(errorMessage)
@@ -347,20 +368,36 @@ class NSHomeFragment : NSFragment() {
             validationErrorId.observe(viewLifecycleOwner) { errorId ->
                 showAlertDialog(getString(errorId))
             }
+
+            chekVersionLiveData.observe(viewLifecycleOwner) { apiResponse ->
+                checkUpdateDialog(apiResponse)
+            }
         }
     }
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
-		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_NEGATIVE && event.alertKey == NSConstants.LOGOUT_CLICK) {
-			with(homeModel) {
-				logout()
-			}
-		}
-	}
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
+        if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_NEGATIVE && event.alertKey == NSConstants.LOGOUT_CLICK) {
+            with(homeModel) {
+                logout()
+            }
+        }
+    }
 
-	override fun onResume() {
-		super.onResume()
-	//	NSUtilities.showUpdateDialog(activity, false)
-	}
+    private fun checkUpdateDialog(apiResponse: NSCheckVersionResponse?) {
+        apiResponse?.data?.apply {
+            version?.let { version ->
+                if (version.isInteger())
+                    version.toInt().takeIf { it > BuildConfig.VERSION_CODE }?.let {
+                        showUpdateDialog(activity, skip == "1",link)
+                    }
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //	NSUtilities.showUpdateDialog(activity, false)
+        checkUpdateDialog(homeModel.chekVersionResponse)
+    }
 }

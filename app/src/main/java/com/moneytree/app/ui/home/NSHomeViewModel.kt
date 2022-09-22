@@ -1,17 +1,15 @@
 package com.moneytree.app.ui.home
 
 import android.app.Application
-import android.text.method.LinkMovementMethod
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.database.MainDatabase
+import com.moneytree.app.repository.NSCheckVersionRepository
 import com.moneytree.app.repository.NSDashboardRepository
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -25,6 +23,8 @@ import com.moneytree.app.ui.slide.SliderFragment
 class NSHomeViewModel(application: Application) : NSViewModel(application) {
     var isDashboardDataAvailable = MutableLiveData<Boolean>()
     var dashboardData: NSDashboardResponse? = null
+    var chekVersionLiveData = MutableLiveData<NSCheckVersionResponse>()
+    var chekVersionResponse: NSCheckVersionResponse? = null
     var strHomeData : String? = null
     private var homeDetail: NSNotificationListData? = null
     var nsUserData: NSDataUser? = null
@@ -173,6 +173,32 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
                 }
             }
         }
+    }
+
+    /**
+     * check version data
+     *
+     */
+    fun checkVersion() {
+        NSCheckVersionRepository.checkVersionData(object : NSGenericViewModelCallback {
+            override fun <T> onSuccess(data: T) {
+                val checkVersionMainData = data as NSCheckVersionResponse
+                chekVersionResponse = checkVersionMainData
+                chekVersionLiveData.postValue(checkVersionMainData)
+            }
+
+            override fun onError(errors: List<Any>) {
+
+            }
+
+            override fun onFailure(failureMessage: String?) {
+
+            }
+
+            override fun <T> onNoNetwork(localData: T) {
+
+            }
+        })
     }
 
 	/**

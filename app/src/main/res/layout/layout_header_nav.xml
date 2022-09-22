@@ -319,7 +319,7 @@
 		<TextView
 			style="@style/LayoutWidthHeightWrap"
 			android:textSize="@dimen/_14sdp"
-			android:text="@string/activate"
+			android:text="@string/self_activation"
 			android:textColor="@color/black"
 			android:fontFamily="@font/inter_regular"
 			android:includeFontPadding="false"

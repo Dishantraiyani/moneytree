@@ -36,8 +36,6 @@
 	<string name="home">Home</string>
 	<string name="orders">Orders</string>
 	<string name="profile_title">My Account</string>
-	<!--AIzaSyCarxoldwoOfN1avMrTLg1bfdBi998RSQw-->
-	<string name="google_maps_key" translatable="false">AIzaSyA_coyCsWHgKVZsAypeU2tSJvck9Y_8ZdA</string>
 
 	<string name="location_permission">Location Permission Needed</string>
 	<string name="location_permission_description">This app needs the Location permission, please accept to use location functionality</string>
@@ -322,7 +320,7 @@
 
 	<string name="level_no">Level No: %1$s</string>
 	<string name="active_members">Active Members: %1$s</string>
-	<string name="direct">Direct15: %1$s Members</string>
+	<string name="direct">Direct 15: %1$s Members</string>
 	<string name="repurchase_data">Repurchase: %1$s</string>
 	<string name="no_redeem_available">No Redemption Available</string>
 	<string name="transaction_id">Transaction Id: %1$s</string>
@@ -446,5 +444,13 @@
 	<string name="whatsapp_support">WhatsApp</string>
 	<string name="update_available">Update Available</string>
 	<string name="update_description">Update new version, Improved performance</string>
+
+	<string name="self_activation">Self-Activation</string>
+	<string name="coming_soon">Coming Soon</string>
+	<string name="view">View</string>
+	<string name="member_name">Member Name</string>
+	<string name="direct_sponsor">Direct Sponsor</string>
+	<string name="royalty_rank">Royalty Rank</string>
+	<string name="sponsor_id">Sponsor Id</string>
 
 </resources>

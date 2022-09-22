@@ -3,9 +3,7 @@ package com.moneytree.app.common.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -15,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.moneytree.app.R
 import com.moneytree.app.common.NSLog
 import java.text.DecimalFormat
+
 
 /**
  * This is the file that contains the all the extensions functions.
@@ -92,10 +91,11 @@ fun <T : Activity> Fragment.switchActivity(
  * @param bundle      additional information to be carried
  * @param <T>         represents the common template, able to get calling class using <T> format
  */
-fun <T : Activity> Fragment.switchResultActivity(launcher: ActivityResultLauncher<Intent?>,
-												 destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
+fun <T : Activity> Fragment.switchResultActivity(
+    launcher: ActivityResultLauncher<Intent?>,
+    destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
 ) {
-	launcher.launch(getIntent(destination, bundle, flags))
+    launcher.launch(getIntent(destination, bundle, flags))
 }
 
 /**
@@ -291,27 +291,38 @@ fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(this).toDo
  * @param data data set
  * @return
  */
-fun addText(activity: Activity, resource: Int,  data: String) : String {
+fun addText(activity: Activity, resource: Int, data: String): String {
     with(activity.resources) {
         return getString(resource, data)
     }
 }
 
-fun setUserName(activity: Activity, userName: String) : String{
+fun setUserName(activity: Activity, userName: String): String {
     return userName.ifEmpty {
         activity.resources.getString(R.string.no_user_name)
     }
 }
 
-fun setMobile(activity: Activity, mobile: String) : String{
+fun setMobile(activity: Activity, mobile: String): String {
     return mobile.ifEmpty {
         activity.resources.getString(R.string.no_mobile_added)
     }
 }
 
-fun setEmail(activity: Activity, email: String) : String{
+fun setEmail(activity: Activity, email: String): String {
     return email.ifEmpty {
         activity.resources.getString(R.string.no_email_added)
     }
+}
+
+fun String.isInteger(): Boolean {
+    try {
+        this.toInt()
+    } catch (e: java.lang.NumberFormatException) {
+        return false
+    } catch (e: NullPointerException) {
+        return false
+    }
+    return true
 }
 

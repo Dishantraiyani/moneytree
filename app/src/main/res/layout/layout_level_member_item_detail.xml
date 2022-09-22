@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/cl_repurchase" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_2sdp"
+    app:cardUseCompatPadding="true"
+    android:layout_marginBottom="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/tv_level_no"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Level No: "
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textSize="@dimen/_11sdp"
+			android:paddingVertical="@dimen/_10sdp"
+			android:textColor="@color/orange"
+			android:lines="1"
+			android:textStyle="bold"
+			android:paddingHorizontal="@dimen/_10sdp"
+			android:fontFamily="@font/inter_semi_bold"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<LinearLayout
+			android:id="@+id/ll_first_layout"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/_30sdp"
+			android:orientation="horizontal"
+			android:background="@color/gray_background"
+			app:layout_constraintTop_toBottomOf="@id/tv_level_no">
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/member_id_title_"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_10sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/member_name"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_10sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/direct_sponsor"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_10sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/ll_second_layout"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/_30sdp"
+			android:orientation="horizontal"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/ll_first_layout"
+			>
+
+			<TextView
+				android:id="@+id/tv_member_id"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_9sdp"
+				android:textColor="@color/black"
+				android:fontFamily="@font/inter_regular"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:id="@+id/tv_member_name"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_9sdp"
+				android:textColor="@color/black"
+				android:fontFamily="@font/inter_regular"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:id="@+id/tv_direct_sponsor"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_9sdp"
+				android:textColor="@color/black"
+				android:fontFamily="@font/inter_regular"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/ll_third_layout"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/_30sdp"
+			android:orientation="horizontal"
+			android:background="@color/gray_background"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/ll_second_layout">
+
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/royalty_rank"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_10sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/repurchase"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_10sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:text="@string/sponsor_id"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_10sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/ll_four_layout"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/_30sdp"
+			android:orientation="horizontal"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/ll_third_layout">
+
+			<TextView
+				android:id="@+id/tv_royalty_rank"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_9sdp"
+				android:textColor="@color/black"
+				android:fontFamily="@font/inter_regular"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:id="@+id/tv_repurchase"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_9sdp"
+				android:textColor="@color/black"
+				android:fontFamily="@font/inter_regular"/>
+
+			<View
+				android:layout_width="1dp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"/>
+
+			<TextView
+				android:id="@+id/tv_sponsor_id"
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="@dimen/_9sdp"
+				android:textColor="@color/black"
+				android:fontFamily="@font/inter_regular"/>
+
+		</LinearLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

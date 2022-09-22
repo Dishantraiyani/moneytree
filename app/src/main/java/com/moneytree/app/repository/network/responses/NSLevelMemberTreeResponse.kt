@@ -33,6 +33,9 @@ data class NSLevelMemberTreeData(
     var repTotal: Int = 0,
     @SerializedName("repurchase")
     @Expose
-    var repurchase: Int = 0
+    var repurchase: Int = 0,
+	@SerializedName("direct_fifty")
+	@Expose
+	var directFifty: Int = 0
 
 )

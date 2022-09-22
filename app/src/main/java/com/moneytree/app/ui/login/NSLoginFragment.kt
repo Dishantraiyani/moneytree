@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class NSLoginFragment : NSFragment() {
 	private val loginViewModel: NSLoginViewModel by lazy {
-		ViewModelProvider(this).get(NSLoginViewModel::class.java)
+		ViewModelProvider(this)[NSLoginViewModel::class.java]
 	}
 	private var _binding: NsFragmentLoginBinding? = null
 

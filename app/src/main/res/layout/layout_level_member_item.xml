@@ -27,7 +27,7 @@
             android:textStyle="bold"
             android:fontFamily="@font/inter_semi_bold"
             android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +44,7 @@
             android:layout_marginTop="@dimen/_6sdp"
             android:fontFamily="@font/inter_medium"
             android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_level_no" />
 
@@ -83,6 +83,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_direct" />
+
+		<Button
+			android:id="@+id/btn_view"
+			style="@style/LayoutWidthHeightZeroWrap"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/_25sdp"
+			android:background="@drawable/blue_button_order_border"
+			android:fontFamily="@font/inter_regular"
+			android:text="@string/view"
+			android:textColor="@color/white"
+			android:paddingHorizontal="@dimen/_10sdp"
+			android:textSize="@dimen/_8sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

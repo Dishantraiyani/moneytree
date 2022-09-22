@@ -33,7 +33,7 @@ class NSLoginRegisterEvent(val data: NSDataUser?)
 /**
  * Event that triggered when click on Fragment change
  */
-class NSFragmentChange(var fragment: Fragment)
+class NSFragmentChange(var fragment: Fragment, var isBackStack: Boolean = true)
 
 /**
  * Event that triggered when click on Fragment change

@@ -1,12 +1,16 @@
 package com.moneytree.app.ui.levelMember
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutLevelMemberItemBinding
@@ -68,8 +72,14 @@ class LevelMemberTreeRecycleAdapter(
                 with(response) {
                     tvLevelNo.text = addText(activity, R.string.level_no, levelNo!!)
                     tvActiveMember.text = addText(activity, R.string.active_members, cnt!!)
-                    tvDirect.text = addText(activity, R.string.direct, repTotal.toString())
+                    tvDirect.text = addText(activity, R.string.direct, directFifty.toString())
                     tvRepurchase.text = addText(activity, R.string.repurchase_data, repurchase.toString())
+
+					btnView.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							activity.startActivity(Intent(activity, LevelMemberTreeActivity::class.java).putExtra(NSConstants.KEY_MEMBER_LEVEL_NUMBER, levelNo))
+						}
+					})
                 }
             }
         }

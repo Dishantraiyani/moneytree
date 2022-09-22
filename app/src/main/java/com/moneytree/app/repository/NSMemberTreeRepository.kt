@@ -4,6 +4,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
+import com.moneytree.app.repository.network.responses.NSLevelMemberTreeDetailResponse
 import com.moneytree.app.repository.network.responses.NSLevelMemberTreeResponse
 import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
 import com.moneytree.app.repository.network.responses.NSUpLineListResponse
@@ -48,7 +49,36 @@ object NSMemberTreeRepository {
         apiManager.getLevelWiseTree(object :
             NSRetrofitCallback<NSLevelMemberTreeResponse>(viewModelCallback, NSApiErrorHandler.ERROR_LEVEL_WISE_MEMBER_TREE) {
             override fun <T> onResponse(response: Response<T>) {
-                viewModelCallback.onSuccess(response.body())
+				val data = response.body() as NSLevelMemberTreeResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+            }
+        })
+    }
+
+	/**
+     * To get level wise data API
+     *
+     * @param viewModelCallback The callback to communicate back to the view model
+     */
+    fun getLevelWiseTreeDetail(levelNo: String, viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.getLevelWiseDetailTree(levelNo, object :
+            NSRetrofitCallback<NSLevelMemberTreeDetailResponse>(viewModelCallback, NSApiErrorHandler.ERROR_LEVEL_WISE_MEMBER_TREE) {
+            override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSLevelMemberTreeDetailResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
             }
         })
     }

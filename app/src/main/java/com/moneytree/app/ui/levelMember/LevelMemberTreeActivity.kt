@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityLevelMemberTreeBinding
 import com.moneytree.app.databinding.ActivityMemberTreeBinding
+import com.moneytree.app.ui.levelMemberDetail.LevelMemberTreeDetailFragment
 
 class LevelMemberTreeActivity : NSActivity() {
     private lateinit var memberTreeBinding: ActivityLevelMemberTreeBinding
@@ -20,6 +21,6 @@ class LevelMemberTreeActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle) {
-        replaceCurrentFragment(LevelMemberTreeFragment.newInstance(bundle), false, memberTreeBinding.levelMemberTreeContainer.id)
+        replaceCurrentFragment(LevelMemberTreeDetailFragment.newInstance(bundle), false, memberTreeBinding.levelMemberTreeContainer.id)
     }
 }
