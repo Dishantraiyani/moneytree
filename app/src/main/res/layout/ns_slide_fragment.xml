@@ -7,6 +7,7 @@
     android:layout_height="@dimen/_90sdp">
 
     <ImageView
+		android:id="@+id/iv_banenr"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_90sdp"
         android:src="@drawable/offer_slider"

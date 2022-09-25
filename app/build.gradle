@@ -119,4 +119,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 	implementation 'com.squareup.picasso:picasso:2.8'
 	implementation 'com.android.installreferrer:installreferrer:2.2'
+	implementation 'com.tbuonomo:dotsindicator:4.2'
+
 }

@@ -2,6 +2,8 @@ package com.moneytree.app.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
@@ -26,9 +29,7 @@ import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
-import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.reports.NSReportsActivity
-import com.moneytree.app.ui.retailInfo.NSRetailInfoFragment
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import org.greenrobot.eventbus.EventBus
@@ -45,6 +46,10 @@ class NSHomeFragment : NSFragment() {
     private val homeBinding get() = _binding!!
     private var homeListModelClassArrayList1: ArrayList<GridModel>? = null
     private var bAdapterNS: GridRecycleAdapter? = null
+	private var timer: Timer? = null
+	private val DELAY_MS: Long = 500
+	private val PERIOD_MS: Long = 5000
+	private var currentPage = 0
 
     companion object {
         fun newInstance() = NSHomeFragment()
@@ -86,9 +91,7 @@ class NSHomeFragment : NSFragment() {
                 }
                 getUserDetail()
                 checkVersion()
-                setFragmentData()
                 getDashboardData(true)
-                setupViewPager(viewPager)
                 addRechargeItems()
             }
         }
@@ -96,15 +99,56 @@ class NSHomeFragment : NSFragment() {
     }
 
     // Add Fragments to Tabs
-    private fun setupViewPager(viewPager: ViewPager2) {
+    private fun setupViewPager(viewPager: ViewPager) {
         with(homeModel) {
             with(homeBinding) {
                 try {
-                    val adapter = ViewPagerMDAdapter(requireActivity())
+					rlBanner.setVisibility(mFragmentList.isValidList())
+					val pagerAdapter = SliderAdapter(requireActivity(), mFragmentList)
+					viewPager.adapter = pagerAdapter
+					pagerAdapter.notifyDataSetChanged()
+					indicator.setViewPager(viewPager)
+                    /*val adapter = ViewPagerMDAdapter(requireActivity())
                     adapter.setFragment(mFragmentList)
-                    viewPager.adapter = adapter
-                    indicator.setViewPager(viewPager)
-                    adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
+                    viewPager.adapter = adapter*/
+
+					//adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
+
+					val handler = Handler(Looper.getMainLooper())
+					val runnable = Runnable {
+						if (currentPage >= mFragmentList.size) {
+							currentPage = 0
+						}
+						viewPager.setCurrentItem(currentPage++, true)
+					}
+
+					timer = Timer()
+					timer!!.schedule(object : TimerTask() {
+						override fun run() {
+							handler.post(runnable)
+						}
+					}, DELAY_MS, PERIOD_MS)
+
+					viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+						override fun onPageScrolled(
+							position: Int,
+							positionOffset: Float,
+							positionOffsetPixels: Int
+						) {
+
+						}
+
+						override fun onPageSelected(position: Int) {
+							currentPage = position + 1
+						}
+
+						override fun onPageScrollStateChanged(state: Int) {
+
+						}
+
+
+					})
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -220,6 +264,7 @@ class NSHomeFragment : NSFragment() {
                         addText(activity, R.string.status_royalty, setRoyaltyStatus())
                     layoutHeader.tvAmountData.text =
                         addText(activity, R.string.my_earning, setEarningAmount())
+					setupViewPager(viewPager)
                     //This is display Message slider
                     /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
                         tvMessage.setTextColor(Color.parseColor(data!!.colour))

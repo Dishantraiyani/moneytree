@@ -1,10 +1,12 @@
 package com.moneytree.app.ui.home
 
 import android.app.Application
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
@@ -29,8 +31,7 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     private var homeDetail: NSNotificationListData? = null
     var nsUserData: NSDataUser? = null
     var isUserDataAvailable = MutableLiveData<Boolean>()
-    private val mFragmentTitleList: MutableList<String> = ArrayList()
-    val mFragmentList: MutableList<Fragment> = ArrayList()
+    val mFragmentList: MutableList<String> = ArrayList()
     var fieldName: Array<String> = arrayOf()
 	var isLogout = MutableLiveData<Boolean>()
     var fieldImage = arrayOf(
@@ -78,7 +79,8 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
                 isProgressShowing.value = false
                 val dashboardMainData = data as NSDashboardResponse
                 dashboardData = dashboardMainData
-                isDashboardDataAvailable.value = true
+				setFragmentData()
+
             }
 
             override fun onError(errors: List<Any>) {
@@ -99,12 +101,21 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     }
 
     fun setFragmentData() {
-        mFragmentTitleList.clear()
-        mFragmentTitleList.add("")
+		/*dashboardData!!.data!!.banners.add("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
+		dashboardData!!.data!!.banners.add("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
+		dashboardData!!.data!!.banners.add("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
+*/
         mFragmentList.clear()
-        mFragmentList.add(SliderFragment())
-        mFragmentList.add(SliderFragment())
-        mFragmentList.add(SliderFragment())
+		if (dashboardData != null) {
+			if (dashboardData!!.data != null) {
+				if (dashboardData!!.data!!.banners.isValidList()) {
+					dashboardData!!.data!!.banners.forEachIndexed { index, data ->
+						mFragmentList.add(data)
+					}
+				}
+			}
+		}
+		isDashboardDataAvailable.value = true
     }
 
     fun setDownLine(): String {

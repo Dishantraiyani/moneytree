@@ -32,6 +32,9 @@ class NSConstants {
 		const val KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL = "key_member_form_activation_form_detail"
 		const val KEY_MEMBER_LEVEL_NUMBER = "key_member_level_number"
 
+		const val KEY_BANNER_URL = "key_banner_url"
+		const val KEY_BANNER_POSITION = "key_banner_position"
+
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"
         const val REDEEM_SAVE_CLICK = "redeem_save_button_click"

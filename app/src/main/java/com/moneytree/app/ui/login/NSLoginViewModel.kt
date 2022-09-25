@@ -34,9 +34,9 @@ class NSLoginViewModel(application: Application) : NSViewModel(application) {
             strPassword.isNullOrBlank() -> {
                 errorId = R.string.enter_password
             }
-            (strPassword!!.length < 8) -> {
+            /*(strPassword!!.length < 8) -> {
                 errorId = R.string.enter_password_correct
-            }
+            }*/
         }
         errorId?.let {
             validationErrorId.value = it

@@ -1,6 +1,9 @@
 package com.moneytree.app.ui.productDetail
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +11,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.CustomTarget
 import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
@@ -66,14 +73,18 @@ class NSProductDetailFragment : NSFragment() {
         with(productBinding) {
 			with(layoutHeader) {
 				clBack.visible()
-				with(productDetail!!) {
-					tvHeaderBack.text = productName
-					Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE+productImage).placeholder(R.drawable.placeholder)
-						.error(R.drawable.placeholder).into(ivProductImg)
-					tvProductName.text = productName
-					tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
-					tvRate.text = addText(activity, R.string.rate_title, rate!!)
-					tvDescription.text = description!!
+				if (productDetail != null) {
+					with(productDetail!!) {
+						tvHeaderBack.text = productName
+						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
+							.diskCacheStrategy(DiskCacheStrategy.NONE)
+							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
+							.error(R.drawable.placeholder).into(ivProductImg)
+						tvProductName.text = productName
+						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
+						tvRate.text = addText(activity, R.string.rate_title, rate!!)
+						tvDescription.text = description!!
+					}
 				}
 			}
         }

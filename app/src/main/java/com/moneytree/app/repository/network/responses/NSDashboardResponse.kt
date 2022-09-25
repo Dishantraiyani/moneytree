@@ -40,6 +40,8 @@ data class NSDashboardData(
     val availableJoiningVoucher: MutableList<NSDwnTotalData>? = null,
     @SerializedName("slot_list")
     val slotList: MutableList<NSSlotListData>? = null,
+	@SerializedName("banner_list")
+	val banners: MutableList<String> = arrayListOf(),
     @SerializedName("directRetailStatus")
     val directRetailStatus: String = "",
     @SerializedName("colour")
