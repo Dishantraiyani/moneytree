@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/_20sdp">
+
+		<ImageView
+			android:id="@+id/iv_close"
+			android:layout_width="@dimen/_13sdp"
+			android:layout_height="@dimen/_13sdp"
+			android:src="@drawable/ic_close_s"
+			android:tint="@color/white"
+			android:layout_alignParentEnd="true"
+			android:layout_margin="@dimen/_5sdp"
+			tools:ignore="UseAppTint" />
+
+		<ImageView
+			android:id="@+id/iv_popup_dialog"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:layout_below="@id/iv_close"/>
+
+	</RelativeLayout>
+
+</RelativeLayout>
+

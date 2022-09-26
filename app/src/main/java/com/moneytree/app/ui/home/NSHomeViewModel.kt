@@ -166,6 +166,22 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
         }
     }
 
+	fun getPopUpImage(): String {
+		with(dashboardData) {
+			with(this?.data!!) {
+				if (popupImg != null) {
+					if (popupImg.isNotEmpty()) {
+						return popupImg
+					} else {
+						return "1657529429_bbps-services.jpeg"
+					}
+				} else {
+					return "1657529429_bbps-services.jpeg"
+				}
+			}
+		}
+	}
+
     fun setEarningAmount(): String {
         with(dashboardData) {
             with(this?.data!!) {

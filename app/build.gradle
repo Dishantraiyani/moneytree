@@ -38,6 +38,7 @@ android {
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
             buildConfigField 'String', 'BASE_URL_IMAGE', ' "https://moneytree.biz/upload/product/" '
+            buildConfigField 'String', 'BASE_URL_IMAGE_POPUP', ' "https://moneytree.biz/upload/popup/" '
             buildConfigField 'String', 'TERMS', ' "https://moneytree.biz/terms-and-condition" '
             buildConfigField 'String', 'PRIVACY', ' "https://moneytree.biz/privacy-policy" '
             buildConfigField 'String', 'REFUND', ' "https://moneytree.biz/return-and-refunds" '

@@ -42,6 +42,8 @@ data class NSDashboardData(
     val slotList: MutableList<NSSlotListData>? = null,
 	@SerializedName("banner_list")
 	val banners: MutableList<String> = arrayListOf(),
+	@SerializedName("popup_img")
+	val popupImg: String? = null,
     @SerializedName("directRetailStatus")
     val directRetailStatus: String = "",
     @SerializedName("colour")

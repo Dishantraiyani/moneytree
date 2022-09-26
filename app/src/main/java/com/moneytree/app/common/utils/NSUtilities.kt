@@ -12,7 +12,10 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
 import java.util.*
 
@@ -182,6 +185,25 @@ object NSUtilities {
 				)
 			)
 		}
+		dialog.show()
+	}
+
+	fun showPopUpHome(activity: Activity, url: String) {
+		val builder = AlertDialog.Builder(activity)
+		val view: View = activity.layoutInflater.inflate(R.layout.dialog_popup_home, null)
+		builder.setView(view)
+		val bind: DialogPopupHomeBinding = DialogPopupHomeBinding.bind(view)
+		val dialog = builder.create()
+		dialog.setCancelable(false)
+		dialog.setCanceledOnTouchOutside(false)
+		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+		bind.ivClose.setOnClickListener {
+			dialog.dismiss()
+		}
+
+		Glide.with(activity).load(if (url.contains("https://")) {
+			url
+		} else {BuildConfig.BASE_URL_IMAGE_POPUP + url}).into(bind.ivPopupDialog)
 		dialog.show()
 	}
 

@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
 import com.moneytree.app.common.utils.*
+import com.moneytree.app.common.utils.NSUtilities.showPopUpHome
 import com.moneytree.app.common.utils.NSUtilities.showUpdateDialog
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
@@ -97,6 +99,15 @@ class NSHomeFragment : NSFragment() {
         }
         observeViewModel()
     }
+
+	private fun showPopup(fileName: String) {
+		with(homeBinding) {
+			if (pref.isPopupDisplay) {
+				pref.isPopupDisplay = false
+				showPopUpHome(activity, fileName)
+			}
+		}
+	}
 
     // Add Fragments to Tabs
     private fun setupViewPager(viewPager: ViewPager) {
@@ -265,6 +276,7 @@ class NSHomeFragment : NSFragment() {
                     layoutHeader.tvAmountData.text =
                         addText(activity, R.string.my_earning, setEarningAmount())
 					setupViewPager(viewPager)
+					showPopup(getPopUpImage())
                     //This is display Message slider
                     /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
                         tvMessage.setTextColor(Color.parseColor(data!!.colour))

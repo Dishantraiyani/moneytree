@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.moneytree.app.common.NSActivity
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsActivitySplashBinding
@@ -24,6 +25,7 @@ class NSSplashActivity : NSActivity() {
 
     override fun onStart() {
         super.onStart()
+		NSApplication.getInstance().getPrefs().isPopupDisplay = true
         checkLoginStatus()
     }
 

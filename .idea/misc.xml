@@ -7,6 +7,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/dialog_popup_home.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree_detail.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_member_tree.xml" value="0.32083333333333336" />
