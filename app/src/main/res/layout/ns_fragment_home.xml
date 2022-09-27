@@ -366,6 +366,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="@dimen/_90sdp"
 					app:cardCornerRadius="2dp"
+					android:visibility="gone"
 					app:cardBackgroundColor="@android:color/transparent"
 					android:layout_gravity="center_horizontal"
 					android:layout_marginTop="@dimen/_10sdp">

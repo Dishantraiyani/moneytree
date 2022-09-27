@@ -173,10 +173,10 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
 					if (popupImg.isNotEmpty()) {
 						return popupImg
 					} else {
-						return "1657529429_bbps-services.jpeg"
+						return ""
 					}
 				} else {
-					return "1657529429_bbps-services.jpeg"
+					return ""
 				}
 			}
 		}

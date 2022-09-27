@@ -11,8 +11,6 @@ android {
         applicationId "com.money.tree.app"
         minSdk 21
         targetSdk 32
-        versionCode 2
-        versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,8 +22,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 		debug {
-			minifyEnabled false
-			shrinkResources false
+			minifyEnabled true
+			shrinkResources true
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
     }
@@ -33,8 +31,8 @@ android {
     productFlavors {
         development {
             dimension "moneytree"
-            versionCode 2
-            versionName "1.0"
+            versionCode 3
+            versionName "1.1"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
             buildConfigField 'String', 'BASE_URL_IMAGE', ' "https://moneytree.biz/upload/product/" '

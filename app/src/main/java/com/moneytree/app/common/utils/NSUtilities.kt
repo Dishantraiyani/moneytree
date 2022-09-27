@@ -201,10 +201,10 @@ object NSUtilities {
 			dialog.dismiss()
 		}
 
-		Glide.with(activity).load(if (url.contains("https://")) {
-			url
-		} else {BuildConfig.BASE_URL_IMAGE_POPUP + url}).into(bind.ivPopupDialog)
-		dialog.show()
+		Glide.with(activity).load(url).into(bind.ivPopupDialog)
+		if (url.isNotEmpty()) {
+			dialog.show()
+		}
 	}
 
 }
