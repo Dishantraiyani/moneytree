@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.success.SuccessActivity">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent">
+
+		<ImageView
+			android:id="@+id/iv_success_fail"
+			android:layout_width="@dimen/_110sdp"
+			android:layout_height="@dimen/_110sdp"
+			android:layout_gravity="center_horizontal"
+			android:contentDescription="@string/success"
+			android:padding="@dimen/_10sdp"
+			android:src="@drawable/ic_success"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/tv_success_fail_title"
+			style="@style/QueThemeVertical"
+			android:layout_marginTop="@dimen/_10sdp"
+			android:fontFamily="@font/inter_semi_bold"
+			android:gravity="center"
+			android:text="@string/success"
+			android:textSize="@dimen/_18sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/iv_success_fail" />
+
+		<TextView
+			android:id="@+id/tv_message_"
+			style="@style/QueThemeVertical"
+			android:layout_marginTop="@dimen/_1sdp"
+			android:gravity="center"
+			android:text="@string/success_msg"
+			android:textSize="@dimen/_11sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_success_fail_title" />
+
+		<TextView
+			android:id="@+id/tv_continue_button"
+			style="@style/QueThemeWrap"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="@dimen/_25sdp"
+			android:background="@drawable/login_button_border"
+			android:fontFamily="@font/inter_semi_bold"
+			android:gravity="center"
+			android:minWidth="@dimen/_160sdp"
+			android:paddingVertical="@dimen/_7sdp"
+			android:text="@string/continue_title"
+			android:textColor="@color/white"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_message_" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

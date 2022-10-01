@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +32,7 @@ import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
+import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
@@ -182,12 +184,17 @@ class NSHomeFragment : NSFragment() {
                 bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
                         override fun onClick(position: Int) {
-                            //todo change
-                            //switchActivity(NSRechargeActivity::class.java)
-                            Toast.makeText(activity,
+							if (position < 2) {
+								switchActivity(
+									NSRechargeActivity::class.java,
+									bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
+								)
+							} else {
+								Toast.makeText(activity,
                                 activity.resources.getString(R.string.coming_soon),
                                 Toast.LENGTH_SHORT
                             ).show()
+							}
                         }
                     }
                 )

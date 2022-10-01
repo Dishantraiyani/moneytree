@@ -1,0 +1,63 @@
+package com.moneytree.app.repository
+
+import com.moneytree.app.common.NSApplication
+import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
+import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
+import com.moneytree.app.repository.network.error.NSApiErrorHandler
+import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
+import com.moneytree.app.repository.network.responses.*
+import retrofit2.Response
+
+/**
+ * Repository class to handle data operations related to wallet
+ */
+object NSRechargeRepository {
+    private val apiManager by lazy { NSApplication.getInstance().getApiManager() }
+    private var errorMessageList: MutableList<Any> = mutableListOf()
+
+    /**
+     * To get wallet list data API
+     *
+     * @param viewModelCallback The callback to communicate back to the view model
+     */
+    fun getServiceProvider(rechargeType: String, rechargeMemberId: String = "",
+        viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.getServiceProvider(rechargeType, rechargeMemberId, object :
+            NSRetrofitCallback<NSServiceProviderResponse>(viewModelCallback, NSApiErrorHandler.ERROR_SERVICE_PROVIDER_DATA) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as NSServiceProviderResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+					errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+	/**
+	 * To get wallet list data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun saveRecharge(rechargeSave: NSRechargeSaveRequest,
+					 viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.rechargeSave(rechargeSave, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_SAVE_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+}

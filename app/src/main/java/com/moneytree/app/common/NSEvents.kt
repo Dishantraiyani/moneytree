@@ -68,6 +68,8 @@ class MainSearchStringEvent(val search: String)
 
 class NSRepurchaseEventTab()
 
+class NSRechargeAllEventTab(val rechargeType: String)
+
 class NSRetailInfoEventTab()
 
 class NSRoyaltyEventTab()

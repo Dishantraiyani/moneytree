@@ -52,16 +52,12 @@ class NSRedeemViewModel(application: Application) : NSViewModel(application),
         }
         val voucherMainListData = data as NSRedeemListResponse
         redeemResponse = voucherMainListData
-        if (voucherMainListData.data != null) {
-            if (voucherMainListData.data.isValidList()) {
-                redeemList.addAll(voucherMainListData.data!!)
-                isRedeemDataAvailable.value = redeemList.isValidList()
-            } else if (pageIndex == "1" || searchData.isNotEmpty()){
-                isRedeemDataAvailable.value = false
-            }
-        } else if (pageIndex == "1" || searchData.isNotEmpty()){
-            isRedeemDataAvailable.value = false
-        }
+		if (voucherMainListData.data.isValidList()) {
+			redeemList.addAll(voucherMainListData.data)
+			isRedeemDataAvailable.value = redeemList.isValidList()
+		} else if (pageIndex == "1" || searchData.isNotEmpty()){
+			isRedeemDataAvailable.value = false
+		}
     }
 
     override fun onError(errors: List<Any>) {

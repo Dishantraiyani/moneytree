@@ -4,29 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.core.os.bundleOf
+import com.google.android.material.tabs.TabLayout
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
 import com.moneytree.app.databinding.NsFragmentRechargeBinding
-import com.moneytree.app.ui.downlineReOffer.NSDownlineReOfferFragment
-import com.moneytree.app.ui.repurchase.NSRePurchaseListFragment
-import com.moneytree.app.ui.retail.NSRetailListFragment
-import com.moneytree.app.ui.royalty.NSRoyaltyListFragment
-import org.greenrobot.eventbus.EventBus
+import com.moneytree.app.ui.recharge.mobile.NSMobileRechargeFragment
 
 
 class NSRechargeFragment : NSFragment() {
     private var _binding: NsFragmentRechargeBinding? = null
     private val rgBinding get() = _binding!!
-    private val mFragmentTitleList: MutableList<String> = ArrayList()
-    private val mFragmentList: MutableList<Fragment> = ArrayList()
     var fieldName: Array<String> = arrayOf()
+	var rechargeSelectedType: String? = ""
 
-    companion object {
-        fun newInstance() = NSRechargeFragment()
-    }
+	companion object {
+		fun newInstance(bundle: Bundle?) = NSRechargeFragment().apply {
+			arguments = bundle
+		}
+	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		arguments?.let {
+			rechargeSelectedType = it.getString(NSConstants.KEY_RECHARGE_TYPE)
+		}
+	}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,56 +70,31 @@ class NSRechargeFragment : NSFragment() {
     }
 
     private fun setFragmentData() {
-        fieldName = resources.getStringArray(R.array.recharge_list)
-        mFragmentTitleList.clear()
-        for (strData in fieldName) {
-            mFragmentTitleList.add(strData)
-        }
-        mFragmentList.clear()
-        for (strData in fieldName) {
-            mFragmentList.add(NSSubRechargeFragment())
-        }
-        setupViewPager(rgBinding.rechargeContainer)
-    }
+        fieldName = resources.getStringArray(R.array.recharge_list_final)
+		rgBinding.tabLayout.removeAllTabs()
 
-    // Add Fragments to Tabs
-    private fun setupViewPager(viewPager: ViewPager2) {
-        with(rgBinding) {
-            try {
-                val adapter = ViewPagerMDAdapter(requireActivity())
-                adapter.setFragment(mFragmentList)
-                viewPager.adapter = adapter
-                TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                    tab.text = mFragmentTitleList[position]
-                }.attach()
-                viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                    override fun onPageSelected(position: Int) {
-                        super.onPageSelected(position)
-                        when (position) {
-                            0 -> {
-                                EventBus.getDefault().post(
-                                    NSRepurchaseEventTab()
-                                )
-                            }
-                            1 -> {
-                                EventBus.getDefault().post(
-                                    NSRetailInfoEventTab()
-                                )
-                            }
-                            2 -> {
-                                EventBus.getDefault().post(NSRoyaltyEventTab())
-                            }
-                            3 -> {
-                                EventBus.getDefault().post(
-                                    NSDownlineEventTab()
-                                )
-                            }
-                        }
-                    }
-                })
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+		var indexValue = 0
+		fieldName.forEachIndexed { index, strData ->
+			rgBinding.tabLayout.addTab(rgBinding.tabLayout.newTab().setText(strData))
+			if (rechargeSelectedType.equals(strData)) {
+				indexValue = index
+				replaceFragment(NSMobileRechargeFragment.newInstance(bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[index])), false, R.id.recharge_container_view)
+			}
+		}
+		rgBinding.tabLayout.getTabAt(indexValue)?.select()
+		rgBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+			override fun onTabSelected(tab: TabLayout.Tab) {
+				replaceFragment(NSMobileRechargeFragment.newInstance(bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[tab.position])), false, R.id.recharge_container_view)
+			}
+
+			override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+			}
+
+			override fun onTabReselected(tab: TabLayout.Tab?) {
+
+			}
+
+		})
     }
 }

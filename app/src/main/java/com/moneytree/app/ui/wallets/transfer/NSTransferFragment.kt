@@ -223,7 +223,7 @@ class NSTransferFragment : NSFragment() {
 
 				isVoucherDataAvailable.observe(
 					viewLifecycleOwner
-				) { isNotification ->
+				) {
 					voucherQty = if (voucherQuantity == null) 0 else voucherQuantity!!.toInt()
 					adBinding.tvQuantity.text =
 						addText(activity, R.string.voucher_available, voucherQuantity!!)

@@ -7,20 +7,71 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_failed.xml" value="0.27" />
+        <entry key="app/src/main/res/drawable/ic_success.xml" value="0.27" />
+        <entry key="app/src/main/res/layout/activity_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_success.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/layout/dialog_popup_home.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree_detail.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_member_tree.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/fragment_verify_member.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_verify_recharge.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/layout_category_item.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_level_member_item.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_level_member_item_detail.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_register_item.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/layout_repurchase_info_item.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment__pending_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_activation.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_activation_form.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_add_redeem.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_add_register.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_change_password.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_direct_retail_list.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_downline_re_offer.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_dth_recharge.xml" value="0.23645833333333333" />
+        <entry key="app/src/main/res/layout/ns_fragment_edit.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_home.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/ns_fragment_invite.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_joining_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_login.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_main_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_member_activation_form.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_mobile_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_package_detail.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_package_list.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_product_category.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_product_detail.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_product_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_products.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_profile.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_receive_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_recharge_detail.xml" value="0.30520833333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_redeem.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_register.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_reports.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_repurchase_info.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_repurchase_list.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_retail_info.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_royalty_list.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_signup.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_slot.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_sub_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_transaction.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_transfer.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_transfer_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_wallet.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_slide_fragment.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/row_slider.xml" value="0.32083333333333336" />
       </map>
     </option>
+  </component>
+  <component name="EntryPointsManager">
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="org.greenrobot.eventbus.Subscribe" />
+    </list>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

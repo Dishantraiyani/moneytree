@@ -6,6 +6,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
 	<queries>
 		<intent>
 			<action android:name="android.intent.action.MAIN" />
@@ -23,41 +24,57 @@
 		android:theme="@style/Theme.HubzDriver"
 		android:usesCleartextTraffic="true"
 		tools:targetApi="n">
-		<activity android:name=".ui.invite.NSInviteActivity"
+		<activity
+			android:name=".ui.success.SuccessActivity"
+			android:exported="false" />
+		<activity
+			android:name=".ui.recharge.detail.NSRechargeDetailActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.signup.SignUpActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.invite.NSInviteActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.memberActivation.NSMemberActivationFormActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.signup.SignUpActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.activationForm.NSActivationFormActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.memberActivation.NSMemberActivationFormActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.activate.NSActivateActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.activationForm.NSActivationFormActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.productDetail.NSProductsDetailActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.activate.NSActivateActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.products.NSProductsActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.productDetail.NSProductsDetailActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.productCategory.NSProductsCategoryActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.products.NSProductsActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
-		<activity android:name=".ui.packageVoucher.packageList.NSPackageListActivity"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.productCategory.NSProductsCategoryActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.packageVoucher.packageList.NSPackageListActivity"
+			android:exported="false"
+			android:screenOrientation="portrait" />
 		<activity
 			android:name=".ui.packageVoucher.packageDetail.PackageDetailActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
+			android:screenOrientation="portrait" />
 		<activity
 			android:name=".ui.wallets.verifyMember.VerifyMemberActivity"
 			android:exported="false"
-			android:screenOrientation="portrait"/>
+			android:screenOrientation="portrait" />
 		<activity
 			android:name=".ui.memberTree.MemberTreeActivity"
 			android:exported="false"

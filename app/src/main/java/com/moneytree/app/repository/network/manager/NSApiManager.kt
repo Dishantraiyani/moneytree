@@ -7,6 +7,7 @@ import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.requests.NSChangePasswordRequest
 import com.moneytree.app.repository.network.requests.NSLoginRequest
+import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
 import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
 import com.moneytree.app.repository.network.responses.*
 import okhttp3.Interceptor
@@ -518,6 +519,14 @@ class NSApiManager {
     fun checkVersion(callback: NSRetrofitCallback<NSCheckVersionResponse>) {
         request(unAuthorised3020Client.checkVersion(), callback)
     }
+
+	fun getServiceProvider(rechargeType: String, rechargeMemberId: String , callback: NSRetrofitCallback<NSServiceProviderResponse>) {
+		request(unAuthorised3020Client.getServiceProvider(rechargeType, rechargeMemberId), callback)
+	}
+
+	fun rechargeSave(rsR: NSRechargeSaveRequest, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.rechargeSave(NSUserManager.getAuthToken()!!, rsR.rechargeType!!, rsR.serviceProvider!!, rsR.accountDisplay!!, rsR.amount!!, rsR.note!!, rsR.ad1!!, rsR.ad2!!, rsR.ad3!!), callback)
+	}
 }
 
 /**
@@ -693,4 +702,21 @@ interface RTApiInterface {
 
     @GET("check-version")
     fun checkVersion() : Call<NSCheckVersionResponse>
+
+	@FormUrlEncoded
+	@POST("get-service-provider")
+	fun getServiceProvider(@Field("recharge_type") rechargeType: String, @Field("recharge_master_id") rechargeMasterId: String): Call<NSServiceProviderResponse>
+
+	@FormUrlEncoded
+	@POST("recharge-save")
+	fun rechargeSave(@Field("token_id") token: String,
+					 @Field("recharge_type") rechargeType: String,
+					 @Field("service_provider") serviceProvider: String,
+					 @Field("account_display") accountDisplay: String,
+					 @Field("amount") amount: String,
+					 @Field("note") note: String,
+					 @Field("ad1") ad1: String,
+					 @Field("ad2") ad2: String,
+					 @Field("ad3") ad3: String): Call<NSSuccessResponse>
+
 }

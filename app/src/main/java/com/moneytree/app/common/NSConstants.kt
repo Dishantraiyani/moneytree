@@ -38,10 +38,14 @@ class NSConstants {
         //Add Image
         const val POSITIVE_CLICK = "positive_button_click"
         const val REDEEM_SAVE_CLICK = "redeem_save_button_click"
+        const val RECHARGE_SAVE_CLICK = "recharge_save_button_click"
         const val MEMBER_ACTIVATE_CLICK = "member_activate_button_click"
         const val MEMBER_TH_ACTIVATE_CLICK = "member_th_activate_button_click"
         const val LOGOUT_CLICK = "logout_button_click"
 
+		const val KEY_RECHARGE_VERIFY = "key_recharge_verify"
+		const val KEY_RECHARGE_TYPE = "key_recharge_type_selected"
+		const val KEY_SUCCESS_FAIL = "key_success_fail"
         //Pagination
         const val PAGINATION = 25
         var IS_LOGIN_SUCCESS: Boolean = false
