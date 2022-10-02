@@ -3,6 +3,7 @@ package com.moneytree.app.repository.network.manager
 import com.google.gson.GsonBuilder
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
+import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.requests.NSChangePasswordRequest
@@ -168,7 +169,7 @@ class NSApiManager {
      * @param callback     The callback for the result
      */
     fun login(loginRequest: NSLoginRequest, callback: NSRetrofitCallback<NSUserResponse>) {
-        request(unAuthorised3020Client.login(loginRequest.userName!!, loginRequest.password!!), callback)
+        request(unAuthorised3020Client.login(loginRequest.userName!!, loginRequest.password!!, NSApplication.getInstance().getLoginPrefs().notificationToken!!), callback)
     }
 
     /**
@@ -349,7 +350,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun saveDirectRegisterApi(referalCode: String, fullName: String, email: String, mobile: String, password: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
-		request(unAuthorised3020Client.saveRegistrationDirectApi(referalCode, fullName, email, mobile, password), callback)
+		request(unAuthorised3020Client.saveRegistrationDirectApi(referalCode, fullName, email, mobile, password, NSApplication.getInstance().getLoginPrefs().notificationToken!!), callback)
 	}
 
     /**
@@ -527,6 +528,16 @@ class NSApiManager {
 	fun rechargeSave(rsR: NSRechargeSaveRequest, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(unAuthorised3020Client.rechargeSave(NSUserManager.getAuthToken()!!, rsR.rechargeType!!, rsR.serviceProvider!!, rsR.accountDisplay!!, rsR.amount!!, rsR.note!!, rsR.ad1!!, rsR.ad2!!, rsR.ad3!!), callback)
 	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getRechargeListData(pageIndex: String, search: String, rechargeType: String, callback: NSRetrofitCallback<NSRechargeListResponse>) {
+		request(unAuthorised3020Client.getRechargeList(NSUserManager.getAuthToken()!!, pageIndex, search, rechargeType), callback)
+	}
+
 }
 
 /**
@@ -536,7 +547,7 @@ interface RTApiInterface {
 
     @FormUrlEncoded
     @POST("login-api")
-    fun login(@Field("username") username: String, @Field("password") password: String): Call<NSUserResponse>
+    fun login(@Field("username") username: String, @Field("password") password: String, @Field("notification_token") token: String): Call<NSUserResponse>
 
     @FormUrlEncoded
     @POST("logout-api")
@@ -649,7 +660,7 @@ interface RTApiInterface {
 
 	@FormUrlEncoded
 	@POST("save-registration-direct-api")
-	fun saveRegistrationDirectApi(@Field("referral_code") referalCode: String, @Field("fullname") fullName: String, @Field("email") email: String, @Field("mobile") mobile: String, @Field("password") password: String): Call<NSSuccessResponse>
+	fun saveRegistrationDirectApi(@Field("referral_code") referalCode: String, @Field("fullname") fullName: String, @Field("email") email: String, @Field("mobile") mobile: String, @Field("password") password: String, @Field("notification_token") token: String): Call<NSSuccessResponse>
 
 	@FormUrlEncoded
 	@POST("member-info-api")
@@ -718,5 +729,9 @@ interface RTApiInterface {
 					 @Field("ad1") ad1: String,
 					 @Field("ad2") ad2: String,
 					 @Field("ad3") ad3: String): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("recharge-list")
+	fun getRechargeList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String, @Field("recharge_type") rechargeType: String): Call<NSRechargeListResponse>
 
 }

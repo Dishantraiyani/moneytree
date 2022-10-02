@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/cl_recharge_history" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_2sdp"
+    app:cardUseCompatPadding="true"
+    android:layout_marginBottom="@dimen/_5sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_recharge_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_5sdp"
+        android:paddingHorizontal="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/tv_account_display"
+            style="@style/LoginSubFontsZeroWrap"
+            tools:text="UserName"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/orange"
+            android:paddingStart="@dimen/_10sdp"
+            android:lines="1"
+            android:textStyle="bold"
+            android:fontFamily="@font/inter_semi_bold"
+            android:paddingEnd="@dimen/_5sdp"
+            app:layout_constraintEnd_toStartOf="@id/btn_active"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/tv_recharge_type_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/recharge_type_"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_account_display" />
+
+		<TextView
+			android:id="@+id/tv_recharge_type_value"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Notification"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="0dp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tv_recharge_type_title"
+			app:layout_constraintTop_toBottomOf="@+id/tv_account_display" />
+
+		<TextView
+			android:id="@+id/tv_amount_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/amount"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_recharge_type_title" />
+
+		<TextView
+			android:id="@+id/tv_amount_value"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Notification"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="0dp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tv_amount_title"
+			app:layout_constraintTop_toBottomOf="@+id/tv_recharge_type_value" />
+
+		<TextView
+			android:id="@+id/tv_date_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/date_recharge"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_amount_title" />
+
+		<TextView
+			android:id="@+id/tv_date_value"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Notification"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="0dp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tv_date_title"
+			app:layout_constraintTop_toBottomOf="@+id/tv_amount_value" />
+
+		<TextView
+			android:id="@+id/tv_status_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/status_title"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_date_title" />
+
+		<TextView
+			android:id="@+id/tv_status_value"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Notification"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="0dp"
+			android:lines="1"
+			android:textSize="@dimen/_11sdp"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_regular"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@id/tv_status_title"
+			app:layout_constraintTop_toBottomOf="@+id/tv_date_value" />
+
+		<Button
+			android:id="@+id/btn_active"
+			style="@style/LayoutWidthHeightZeroWrap"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/_25sdp"
+			android:background="@drawable/blue_button_order_border"
+			android:fontFamily="@font/inter_regular"
+			android:text="@string/invoice"
+			android:textColor="@color/white"
+			android:paddingHorizontal="@dimen/_10sdp"
+			android:textSize="@dimen/_8sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			/>
+
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

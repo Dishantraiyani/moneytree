@@ -60,4 +60,27 @@ object NSRechargeRepository {
 			}
 		})
 	}
+
+	/**
+	 * To get register data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getRechargeListData(pageIndex: String, search: String, rechargeType: String = "",
+							viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getRechargeListData(pageIndex, search, rechargeType, object :
+			NSRetrofitCallback<NSRechargeListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_LIST_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSRechargeListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

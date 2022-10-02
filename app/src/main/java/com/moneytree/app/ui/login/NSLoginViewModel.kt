@@ -1,11 +1,15 @@
 package com.moneytree.app.ui.login
 
 import android.app.Application
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.moneytree.app.R
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -84,4 +88,30 @@ class NSLoginViewModel(application: Application) : NSViewModel(application) {
             })
         }
     }
+
+	/**
+	 * Get notification token from database
+	 *
+	 */
+	fun getNotificationToken() {
+		if (NSApplication.getInstance().getLoginPrefs().notificationToken.isNullOrEmpty()) {
+			getCurrentNotificationToken()
+		}
+	}
+
+	/**
+	 * Get current notification token from fcm
+	 *
+	 */
+	private fun getCurrentNotificationToken() {
+		FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+			if (!task.isSuccessful) {
+				return@OnCompleteListener
+			}
+			// Get new FCM registration token
+			val token = task.result
+			NSApplication.getInstance().getLoginPrefs().notificationToken = token
+		})
+	}
+
 }

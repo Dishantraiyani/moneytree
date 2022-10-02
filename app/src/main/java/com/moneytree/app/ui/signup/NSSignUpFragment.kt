@@ -49,6 +49,7 @@ class NSSignUpFragment : NSFragment() {
 	private fun viewCreated() {
 		with(signUpBinding) {
 			with(signUpModel) {
+				getNotificationToken()
 				with(layoutHeader) {
 					getReferrerCode()
 					clBack.visibility = View.VISIBLE

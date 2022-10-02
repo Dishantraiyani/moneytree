@@ -3,16 +3,13 @@ package com.moneytree.app.common
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.NetworkRequest
 import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
-import org.greenrobot.eventbus.EventBus
+import com.onesignal.OneSignal
 
 /**
  * The MoneyTree application class containing Preference, network manager and functionality
@@ -20,13 +17,19 @@ import org.greenrobot.eventbus.EventBus
  */
 class NSApplication : Application() {
     private lateinit var preferences: NSPreferences
+    private lateinit var preferencesLogin: NSLoginPreferences
     private lateinit var apiManager: NSApiManager
     private lateinit var walletBalance: String
+	private val ONESIGNAL_APP_ID = "a31a4b92-4cf4-4768-ba20-904945d2159e"
 
     override fun onCreate() {
         super.onCreate()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         initInstance()
+
+		OneSignal.initWithContext(this)
+		OneSignal.setAppId(ONESIGNAL_APP_ID)
+		OneSignal.unsubscribeWhenNotificationsAreDisabled(true)
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -40,6 +43,7 @@ class NSApplication : Application() {
     private fun initInstance() {
         instance = this
         preferences = NSPreferences(this)
+        preferencesLogin = NSLoginPreferences(this)
         apiManager = NSApiManager()
         MainDatabase.appDatabase(applicationContext)
         isAlertShown = false
@@ -49,6 +53,11 @@ class NSApplication : Application() {
      * To get instances of shared preferences
      */
     fun getPrefs(): NSPreferences = preferences
+
+	/**
+	 * To get instances of shared login preferences
+	 */
+	fun getLoginPrefs(): NSLoginPreferences = preferencesLogin
 
     /**
      * To get instance of Api manager

@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSUserDataCallback
+import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.databinding.FragmentMainBinding
+import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.offers.NSOfferFragment
 import com.moneytree.app.ui.packageVoucher.packageList.NSPackageListFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
 import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.wallets.NSWalletFragment
+import com.onesignal.OneSignal
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -30,10 +34,20 @@ class MainFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+		getUserDetail()
         viewCreated()
         setListener()
         return mainBinding.root
     }
+
+	fun getUserDetail() {
+		MainDatabase.getUserData(object : NSUserDataCallback {
+			override fun onResponse(userDetail: NSDataUser) {
+				OneSignal.sendTag("user_id_sponsor", userDetail.sponsorId);
+				OneSignal.sendTag("user_id", userDetail.userName);
+			}
+		})
+	}
 
     /**
      * View created

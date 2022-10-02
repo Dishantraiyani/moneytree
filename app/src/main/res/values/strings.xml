@@ -239,6 +239,13 @@
 		<item>DTH</item>
 	</string-array>
 
+	<string-array name="recharge_list_history">
+		<item>All</item>
+		<item>Prepaid</item>
+		<item>Postpaid</item>
+		<item>DTH</item>
+	</string-array>
+
 	<string-array name="registration_type">
 		<item>Select Register Type</item>
 		<item>Wallet Register</item>
@@ -488,5 +495,11 @@
 	<string name="continue_title">Continue</string>
 	<string name="failed">Failed</string>
 	<string name="failed_msg">Recharge Failed</string>
+	<string name="no_recharge_available">No Recharge Available</string>
+	<string name="recharge_history">Recharge History</string>
+	<string name="recharge_type_">Recharge Type:</string>
+	<string name="date_recharge">Date:</string>
+	<string name="invoice">Invoice</string>
+	<string name="default_notification_channel_id">money_tree_notification</string>
 
 </resources>

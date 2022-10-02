@@ -150,4 +150,18 @@
 		<item name="android:fontFamily">@font/inter_medium</item>
 		<item name="android:textColor">@color/black</item>
 	</style>
+
+	<style name="Theme.PdfView.SelectedTheme" parent="@style/Theme.PdfView.Light">
+		<item name="pdfView_backIcon">@drawable/ic_arrow_back</item>
+		<item name="pdfView_actionBarTint">@color/orange</item>
+		<item name="pdfView_downloadIcon">@drawable/ic_downloads</item>
+		<item name="pdfView_titleTextStyle">@style/MyTabTextAppearanceSecond</item>
+	</style>
+
+	<style name="MyTabTextAppearanceSecond" parent="TextAppearance.AppCompat.Button">
+		<item name="android:textSize">@dimen/_12sdp</item>
+		<item name="android:fontFamily">@font/inter_regular</item>
+		<item name="textAllCaps">false</item>
+		<item name="android:textColor">@color/white</item>
+	</style>
 </resources>

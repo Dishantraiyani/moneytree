@@ -18,6 +18,7 @@ class NSLoginPreferences(context: Context) {
         //Keys for user data
         private const val KEY_AUTH_USERNAME = "user_username"
         private const val KEY_USER_PASSWORD = "user_password"
+        private const val KEY_NOTIFICATION_TOKEN = "key_notification_token"
     }
 
     /**
@@ -33,6 +34,13 @@ class NSLoginPreferences(context: Context) {
     var prefPassword: String?
         get() = preference.getString(KEY_USER_PASSWORD, null)
         set(name) = prefEdit.putString(KEY_USER_PASSWORD, name).apply()
+
+	/**
+     * Property that contains the user password
+     */
+    var notificationToken: String?
+        get() = preference.getString(KEY_NOTIFICATION_TOKEN, null)
+        set(name) = prefEdit.putString(KEY_NOTIFICATION_TOKEN, name).apply()
 
     /**
      * To clear all preferences data

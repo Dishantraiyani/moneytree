@@ -54,6 +54,7 @@ class NSLoginFragment : NSFragment() {
 		observeViewModel()
 		with(loginBinding) {
 			with(loginViewModel) {
+				getNotificationToken()
 				if (!loginPref!!.prefUserName.isNullOrEmpty()) {
 					strUserName = loginPref!!.prefUserName
 					strPassword = loginPref!!.prefPassword

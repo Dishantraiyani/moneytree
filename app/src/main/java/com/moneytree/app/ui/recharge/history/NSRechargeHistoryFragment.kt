@@ -1,11 +1,12 @@
-package com.moneytree.app.ui.register
+package com.moneytree.app.ui.recharge.history
 
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,53 +16,51 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.switchResultActivity
-import com.moneytree.app.databinding.NsFragmentRegisterBinding
-import com.moneytree.app.repository.NSRegisterRepository.getRegisterListData
+import com.moneytree.app.databinding.NsFragmentRechargeHistoryBinding
 import com.moneytree.app.repository.network.responses.NSRegisterListData
-import com.moneytree.app.ui.activationForm.NSActivationFormActivity
 import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
+import com.moneytree.app.ui.register.NSAddRegisterFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSRegisterFragment : NSFragment() {
-    private val registerListModel: NSRegisterViewModel by lazy {
-        ViewModelProvider(this).get(NSRegisterViewModel::class.java)
+class NSRechargeHistoryFragment : NSFragment() {
+    private val rechargeListModel: NSRechargeHistoryViewModel by lazy {
+		ViewModelProvider(this)[NSRechargeHistoryViewModel::class.java]
     }
-    private var _binding: NsFragmentRegisterBinding? = null
+    private var _binding: NsFragmentRechargeHistoryBinding? = null
 
-    private val registerBinding get() = _binding!!
-    private var registerListAdapter: NSRegisterListRecycleAdapter? = null
+    private val rechargeBinding get() = _binding!!
+    private var rechargeListAdapter: NSRechargeListRecycleAdapter? = null
     companion object {
-        fun newInstance() = NSRegisterFragment()
+        fun newInstance() = NSRechargeHistoryFragment()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentRegisterBinding.inflate(inflater, container, false)
+        _binding = NsFragmentRechargeHistoryBinding.inflate(inflater, container, false)
         viewCreated()
         setListener()
-        return registerBinding.root
+        return rechargeBinding.root
     }
 
     /**
      * View created
      */
     private fun viewCreated() {
-        with(registerBinding) {
+        with(rechargeBinding) {
             with(layoutHeader) {
                 clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.register)
+                tvHeaderBack.text = activity.resources.getString(R.string.recharge_history)
                 ivBack.visibility = View.VISIBLE
                 ivSearch.visibility = View.VISIBLE
-				if (pref.isActive) {
-					ivAddNew.visibility = View.VISIBLE
-				}
             }
             setRegisterAdapter()
+			setServiceProvider(true)
         }
         observeViewModel()
     }
@@ -70,11 +69,11 @@ class NSRegisterFragment : NSFragment() {
      * Set listener
      */
     private fun setListener() {
-        with(registerBinding) {
-            with(registerListModel) {
+        with(rechargeBinding) {
+            with(rechargeListModel) {
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
-                    getRegisterListData(pageIndex, "", false, isBottomProgress = false)
+                    getRechargeListData(pageIndex, "", false, isBottomProgress = false)
                 }
 
                 with(layoutHeader) {
@@ -96,11 +95,11 @@ class NSRegisterFragment : NSFragment() {
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
                         pageIndex = "1"
-                        if (tempRegisterList.isValidList()) {
-                            registerList.clear()
-                            registerList.addAll(tempRegisterList)
-                            tempRegisterList.clear()
-                            setRegisterData(registerList.isValidList())
+                        if (tempRechargeList.isValidList()) {
+                            rechargeList.clear()
+                            rechargeList.addAll(tempRechargeList)
+                            tempRechargeList.clear()
+                            setRegisterData(rechargeList.isValidList())
                         }
                     }
 
@@ -112,8 +111,8 @@ class NSRegisterFragment : NSFragment() {
                                         val strSearch = etSearch.text.toString()
                                         if (strSearch.isNotEmpty()) {
                                             hideKeyboard(cardSearch)
-                                            tempRegisterList.addAll(registerList)
-                                            getRegisterListData(pageIndex, strSearch, true,
+                                            tempRechargeList.addAll(rechargeList)
+                                            getRechargeListData(pageIndex, strSearch, true,
                                                 isBottomProgress = false
                                             )
                                         }
@@ -129,37 +128,61 @@ class NSRegisterFragment : NSFragment() {
         }
     }
 
+	private fun setServiceProvider(isProviderAvailable: Boolean) {
+		with(rechargeBinding) {
+			with(rechargeListModel) {
+				val rechargeListType: MutableList<String> = arrayListOf()
+				rechargeListType.addAll(resources.getStringArray(R.array.recharge_list_history))
+				val adapter = ArrayAdapter(activity, R.layout.layout_spinner, rechargeListType)
+				rechargeTypeSpinner.adapter = adapter
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+				rechargeTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+					override fun onItemSelected(
+						p0: AdapterView<*>?, view: View?, position: Int, id: Long
+					) {
+						pageIndex = "1"
+						rechargeType = if (rechargeListType[position] == "All") "" else rechargeListType[position]
+						getRechargeListData(pageIndex, "", true, isBottomProgress = false)
+					}
+
+					override fun onNothingSelected(p0: AdapterView<*>?) {
+					}
+				}
+			}
+		}
+	}
+
     /**
      * To add data of register in list
      */
     private fun setRegisterAdapter() {
-        with(registerBinding) {
-            with(registerListModel) {
-                rvRegisterList.layoutManager = LinearLayoutManager(activity)
-				registerListAdapter = NSRegisterListRecycleAdapter(activity, object: NSMemberActiveSelectCallback {
+        with(rechargeBinding) {
+            with(rechargeListModel) {
+                rvRechargeList.layoutManager = LinearLayoutManager(activity)
+				rechargeListAdapter = NSRechargeListRecycleAdapter(activity, object: NSMemberActiveSelectCallback {
 					override fun onClick(data: NSRegisterListData) {
 						dataMember = data
-						getActivationPackage(data.username!!, true)
+
 					}
 				}, object : NSPageChangeCallback {
 					override fun onPageChange() {
-						if (registerResponse!!.nextPage) {
-							val page: Int = registerList.size/NSConstants.PAGINATION + 1
+						if (rechargeResponse!!.nextPage) {
+							val page: Int = rechargeList.size/NSConstants.PAGINATION + 1
 							pageIndex = page.toString()
-							getRegisterListData(pageIndex, "", false, isBottomProgress = true)
+							getRechargeListData(pageIndex, "", false, isBottomProgress = true)
 						}
 					}
 				})
 
-                rvRegisterList.adapter = registerListAdapter
+                rvRechargeList.adapter = rechargeListAdapter
                 pageIndex = "1"
-                getRegisterListData(pageIndex, "", true, isBottomProgress = false)
+                getRechargeListData(pageIndex, "", true, isBottomProgress = false)
             }
         }
     }
 
     private fun bottomProgress(isShowProgress: Boolean) {
-        with(registerBinding) {
+        with(rechargeBinding) {
             cvProgress.visibility = if (isShowProgress) View.VISIBLE else View.GONE
         }
     }
@@ -170,11 +193,11 @@ class NSRegisterFragment : NSFragment() {
      * @param isRegister when data available it's true
      */
     private fun setRegisterData(isRegister: Boolean) {
-        with(registerListModel) {
+        with(rechargeListModel) {
             registerDataManage(isRegister)
             if (isRegister) {
-                registerListAdapter!!.clearData()
-                registerListAdapter!!.updateData(registerList)
+                rechargeListAdapter!!.clearData()
+                rechargeListAdapter!!.updateData(rechargeList)
             }
         }
     }
@@ -185,9 +208,9 @@ class NSRegisterFragment : NSFragment() {
      * @param isRegisterVisible when register available it's visible
      */
     private fun registerDataManage(isRegisterVisible: Boolean) {
-        with(registerBinding) {
-            rvRegisterList.visibility = if (isRegisterVisible) View.VISIBLE else View.GONE
-            clRegisterNotFound.visibility = if (isRegisterVisible) View.GONE else View.VISIBLE
+        with(rechargeBinding) {
+            rvRechargeList.visibility = if (isRegisterVisible) View.VISIBLE else View.GONE
+            clRechargeListNotFound.visibility = if (isRegisterVisible) View.GONE else View.VISIBLE
         }
     }
 
@@ -195,8 +218,8 @@ class NSRegisterFragment : NSFragment() {
      * To observe the view model for data changes
      */
     private fun observeViewModel() {
-        with(registerListModel) {
-            with(registerBinding) {
+        with(rechargeListModel) {
+            with(rechargeBinding) {
                 isProgressShowing.observe(
                     viewLifecycleOwner
                 ) { shouldShowProgress ->
@@ -230,7 +253,7 @@ class NSRegisterFragment : NSFragment() {
 					}
 				}
 
-                isRegisterDataAvailable.observe(
+                isRechargeDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isNotification ->
                     srlRefresh.isRefreshing = false
@@ -265,9 +288,9 @@ class NSRegisterFragment : NSFragment() {
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	fun onResultEvent(event: NSActivityEvent) {
 		if (event.resultCode == NSRequestCodes.REQUEST_MEMBER_ACTIVATION_FORM) {
-			with(registerListModel) {
+			with(rechargeListModel) {
 				pageIndex = "1"
-				getRegisterListData(pageIndex, "", true, isBottomProgress = false)
+				getRechargeListData(pageIndex, "", true, isBottomProgress = false)
 			}
 		}
 	}

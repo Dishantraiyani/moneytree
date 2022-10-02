@@ -9,7 +9,11 @@ import com.google.android.material.tabs.TabLayout
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentRechargeBinding
+import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
 import com.moneytree.app.ui.recharge.mobile.NSMobileRechargeFragment
 
 
@@ -51,6 +55,8 @@ class NSRechargeFragment : NSFragment() {
                 clBack.visibility = View.VISIBLE
                 tvHeaderBack.text = activity.resources.getString(R.string.recharge)
                 ivBack.visibility = View.VISIBLE
+				ivAddNew.visible()
+				ivAddNew.setImageResource(R.drawable.ic_history_recharge)
             }
             setFragmentData()
         }
@@ -65,6 +71,12 @@ class NSRechargeFragment : NSFragment() {
                 clBack.setOnClickListener {
                     onBackPress()
                 }
+
+				ivAddNew.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						switchActivity(NSRechargeHistoryActivity::class.java)
+					}
+				})
             }
         }
     }

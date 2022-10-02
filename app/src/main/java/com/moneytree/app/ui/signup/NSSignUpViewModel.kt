@@ -2,6 +2,9 @@ package com.moneytree.app.ui.signup
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.repository.NSRegisterRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -41,6 +44,31 @@ class NSSignUpViewModel(application: Application) : NSViewModel(application) {
 				handleNoNetwork()
 			}
 
+		})
+	}
+
+	/**
+	 * Get notification token from database
+	 *
+	 */
+	fun getNotificationToken() {
+		if (NSApplication.getInstance().getLoginPrefs().notificationToken.isNullOrEmpty()) {
+			getCurrentNotificationToken()
+		}
+	}
+
+	/**
+	 * Get current notification token from fcm
+	 *
+	 */
+	private fun getCurrentNotificationToken() {
+		FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+			if (!task.isSuccessful) {
+				return@OnCompleteListener
+			}
+			// Get new FCM registration token
+			val token = task.result
+			NSApplication.getInstance().getLoginPrefs().notificationToken = token
 		})
 	}
 }
