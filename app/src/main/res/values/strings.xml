@@ -234,16 +234,19 @@
 		<item>LIC</item>
 	</string-array>
 
-	<string-array name="recharge_list_final">
-		<item>Mobile</item>
-		<item>DTH</item>
-	</string-array>
-
 	<string-array name="recharge_list_history">
 		<item>All</item>
 		<item>Prepaid</item>
 		<item>Postpaid</item>
 		<item>DTH</item>
+		<item>Cable</item>
+		<item>FastTag</item>
+		<item>Broadband</item>
+		<item>Gas</item>
+		<item>Electricity</item>
+		<item>EMI</item>
+		<item>Insurance</item>
+		<item>LIC</item>
 	</string-array>
 
 	<string-array name="registration_type">

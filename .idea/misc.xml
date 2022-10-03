@@ -31,14 +31,22 @@
         <entry key="app/src/main/res/layout/ns_fragment_activation_form.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_add_redeem.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_add_register.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_broad_band_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_cable_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_change_password.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_direct_retail_list.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_downline_re_offer.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_dth_recharge.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/layout/ns_fragment_edit.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_electricity_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_emi_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_fast_tag_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_gas_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_home.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/ns_fragment_insurance_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_invite.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_joining_vouchers.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_lic_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_login.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_main_vouchers.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_member_activation_form.xml" value="0.2515625" />

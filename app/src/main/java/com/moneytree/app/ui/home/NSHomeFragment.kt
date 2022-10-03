@@ -184,17 +184,10 @@ class NSHomeFragment : NSFragment() {
                 bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
                         override fun onClick(position: Int) {
-							if (position < 2) {
-								switchActivity(
-									NSRechargeActivity::class.java,
-									bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
-								)
-							} else {
-								Toast.makeText(activity,
-                                activity.resources.getString(R.string.coming_soon),
-                                Toast.LENGTH_SHORT
-                            ).show()
-							}
+							switchActivity(
+								NSRechargeActivity::class.java,
+								bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
+							)
                         }
                     }
                 )

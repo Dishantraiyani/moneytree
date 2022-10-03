@@ -78,7 +78,7 @@ class NSRechargeHistoryFragment : NSFragment() {
 
                 with(layoutHeader) {
                     clBack.setOnClickListener {
-                        EventBus.getDefault().post(BackPressEvent())
+                        onBackPress()
                     }
 
                     ivSearch.setOnClickListener {

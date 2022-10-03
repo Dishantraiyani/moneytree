@@ -9,9 +9,11 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.ActivityRechargeBinding
 import com.moneytree.app.databinding.ActivitySuccessBinding
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
 
 class SuccessActivity : AppCompatActivity() {
 	private lateinit var successBinding: ActivitySuccessBinding
@@ -51,6 +53,7 @@ class SuccessActivity : AppCompatActivity() {
 		with(successBinding) {
 			tvContinueButton.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
+					switchActivity(NSRechargeHistoryActivity::class.java, flags = intArrayOf(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 					finish()
 				}
 			})
