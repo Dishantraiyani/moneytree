@@ -74,6 +74,7 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 		serviceProvidersList.clear()
 		if (serviceProviderResponse != null) {
 			serviceProviderDataList.clear()
+			serviceProviderDataList.add(ServiceProviderDataItem(serviceProvider = "Select Provider"))
 			serviceProviderDataList.addAll(serviceProviderResponse!!.data)
 			for (data in serviceProviderDataList) {
 				data.serviceProvider?.let { serviceProvidersList.add(it) }

@@ -44,7 +44,10 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
         R.drawable.ic_electricity,
         R.drawable.ic_emi,
         R.drawable.ic_insurance_ico,
-        R.drawable.ic_lic_ico
+        R.drawable.ic_lic_ico,
+		R.drawable.ic_landline,
+		R.drawable.ic_lpg,
+		R.drawable.ic_water
     )
 
     /**

@@ -164,11 +164,6 @@ class NSMobileRechargeFragment : NSFragment() {
 	private fun setServiceProvider(isProviderAvailable: Boolean) {
 		with(rgBinding) {
 			with(viewModel) {
-				tvMobileNumberTitle.setVisibility(isProviderAvailable)
-				cardMobileNumber.setVisibility(isProviderAvailable)
-				if (serviceProvidersList.isValidList()) {
-					setHintData(tvMobileNumberTitle, etMobileNumber, serviceProviderResponse?.data?.get(0)?.accountDisplay ?: "")
-				}
 				val adapter = ArrayAdapter(activity, R.layout.layout_spinner, serviceProvidersList)
 				spinner.adapter = adapter
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -176,17 +171,35 @@ class NSMobileRechargeFragment : NSFragment() {
 					override fun onItemSelected(
 						p0: AdapterView<*>?, view: View?, position: Int, id: Long
 					) {
-						dataItemModel = serviceProviderDataList[position]
+
+						if (position != 0) {
+							dataItemModel = serviceProviderDataList[position]
+							setHintData(
+								tvMobileNumberTitle,
+								etMobileNumber,
+								dataItemModel!!.accountDisplay ?: ""
+							)
+						}
+
 						if (dataItemModel != null) {
 							with(dataItemModel!!) {
-								if (ad1 != null && ad1 != "NA" && ad1.isNotEmpty()) {
-									setHintData(tvAd1, etAd1, ad1 ?: "")
-								}
-								if (ad2 != null && ad2 != "NA" && ad2.isNotEmpty()) {
-									setHintData(tvAd2, etAd2, ad2 ?: "")
-								}
-								if (ad3 != null && ad3 != "NA" && ad3.isNotEmpty()) {
-									setHintData(tvAd3, etAd3, ad3 ?: "")
+								if (position != 0) {
+									if (accountDisplay != null && accountDisplay != "NA" && accountDisplay.isNotEmpty()) {
+										tvMobileNumberTitle.setVisibility(position != 0)
+										cardMobileNumber.setVisibility(position != 0)
+									}
+									if (ad1 != null && ad1 != "NA" && ad1.isNotEmpty()) {
+										setHintData(tvAd1, etAd1, ad1 ?: "")
+									}
+									if (ad2 != null && ad2 != "NA" && ad2.isNotEmpty()) {
+										setHintData(tvAd2, etAd2, ad2 ?: "")
+									}
+									if (ad3 != null && ad3 != "NA" && ad3.isNotEmpty()) {
+										setHintData(tvAd3, etAd3, ad3 ?: "")
+									}
+								} else {
+									tvMobileNumberTitle.setVisibility(false)
+									cardMobileNumber.setVisibility(false)
 								}
 							}
 						}

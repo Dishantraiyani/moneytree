@@ -225,13 +225,16 @@
 		<item>Mobile</item>
 		<item>DTH</item>
 		<item>Cable</item>
-		<item>FastTag</item>
+		<item>FasTag</item>
 		<item>Broadband</item>
 		<item>Gas</item>
 		<item>Electricity</item>
-		<item>EMI</item>
+		<item>EMI Payments</item>
 		<item>Insurance</item>
-		<item>LIC</item>
+		<item>Hospital</item>
+		<item>Landline</item>
+		<item>LPG Booking</item>
+		<item>Water</item>
 	</string-array>
 
 	<string-array name="recharge_list_history">
@@ -240,13 +243,16 @@
 		<item>Postpaid</item>
 		<item>DTH</item>
 		<item>Cable</item>
-		<item>FastTag</item>
+		<item>FasTag</item>
 		<item>Broadband</item>
 		<item>Gas</item>
 		<item>Electricity</item>
-		<item>EMI</item>
+		<item>EMI Payments</item>
 		<item>Insurance</item>
-		<item>LIC</item>
+		<item>Hospital</item>
+		<item>Landline</item>
+		<item>LPG Booking</item>
+		<item>Water</item>
 	</string-array>
 
 	<string-array name="registration_type">
