@@ -211,7 +211,7 @@
 					android:contentDescription="@string/password_title" />
 
 				<EditText
-					android:id="@+id/et_mobile_number"
+					android:id="@+id/et_customer_detail"
 					style="@style/LoginSubFontsZeroWrap"
 					android:minHeight="@dimen/_38sdp"
 					android:textColor="@color/black"

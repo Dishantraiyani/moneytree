@@ -139,7 +139,7 @@ class NSDthRechargeFragment : NSFragment() {
 					btnSubmit.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							val amount = etAmount.text.toString()
-							val mobileNumber = etMobileNumber.text.toString()
+							val mobileNumber = etCustomerDetail.text.toString()
 							val note = etNote.text.toString()
 							val ad1 = etAd1.text.toString()
 							val ad2 = etAd2.text.toString()
@@ -149,11 +149,11 @@ class NSDthRechargeFragment : NSFragment() {
 							val accountDisplay = dataItemModel!!.accountDisplay
 							val serviceProviderTitle = dataItemModel!!.serviceProvider
 
-							if (etMobileNumber.text.toString().isEmpty()) {
-								etMobileNumber.error = activity.resources.getString(R.string.please_enter_mobile, dataItemModel?.accountDisplay)
+							if (etCustomerDetail.text.toString().isEmpty()) {
+								etCustomerDetail.error = activity.resources.getString(R.string.please_enter_mobile, dataItemModel?.accountDisplay)
 								return
-							} else if (etMobileNumber.text.toString().length < 10) {
-								etMobileNumber.error = activity.resources.getString(R.string.please_enter_valid_mobile, dataItemModel?.accountDisplay)
+							} else if (etCustomerDetail.text.toString().length < 10) {
+								etCustomerDetail.error = activity.resources.getString(R.string.please_enter_valid_mobile, dataItemModel?.accountDisplay)
 								return
 							} else if (etAmount.text.toString().isEmpty()) {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount)
@@ -179,7 +179,7 @@ class NSDthRechargeFragment : NSFragment() {
 				tvMobileNumberTitle.setVisibility(isProviderAvailable)
 				cardMobileNumber.setVisibility(isProviderAvailable)
 				if (serviceProvidersList.isValidList()) {
-					setHintData(tvMobileNumberTitle, etMobileNumber, serviceProviderResponse?.data?.get(0)?.accountDisplay ?: "")
+					setHintData(tvMobileNumberTitle, etCustomerDetail, serviceProviderResponse?.data?.get(0)?.accountDisplay ?: "")
 				}
 				val adapter = ArrayAdapter(activity, R.layout.layout_spinner, serviceProvidersList)
 				spinner.adapter = adapter

@@ -2,27 +2,26 @@ package com.moneytree.app.ui.recharge.mobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMobileRechargeBinding
-import com.moneytree.app.databinding.NsFragmentRechargeBinding
-import com.moneytree.app.databinding.NsFragmentSubRechargeBinding
 import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
+import com.moneytree.app.ui.memberTree.MemberTreeRecycleAdapter
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
+import com.moneytree.app.ui.recharge.RechargeDetailRecycleAdapter
 import com.moneytree.app.ui.recharge.detail.NSRechargeDetailActivity
-import com.moneytree.app.ui.recharge.detail.NSRechargeDetailFragment
-import com.moneytree.app.ui.wallets.redeemForm.NSRedeemSaveViewModel
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 class NSMobileRechargeFragment : NSFragment() {
@@ -31,6 +30,7 @@ class NSMobileRechargeFragment : NSFragment() {
 	}
     private var _binding: NsFragmentMobileRechargeBinding? = null
     private val rgBinding get() = _binding!!
+	private var rechargeFetchListAdapter: RechargeDetailRecycleAdapter? = null
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = NSMobileRechargeFragment().apply {
@@ -92,6 +92,7 @@ class NSMobileRechargeFragment : NSFragment() {
 				}
 			}
 		}
+		setRechargeFetchAdapter()
 		observeViewModel()
     }
 
@@ -124,10 +125,52 @@ class NSMobileRechargeFragment : NSFragment() {
 						}
 					}
 
+					etCustomerDetail.addTextChangedListener(object: TextWatcher {
+						override fun beforeTextChanged(
+							p0: CharSequence?,
+							p1: Int,
+							p2: Int,
+							p3: Int
+						) {
+
+						}
+
+						override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+							if (p0.toString().length >= 10) {
+								if (spinner.selectedItemPosition != 0) {
+									with(dataItemModel!!) {
+										rechargeRequestFetchData =
+											NSRechargeSaveRequest(
+												rechargeType,
+												rechargeMasterId,
+												"",
+												p0.toString(),
+												"",
+												"0",
+												"",
+												tvAd1.text.toString(),
+												tvAd2.text.toString(),
+												tvAd3.text.toString()
+											)
+									}
+									getRechargeFetchData()
+								}
+							} else {
+								rvAccountDetail.gone()
+								tvMessage.gone()
+								tvMessageTitle.gone()
+							}
+						}
+
+						override fun afterTextChanged(p0: Editable?) {
+
+						}
+					})
+
 					btnSubmit.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							val amount = etAmount.text.toString()
-							val mobileNumber = etMobileNumber.text.toString()
+							val mobileNumber = etCustomerDetail.text.toString()
 							val note = etNote.text.toString()
 							val ad1 = etAd1.text.toString()
 							val ad2 = etAd2.text.toString()
@@ -137,11 +180,11 @@ class NSMobileRechargeFragment : NSFragment() {
 							val accountDisplay = dataItemModel!!.accountDisplay
 							val serviceProviderTitle = dataItemModel!!.serviceProvider
 
-							if (etMobileNumber.text.toString().isEmpty()) {
-								etMobileNumber.error = activity.resources.getString(R.string.please_enter_mobile, dataItemModel?.accountDisplay)
+							if (etCustomerDetail.text.toString().isEmpty()) {
+								etCustomerDetail.error = activity.resources.getString(R.string.please_enter_mobile, dataItemModel?.accountDisplay)
 								return
-							} else if (etMobileNumber.text.toString().length < 10) {
-								etMobileNumber.error = activity.resources.getString(R.string.please_enter_valid_mobile, dataItemModel?.accountDisplay)
+							} else if (etCustomerDetail.text.toString().length < 10) {
+								etCustomerDetail.error = activity.resources.getString(R.string.please_enter_valid_mobile, dataItemModel?.accountDisplay)
 								return
 							} else if (etAmount.text.toString().isEmpty()) {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount)
@@ -176,9 +219,13 @@ class NSMobileRechargeFragment : NSFragment() {
 							dataItemModel = serviceProviderDataList[position]
 							setHintData(
 								tvMobileNumberTitle,
-								etMobileNumber,
+								etCustomerDetail,
 								dataItemModel!!.accountDisplay ?: ""
 							)
+							with(dataItemModel!!) {
+								rechargeRequestFetchData =
+									NSRechargeSaveRequest(rechargeType, rechargeMasterId, "", etCustomerDetail.text.toString(), "", "0", "", tvAd1.text.toString(), tvAd2.text.toString(), tvAd3.text.toString())
+							}
 						}
 
 						if (dataItemModel != null) {
@@ -212,6 +259,43 @@ class NSMobileRechargeFragment : NSFragment() {
 		}
 	}
 
+	/**
+	 * To add data of member tree in list
+	 */
+	private fun setRechargeFetchAdapter() {
+		with(rgBinding) {
+			rvAccountDetail.layoutManager = LinearLayoutManager(activity)
+			rechargeFetchListAdapter = RechargeDetailRecycleAdapter()
+			rvAccountDetail.adapter = rechargeFetchListAdapter
+		}
+	}
+
+	/**
+	 * Set member tree data
+	 *
+	 * @param isMemberTree when data available it's true
+	 */
+	private fun setRechargeFetchData(isMemberTree: Boolean) {
+		with(rgBinding) {
+			with(viewModel) {
+				Log.d("DAdaAvailable", "onSuccess: ${isMemberTree}- ${rechargeFetchDataList.size} ${rechargeFetchResponse?.message}")
+				rvAccountDetail.setVisibility(isMemberTree && rechargeFetchDataList.isValidList())
+				tvMessage.setVisibility(!isMemberTree)
+				tvMessageTitle.setVisibility(rvAccountDetail.isVisible || tvMessage.isVisible)
+				if (isMemberTree) {
+					rechargeFetchListAdapter!!.clearData()
+					rechargeFetchListAdapter!!.updateData(rechargeFetchDataList)
+				} else {
+					tvMessage.text = rechargeFetchResponse?.message
+					if (rechargeFetchResponse == null) {
+						tvMessage.gone()
+						tvMessageTitle.gone()
+					}
+				}
+			}
+		}
+	}
+
 	private fun setHintData(tvText: TextView, edtText: EditText, title: String) {
 		tvText.text = title
 		val hint = "Enter $title"
@@ -234,6 +318,12 @@ class NSMobileRechargeFragment : NSFragment() {
 					viewLifecycleOwner
 				) { isProvider ->
 					setServiceProvider(isProvider)
+				}
+
+				isRechargeFetchDataAvailable.observe(
+					viewLifecycleOwner
+				) { isProvider ->
+					setRechargeFetchData(isProvider)
 				}
 
 				failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

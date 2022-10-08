@@ -227,7 +227,7 @@
 		<item>Cable</item>
 		<item>FasTag</item>
 		<item>Broadband</item>
-		<item>Gas</item>
+		<item>GAS</item>
 		<item>Electricity</item>
 		<item>EMI Payments</item>
 		<item>Insurance</item>
@@ -245,7 +245,7 @@
 		<item>Cable</item>
 		<item>FasTag</item>
 		<item>Broadband</item>
-		<item>Gas</item>
+		<item>GAS</item>
 		<item>Electricity</item>
 		<item>EMI Payments</item>
 		<item>Insurance</item>
@@ -510,5 +510,6 @@
 	<string name="date_recharge">Date:</string>
 	<string name="invoice">Invoice</string>
 	<string name="default_notification_channel_id">money_tree_notification</string>
+	<string name="details">Recharge Details</string>
 
 </resources>

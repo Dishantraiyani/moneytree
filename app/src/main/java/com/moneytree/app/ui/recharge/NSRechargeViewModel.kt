@@ -3,6 +3,7 @@ package com.moneytree.app.ui.recharge
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -23,6 +24,7 @@ import com.moneytree.app.ui.success.SuccessActivity
 class NSRechargeViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var isServiceProviderDataAvailable = MutableLiveData<Boolean>()
+    var isRechargeFetchDataAvailable = MutableLiveData<Boolean>()
     var rechargeSelectedType: String? = ""
     var rechargeDetail: String? = ""
 	var serviceProviderResponse: NSServiceProviderResponse? = null
@@ -30,7 +32,12 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 	var serviceProvidersList: MutableList<String> = arrayListOf()
 	var dataItemModel: ServiceProviderDataItem? = null
 	var rechargeRequest: NSRechargeSaveRequest? = null
+	var rechargeRequestFetchData: NSRechargeSaveRequest? = null
 	var successResponse: NSSuccessResponse? = null
+	var rechargeFetchResponse: NSRechargeFetchListResponse? = null
+
+	//Recharge Fetch Data
+	var rechargeFetchDataList: MutableList<NSRechargeFetchListData> = arrayListOf()
 
 	/**
 	 * for Recharge Detail Screen
@@ -104,6 +111,54 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 
 					override fun <T> onNoNetwork(localData: T) {
 						handleNoNetwork()
+					}
+
+				})
+		}
+	}
+
+	fun getRechargeFetchData() {
+		if (rechargeRequestFetchData != null) {
+			//isProgressShowing.value = true
+			Log.d("DAdaAvailable", "onSuccess: 1 ${rechargeRequestFetchData?.accountDisplay}")
+			NSRechargeRepository.getRechargeFetchData(rechargeRequestFetchData!!,
+				object : NSGenericViewModelCallback {
+					override fun <T> onSuccess(data: T) {
+						isProgressShowing.value = false
+						rechargeFetchResponse = data as NSRechargeFetchListResponse
+						val map = rechargeFetchResponse?.data
+						rechargeFetchDataList.clear()
+						map?.forEach { (key, value) ->
+							run {
+								rechargeFetchDataList.add(NSRechargeFetchListData(key, value))
+							}
+						}
+						Log.d("DAdaAvailable", "onSuccess: 2")
+						isRechargeFetchDataAvailable.value = rechargeFetchDataList.isValidList()
+					}
+
+					override fun onError(errors: List<Any>) {
+						isProgressShowing.value = false
+						rechargeFetchResponse = null
+						rechargeFetchDataList.clear()
+						isRechargeFetchDataAvailable.value = false
+						//handleError(errors)
+					}
+
+					override fun onFailure(failureMessage: String?) {
+						isProgressShowing.value = false
+						rechargeFetchDataList.clear()
+						rechargeFetchResponse = null
+						isRechargeFetchDataAvailable.value = false
+						//handleFailure(failureMessage)
+					}
+
+					override fun <T> onNoNetwork(localData: T) {
+						isProgressShowing.value = false
+						rechargeFetchDataList.clear()
+						rechargeFetchResponse = null
+						isRechargeFetchDataAvailable.value = false
+						//handleNoNetwork()
 					}
 
 				})

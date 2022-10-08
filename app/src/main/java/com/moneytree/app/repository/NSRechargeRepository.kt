@@ -62,6 +62,25 @@ object NSRechargeRepository {
 	}
 
 	/**
+	 * To get wallet list data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getRechargeFetchData(rechargeSave: NSRechargeSaveRequest,
+					 viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.cancelAllRequests()
+		apiManager.rechargeFetchData(rechargeSave, object :
+			NSRetrofitCallback<NSRechargeFetchListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_FETCH_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				//Do not enter conditions
+				viewModelCallback.onSuccess(response.body())
+			}
+		})
+	}
+
+
+	/**
 	 * To get register data API
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model

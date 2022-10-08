@@ -529,6 +529,10 @@ class NSApiManager {
 		request(unAuthorised3020Client.rechargeSave(NSUserManager.getAuthToken()!!, rsR.rechargeType!!, rsR.serviceProvider!!, rsR.accountDisplay!!, rsR.amount!!, rsR.note!!, rsR.ad1!!, rsR.ad2!!, rsR.ad3!!), callback)
 	}
 
+	fun rechargeFetchData(rsR: NSRechargeSaveRequest, callback: NSRetrofitCallback<NSRechargeFetchListResponse>) {
+		request(unAuthorised3020Client.rechargeFetchData(NSUserManager.getAuthToken()!!, rsR.serviceProvider!!, rsR.accountDisplay!!, rsR.ad1!!, rsR.ad2!!, rsR.ad3!!), callback)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -734,4 +738,12 @@ interface RTApiInterface {
 	@POST("recharge-list")
 	fun getRechargeList(@Field("token_id") token: String, @Field("page_index") pageIndex: String, @Field("search") search: String, @Field("recharge_type") rechargeType: String): Call<NSRechargeListResponse>
 
+	@FormUrlEncoded
+	@POST("recharge-fetch-data")
+	fun rechargeFetchData(@Field("token_id") token: String,
+					 @Field("service_provider") serviceProvider: String,
+					 @Field("account_display") accountDisplay: String,
+					 @Field("ad1") ad1: String,
+					 @Field("ad2") ad2: String,
+					 @Field("ad3") ad3: String): Call<NSRechargeFetchListResponse>
 }

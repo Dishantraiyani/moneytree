@@ -58,7 +58,7 @@
 							android:layout_width="0dp"
 							android:layout_weight="1"
 							android:textSize="@dimen/_10sdp"
-							android:text="kllk;lk;llk;lk;lk;lklk;lklkl;kklk;"
+							android:text=""
 							android:background="@drawable/phone_white_background"
 							android:gravity="end|center_vertical"
 							android:paddingHorizontal="@dimen/_10sdp"
