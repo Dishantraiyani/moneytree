@@ -82,7 +82,7 @@ class NSRechargeFragment : NSFragment() {
     }
 
     private fun setFragmentData() {
-        fieldName = resources.getStringArray(R.array.recharge_list)
+        fieldName = resources.getStringArray(R.array.recharge_list_second)
 		rgBinding.tabLayout.removeAllTabs()
 
 		var indexValue = 0

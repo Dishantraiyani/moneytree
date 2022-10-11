@@ -221,7 +221,24 @@
 	<string name="please_enter_mobile">Please Enter %1$s</string>
 	<string name="please_enter_valid_mobile">Please Enter Valid %1$s</string>
 
-	<string-array name="recharge_list">
+	<string-array name="recharge_list_home">
+		<item>QR Scan</item>
+		<item>Mobile</item>
+		<item>DTH</item>
+		<item>Cable</item>
+		<item>FasTag</item>
+		<item>Broadband</item>
+		<item>GAS</item>
+		<item>Electricity</item>
+		<item>EMI Payments</item>
+		<item>Insurance</item>
+		<item>Hospital</item>
+		<item>Landline</item>
+		<item>LPG Booking</item>
+		<item>Water</item>
+	</string-array>
+
+	<string-array name="recharge_list_second">
 		<item>Mobile</item>
 		<item>DTH</item>
 		<item>Cable</item>
@@ -500,7 +517,7 @@
 	<string name="ad1">Ad1:</string>
 	<string name="ad2">Ad2:</string>
 	<string name="ad3">Ad3:</string>
-    <string name="success_msg">Recharge Successfull</string>
+	<string name="success_msg">Recharge Successfull</string>
 	<string name="continue_title">Continue</string>
 	<string name="failed">Failed</string>
 	<string name="failed_msg">Recharge Failed</string>
@@ -511,5 +528,7 @@
 	<string name="invoice">Invoice</string>
 	<string name="default_notification_channel_id">money_tree_notification</string>
 	<string name="details">Recharge Details</string>
+	<string name="rs">₹</string>
+	<string name="add_a_note">Add a note</string>
 
 </resources>

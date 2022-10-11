@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<include android:id="@+id/layout_header"
+		layout="@layout/layout_header"/>
+
+	<LinearLayout
+		android:id="@+id/ll_amount_detail"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingHorizontal="@dimen/_20sdp"
+		app:layout_constraintVertical_chainStyle="packed"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintBottom_toTopOf="@id/et_note">
+
+		<TextView
+			style="@style/LoginSubFontsWrap"
+			android:textColor="@color/black"
+			android:text="@string/rs"
+			android:textSize="@dimen/_35sdp"
+			android:fontFamily="@font/inter_regular"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/iv_amount"
+			app:layout_constraintEnd_toEndOf="parent" />
+
+		<EditText
+			android:id="@+id/et_amount"
+			style="@style/LoginSubFontsWrap"
+			android:textColor="@color/black"
+			android:paddingHorizontal="@dimen/_5sdp"
+			android:hint="@string/zero"
+			android:background="@null"
+			android:focusable="true"
+			android:fontFamily="@font/inter_regular"
+			android:textColorHint="@color/hint_color"
+			android:textSize="@dimen/_35sdp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/iv_amount"
+			app:layout_constraintEnd_toEndOf="parent"
+			android:inputType="number"
+			android:imeOptions="actionDone">
+			<requestFocus/>
+		</EditText>
+
+	</LinearLayout>
+
+	<EditText
+		android:id="@+id/et_note"
+		style="@style/LoginSubFontsWrap"
+		android:minHeight="@dimen/_38sdp"
+		android:textColor="@color/black"
+		android:background="@drawable/gray_round_border_background"
+		android:paddingHorizontal="@dimen/_25sdp"
+		android:layout_marginHorizontal="@dimen/_40sdp"
+		android:hint="@string/add_a_note"
+		android:textColorHint="@color/gray_text"
+		android:layout_marginTop="@dimen/_10sdp"
+		app:layout_constraintTop_toBottomOf="@id/ll_amount_detail"
+		app:layout_constraintBottom_toTopOf="@id/btn_submit"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		android:inputType="text"
+		android:imeOptions="actionDone"/>
+
+	<Button
+		android:id="@+id/btn_submit"
+		style="@style/LayoutWidthHeightWrap"
+		android:background="@drawable/login_button_border"
+		android:text="@string/submit"
+		android:textColor="@color/white"
+		android:textAllCaps="true"
+		android:textSize="@dimen/_12sdp"
+		android:paddingHorizontal="@dimen/_50sdp"
+		android:fontFamily="@font/inter_regular"
+		android:layout_marginHorizontal="@dimen/_5sdp"
+		android:layout_marginTop="@dimen/_20sdp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/et_note"
+		app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

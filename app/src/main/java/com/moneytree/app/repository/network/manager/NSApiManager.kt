@@ -6,10 +6,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
-import com.moneytree.app.repository.network.requests.NSChangePasswordRequest
-import com.moneytree.app.repository.network.requests.NSLoginRequest
-import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
-import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
+import com.moneytree.app.repository.network.requests.*
 import com.moneytree.app.repository.network.responses.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -533,6 +530,10 @@ class NSApiManager {
 		request(unAuthorised3020Client.rechargeFetchData(NSUserManager.getAuthToken()!!, rsR.serviceProvider!!, rsR.accountDisplay!!, rsR.ad1!!, rsR.ad2!!, rsR.ad3!!), callback)
 	}
 
+	fun qrScan(qrUserId: String, amount: String, note: String = "", callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.qrScan(NSUserManager.getAuthToken()!!, amount, note, qrUserId), callback)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -746,4 +747,11 @@ interface RTApiInterface {
 					 @Field("ad1") ad1: String,
 					 @Field("ad2") ad2: String,
 					 @Field("ad3") ad3: String): Call<NSRechargeFetchListResponse>
+
+	@FormUrlEncoded
+	@POST("recharge-qr-scan")
+	fun qrScan(@Field("token_id") token: String,
+						  @Field("amount") amount: String,
+						  @Field("note") note: String,
+						  @Field("qr_user_id") qrUserId: String): Call<NSSuccessResponse>
 }

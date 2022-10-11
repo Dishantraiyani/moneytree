@@ -8,10 +8,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/gray_button_border.xml" value="0.27" />
+        <entry key="app/src/main/res/drawable/gray_round_border_background.xml" value="0.2425" />
         <entry key="app/src/main/res/drawable/ic_failed.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/ic_history_recharge.xml" value="0.2425" />
         <entry key="app/src/main/res/drawable/ic_success.xml" value="0.27" />
+        <entry key="app/src/main/res/drawable/phone_gray_background.xml" value="0.2425" />
         <entry key="app/src/main/res/drawable/recharge_detail_border.xml" value="0.27" />
+        <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.278125" />
         <entry key="app/src/main/res/layout/activity_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_recharge_history.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_success.xml" value="0.27395833333333336" />
@@ -19,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_level_member_tree.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree_detail.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_member_tree.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/fragment_qr_amount.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_verify_member.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_verify_recharge.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/layout_category_item.xml" value="0.32083333333333336" />
@@ -30,6 +34,7 @@
         <entry key="app/src/main/res/layout/layout_register_item.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_repurchase_info_item.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/layout_up_line_member.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_activity_products.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/layout/ns_fragment__pending_vouchers.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_activation.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_activation_form.xml" value="0.2515625" />

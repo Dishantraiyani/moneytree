@@ -45,6 +45,8 @@ class NSConstants {
 
 		const val KEY_RECHARGE_VERIFY = "key_recharge_verify"
 		const val KEY_RECHARGE_TYPE = "key_recharge_type_selected"
+		const val KEY_QR_CODE_ID = "key_qr_code_id"
+		const val KEY_WALLET_AMOUNT = "key_wallet_amount"
 		const val KEY_SUCCESS_FAIL = "key_success_fail"
         //Pagination
         const val PAGINATION = 25

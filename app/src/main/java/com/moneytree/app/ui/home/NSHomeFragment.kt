@@ -8,7 +8,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
@@ -16,8 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
@@ -32,10 +31,14 @@ import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
+import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
+import io.github.g00fy2.quickie.QRResult
+import io.github.g00fy2.quickie.ScanQRCode
+import io.github.g00fy2.quickie.content.QRContent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -54,6 +57,7 @@ class NSHomeFragment : NSFragment() {
 	private val DELAY_MS: Long = 500
 	private val PERIOD_MS: Long = 5000
 	private var currentPage = 0
+	private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
 
     companion object {
         fun newInstance() = NSHomeFragment()
@@ -176,7 +180,7 @@ class NSHomeFragment : NSFragment() {
                 recyclerView.layoutManager = layoutManager
                 recyclerView.itemAnimator = DefaultItemAnimator()
                 homeListModelClassArrayList1 = ArrayList()
-                fieldName = resources.getStringArray(R.array.recharge_list)
+                fieldName = resources.getStringArray(R.array.recharge_list_home)
                 for (i in fieldName.indices) {
                     val gridModel = GridModel(fieldName[i], fieldImage[i])
                     homeListModelClassArrayList1!!.add(gridModel)
@@ -184,10 +188,14 @@ class NSHomeFragment : NSFragment() {
                 bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
                         override fun onClick(position: Int) {
-							switchActivity(
-								NSRechargeActivity::class.java,
-								bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
-							)
+							if (position == 0) {
+								scanQrCode.launch(null)
+							} else {
+								switchActivity(
+									NSRechargeActivity::class.java,
+									bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
+								)
+							}
                         }
                     }
                 )
@@ -457,4 +465,28 @@ class NSHomeFragment : NSFragment() {
         //	NSUtilities.showUpdateDialog(activity, false)
         checkUpdateDialog(homeModel.chekVersionResponse)
     }
+
+	private fun showSnackbar(result: QRResult) {
+		val text = when (result) {
+			is QRResult.QRSuccess -> {
+				switchActivity(QRCodeActivity::class.java, bundleOf(NSConstants.KEY_QR_CODE_ID to result.content.rawValue, NSConstants.KEY_WALLET_AMOUNT to homeModel.setWallet()))
+				return
+			}
+			QRResult.QRUserCanceled -> "User canceled"
+			QRResult.QRMissingPermission -> "Missing permission"
+			is QRResult.QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
+		}
+
+		Snackbar.make(homeBinding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
+			view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
+				maxLines = 5
+				setTextIsSelectable(true)
+			}
+			if (result is QRResult.QRSuccess && result.content is QRContent.Url) {
+				//setAction(R.string.open_action) { openUrl(result.content.rawValue) }
+			} else {
+				//setAction(R.string.ok_action) { }
+			}
+		}.show()
+	}
 }

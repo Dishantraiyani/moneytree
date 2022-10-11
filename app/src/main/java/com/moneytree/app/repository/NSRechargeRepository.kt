@@ -102,4 +102,27 @@ object NSRechargeRepository {
 			}
 		})
 	}
+
+	/**
+	 * To get register data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun qrCodeRecharge(qrUserId: String, amount: String, note: String = "",
+							viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.qrScan(qrUserId, amount, note, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_QR_SCAN) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }
