@@ -35,7 +35,6 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     var fieldName: Array<String> = arrayOf()
 	var isLogout = MutableLiveData<Boolean>()
     var fieldImage = arrayOf(
-        R.drawable.ic_qr,
         R.drawable.ic_mobile_ico,
         R.drawable.ic_dth,
         R.drawable.ic_cable,

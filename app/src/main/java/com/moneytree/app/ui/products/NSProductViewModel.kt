@@ -25,6 +25,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
 	var categoryId: String? = null
 	var categoryName: String? = null
 
+
     /**
      * Get voucher list data
      *

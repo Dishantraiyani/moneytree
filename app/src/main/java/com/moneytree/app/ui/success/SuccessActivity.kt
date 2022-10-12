@@ -35,16 +35,16 @@ class SuccessActivity : AppCompatActivity() {
 				if (successFail.status) {
 					ivSuccessFail.setImageResource(R.drawable.ic_success)
 					tvSuccessFailTitle.text = resources.getString(R.string.success)
-					tvMessage.text = resources.getString(R.string.success_msg)
+					tvMessage.text = successFail.message
 				} else {
 					ivSuccessFail.setImageResource(R.drawable.ic_failed)
 					tvSuccessFailTitle.text = resources.getString(R.string.failed)
-					tvMessage.text = resources.getString(R.string.failed_msg)
+					tvMessage.text = successFail.message
 				}
 			} else {
 				ivSuccessFail.setImageResource(R.drawable.ic_failed)
 				tvSuccessFailTitle.text = resources.getString(R.string.failed)
-				tvMessage.text = resources.getString(R.string.failed_msg)
+				tvMessage.text = resources.getString(R.string.something_went_wrong)
 			}
 		}
 	}

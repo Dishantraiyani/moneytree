@@ -118,4 +118,104 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_product_layout_grid"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/_5sdp"
+		android:visibility="gone">
+
+		<ImageView
+			android:id="@+id/iv_product_img_grid"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:src="@drawable/placeholder"
+			android:scaleType="centerCrop"
+			app:layout_constraintDimensionRatio="W,1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<View
+			android:id="@+id/view_line"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:background="@color/line_color"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/iv_product_img_grid"/>
+
+		<TextView
+			android:id="@+id/tv_product_name_grid"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Product Name"
+			android:gravity="start"
+			android:textColor="@color/black"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:textStyle="bold"
+			android:textSize="@dimen/_11sdp"
+			android:ellipsize="marquee"
+			android:singleLine="true"
+			android:marqueeRepeatLimit ="marquee_forever"
+			android:focusable="true"
+			android:focusableInTouchMode="true"
+			android:scrollHorizontally="true"
+			android:fontFamily="@font/inter_semi_bold"
+			android:paddingHorizontal="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/view_line" />
+
+		<TextView
+			android:id="@+id/tv_price_title_grid"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/price"
+			android:textSize="@dimen/_9sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_5sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_2sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_product_name_grid" />
+
+		<TextView
+			android:id="@+id/tv_price_grid"
+			style="@style/LoginSubFontsWrap"
+			tools:text="1Rs"
+			android:textSize="@dimen/_9sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_2sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			android:paddingStart="0dp"
+			app:layout_constraintStart_toEndOf="@id/tv_price_title_grid"
+			app:layout_constraintTop_toBottomOf="@+id/tv_product_name_grid" />
+
+		<TextView
+			android:id="@+id/tv_rate_grid"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Rate : 1"
+			android:textSize="@dimen/_9sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_5sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_2sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_price_title_grid" />
+
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

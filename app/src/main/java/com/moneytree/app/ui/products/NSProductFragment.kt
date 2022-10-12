@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
@@ -67,6 +69,8 @@ class NSProductFragment : NSFragment() {
 					clBack.visible()
 					tvHeaderBack.text = categoryName
 					ivSearch.visible()
+					ivAddNew.visible()
+					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
 				}
                 setVoucherAdapter()
             }
@@ -95,6 +99,15 @@ class NSProductFragment : NSFragment() {
 					ivSearch.setOnClickListener {
 						cardSearch.visibility = View.VISIBLE
 					}
+
+					ivAddNew.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							isGridMode = !isGridMode
+							ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
+							setProductListGrid(isGridMode)
+						}
+
+					})
 
 					ivClose.setOnClickListener {
 						cardSearch.visibility = View.GONE
@@ -147,9 +160,13 @@ class NSProductFragment : NSFragment() {
     private fun setVoucherAdapter() {
         with(productBinding) {
             with(productModel) {
-                rvProductList.layoutManager = LinearLayoutManager(activity)
+				if (!isGridMode) {
+					rvProductList.layoutManager = LinearLayoutManager(activity)
+				} else {
+					rvProductList.layoutManager = GridLayoutManager(activity,2)
+				}
                 productListAdapter =
-					NSProductListRecycleAdapter(activity, object : NSPageChangeCallback{
+					NSProductListRecycleAdapter(activity, isGridMode, object : NSPageChangeCallback{
                         override fun onPageChange() {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
@@ -168,6 +185,36 @@ class NSProductFragment : NSFragment() {
             }
         }
     }
+
+	private fun setProductListGrid(isGrid: Boolean) {
+		with(productBinding) {
+			with(productModel) {
+				if (!isGrid) {
+					rvProductList.layoutManager = LinearLayoutManager(activity)
+				} else {
+					rvProductList.layoutManager = GridLayoutManager(activity,2)
+				}
+				productListAdapter =
+					NSProductListRecycleAdapter(activity, isGrid, object : NSPageChangeCallback{
+						override fun onPageChange() {
+							if (productResponse!!.nextPage) {
+								val page: Int = productList.size/NSConstants.PAGINATION + 1
+								pageIndex = page.toString()
+								getProductListData(pageIndex, "", true, isBottomProgress = true)
+							}
+						}
+					}, object : NSProductDetailCallback {
+						override fun onResponse(productDetail: ProductDataDTO) {
+							switchActivity(NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
+						}
+					})
+				rvProductList.adapter = productListAdapter
+				productListAdapter!!.clearData()
+				productListAdapter!!.updateData(productList)
+			}
+		}
+	}
+
 
     private fun bottomProgress(isShowProgress: Boolean) {
         with(productBinding) {

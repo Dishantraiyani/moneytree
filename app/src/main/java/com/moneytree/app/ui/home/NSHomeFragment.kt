@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.home
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -188,14 +189,10 @@ class NSHomeFragment : NSFragment() {
                 bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
                         override fun onClick(position: Int) {
-							if (position == 0) {
-								scanQrCode.launch(null)
-							} else {
-								switchActivity(
-									NSRechargeActivity::class.java,
-									bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
-								)
-							}
+							switchActivity(
+								NSRechargeActivity::class.java,
+								bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
+							)
                         }
                     }
                 )
@@ -236,6 +233,12 @@ class NSHomeFragment : NSFragment() {
                     )
                 )*/
             }
+
+			clQrCode.setOnClickListener(object : SingleClickListener() {
+				override fun performClick(v: View?) {
+					scanQrCode.launch(null)
+				}
+			})
 
             tvUpdate.setOnClickListener(object : SingleClickListener() {
                 override fun performClick(v: View?) {
@@ -482,11 +485,8 @@ class NSHomeFragment : NSFragment() {
 				maxLines = 5
 				setTextIsSelectable(true)
 			}
-			if (result is QRResult.QRSuccess && result.content is QRContent.Url) {
-				//setAction(R.string.open_action) { openUrl(result.content.rawValue) }
-			} else {
-				//setAction(R.string.ok_action) { }
-			}
+			setAction(R.string.ok) { }
+			setActionTextColor(Color.parseColor(activity.resources.getString(R.string.orange)))
 		}.show()
 	}
 }

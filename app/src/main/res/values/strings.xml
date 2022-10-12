@@ -222,7 +222,6 @@
 	<string name="please_enter_valid_mobile">Please Enter Valid %1$s</string>
 
 	<string-array name="recharge_list_home">
-		<item>QR Scan</item>
 		<item>Mobile</item>
 		<item>DTH</item>
 		<item>Cable</item>
@@ -530,5 +529,6 @@
 	<string name="details">Recharge Details</string>
 	<string name="rs">₹</string>
 	<string name="add_a_note">Add a note</string>
+    <string name="scan_qr_code">Scan Any QR</string>
 
 </resources>

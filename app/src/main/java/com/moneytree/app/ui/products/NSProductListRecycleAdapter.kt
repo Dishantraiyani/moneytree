@@ -16,6 +16,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import java.util.concurrent.ExecutionException
@@ -23,6 +24,7 @@ import java.util.concurrent.ExecutionException
 
 class NSProductListRecycleAdapter(
     activityNS: Activity,
+	val isGrid: Boolean,
     onPageChange: NSPageChangeCallback,
 	val onProductClick: NSProductDetailCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -82,6 +84,8 @@ class NSProductListRecycleAdapter(
         fun bind(response: ProductDataDTO) {
             with(productBinding) {
                 with(response) {
+					clProductLayout.setVisibility(!isGrid)
+					clProductLayoutGrid.setVisibility(isGrid)
 					val url = BuildConfig.BASE_URL_IMAGE+productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder).diskCacheStrategy(DiskCacheStrategy.NONE)
 						.skipMemoryCache(true).into(ivProductImg)
@@ -90,6 +94,19 @@ class NSProductListRecycleAdapter(
                     tvRate.text = addText(activity, R.string.rate_title, rate!!)
                     tvDescription.text = description!!
 					clProductLayout.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							onProductClick.onResponse(response)
+						}
+					})
+
+					//Grid
+					Glide.with(activity).load(url).error(R.drawable.placeholder).diskCacheStrategy(DiskCacheStrategy.NONE)
+						.skipMemoryCache(true).into(ivProductImgGrid)
+					tvProductNameGrid.text = productName
+					tvProductNameGrid.isSelected = true
+					tvPriceGrid.text = addText(activity, R.string.price_value, sdPrice)
+					tvRateGrid.text = addText(activity, R.string.rate_title, rate)
+					clProductLayoutGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
 						}
