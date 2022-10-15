@@ -22,6 +22,8 @@ import com.moneytree.app.ui.success.SuccessActivity
  * The view model class for redeem. It handles the business logic to communicate with the model for the redeem and provides the data to the observing UI component.
  */
 class NSQRCodeViewModel(application: Application) : NSViewModel(application) {
+	var name: String = ""
+	var upiId: String = ""
 	var qrCodeId: String? = ""
 	var walletAmount: String? = "0"
 	var amount: String? = "0.0"
@@ -30,7 +32,7 @@ class NSQRCodeViewModel(application: Application) : NSViewModel(application) {
 
 	fun qrCodeRecharge(activity: Activity) {
 		isProgressShowing.value = true
-		NSRechargeRepository.qrCodeRecharge(qrCodeId!!, amount!!, note!!,
+		NSRechargeRepository.qrCodeRecharge(qrCodeId!!, amount!!, note!!, name, upiId,
 			object : NSGenericViewModelCallback {
 				override fun <T> onSuccess(data: T) {
 					isProgressShowing.value = false

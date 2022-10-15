@@ -9,7 +9,7 @@
 	<LinearLayout
 		android:id="@+id/ll_recharge_data"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:orientation="vertical"
 		android:paddingVertical="@dimen/_20sdp"
 		android:paddingHorizontal="@dimen/_15sdp"
@@ -25,7 +25,7 @@
 			android:layout_marginStart="@dimen/_5sdp"
 			android:layout_marginTop="@dimen/_15sdp"
 			android:textSize="@dimen/_10sdp"
-			android:visibility="gone"/>
+			android:visibility="gone" />
 
 		<androidx.cardview.widget.CardView
 			android:id="@+id/card_recharge_type"
@@ -71,7 +71,7 @@
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintStart_toEndOf="@id/iv_recharge_type"
-					app:layout_constraintEnd_toEndOf="parent"/>
+					app:layout_constraintEnd_toEndOf="parent" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,7 +88,6 @@
 				android:id="@+id/rbPrepaid"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:checked="true"
 				android:text="@string/prepaid"
 				android:fontFamily="@font/inter_regular"
 				android:paddingHorizontal="@dimen/_2sdp"
@@ -114,7 +113,7 @@
 			android:textColor="@color/black"
 			android:layout_marginStart="@dimen/_5sdp"
 			android:layout_marginTop="@dimen/_15sdp"
-			android:textSize="@dimen/_10sdp"/>
+			android:textSize="@dimen/_10sdp" />
 
 		<androidx.cardview.widget.CardView
 			android:id="@+id/card_wallet_amount"
@@ -149,7 +148,7 @@
 					app:layout_constraintBottom_toBottomOf="parent"
 					android:contentDescription="@string/username_title" />
 
-				<Spinner
+				<com.moneytree.app.common.SearchableSpinner
 					android:id="@+id/spinner"
 					style="@style/LoginSubFontsZeroWrap"
 					android:paddingHorizontal="@dimen/_10sdp"
@@ -159,7 +158,7 @@
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintStart_toEndOf="@id/iv_wallet_amount"
-					app:layout_constraintEnd_toEndOf="parent"/>
+					app:layout_constraintEnd_toEndOf="parent" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -173,7 +172,7 @@
 			android:visibility="gone"
 			android:layout_marginStart="@dimen/_5sdp"
 			android:layout_marginTop="@dimen/_15sdp"
-			android:textSize="@dimen/_10sdp"/>
+			android:textSize="@dimen/_10sdp" />
 
 		<androidx.cardview.widget.CardView
 			android:id="@+id/card_mobile_number"
@@ -223,7 +222,7 @@
 					app:layout_constraintStart_toEndOf="@id/iv_mobile_number"
 					app:layout_constraintEnd_toEndOf="parent"
 					android:inputType="text"
-					android:imeOptions="actionDone"/>
+					android:imeOptions="actionDone" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -285,7 +284,7 @@
 					app:layout_constraintStart_toEndOf="@id/iv_amount"
 					app:layout_constraintEnd_toEndOf="parent"
 					android:inputType="number"
-					android:imeOptions="actionNext"/>
+					android:imeOptions="actionNext" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -348,7 +347,7 @@
 					app:layout_constraintStart_toEndOf="@id/iv_ad1"
 					app:layout_constraintEnd_toEndOf="parent"
 					android:inputType="text"
-					android:imeOptions="actionDone"/>
+					android:imeOptions="actionDone" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -411,7 +410,7 @@
 					app:layout_constraintStart_toEndOf="@id/iv_ad2"
 					app:layout_constraintEnd_toEndOf="parent"
 					android:inputType="text"
-					android:imeOptions="actionDone"/>
+					android:imeOptions="actionDone" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -474,7 +473,7 @@
 					app:layout_constraintStart_toEndOf="@id/iv_ad3"
 					app:layout_constraintEnd_toEndOf="parent"
 					android:inputType="text"
-					android:imeOptions="actionDone"/>
+					android:imeOptions="actionDone" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -536,7 +535,7 @@
 					app:layout_constraintStart_toEndOf="@id/iv_note"
 					app:layout_constraintEnd_toEndOf="parent"
 					android:inputType="text"
-					android:imeOptions="actionDone"/>
+					android:imeOptions="actionDone" />
 
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -571,7 +570,7 @@
 			android:visibility="gone"
 			android:background="@drawable/recharge_detail_border"
 			android:layout_marginHorizontal="@dimen/_5sdp"
-			android:layout_marginTop="@dimen/_10sdp"/>
+			android:layout_marginTop="@dimen/_10sdp" />
 
 		<Button
 			android:id="@+id/btn_submit"
@@ -587,7 +586,71 @@
 			android:layout_marginTop="@dimen/_30sdp"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/card_transaction_password"/>
+			app:layout_constraintTop_toBottomOf="@id/card_transaction_password" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/_5sdp"
+			android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/tv_recharge_history"
+				style="@style/LoginSubFontsZeroWrap"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:text="@string/recharge_history"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/black"
+				android:textSize="@dimen/_10sdp" />
+
+			<TextView
+				android:id="@+id/tv_view_all"
+				style="@style/LoginSubFontsWrap"
+				android:gravity="end"
+				android:visibility="gone"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:text="@string/view_all"
+				android:fontFamily="@font/inter_semi_bold"
+				android:textColor="@color/orange"
+				android:textSize="@dimen/_10sdp" />
+		</LinearLayout>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<TextView
+				android:id="@+id/tv_recharge_not_found_sub"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:clipToPadding="false"
+				android:text="@string/no_recharge_available"
+				android:textColor="@color/gray_text"
+				android:gravity="start"
+				android:visibility="gone"
+				android:textSize="@dimen/_11sdp"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_5sdp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/rv_recharge_list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingTop="@dimen/_10sdp"
+				android:paddingBottom="0dp"
+				android:clipToPadding="false"
+				android:visibility="gone"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent"/>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
 
 	</LinearLayout>
 

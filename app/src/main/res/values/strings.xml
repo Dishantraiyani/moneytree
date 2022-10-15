@@ -271,6 +271,13 @@
 		<item>Water</item>
 	</string-array>
 
+	<string-array name="status_list">
+		<item>All</item>
+		<item>Pending</item>
+		<item>Success</item>
+		<item>Failed</item>
+	</string-array>
+
 	<string-array name="registration_type">
 		<item>Select Register Type</item>
 		<item>Wallet Register</item>
@@ -530,5 +537,9 @@
 	<string name="rs">₹</string>
 	<string name="add_a_note">Add a note</string>
     <string name="scan_qr_code">Scan Any QR</string>
+    <string name="status">Status</string>
+	<string name="repeat">Repeat</string>
+    <string name="select_provider">Select Provider</string>
+    <string name="view_all">View All</string>
 
 </resources>

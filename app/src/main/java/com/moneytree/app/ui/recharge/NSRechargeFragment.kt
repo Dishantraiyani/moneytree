@@ -22,6 +22,8 @@ class NSRechargeFragment : NSFragment() {
     private val rgBinding get() = _binding!!
     var fieldName: Array<String> = arrayOf()
 	var rechargeSelectedType: String? = ""
+	var rechargeMainSelectedType: String? = ""
+	var rechargeRepeatData: String? = null
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = NSRechargeFragment().apply {
@@ -33,6 +35,7 @@ class NSRechargeFragment : NSFragment() {
 		super.onCreate(savedInstanceState)
 		arguments?.let {
 			rechargeSelectedType = it.getString(NSConstants.KEY_RECHARGE_TYPE)
+			rechargeRepeatData = it.getString(NSConstants.KEY_RECHARGE_DETAIL)
 		}
 	}
 
@@ -59,7 +62,7 @@ class NSRechargeFragment : NSFragment() {
 				ivAddNew.setImageResource(R.drawable.ic_history_recharge)
             }
             setFragmentData()
-        }
+		}
     }
 
     /**
@@ -74,7 +77,7 @@ class NSRechargeFragment : NSFragment() {
 
 				ivAddNew.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						switchActivity(NSRechargeHistoryActivity::class.java)
+						switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
 					}
 				})
             }
@@ -85,18 +88,23 @@ class NSRechargeFragment : NSFragment() {
         fieldName = resources.getStringArray(R.array.recharge_list_second)
 		rgBinding.tabLayout.removeAllTabs()
 
+		rechargeMainSelectedType = rechargeSelectedType
+		if (rechargeSelectedType?.lowercase().equals("prepaid") || rechargeSelectedType?.lowercase().equals("postpaid")) {
+			rechargeSelectedType = "Mobile"
+		}
+
 		var indexValue = 0
 		fieldName.forEachIndexed { index, strData ->
 			rgBinding.tabLayout.addTab(rgBinding.tabLayout.newTab().setText(strData))
-			if (rechargeSelectedType.equals(strData)) {
+			if (rechargeSelectedType?.lowercase() == strData.lowercase()) {
 				indexValue = index
-				replaceFragment(NSMobileRechargeFragment.newInstance(bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[index])), false, R.id.recharge_container_view)
+				replaceFragment(NSMobileRechargeFragment.newInstance(bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[index], NSConstants.KEY_RECHARGE_DETAIL to rechargeRepeatData)), false, R.id.recharge_container_view)
 			}
 		}
 		rgBinding.tabLayout.getTabAt(indexValue)?.select()
 		rgBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 			override fun onTabSelected(tab: TabLayout.Tab) {
-				replaceFragment(NSMobileRechargeFragment.newInstance(bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[tab.position])), false, R.id.recharge_container_view)
+				replaceFragment(NSMobileRechargeFragment.newInstance(bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[tab.position], NSConstants.KEY_RECHARGE_DETAIL to rechargeRepeatData)), false, R.id.recharge_container_view)
 			}
 
 			override fun onTabUnselected(tab: TabLayout.Tab?) {

@@ -36,8 +36,16 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 	var successResponse: NSSuccessResponse? = null
 	var rechargeFetchResponse: NSRechargeFetchListResponse? = null
 
+	var rechargeRepeat: RechargeListDataItem? = null
+
 	//Recharge Fetch Data
 	var rechargeFetchDataList: MutableList<NSRechargeFetchListData> = arrayListOf()
+
+	//RechargeList
+	var rechargeList: MutableList<RechargeListDataItem> = arrayListOf()
+	var rechargeType: String = ""
+	var rechargeResponse: NSRechargeListResponse? = null
+	var isRechargeDataAvailable = MutableLiveData<Boolean>()
 
 	/**
 	 * for Recharge Detail Screen
@@ -171,5 +179,39 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 			flags = intArrayOf(Intent.FLAG_ACTIVITY_CLEAR_TOP), bundle = bundleOf(NSConstants.KEY_SUCCESS_FAIL to if (successResponse == null) "" else Gson().toJson(successResponse))
 		)
 		activity.finish()
+	}
+
+	/**
+	 * Get register list data
+	 *
+	 */
+	fun getRechargeListData(isShowProgress: Boolean) {
+		rechargeList.clear()
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSRechargeRepository.getRechargeListData("1", "", rechargeType, "", object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+				val rechargeMainListData = data as NSRechargeListResponse
+				rechargeResponse = rechargeMainListData
+				if (rechargeMainListData.data.isValidList()) {
+					rechargeList.addAll(rechargeMainListData.data)
+				}
+				isRechargeDataAvailable.value = rechargeList.isValidList()
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+		})
 	}
 }

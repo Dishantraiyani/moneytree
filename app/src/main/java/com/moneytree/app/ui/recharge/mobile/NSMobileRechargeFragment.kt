@@ -9,19 +9,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMobileRechargeBinding
 import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
+import com.moneytree.app.repository.network.responses.RechargeListDataItem
 import com.moneytree.app.ui.memberTree.MemberTreeRecycleAdapter
+import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
 import com.moneytree.app.ui.recharge.RechargeDetailRecycleAdapter
 import com.moneytree.app.ui.recharge.detail.NSRechargeDetailActivity
+import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
+import com.moneytree.app.ui.recharge.history.NSRechargeListRecycleAdapter
 
 
 class NSMobileRechargeFragment : NSFragment() {
@@ -31,6 +38,8 @@ class NSMobileRechargeFragment : NSFragment() {
     private var _binding: NsFragmentMobileRechargeBinding? = null
     private val rgBinding get() = _binding!!
 	private var rechargeFetchListAdapter: RechargeDetailRecycleAdapter? = null
+	private var rechargeRepeatData: String? = null
+	private var rechargeListAdapter: NSRechargeListRecycleAdapter? = null
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = NSMobileRechargeFragment().apply {
@@ -43,6 +52,7 @@ class NSMobileRechargeFragment : NSFragment() {
 		arguments?.let {
 			with(viewModel) {
 				rechargeSelectedType = it.getString(NSConstants.KEY_RECHARGE_TYPE)
+				rechargeRepeatData = it.getString(NSConstants.KEY_RECHARGE_DETAIL)
 			}
 		}
 	}
@@ -55,6 +65,7 @@ class NSMobileRechargeFragment : NSFragment() {
         rgBinding.llRechargeData.gone()
 		viewCreated(true)
         setListener()
+		getRechargeRepeatData()
         return rgBinding.root
     }
 
@@ -94,6 +105,7 @@ class NSMobileRechargeFragment : NSFragment() {
 		}
 		setRechargeFetchAdapter()
 		observeViewModel()
+		setRegisterAdapter()
     }
 
     /**
@@ -199,10 +211,60 @@ class NSMobileRechargeFragment : NSFragment() {
 							}
 						}
 					})
+
+					tvViewAll.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							var selectedType: String? = "All"
+							selectedType = if (rechargeSelectedType?.lowercase().equals("mobile")) {
+								if (rbPrepaid.isChecked) {
+									"prepaid"
+								} else {
+									"postpaid"
+								}
+							} else {
+								rechargeSelectedType!!
+							}
+
+							switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to selectedType))
+						}
+					})
 				}
 			}
 		}
     }
+
+	private fun getRechargeRepeatData() {
+		with(rgBinding) {
+			with(viewModel) {
+				if (rechargeRepeatData != null && rechargeRepeatData?.isNotEmpty() == true) {
+					rechargeRepeat = Gson().fromJson(rechargeRepeatData, RechargeListDataItem::class.java)
+					if (rechargeRepeat?.rechargeType?.lowercase().equals("prepaid") || rechargeRepeat?.rechargeType?.lowercase().equals("postpaid")) {
+						if (rechargeRepeat?.rechargeType?.lowercase().equals("prepaid")) {
+							rbPrepaid.isChecked = true
+						} else {
+							rbPostPaid.isChecked = true
+							setServiceProvider(
+								getString(R.string.postpaid),
+								isShowProgress = true
+							)
+						}
+					}
+
+					/*etCustomerDetail.setText(rechargeRepeat!!.accountDisplay)
+					etAmount.setText(rechargeRepeat!!.amount)
+					etNote.setText(rechargeRepeat!!.note)
+					etAd1.setText(rechargeRepeat!!.ad1)
+					etAd2.setText(rechargeRepeat!!.ad2)
+					etAd3.setText(rechargeRepeat!!.ad3)*/
+
+				} else {
+					if (rechargeSelectedType?.lowercase().equals("mobile")) {
+						rbPrepaid.isChecked = true
+					}
+				}
+			}
+		}
+	}
 
 	private fun setServiceProvider(isProviderAvailable: Boolean) {
 		with(rgBinding) {
@@ -249,10 +311,30 @@ class NSMobileRechargeFragment : NSFragment() {
 									cardMobileNumber.setVisibility(false)
 								}
 							}
+
+							if (rechargeRepeat != null) {
+								etCustomerDetail.setText(rechargeRepeat!!.accountDisplay)
+								etAmount.setText(rechargeRepeat!!.amount)
+								etNote.setText(rechargeRepeat!!.note)
+								etAd1.setText(rechargeRepeat!!.ad1)
+								etAd2.setText(rechargeRepeat!!.ad2)
+								etAd3.setText(rechargeRepeat!!.ad3)
+								rechargeRepeat = null
+							}
 						}
 					}
 
 					override fun onNothingSelected(p0: AdapterView<*>?) {
+					}
+				}
+
+				if (rechargeRepeat != null) {
+					serviceProviderDataList.forEachIndexed { index, data ->
+						run {
+							if (data.rechargeMasterId.equals(rechargeRepeat!!.serviceProvider)) {
+								spinner.setSelection(index)
+							}
+						}
 					}
 				}
 			}
@@ -326,6 +408,12 @@ class NSMobileRechargeFragment : NSFragment() {
 					setRechargeFetchData(isProvider)
 				}
 
+				isRechargeDataAvailable.observe(
+					viewLifecycleOwner
+				) { isNotification ->
+					setRegisterData(isNotification)
+				}
+
 				failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
 					showAlertDialog(errorMessage)
 				}
@@ -345,6 +433,63 @@ class NSMobileRechargeFragment : NSFragment() {
 					showAlertDialog(getString(errorId))
 				}
 			}
+		}
+	}
+
+	//Recharge History
+	/**
+	 * To add data of register in list
+	 */
+	private fun setRegisterAdapter() {
+		with(rgBinding) {
+			with(viewModel) {
+				rvRechargeList.layoutManager = LinearLayoutManager(activity)
+				rechargeListAdapter = NSRechargeListRecycleAdapter(activity, true, object:
+					NSRechargeRepeatCallback {
+					override fun onClick(rechargeData: RechargeListDataItem) {
+						switchActivity(
+							NSRechargeActivity::class.java,
+							bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to rechargeData.rechargeType, NSConstants.KEY_RECHARGE_DETAIL to Gson().toJson(rechargeData)), flags = intArrayOf(
+								Intent.FLAG_ACTIVITY_CLEAR_TOP)
+						)
+					}
+				}, object : NSPageChangeCallback {
+					override fun onPageChange() {
+
+					}
+				})
+
+				rvRechargeList.adapter = rechargeListAdapter
+				getRechargeListData(true)
+			}
+		}
+	}
+
+	/**
+	 * Set register data
+	 *
+	 * @param isRegister when data available it's true
+	 */
+	private fun setRegisterData(isRegister: Boolean) {
+		with(viewModel) {
+			registerDataManage(isRegister)
+			if (isRegister) {
+				rechargeListAdapter!!.clearData()
+				rechargeListAdapter!!.updateData(rechargeList)
+			}
+		}
+	}
+
+	/**
+	 * Register data manage
+	 *
+	 * @param isRegisterVisible when register available it's visible
+	 */
+	private fun registerDataManage(isRegisterVisible: Boolean) {
+		with(rgBinding) {
+			tvViewAll.setVisibility(isRegisterVisible)
+			rvRechargeList.visibility = if (isRegisterVisible) View.VISIBLE else View.GONE
+			tvRechargeNotFoundSub.visibility = if (isRegisterVisible) View.GONE else View.VISIBLE
 		}
 	}
 }

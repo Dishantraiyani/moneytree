@@ -19,16 +19,12 @@ class NSRechargeHistoryViewModel(application: Application) : NSViewModel(applica
     var rechargeList: MutableList<RechargeListDataItem> = arrayListOf()
     var tempRechargeList: MutableList<RechargeListDataItem> = arrayListOf()
     var isRechargeDataAvailable = MutableLiveData<Boolean>()
-    var isRechargeSuccessAvailable = MutableLiveData<Boolean>()
     var pageIndex: String = "1"
     var rechargeResponse: NSRechargeListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
-	var activationPackageResponse: NSActivationPackageResponse? = null
-	var activationPackageList: MutableList<NSActivationPackageData> = arrayListOf()
-	var isActivationPackageDataAvailable = MutableLiveData<Boolean>()
-	var dataMember: NSRegisterListData? = null
-	var rechargeType: String = ""
+	var rechargeType: String? = ""
+	var statusType: String = ""
 
 	//Spinner value for registration form
     var registrationType: MutableList<String> = arrayListOf()
@@ -49,7 +45,7 @@ class NSRechargeHistoryViewModel(application: Application) : NSViewModel(applica
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-        NSRechargeRepository.getRechargeListData(pageIndex, search, rechargeType, this)
+        NSRechargeRepository.getRechargeListData(pageIndex, search, rechargeType!!, statusType, this)
     }
 
     override fun <T> onSuccess(data: T) {

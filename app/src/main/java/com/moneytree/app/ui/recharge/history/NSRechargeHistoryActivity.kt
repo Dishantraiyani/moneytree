@@ -13,14 +13,14 @@ class NSRechargeHistoryActivity : NSActivity() {
         super.onCreate(savedInstanceState)
         rechargeBinding = ActivityRechargeHistoryBinding.inflate(layoutInflater)
         setContentView(rechargeBinding.root)
-        loadInitialFragment()
+        loadInitialFragment(intent.extras)
     }
 
     /**
      * To initialize recharge fragment
      *
      */
-    private fun loadInitialFragment() {
-        replaceCurrentFragment(NSRechargeHistoryFragment.newInstance(), false, rechargeBinding.rechargeHistoryContainer.id)
+    private fun loadInitialFragment(bundle: Bundle?) {
+        replaceCurrentFragment(NSRechargeHistoryFragment.newInstance(bundle), false, rechargeBinding.rechargeHistoryContainer.id)
     }
 }

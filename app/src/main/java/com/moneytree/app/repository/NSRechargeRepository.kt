@@ -85,10 +85,10 @@ object NSRechargeRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun getRechargeListData(pageIndex: String, search: String, rechargeType: String = "",
+	fun getRechargeListData(pageIndex: String, search: String, rechargeType: String = "", statusType: String = "",
 							viewModelCallback: NSGenericViewModelCallback
 	) {
-		apiManager.getRechargeListData(pageIndex, search, rechargeType, object :
+		apiManager.getRechargeListData(pageIndex, search, rechargeType, statusType, object :
 			NSRetrofitCallback<NSRechargeListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_LIST_DATA) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSRechargeListResponse
@@ -108,10 +108,10 @@ object NSRechargeRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun qrCodeRecharge(qrUserId: String, amount: String, note: String = "",
+	fun qrCodeRecharge(qrUserId: String, amount: String, note: String = "", name: String, upiId: String = "",
 							viewModelCallback: NSGenericViewModelCallback
 	) {
-		apiManager.qrScan(qrUserId, amount, note, object :
+		apiManager.qrScan(qrUserId, amount, note, name, upiId, object :
 			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_QR_SCAN) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse

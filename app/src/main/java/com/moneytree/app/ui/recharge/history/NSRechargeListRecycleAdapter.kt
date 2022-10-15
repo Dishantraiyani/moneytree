@@ -12,16 +12,20 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutRechargeHistoryItemBinding
 import com.moneytree.app.repository.network.responses.RechargeListDataItem
+import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.rajat.pdfviewer.PdfViewerActivity
 
 class NSRechargeListRecycleAdapter(
-    activityNS: Activity,
-	private val packageActiveCallback: NSMemberActiveSelectCallback,
-    onPageChange: NSPageChangeCallback
+	activityNS: Activity,
+	private val isDisplayCountManage: Boolean = false,
+	private val rechargeRepeatCallback: NSRechargeRepeatCallback,
+	onPageChange: NSPageChangeCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
     private val rechargeData: MutableList<RechargeListDataItem> = arrayListOf()
@@ -60,7 +64,21 @@ class NSRechargeListRecycleAdapter(
     }
 
     override fun getItemCount(): Int {
-        return rechargeData.size
+		return if (isDisplayCountManage) {
+			when (rechargeData.size) {
+				2 -> {
+					2
+				}
+				1 -> {
+					1
+				}
+				else -> {
+					2
+				}
+			}
+		} else {
+			rechargeData.size
+		}
     }
 
     /**
@@ -89,11 +107,17 @@ class NSRechargeListRecycleAdapter(
 
 					btnActive.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							invoice = "https://www.clickdimensions.com/links/TestPDFfile.pdf"
 							val fileName: String = invoice?.substring(invoice!!.lastIndexOf('/') + 1)!!
 							activity.startActivity(PdfViewerActivity.launchPdfFromUrl(activity, invoice, fileName, Environment.DIRECTORY_DOCUMENTS, true))
 						}
 					})
+
+					btnRepeat.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							rechargeRepeatCallback.onClick(response)
+						}
+					})
+
 					/*val isActive = directActivation.equals("NOT REQUIRED")
 					btnActive.isEnabled = !isActive
 					btnActive.setBackgroundResource(if (isActive) R.drawable.gray_button_order_border else R.drawable.blue_button_order_border)

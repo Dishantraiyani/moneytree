@@ -61,14 +61,54 @@ class NSQRCodeFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(rgBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.qr_code)
-                ivBack.visibility = View.VISIBLE
-            }
+			with(viewModel) {
+				with(layoutHeader) {
+					clBack.visibility = View.VISIBLE
+					tvHeaderBack.text = activity.resources.getString(R.string.qr_code)
+					ivBack.visibility = View.VISIBLE
+				}
+
+			}
         }
 		observeViewModel()
+		generateUpi()
     }
+
+	private fun generateUpi() {
+		with(viewModel) {
+			with(rgBinding) {
+				val data: List<String>? = viewModel.qrCodeId?.split("?")
+				if (data != null) {
+					if (data.size >= 2) {
+						var upiData = ""
+						if (data.size > 2) {
+							for (d in data) {
+								upiData += d
+							}
+						} else {
+							upiData = data[1]
+						}
+
+						val mainUpiData: List<String> = upiData.split("&")
+						for (da in mainUpiData) {
+							if (da.startsWith("pn=")) {
+								if (da.length > 2) {
+									name = da.substring(3).replace("%20", " ")
+								}
+							} else if (da.contains("pa=")) {
+								if (da.length > 2) {
+									upiId = da.substring(3)
+								}
+							}
+						}
+
+						tvName.text = name
+						tvSubUpi.text = upiId
+					}
+				}
+			}
+		}
+	}
 
     /**
      * Set listener

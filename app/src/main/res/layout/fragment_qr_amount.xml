@@ -7,6 +7,28 @@
 	<include android:id="@+id/layout_header"
 		layout="@layout/layout_header"/>
 
+	<TextView
+		android:id="@+id/tv_name"
+		style="@style/LoginSubFontsWrap"
+		android:textColor="@color/black"
+		android:textSize="@dimen/_14sdp"
+		android:layout_marginTop="@dimen/_20sdp"
+		android:fontFamily="@font/inter_medium"
+		app:layout_constraintBottom_toTopOf="@id/tv_sub_upi"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"/>
+
+	<TextView
+		android:id="@+id/tv_sub_upi"
+		style="@style/LoginSubFontsWrap"
+		android:textColor="@color/black"
+		android:textSize="@dimen/_12sdp"
+		android:fontFamily="@font/inter_regular"
+		android:layout_marginBottom="@dimen/_20sdp"
+		app:layout_constraintBottom_toTopOf="@id/ll_amount_detail"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"/>
+
 	<LinearLayout
 		android:id="@+id/ll_amount_detail"
 		android:layout_width="wrap_content"

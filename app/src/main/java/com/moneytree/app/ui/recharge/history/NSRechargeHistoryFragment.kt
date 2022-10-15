@@ -1,5 +1,6 @@
 package com.moneytree.app.ui.recharge.history
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -15,12 +16,16 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRechargeHistoryBinding
 import com.moneytree.app.repository.network.responses.NSRegisterListData
+import com.moneytree.app.repository.network.responses.RechargeListDataItem
 import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
+import com.moneytree.app.ui.recharge.NSRechargeActivity
+import com.moneytree.app.ui.recharge.mobile.NSMobileRechargeFragment
 import com.moneytree.app.ui.register.NSAddRegisterFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -34,9 +39,22 @@ class NSRechargeHistoryFragment : NSFragment() {
 
     private val rechargeBinding get() = _binding!!
     private var rechargeListAdapter: NSRechargeListRecycleAdapter? = null
-    companion object {
-        fun newInstance() = NSRechargeHistoryFragment()
-    }
+	var rechargeSelectedType: String? = ""
+
+	companion object {
+		fun newInstance(bundle: Bundle?) = NSRechargeHistoryFragment().apply {
+			arguments = bundle
+		}
+	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		arguments?.let {
+			with(rechargeListModel) {
+				rechargeType = it.getString(NSConstants.KEY_RECHARGE_TYPE)
+			}
+		}
+	}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +79,7 @@ class NSRechargeHistoryFragment : NSFragment() {
             }
             setRegisterAdapter()
 			setServiceProvider(true)
+			setStatusFilter()
         }
         observeViewModel()
     }
@@ -148,6 +167,36 @@ class NSRechargeHistoryFragment : NSFragment() {
 					override fun onNothingSelected(p0: AdapterView<*>?) {
 					}
 				}
+
+				rechargeListType.forEachIndexed { index, strData ->
+					if (strData.lowercase() == rechargeType?.lowercase()) {
+						rechargeTypeSpinner.setSelection(index)
+					}
+				}
+			}
+		}
+	}
+
+	private fun setStatusFilter() {
+		with(rechargeBinding) {
+			with(rechargeListModel) {
+				val statusListType: MutableList<String> = arrayListOf()
+				statusListType.addAll(resources.getStringArray(R.array.status_list))
+				val adapter = ArrayAdapter(activity, R.layout.layout_spinner, statusListType)
+				statusTypeSpinner.adapter = adapter
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+				statusTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+					override fun onItemSelected(
+						p0: AdapterView<*>?, view: View?, position: Int, id: Long
+					) {
+						pageIndex = "1"
+						statusType = if (statusListType[position] == "All") "" else statusListType[position]
+						getRechargeListData(pageIndex, "", true, isBottomProgress = false)
+					}
+
+					override fun onNothingSelected(p0: AdapterView<*>?) {
+					}
+				}
 			}
 		}
 	}
@@ -159,10 +208,14 @@ class NSRechargeHistoryFragment : NSFragment() {
         with(rechargeBinding) {
             with(rechargeListModel) {
                 rvRechargeList.layoutManager = LinearLayoutManager(activity)
-				rechargeListAdapter = NSRechargeListRecycleAdapter(activity, object: NSMemberActiveSelectCallback {
-					override fun onClick(data: NSRegisterListData) {
-						dataMember = data
-
+				rechargeListAdapter = NSRechargeListRecycleAdapter(activity, false, object:
+					NSRechargeRepeatCallback {
+					override fun onClick(rechargeData: RechargeListDataItem) {
+						switchActivity(
+							NSRechargeActivity::class.java,
+							bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to rechargeData.rechargeType, NSConstants.KEY_RECHARGE_DETAIL to Gson().toJson(rechargeData)), flags = intArrayOf(
+								Intent.FLAG_ACTIVITY_CLEAR_TOP)
+						)
 					}
 				}, object : NSPageChangeCallback {
 					override fun onPageChange() {
@@ -231,27 +284,6 @@ class NSRechargeHistoryFragment : NSFragment() {
                 ) { isBottomProgressShowing ->
                     bottomProgress(isBottomProgressShowing)
                 }
-
-				isActivationPackageDataAvailable.observe(
-					viewLifecycleOwner
-				) { isActivation ->
-					srlRefresh.isRefreshing = false
-					if (isActivation) {
-						if (activationPackageList.isValidList()) {
-							switchResultActivity(dataResult,
-								NSMemberActivationFormActivity::class.java,
-								bundleOf(
-									NSConstants.KEY_MEMBER_ACTIVATION_FORM to Gson().toJson(
-										activationPackageResponse
-									),
-									NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL to if (dataMember != null) Gson().toJson(dataMember) else "",
-									NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM to true
-								)
-							)
-						}
-						isActivationPackageDataAvailable.value = false
-					}
-				}
 
                 isRechargeDataAvailable.observe(
                     viewLifecycleOwner
