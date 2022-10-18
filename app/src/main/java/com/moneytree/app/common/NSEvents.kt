@@ -105,3 +105,5 @@ class NSActivityEvent(
 	val resultCode: Int,
 	val data: Intent?
 )
+
+class NetworkCheckEvent

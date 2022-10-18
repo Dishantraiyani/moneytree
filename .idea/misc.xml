@@ -13,18 +13,26 @@
         <entry key="app/src/main/res/drawable/ic_failed.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/ic_history_recharge.xml" value="0.2425" />
         <entry key="app/src/main/res/drawable/ic_list.xml" value="0.2375" />
+        <entry key="app/src/main/res/drawable/ic_no_signal.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2375" />
         <entry key="app/src/main/res/drawable/ic_success.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/phone_gray_background.xml" value="0.2425" />
         <entry key="app/src/main/res/drawable/recharge_detail_border.xml" value="0.27" />
+        <entry key="app/src/main/res/layout/activity_add_redeem.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_edit.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_member_tree.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_no_network.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.278125" />
         <entry key="app/src/main/res/layout/activity_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_recharge_history.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_success.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/layout/dialog_popup_home.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/dialog_update.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree_detail.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_member_tree.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/fragment_no_network.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_qr_amount.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_success.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_verify_member.xml" value="0.33" />
@@ -69,6 +77,8 @@
         <entry key="app/src/main/res/layout/ns_fragment_main_vouchers.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_member_activation_form.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_mobile_recharge.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_notification.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/ns_fragment_offers.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/ns_fragment_package_detail.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_package_list.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_product_category.xml" value="0.2515625" />

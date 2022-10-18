@@ -15,6 +15,8 @@ import com.moneytree.app.common.callbacks.NSReplaceFragmentCallback
 import com.moneytree.app.common.utils.NSAlertUtils
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.hideKeyboard
+import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.ui.noNetwork.NoNetworkActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -107,7 +109,10 @@ open class NSFragment : Fragment() {
      */
     protected fun showNoNetworkAlertDialog(title: String?, message: String?) {
         val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title)
+		switchActivity(
+			NoNetworkActivity::class.java
+		)
+        //NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title)
     }
 
     /**

@@ -197,6 +197,8 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 				rechargeResponse = rechargeMainListData
 				if (rechargeMainListData.data.isValidList()) {
 					rechargeList.addAll(rechargeMainListData.data)
+				} else {
+					rechargeList.clear()
 				}
 				isRechargeDataAvailable.value = rechargeList.isValidList()
 			}

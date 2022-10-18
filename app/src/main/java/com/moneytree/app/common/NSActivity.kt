@@ -3,6 +3,7 @@ package com.moneytree.app.common
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Bundle
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -16,6 +17,10 @@ import com.moneytree.app.common.callbacks.NSProgressCallback
 import com.moneytree.app.common.callbacks.NSReplaceFragmentCallback
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.noNetwork.NoNetworkActivity
+import com.muddassir.connection_checker.ConnectionState
+import com.muddassir.connection_checker.ConnectivityListener
+import com.muddassir.connection_checker.checkConnection
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -23,11 +28,17 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * The base class for all activities which holds the members and methods common to all activities
  */
-open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgressCallback {
+open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFragmentCallback, NSProgressCallback {
     private val tag: String = NSActivity::class.java.simpleName
     private var isProgressShowing = false
     private var allowBackPress = true
     private lateinit var rlLayout: RelativeLayout
+	var isConnected = true
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		checkConnection(this)
+	}
 
     override fun onStart() {
         super.onStart()
@@ -148,4 +159,21 @@ open class NSActivity : AppCompatActivity(), NSReplaceFragmentCallback, NSProgre
             flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
     }
+
+	override fun onConnectionState(state: ConnectionState) {
+		when (state) {
+			ConnectionState.DISCONNECTED -> {
+				if (isConnected) {
+					isConnected = false
+					switchActivity(
+						NoNetworkActivity::class.java
+					)
+				}
+			}
+			ConnectionState.CONNECTED -> {
+				isConnected = true
+			}
+			else -> {}
+		}
+	}
 }

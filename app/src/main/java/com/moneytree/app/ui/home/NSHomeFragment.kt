@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
@@ -161,7 +162,19 @@ class NSHomeFragment : NSFragment() {
 						}
 
 						override fun onPageScrollStateChanged(state: Int) {
-
+							if (state == ViewPager.SCROLL_STATE_IDLE) {
+								if (pagerAdapter == null) return
+								val itemCount = pagerAdapter.count ?: 0
+								if (itemCount < 2) {
+									return
+								}
+								val index = viewPager.currentItem
+								if (index == 0) {
+									viewPager.setCurrentItem(itemCount - 2, false) //Real last item
+								} else if (index == itemCount - 1) {
+									viewPager.setCurrentItem(0, false) //Real first item
+								}
+							}
 						}
 
 

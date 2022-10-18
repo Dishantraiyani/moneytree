@@ -22,7 +22,6 @@ import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMobileRechargeBinding
 import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
 import com.moneytree.app.repository.network.responses.RechargeListDataItem
-import com.moneytree.app.ui.memberTree.MemberTreeRecycleAdapter
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
 import com.moneytree.app.ui.recharge.RechargeDetailRecycleAdapter
@@ -105,7 +104,8 @@ class NSMobileRechargeFragment : NSFragment() {
 		}
 		setRechargeFetchAdapter()
 		observeViewModel()
-		setRegisterAdapter()
+		selectedType()
+		setRechargeHistoryAdapter()
     }
 
     /**
@@ -122,6 +122,8 @@ class NSMobileRechargeFragment : NSFragment() {
 									getString(R.string.prepaid),
 									isShowProgress = true
 								)
+								rechargeType = "prepaid"
+								getRechargeListData(true)
 							}
 						}
 					}
@@ -133,6 +135,8 @@ class NSMobileRechargeFragment : NSFragment() {
 									getString(R.string.postpaid),
 									isShowProgress = true
 								)
+								rechargeType = "postpaid"
+								getRechargeListData(true)
 							}
 						}
 					}
@@ -214,24 +218,34 @@ class NSMobileRechargeFragment : NSFragment() {
 
 					tvViewAll.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							var selectedType: String? = "All"
-							selectedType = if (rechargeSelectedType?.lowercase().equals("mobile")) {
-								if (rbPrepaid.isChecked) {
-									"prepaid"
-								} else {
-									"postpaid"
-								}
-							} else {
-								rechargeSelectedType!!
-							}
-
-							switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to selectedType))
+							selectedType()
+							switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to rechargeType))
 						}
 					})
 				}
 			}
 		}
     }
+
+	private fun selectedType() {
+		with(rgBinding) {
+			with(viewModel) {
+				var selectedType: String? = "All"
+				selectedType = if (rechargeSelectedType?.lowercase().equals("mobile")) {
+					if (!rbPrepaid.isChecked && !rbPostPaid.isChecked) {
+						"prepaid"
+					} else if (rbPrepaid.isChecked) {
+						"prepaid"
+					} else {
+						"postpaid"
+					}
+				} else {
+					rechargeSelectedType!!
+				}
+				rechargeType = selectedType
+			}
+		}
+	}
 
 	private fun getRechargeRepeatData() {
 		with(rgBinding) {
@@ -411,7 +425,7 @@ class NSMobileRechargeFragment : NSFragment() {
 				isRechargeDataAvailable.observe(
 					viewLifecycleOwner
 				) { isNotification ->
-					setRegisterData(isNotification)
+					setRechargeHistoryData(isNotification)
 				}
 
 				failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
@@ -440,7 +454,7 @@ class NSMobileRechargeFragment : NSFragment() {
 	/**
 	 * To add data of register in list
 	 */
-	private fun setRegisterAdapter() {
+	private fun setRechargeHistoryAdapter() {
 		with(rgBinding) {
 			with(viewModel) {
 				rvRechargeList.layoutManager = LinearLayoutManager(activity)
@@ -468,14 +482,17 @@ class NSMobileRechargeFragment : NSFragment() {
 	/**
 	 * Set register data
 	 *
-	 * @param isRegister when data available it's true
+	 * @param isRecharge when data available it's true
 	 */
-	private fun setRegisterData(isRegister: Boolean) {
+	private fun setRechargeHistoryData(isRecharge: Boolean) {
 		with(viewModel) {
-			registerDataManage(isRegister)
-			if (isRegister) {
+			rechargeDataManage(isRecharge)
+			if (isRecharge) {
 				rechargeListAdapter!!.clearData()
 				rechargeListAdapter!!.updateData(rechargeList)
+			} else {
+				rechargeList.clear()
+				rechargeListAdapter!!.clearData()
 			}
 		}
 	}
@@ -485,7 +502,7 @@ class NSMobileRechargeFragment : NSFragment() {
 	 *
 	 * @param isRegisterVisible when register available it's visible
 	 */
-	private fun registerDataManage(isRegisterVisible: Boolean) {
+	private fun rechargeDataManage(isRegisterVisible: Boolean) {
 		with(rgBinding) {
 			tvViewAll.setVisibility(isRegisterVisible)
 			rvRechargeList.visibility = if (isRegisterVisible) View.VISIBLE else View.GONE
