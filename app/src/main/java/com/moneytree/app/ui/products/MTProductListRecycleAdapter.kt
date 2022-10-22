@@ -22,7 +22,7 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 import java.util.concurrent.ExecutionException
 
 
-class NSProductListRecycleAdapter(
+class MTProductListRecycleAdapter(
     activityNS: Activity,
 	val isGrid: Boolean,
     onPageChange: NSPageChangeCallback,

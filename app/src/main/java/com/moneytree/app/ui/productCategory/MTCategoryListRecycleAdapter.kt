@@ -10,7 +10,7 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutCategoryItemBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
 
-class NSCategoryListRecycleAdapter(private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MTCategoryListRecycleAdapter(private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private val categoryData: MutableList<NSCategoryData> = arrayListOf()
 
     fun updateData(voucherList: MutableList<NSCategoryData>) {

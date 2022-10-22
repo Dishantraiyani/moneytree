@@ -1,37 +1,23 @@
 package com.moneytree.app.ui.productDetail
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.CustomTarget
 import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
-import com.moneytree.app.databinding.NsFragmentProductsBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.moneytree.app.ui.products.NSProductListRecycleAdapter
-import com.moneytree.app.ui.products.NSProductViewModel
 
-class NSProductDetailFragment : NSFragment() {
+class MTProductDetailFragment : NSFragment() {
     private var _binding: NsFragmentProductDetailBinding? = null
 
     private val productBinding get() = _binding!!
@@ -39,7 +25,7 @@ class NSProductDetailFragment : NSFragment() {
 	private var strProductDetail: String? = null
 
 	companion object {
-		fun newInstance(bundle: Bundle?) = NSProductDetailFragment().apply {
+		fun newInstance(bundle: Bundle?) = MTProductDetailFragment().apply {
 			arguments = bundle
 		}
 	}

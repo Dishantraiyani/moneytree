@@ -128,5 +128,5 @@ dependencies {
 	implementation 'com.google.firebase:firebase-analytics'
 	implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.1")
 	implementation 'com.github.muddassir235:connection_checker:1.7'
-	implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
+	implementation 'com.github.smarteist:autoimageslider:1.4.0'
 }

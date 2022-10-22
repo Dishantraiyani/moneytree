@@ -371,26 +371,25 @@
 					android:layout_gravity="center_horizontal"
 					android:layout_marginTop="@dimen/_10sdp">
 
-					<androidx.viewpager.widget.ViewPager
+					<com.smarteist.autoimageslider.SliderView
 						android:id="@+id/viewPager"
 						android:layout_width="match_parent"
 						android:layout_height="@dimen/_90sdp"
 						android:layout_gravity="center"
-						android:clipToPadding="false" />
-
-					<com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-						android:id="@+id/indicator"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_alignParentBottom="true"
-						android:layout_centerHorizontal="true"
-						android:layout_margin="3dp"
-						app:dotsColor="@color/white"
-						app:dotsCornerRadius="6dp"
-						app:dotsSize="@dimen/_7sdp"
-						app:dotsSpacing="@dimen/_3sdp"
-						app:dotsStrokeColor="@color/white"
-						app:dotsStrokeWidth="@dimen/_1sdp" />
+						android:clipToPadding="false"
+						app:sliderAnimationDuration="600"
+						app:sliderAutoCycleDirection="right"
+						app:sliderAutoCycleEnabled="true"
+						app:sliderIndicatorAnimationDuration="600"
+						app:sliderIndicatorGravity="center_horizontal|bottom"
+						app:sliderIndicatorMargin="15dp"
+						app:sliderIndicatorOrientation="horizontal"
+						app:sliderIndicatorPadding="3dp"
+						app:sliderIndicatorRadius="2dp"
+						app:sliderIndicatorSelectedColor="@color/orange"
+						app:sliderIndicatorUnselectedColor="#FFF"
+						app:sliderScrollTimeInSec="3"
+						app:sliderStartAutoCycle="true"/>
 
 				</RelativeLayout>
 

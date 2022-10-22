@@ -19,6 +19,12 @@ data class NSProductListResponse(
 
 data class ProductDataDTO(
 
+	@field:SerializedName("is_product_valid")
+	var isProductValid: Boolean = false,
+
+	@field:SerializedName("item_qty")
+	var itemQty: Int = 1,
+
 	@field:SerializedName("product_id")
 	val productId: String? = null,
 

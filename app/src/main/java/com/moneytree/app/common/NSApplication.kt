@@ -6,9 +6,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
+import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.onesignal.OneSignal
 
 /**
@@ -21,6 +23,7 @@ class NSApplication : Application() {
     private lateinit var apiManager: NSApiManager
     private lateinit var walletBalance: String
 	private val ONESIGNAL_APP_ID = "a31a4b92-4cf4-4768-ba20-904945d2159e"
+	private var productList: HashMap<String, ProductDataDTO> = hashMapOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -71,6 +74,34 @@ class NSApplication : Application() {
 
 	fun setWalletBalance(balance: String) {
 		walletBalance = balance
+	}
+
+	fun setProductList(model: ProductDataDTO) {
+		val key = model.productId + "_" + model.categoryId
+		productList[key] = model
+	}
+
+	fun clearProductList() {
+		productList.clear()
+	}
+
+	fun getProductList(): MutableList<ProductDataDTO> {
+		val list: MutableList<ProductDataDTO> = arrayListOf()
+		for ((key, value) in productList.entries) {
+			list.add(value)
+		}
+		return list
+	}
+
+	fun removeProduct(model: ProductDataDTO): MutableList<ProductDataDTO> {
+		val key = model.productId + "_" + model.categoryId
+		productList.remove(key)
+		return getProductList()
+	}
+
+	fun isProductAdded(model: ProductDataDTO) : Boolean {
+		val key = model.productId + "_" + model.categoryId
+		return productList.contains(key)
 	}
 
     companion object {

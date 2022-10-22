@@ -97,12 +97,28 @@
             android:tint="@color/white"
             android:gravity="center"
             android:visibility="gone"
-            android:layout_marginEnd="@dimen/_14sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_cart"
             tools:ignore="UseAppTint"
             android:contentDescription="@string/add_new"/>
+
+		<ImageView
+			android:id="@+id/iv_cart"
+			android:layout_width="@dimen/_24sdp"
+			android:layout_height="@dimen/_24sdp"
+			android:src="@drawable/ic_shopping_cart"
+			android:tint="@color/white"
+			android:gravity="center"
+			android:padding="@dimen/_4sdp"
+			android:visibility="gone"
+			android:layout_marginEnd="@dimen/_14sdp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			tools:ignore="UseAppTint"
+			android:contentDescription="@string/add_new"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_search"

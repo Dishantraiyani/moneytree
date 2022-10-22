@@ -1,36 +1,48 @@
 package com.moneytree.app.common
 
 import android.content.Context
-import androidx.viewpager.widget.PagerAdapter
-import android.view.ViewGroup
 import android.view.LayoutInflater
-import android.view.View
-import android.widget.ImageView
-import com.moneytree.app.R
+import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import androidx.viewpager.widget.ViewPager
+import com.moneytree.app.databinding.RowSliderBinding
+import com.smarteist.autoimageslider.SliderViewAdapter
 
 class SliderAdapter(private val context: Context, private val mItems: List<String>) :
-    PagerAdapter() {
-    override fun getCount(): Int {
-        return mItems.size
-    }
+	SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
-    }
+	override fun onCreateViewHolder(parent: ViewGroup): SliderAdapterVH {
+		val voucherView = RowSliderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+		return SliderAdapterVH(voucherView)
+	}
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val images: ImageView
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val itemView = inflater.inflate(R.layout.row_slider, container, false)
-        images = itemView.findViewById(R.id.image)
-        Glide.with(context).load(mItems[position]).into(images)
-        container.addView(itemView)
-        return itemView
-    }
+	override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
+		viewHolder.bind(mItems[position])
+	}
 
-    override fun destroyItem(container: View, position: Int, `object`: Any) {
-        (container as ViewPager).removeView(`object` as View)
-    }
+	override fun getCount(): Int {
+		//slider view count could be dynamic size
+		return mItems.size
+	}
+
+	/**
+	 * The view holder for voucher list
+	 *
+	 * @property productBinding The voucher list view binding
+	 */
+	inner class SliderAdapterVH(private val productBinding: RowSliderBinding) :
+		SliderViewAdapter.ViewHolder(productBinding.root) {
+
+		/**
+		 * To bind the voucher details view into Recycler view with given data
+		 *
+		 * @param response The voucher details
+		 */
+		fun bind(response: String) {
+			with(productBinding) {
+				with(response) {
+					Glide.with(context).load(response).into(productBinding.image)
+				}
+			}
+		}
+	}
 }

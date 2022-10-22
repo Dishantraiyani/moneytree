@@ -13,7 +13,7 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 /**
  * The view model class for joining voucher. It handles the business logic to communicate with the model for the joining voucher and provides the data to the observing UI component.
  */
-class NSProductViewModel(application: Application) : NSViewModel(application),
+class MTProductViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var productList: MutableList<ProductDataDTO> = arrayListOf()
     var tempProductList: MutableList<ProductDataDTO> = arrayListOf()

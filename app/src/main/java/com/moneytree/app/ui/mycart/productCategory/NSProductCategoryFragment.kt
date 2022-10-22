@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.productCategory
+package com.moneytree.app.ui.mycart.productCategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,16 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.callbacks.NSJoiningVoucherCallback
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductCategoryBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
-import com.moneytree.app.ui.products.NSProductsActivity
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import com.moneytree.app.ui.mycart.cart.NSCartActivity
+import com.moneytree.app.ui.mycart.products.NSProductsActivity
 
 class NSProductCategoryFragment : NSFragment() {
     private val productCategoryModel: NSProductCategoryViewModel by lazy {
@@ -50,6 +47,7 @@ class NSProductCategoryFragment : NSFragment() {
             with(productCategoryModel) {
 				with(layoutHeader) {
 					clBack.visible()
+					ivCart.visible()
 					tvHeaderBack.text = activity.resources.getString(R.string.categories)
 				}
                 setProductCategoryAdapter()
@@ -71,6 +69,12 @@ class NSProductCategoryFragment : NSFragment() {
 				layoutHeader.ivBack.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
 						onBackPress()
+					}
+				})
+
+				layoutHeader.ivCart.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						switchActivity(NSCartActivity::class.java)
 					}
 				})
             }

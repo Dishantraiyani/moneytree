@@ -23,7 +23,8 @@
 		android:supportsRtl="true"
 		android:theme="@style/Theme.HubzDriver"
 		android:usesCleartextTraffic="true"
-		tools:targetApi="n">
+		tools:targetApi="n"
+		tools:replace="android:allowBackup">
 		<activity
 			android:name=".ui.noNetwork.NoNetworkActivity"
 			android:exported="false"
@@ -65,15 +66,23 @@
 			android:exported="false"
 			android:screenOrientation="portrait" />
 		<activity
-			android:name=".ui.productDetail.NSProductsDetailActivity"
+			android:name=".ui.productDetail.MTProductsDetailActivity"
 			android:exported="false"
 			android:screenOrientation="portrait" />
 		<activity
-			android:name=".ui.products.NSProductsActivity"
+			android:name=".ui.mycart.productDetail.NSProductsDetailActivity"
 			android:exported="false"
 			android:screenOrientation="portrait" />
 		<activity
-			android:name=".ui.productCategory.NSProductsCategoryActivity"
+			android:name=".ui.mycart.cart.NSCartActivity"
+			android:exported="false"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.mycart.products.NSProductsActivity"
+			android:exported="false"
+			android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.mycart.productCategory.NSProductsCategoryActivity"
 			android:exported="false"
 			android:screenOrientation="portrait" />
 		<activity

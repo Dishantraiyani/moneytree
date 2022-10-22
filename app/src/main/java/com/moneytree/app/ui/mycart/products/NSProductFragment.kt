@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.products
+package com.moneytree.app.ui.mycart.products
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -22,7 +22,9 @@ import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductsBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.moneytree.app.ui.productDetail.NSProductsDetailActivity
+import com.moneytree.app.ui.mycart.cart.NSCartActivity
+import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
+import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 
 class NSProductFragment : NSFragment() {
     private val productModel: NSProductViewModel by lazy {
@@ -67,6 +69,7 @@ class NSProductFragment : NSFragment() {
             with(productModel) {
 				with(layoutHeader) {
 					clBack.visible()
+					ivCart.visible()
 					tvHeaderBack.text = categoryName
 					ivSearch.visible()
 					ivAddNew.visible()
@@ -147,6 +150,12 @@ class NSProductFragment : NSFragment() {
 								}
 							}
 							return false
+						}
+					})
+
+					ivCart.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							switchActivity(NSCartActivity::class.java)
 						}
 					})
 				}

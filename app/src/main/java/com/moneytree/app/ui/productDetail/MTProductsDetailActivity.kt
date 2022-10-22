@@ -2,12 +2,9 @@ package com.moneytree.app.ui.productDetail
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityProductsBinding
 import com.moneytree.app.databinding.NsActivityProductsDetailBinding
-import com.moneytree.app.ui.products.NSProductFragment
-import com.moneytree.app.ui.vouchers.NSMainVoucherFragment
 
-class NSProductsDetailActivity : NSActivity() {
+class MTProductsDetailActivity : NSActivity() {
     private lateinit var productsBinding: NsActivityProductsDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +19,6 @@ class NSProductsDetailActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSProductDetailFragment.newInstance(bundle), false, productsBinding.productsContainer.id)
+        replaceCurrentFragment(MTProductDetailFragment.newInstance(bundle), false, productsBinding.productsContainer.id)
     }
 }

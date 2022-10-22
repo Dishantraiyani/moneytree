@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
 import com.moneytree.app.databinding.NsSlideFragmentBinding
-import com.moneytree.app.ui.productDetail.NSProductDetailFragment
+import com.moneytree.app.ui.productDetail.MTProductDetailFragment
 
 class SliderFragment : Fragment() {
     private var _binding: NsSlideFragmentBinding? = null
@@ -18,7 +17,7 @@ class SliderFragment : Fragment() {
 	private var url: String? = null
 
 	companion object {
-		fun newInstance(bundle: Bundle?) = NSProductDetailFragment().apply {
+		fun newInstance(bundle: Bundle?) = MTProductDetailFragment().apply {
 			arguments = bundle
 		}
 	}

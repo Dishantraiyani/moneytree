@@ -31,6 +31,7 @@ open class NSFragment : Fragment() {
     private var replaceFragmentCallback: NSReplaceFragmentCallback? = null
     private var progressCallback: NSProgressCallback? = null
     val pref = NSApplication.getInstance().getPrefs()
+    val nsApp = NSApplication.getInstance()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

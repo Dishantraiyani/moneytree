@@ -3,8 +3,6 @@ package com.moneytree.app.ui.home
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +14,6 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
@@ -32,15 +28,18 @@ import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
-import com.moneytree.app.ui.productCategory.NSProductsCategoryActivity
+import com.moneytree.app.ui.mycart.productCategory.NSProductsCategoryActivity
+import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
-import io.github.g00fy2.quickie.content.QRContent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -118,22 +117,25 @@ class NSHomeFragment : NSFragment() {
 	}
 
     // Add Fragments to Tabs
-    private fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(viewPager: SliderView) {
         with(homeModel) {
             with(homeBinding) {
                 try {
 					rlBanner.setVisibility(mFragmentList.isValidList())
 					val pagerAdapter = SliderAdapter(requireActivity(), mFragmentList)
-					viewPager.adapter = pagerAdapter
+					viewPager.setSliderAdapter(pagerAdapter)
 					pagerAdapter.notifyDataSetChanged()
-					indicator.setViewPager(viewPager)
+					viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE);
+					viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+					viewPager.startAutoCycle();
+					//indicator.setViewPager(viewPager)
                     /*val adapter = ViewPagerMDAdapter(requireActivity())
                     adapter.setFragment(mFragmentList)
                     viewPager.adapter = adapter*/
 
 					//adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
 
-					val handler = Handler(Looper.getMainLooper())
+					/*val handler = Handler(Looper.getMainLooper())
 					val runnable = Runnable {
 						if (currentPage >= mFragmentList.size) {
 							currentPage = 0
@@ -178,7 +180,7 @@ class NSHomeFragment : NSFragment() {
 						}
 
 
-					})
+					})*/
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -366,8 +368,13 @@ class NSHomeFragment : NSFragment() {
 
                         llProducts.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)
-                            switchActivity(NSProductsCategoryActivity::class.java)
+                            switchActivity(MTProductsCategoryActivity::class.java)
                         }
+
+						llMyCart.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(NSProductsCategoryActivity::class.java)
+						}
 
                         llActivate.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)
