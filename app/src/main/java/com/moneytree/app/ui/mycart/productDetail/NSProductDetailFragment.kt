@@ -9,15 +9,19 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NSProductDetailFragment : NSFragment() {
     private var _binding: NsFragmentProductDetailBinding? = null
@@ -63,7 +67,8 @@ class NSProductDetailFragment : NSFragment() {
 				clBack.visible()
 				ivCart.visible()
 				if (productDetail != null) {
-					btnAddToCart.visible()
+					cardBottom.visible()
+					tvCartCount.visible()
 					with(productDetail!!) {
 						tvHeaderBack.text = productName
 						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
@@ -74,25 +79,77 @@ class NSProductDetailFragment : NSFragment() {
 						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
 						tvRate.text = addText(activity, R.string.rate_title, rate!!)
 						tvDescription.text = description!!
-						if (nsApp.isProductAdded(productDetail!!)) {
-							btnAddToCart.text = activity.resources.getString(R.string.added)
-						} else {
-							btnAddToCart.text = activity.resources.getString(R.string.add_to_cart)
+						val selectedItem = NSApplication.getInstance().getProduct(productDetail!!)
+						if (selectedItem != null) {
+							itemQty = selectedItem.itemQty
 						}
+						tvQtyGrid.text = itemQty.toString()
+						setCartCount()
+						setTotalAmount()
 					}
 				}
 			}
         }
     }
 
+	@Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+	fun onResultEvent(event: NSActivityEvent) {
+		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE) {
+			setTotalAmount()
+			updateProducts()
+		}
+	}
+
+	private fun setTotalAmount() {
+		with(productBinding) {
+			CoroutineScope(Dispatchers.IO).launch {
+				var totalAmountValue = 0
+				for (data in NSApplication.getInstance().getProductList()) {
+					val amount1 : Int = data.sdPrice?.toInt() ?: 0
+					val finalAmount1 = data.itemQty * amount1
+					totalAmountValue += finalAmount1
+				}
+				withContext(Dispatchers.Main) {
+					totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+				}
+			}
+
+			setCartCount()
+		}
+	}
+
+	private fun updateProducts() {
+		CoroutineScope(Dispatchers.IO).launch {
+			val instance = NSApplication.getInstance()
+			val selectedItem = instance.getProduct(productDetail!!)
+			if (selectedItem == null) {
+				productDetail!!.itemQty = 0
+			}
+			withContext(Dispatchers.Main) {
+				with(productBinding) {
+					tvQtyGrid.text = productDetail!!.itemQty.toString()
+				}
+			}
+		}
+
+	}
+
+	private fun setCartCount() {
+		with(productBinding.layoutHeader) {
+			with(NSApplication.getInstance().getProductList()) {
+				tvCartCount.text = size.toString()
+			}
+		}
+	}
+
 	override fun onResume() {
 		super.onResume()
 		with(productBinding) {
-			if (nsApp.isProductAdded(productDetail!!)) {
+			/*if (nsApp.isProductAdded(productDetail!!)) {
 				btnAddToCart.text = activity.resources.getString(R.string.added)
 			} else {
 				btnAddToCart.text = activity.resources.getString(R.string.add_to_cart)
-			}
+			}*/
 		}
 	}
 
@@ -114,7 +171,7 @@ class NSProductDetailFragment : NSFragment() {
 					}
 				})
 
-				btnAddToCart.setOnClickListener(object : SingleClickListener() {
+				/*btnAddToCart.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
 						productDetail?.let {
 							if (nsApp.isProductAdded(it)) {
@@ -129,7 +186,7 @@ class NSProductDetailFragment : NSFragment() {
 							}
 						}
 					}
-				})
+				})*/
 			}
 		}
     }

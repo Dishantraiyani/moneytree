@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
@@ -91,6 +90,11 @@ class NSApplication : Application() {
 			list.add(value)
 		}
 		return list
+	}
+
+	fun getProduct(model: ProductDataDTO): ProductDataDTO? {
+		val key = model.productId + "_" + model.categoryId
+		return productList[key]
 	}
 
 	fun removeProduct(model: ProductDataDTO): MutableList<ProductDataDTO> {

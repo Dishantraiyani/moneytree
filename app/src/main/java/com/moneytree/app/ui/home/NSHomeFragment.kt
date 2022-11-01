@@ -29,6 +29,7 @@ import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.mycart.productCategory.NSProductsCategoryActivity
+import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
@@ -382,7 +383,9 @@ class NSHomeFragment : NSFragment() {
                         }
 
                         llRePurchase.setOnClickListener {
-                            EventBus.getDefault().post(NSTabChange(R.id.tb_offers))
+							pref.offerTabPosition = 0
+							switchActivity(OffersActivity::class.java)
+                            //EventBus.getDefault().post(NSTabChange(R.id.tb_offers))
                         }
 
                         llLogout.setOnClickListener(object : SingleClickListener() {

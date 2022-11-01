@@ -5,26 +5,33 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.*
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
-import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.common.utils.visible
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentProductsBinding
+import com.moneytree.app.repository.NSRechargeRepository.getRechargeListData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NSProductFragment : NSFragment() {
     private val productModel: NSProductViewModel by lazy {
@@ -36,9 +43,7 @@ class NSProductFragment : NSFragment() {
     private var productListAdapter: NSProductListRecycleAdapter? = null
 
 	companion object {
-		fun newInstance(bundle: Bundle?) = NSProductFragment().apply {
-			arguments = bundle
-		}
+		fun newInstance() = NSProductFragment()
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,12 +75,18 @@ class NSProductFragment : NSFragment() {
 				with(layoutHeader) {
 					clBack.visible()
 					ivCart.visible()
-					tvHeaderBack.text = categoryName
+					tvHeaderBack.text = activity.resources.getString(R.string.shop)
 					ivSearch.visible()
 					ivAddNew.visible()
+					tvCategories.visible()
+					tvCartCount.visible()
+					cardCategoriesType.visible()
+					setCartCount()
+					setTotalAmount()
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
 				}
                 setVoucherAdapter()
+				getProductCategory(true)
             }
         }
         observeViewModel()
@@ -95,7 +106,7 @@ class NSProductFragment : NSFragment() {
 				with(layoutHeader) {
 					ivBack.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							onBackPress()
+							EventBus.getDefault().post(BackPressEvent())
 						}
 					})
 
@@ -155,13 +166,54 @@ class NSProductFragment : NSFragment() {
 
 					ivCart.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							switchActivity(NSCartActivity::class.java)
+							switchResultActivity(dataResult, NSCartActivity::class.java)
 						}
 					})
 				}
             }
         }
     }
+
+	@Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+	fun onResultEvent(event: NSActivityEvent) {
+		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE) {
+			with(productModel) {
+				if (productListAdapter != null) {
+					setTotalAmount()
+					updateProducts()
+				}
+			}
+		}
+	}
+
+	private fun updateProducts() {
+		CoroutineScope(Dispatchers.IO).launch {
+			with(productModel) {
+				val instance = NSApplication.getInstance()
+				for (data in productList) {
+					if (data.itemQty > 0) {
+						val selectedItem = instance.getProduct(data)
+						if (selectedItem == null) {
+							data.itemQty = 0
+						}
+					}
+				}
+
+				withContext(Dispatchers.Main) {
+					productListAdapter?.updateData(productList)
+				}
+			}
+		}
+
+	}
+
+	private fun setCartCount() {
+		with(productBinding.layoutHeader) {
+			with(NSApplication.getInstance().getProductList()) {
+				tvCartCount.text = size.toString()
+			}
+		}
+	}
 
     /**
      * To add data of vouchers in list
@@ -187,6 +239,10 @@ class NSProductFragment : NSFragment() {
 						override fun onResponse(productDetail: ProductDataDTO) {
 							switchActivity(NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
 						}
+					}, object : NSCartTotalAmountCallback {
+						override fun onResponse() {
+							setTotalAmount()
+						}
 					})
                 rvProductList.adapter = productListAdapter
                 pageIndex = "1"
@@ -194,6 +250,26 @@ class NSProductFragment : NSFragment() {
             }
         }
     }
+
+	private fun setTotalAmount() {
+		with(productBinding) {
+			with(productModel) {
+				CoroutineScope(Dispatchers.IO).launch {
+					var totalAmountValue = 0
+					for (data in NSApplication.getInstance().getProductList()) {
+						val amount1 : Int = data.sdPrice?.toInt() ?: 0
+						val finalAmount1 = data.itemQty * amount1
+						totalAmountValue += finalAmount1
+					}
+					withContext(Dispatchers.Main) {
+						totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+					}
+				}
+
+				setCartCount()
+			}
+		}
+	}
 
 	private fun setProductListGrid(isGrid: Boolean) {
 		with(productBinding) {
@@ -215,6 +291,10 @@ class NSProductFragment : NSFragment() {
 					}, object : NSProductDetailCallback {
 						override fun onResponse(productDetail: ProductDataDTO) {
 							switchActivity(NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
+						}
+					}, object : NSCartTotalAmountCallback {
+						override fun onResponse() {
+							setTotalAmount()
 						}
 					})
 				rvProductList.adapter = productListAdapter
@@ -245,6 +325,45 @@ class NSProductFragment : NSFragment() {
             }
         }
     }
+
+	/**
+	 * Set voucher data
+	 *
+	 * @param isVoucher when data available it's true
+	 */
+	private fun setCategoriesData(isVoucher: Boolean) {
+		with(productBinding) {
+			with(productModel) {
+				if (isVoucher) {
+					val catList : ArrayList<String> = arrayListOf()
+					val catIdList : ArrayList<String> = arrayListOf()
+					catList.add("All")
+					for (data in categoryList) {
+						data.categoryName?.let { catList.add(it) }
+						data.categoryId?.let { catIdList.add(it) }
+					}
+
+					val adapter = ArrayAdapter(activity, R.layout.layout_spinner, catList)
+					categoriesTypeSpinner.adapter = adapter
+					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+					categoriesTypeSpinner.onItemSelectedListener =
+						object : AdapterView.OnItemSelectedListener {
+							override fun onItemSelected(
+								p0: AdapterView<*>?, view: View?, position: Int, id: Long
+							) {
+								pageIndex = "1"
+								categoryId = catIdList[position]
+								categoryName = catList[position]
+								getProductListData(pageIndex, "", true, isBottomProgress = false)
+							}
+
+							override fun onNothingSelected(p0: AdapterView<*>?) {
+							}
+						}
+				}
+			}
+		}
+	}
 
     /**
      * Voucher data manage
@@ -282,6 +401,13 @@ class NSProductFragment : NSFragment() {
                     srlRefresh.isRefreshing = false
                     setVoucherData(isProduct)
                 }
+
+				isCategoryDataAvailable.observe(
+					viewLifecycleOwner
+				) { isCategory ->
+					srlRefresh.isRefreshing = false
+					setCategoriesData(isCategory)
+				}
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                     srlRefresh.isRefreshing = false

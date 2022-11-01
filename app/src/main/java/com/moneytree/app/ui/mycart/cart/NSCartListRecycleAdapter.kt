@@ -104,7 +104,7 @@ class NSCartListRecycleAdapter(
 					}
 
 					remove.setOnClickListener {
-						if (itemQty > 1) {
+						if (itemQty > 0) {
 							itemQty -= 1
 							tvQty.text = itemQty.toString()
 
@@ -113,12 +113,19 @@ class NSCartListRecycleAdapter(
 							isProductValid = finalAmount > 0
 
 							tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
+
+							if (itemQty == 0) {
+								NSApplication.getInstance().removeProduct(response)
+								productData.remove(response)
+								notifyItemRemoved(absoluteAdapterPosition)
+							}
+
 							onProductClick.onResponse()
 						}
 					}
 
 					productDel.setOnClickListener {
-						itemQty = 1
+						itemQty = 0
 						NSApplication.getInstance().removeProduct(response)
 						productData.remove(response)
 						notifyItemRemoved(absoluteAdapterPosition)

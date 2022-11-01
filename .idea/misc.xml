@@ -8,6 +8,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../../../../layout/custom_preview.xml" value="0.1618705035971223" />
+        <entry key="app/src/main/res/drawable/active_red.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/box5.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/box6.xml" value="0.27" />
@@ -26,11 +27,13 @@
         <entry key="app/src/main/res/drawable/orange_button_order_border.xml" value="0.27" />
         <entry key="app/src/main/res/drawable/phone_gray_background.xml" value="0.2425" />
         <entry key="app/src/main/res/drawable/recharge_detail_border.xml" value="0.27" />
+        <entry key="app/src/main/res/drawable/red_circle.xml" value="0.27" />
         <entry key="app/src/main/res/layout/activity_add_redeem.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_edit.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_member_tree.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_no_network.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/activity_offers.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_qr_code.xml" value="0.278125" />
         <entry key="app/src/main/res/layout/activity_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_recharge_history.xml" value="0.32083333333333336" />
@@ -58,6 +61,7 @@
         <entry key="app/src/main/res/layout/layout_register_item.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_repurchase_info_item.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/layout_searchable_dialog.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_shop_product_item.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/layout_spinner.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/layout_spinner_item.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/layout_up_line_member.xml" value="0.32083333333333336" />
@@ -98,7 +102,7 @@
         <entry key="app/src/main/res/layout/ns_fragment_product_category.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_product_detail.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_product_vouchers.xml" value="0.2515625" />
-        <entry key="app/src/main/res/layout/ns_fragment_products.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/ns_fragment_products.xml" value="0.33" />
         <entry key="app/src/main/res/layout/ns_fragment_profile.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_receive_vouchers.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/ns_fragment_recharge.xml" value="0.32083333333333336" />
@@ -121,6 +125,7 @@
         <entry key="app/src/main/res/layout/ns_slide_fragment.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/row_slider.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/toolbar.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/menu/bottom_tab_menu.xml" value="0.32083333333333336" />
       </map>
     </option>
   </component>

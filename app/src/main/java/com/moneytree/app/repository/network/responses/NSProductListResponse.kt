@@ -23,7 +23,7 @@ data class ProductDataDTO(
 	var isProductValid: Boolean = false,
 
 	@field:SerializedName("item_qty")
-	var itemQty: Int = 1,
+	var itemQty: Int = 0,
 
 	@field:SerializedName("product_id")
 	val productId: String? = null,

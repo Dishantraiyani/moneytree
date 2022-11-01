@@ -124,7 +124,7 @@ class NSOfferFragment : NSFragment() {
             with(offerModel) {
                 with(layoutHeader) {
                     clBack.setOnClickListener {
-                        EventBus.getDefault().post(BackPressEvent())
+                      	onBackPress()
                     }
 
                     ivSearch.setOnClickListener {

@@ -129,4 +129,8 @@ dependencies {
 	implementation("io.github.g00fy2.quickie:quickie-bundled:1.5.1")
 	implementation 'com.github.muddassir235:connection_checker:1.7'
 	implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
 }

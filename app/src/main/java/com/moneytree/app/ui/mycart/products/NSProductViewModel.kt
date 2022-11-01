@@ -6,6 +6,8 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
+import com.moneytree.app.repository.network.responses.NSCategoryData
+import com.moneytree.app.repository.network.responses.NSCategoryListResponse
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 
@@ -24,6 +26,47 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
     private var searchData: String = ""
 	var categoryId: String? = null
 	var categoryName: String? = null
+
+
+	//Get Categories
+	var categoryList: MutableList<NSCategoryData> = arrayListOf()
+	var isCategoryDataAvailable = MutableLiveData<Boolean>()
+
+	/**
+	 * Get voucher list data
+	 *
+	 */
+	fun getProductCategory(isShowProgress: Boolean) {
+		categoryList.clear()
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSProductRepository.getCategoryOfProducts(object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+				val voucherMainListData = data as NSCategoryListResponse
+				if (voucherMainListData.data != null) {
+					if (voucherMainListData.data.isValidList()) {
+						categoryList.addAll(voucherMainListData.data)
+					}
+				}
+				isCategoryDataAvailable.value = true
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+
+		})
+	}
 
 
     /**

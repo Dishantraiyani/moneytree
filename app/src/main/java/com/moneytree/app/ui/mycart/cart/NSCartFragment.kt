@@ -1,5 +1,6 @@
 package com.moneytree.app.ui.mycart.cart
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.NSApplication
-import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.*
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
-import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
@@ -56,6 +54,8 @@ class NSCartFragment : NSFragment() {
 				with(layoutHeader) {
 					clBack.visible()
 					tvHeaderBack.text = activity.resources.getString(R.string.my_cart)
+					val intent = Intent()
+					activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)
 				}
                 setVoucherAdapter()
             }
@@ -88,7 +88,7 @@ class NSCartFragment : NSFragment() {
             with(productModel) {
 				rvCartItem.layoutManager = LinearLayoutManager(activity)
                 productListAdapter =
-					NSCartListRecycleAdapter(activity, isGridMode, object : NSCartTotalAmountCallback {
+					NSCartListRecycleAdapter(activity, false, object : NSCartTotalAmountCallback {
 						override fun onResponse() {
 							setTotalAmount()
 						}
