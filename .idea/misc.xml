@@ -50,6 +50,8 @@
         <entry key="app/src/main/res/layout/fragment_verify_recharge.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/layout_cart_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_category_item.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/layout_checkbox_spinner.xml" value="0.32083333333333336" />
+        <entry key="app/src/main/res/layout/layout_checkbox_spinner1.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_header.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_header_nav.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/layout_level_member_item.xml" value="0.32083333333333336" />
@@ -61,6 +63,7 @@
         <entry key="app/src/main/res/layout/layout_register_item.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/layout_repurchase_info_item.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/layout_searchable_dialog.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/layout_searchable_dialog_filter.xml" value="0.26510416666666664" />
         <entry key="app/src/main/res/layout/layout_shop_product_item.xml" value="0.2625" />
         <entry key="app/src/main/res/layout/layout_spinner.xml" value="0.17916666666666667" />
         <entry key="app/src/main/res/layout/layout_spinner_item.xml" value="0.17916666666666667" />

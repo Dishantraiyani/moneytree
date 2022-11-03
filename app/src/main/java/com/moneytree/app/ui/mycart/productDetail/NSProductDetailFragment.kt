@@ -1,5 +1,6 @@
 package com.moneytree.app.ui.mycart.productDetail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -70,6 +72,8 @@ class NSProductDetailFragment : NSFragment() {
 					cardBottom.visible()
 					tvCartCount.visible()
 					with(productDetail!!) {
+						val intent = Intent()
+						activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL, intent)
 						tvHeaderBack.text = productName
 						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -167,7 +171,33 @@ class NSProductDetailFragment : NSFragment() {
 
 				ivCart.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						switchActivity(NSCartActivity::class.java)
+						switchResultActivity(dataResult, NSCartActivity::class.java)
+					}
+				})
+
+				addGrid.setOnClickListener {
+					with(productDetail!!) {
+						val amount: Int = sdPrice?.toInt() ?: 0
+						val finalAmount = itemQty * amount
+						isProductValid = finalAmount > 0
+
+						addCart(productDetail!!, finalAmount)
+					}
+				}
+
+				removeGrid.setOnClickListener {
+					with(productDetail!!) {
+						val amount: Int = sdPrice?.toInt() ?: 0
+						val finalAmount = itemQty * amount
+						isProductValid = finalAmount > 0
+
+						removeCart(productDetail!!, finalAmount)
+					}
+				}
+
+				proceed.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						switchResultActivity(dataResult, NSCartActivity::class.java)
 					}
 				})
 
@@ -190,4 +220,45 @@ class NSProductDetailFragment : NSFragment() {
 			}
 		}
     }
+
+	private fun addCart(response: ProductDataDTO, finalAmount: Int) {
+		with(productBinding) {
+			with(response) {
+				itemQty += 1
+				tvQtyGrid.text = itemQty.toString()
+
+				val amount1: Int = sdPrice?.toInt() ?: 0
+				val finalAmount1 = itemQty * amount1
+				isProductValid = finalAmount > 0
+
+				NSApplication.getInstance().setProductList(response)
+				tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
+				setTotalAmount()
+			}
+		}
+	}
+
+	private fun removeCart(response: ProductDataDTO, finalAmount: Int) {
+		with(productBinding) {
+			with(response) {
+				if (itemQty > 0) {
+					itemQty -= 1
+					tvQtyGrid.text = itemQty.toString()
+
+					val amount1: Int = sdPrice?.toInt() ?: 0
+					val finalAmount1 = itemQty * amount1
+					isProductValid = finalAmount > 0
+
+					if (itemQty == 0) {
+						NSApplication.getInstance().removeProduct(response)
+					} else {
+						NSApplication.getInstance().setProductList(response)
+					}
+
+					setTotalAmount()
+				}
+			}
+		}
+
+	}
 }

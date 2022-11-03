@@ -75,6 +75,8 @@ class NSCartFragment : NSFragment() {
 							onBackPress()
 						}
 					})
+
+
 				}
             }
         }

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
 import com.moneytree.app.R;
+import com.moneytree.app.common.callbacks.NSPositiveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
     private ArrayAdapter _arrayAdapter;
     private String _strHintText;
     private boolean _isFromInit;
+    private boolean _isApply;
 
     public SearchableSpinner(Context context) {
         super(context);
@@ -46,6 +48,9 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
             if (attr == R.styleable.SearchableSpinner_hintText) {
                 _strHintText = a.getString(attr);
             }
+			if (attr == R.styleable.SearchableSpinner_isApply) {
+				_isApply = a.getBoolean(attr, false);
+			}
         }
         a.recycle();
         init();
@@ -62,6 +67,7 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
         _searchableListDialog = SearchableListDialog.newInstance
                 (_items);
         _searchableListDialog.setOnSearchableItemClickListener(this);
+        _searchableListDialog.setVisiblityText(_isApply);
         setOnTouchListener(this);
 
         _arrayAdapter = (ArrayAdapter) getAdapter();
@@ -91,7 +97,6 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
                     _items.add(_arrayAdapter.getItem(i).toString());
                 }
                 // Change end.
-
                 _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
             }
         }
@@ -135,6 +140,10 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
     public void setPositiveButton(String strPositiveButtonText) {
         _searchableListDialog.setPositiveButton(strPositiveButtonText);
     }
+
+	public void setPositiveButton(NSPositiveCallback positiveCallback) {
+		_searchableListDialog.setPositiveButton(positiveCallback);
+	}
 
     public void setPositiveButton(String strPositiveButtonText, DialogInterface.OnClickListener onClickListener) {
         _searchableListDialog.setPositiveButton(strPositiveButtonText, onClickListener);

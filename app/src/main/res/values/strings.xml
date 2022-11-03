@@ -554,4 +554,5 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="added">Remove to Cart</string>
 	<string name="shop">Shop</string>
+    <string name="apply">Apply</string>
 </resources>

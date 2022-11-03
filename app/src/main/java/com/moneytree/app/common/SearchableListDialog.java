@@ -19,8 +19,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.moneytree.app.R;
+import com.moneytree.app.common.callbacks.NSPositiveCallback;
 
 import java.io.Serializable;
 import java.util.List;
@@ -39,12 +41,16 @@ public class SearchableListDialog extends DialogFragment implements
     private OnSearchTextChanged _onSearchTextChanged;
 
     private EditText _searchView;
+    private TextView _tvApply;
 
     private String _strTitle;
 
     private String _strPositiveButtonText;
 
     private DialogInterface.OnClickListener _onClickListener;
+    private NSPositiveCallback _onPositiveClickListener;
+	private View rootView;
+	private boolean isApply = false;
 
     public SearchableListDialog() {
 
@@ -90,7 +96,7 @@ public class SearchableListDialog extends DialogFragment implements
         }
         // Change End
 
-        View rootView = inflater.inflate(R.layout.layout_searchable_dialog, null);
+        rootView = inflater.inflate(R.layout.layout_searchable_dialog, null);
         setData(rootView);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
@@ -124,9 +130,17 @@ public class SearchableListDialog extends DialogFragment implements
         _onClickListener = onClickListener;
     }
 
+	public void setPositiveButton(NSPositiveCallback onClickListener) {
+		_onPositiveClickListener = onClickListener;
+    }
+
     public void setOnSearchableItemClickListener(SearchableItem searchableItem) {
         this._searchableItem = searchableItem;
     }
+
+	public void setVisiblityText(boolean isVisible) {
+		isApply = isVisible;
+	}
 
     public void setOnSearchTextChangedListener(OnSearchTextChanged onSearchTextChanged) {
         this._onSearchTextChanged = onSearchTextChanged;
@@ -134,6 +148,10 @@ public class SearchableListDialog extends DialogFragment implements
 
     private void setData(View rootView) {
         _searchView = rootView.findViewById(R.id.et_search);
+		_tvApply = rootView.findViewById(R.id.tv_apply);
+		if (isApply) {
+			_tvApply.setVisibility(View.VISIBLE);
+		}
         ImageView ivClose = rootView.findViewById(R.id.iv_close);
         _searchView.addTextChangedListener(this);
         _searchView.clearFocus();
@@ -159,6 +177,13 @@ public class SearchableListDialog extends DialogFragment implements
         _listViewItems.setOnItemClickListener((parent, view, position, id) -> {
 			_searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
 			getDialog().dismiss();
+		});
+
+		_tvApply.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				_onPositiveClickListener.onClick();
+			}
 		});
     }
 

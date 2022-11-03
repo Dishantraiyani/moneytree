@@ -1,12 +1,17 @@
 package com.moneytree.app.ui.mycart.products
 
+import android.app.Activity
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,14 +22,18 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSPositiveCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
-import com.moneytree.app.common.utils.*
+import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.switchResultActivity
+import com.moneytree.app.common.utils.visible
+import com.moneytree.app.databinding.LayoutSearchableDialogFilterBinding
 import com.moneytree.app.databinding.NsFragmentProductsBinding
-import com.moneytree.app.repository.NSRechargeRepository.getRechargeListData
+import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
-import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,6 +41,7 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class NSProductFragment : NSFragment() {
     private val productModel: NSProductViewModel by lazy {
@@ -84,6 +94,16 @@ class NSProductFragment : NSFragment() {
 					setCartCount()
 					setTotalAmount()
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
+					val data = NSApplication.getInstance().getFilterList()
+					if (data.isEmpty()) {
+						categoriesTypeSpinner.text = "All"
+						categoryName = "All"
+						categoryId = "0"
+					} else {
+						val itemSelected = "${data.size} Item Selected"
+						categoriesTypeSpinner.text = itemSelected
+
+					}
 				}
                 setVoucherAdapter()
 				getProductCategory(true)
@@ -121,6 +141,12 @@ class NSProductFragment : NSFragment() {
 							setProductListGrid(isGridMode)
 						}
 
+					})
+
+					proceed.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							switchResultActivity(dataResult, NSCartActivity::class.java)
+						}
 					})
 
 					ivClose.setOnClickListener {
@@ -169,6 +195,10 @@ class NSProductFragment : NSFragment() {
 							switchResultActivity(dataResult, NSCartActivity::class.java)
 						}
 					})
+
+					categoriesTypeSpinner.setOnClickListener {
+						showFilterDialog(activity, categoryList)
+					}
 				}
             }
         }
@@ -176,7 +206,7 @@ class NSProductFragment : NSFragment() {
 
 	@Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
 	fun onResultEvent(event: NSActivityEvent) {
-		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE) {
+		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL) {
 			with(productModel) {
 				if (productListAdapter != null) {
 					setTotalAmount()
@@ -237,7 +267,7 @@ class NSProductFragment : NSFragment() {
                         }
                     }, object : NSProductDetailCallback {
 						override fun onResponse(productDetail: ProductDataDTO) {
-							switchActivity(NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
+							switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
 						}
 					}, object : NSCartTotalAmountCallback {
 						override fun onResponse() {
@@ -290,7 +320,7 @@ class NSProductFragment : NSFragment() {
 						}
 					}, object : NSProductDetailCallback {
 						override fun onResponse(productDetail: ProductDataDTO) {
-							switchActivity(NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
+							switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
 						}
 					}, object : NSCartTotalAmountCallback {
 						override fun onResponse() {
@@ -343,10 +373,10 @@ class NSProductFragment : NSFragment() {
 						data.categoryId?.let { catIdList.add(it) }
 					}
 
-					val adapter = ArrayAdapter(activity, R.layout.layout_spinner, catList)
-					categoriesTypeSpinner.adapter = adapter
-					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-					categoriesTypeSpinner.onItemSelectedListener =
+					/*categoryId = "0"
+					categoryName = "All"*/
+					//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+					/*categoriesTypeSpinner.onItemSelectedListener =
 						object : AdapterView.OnItemSelectedListener {
 							override fun onItemSelected(
 								p0: AdapterView<*>?, view: View?, position: Int, id: Long
@@ -359,7 +389,7 @@ class NSProductFragment : NSFragment() {
 
 							override fun onNothingSelected(p0: AdapterView<*>?) {
 							}
-						}
+						}*/
 				}
 			}
 		}
@@ -433,4 +463,79 @@ class NSProductFragment : NSFragment() {
             }
         }
     }
+
+	fun showFilterDialog(activity: Activity, categoryData: MutableList<NSCategoryData>) {
+		val builder = AlertDialog.Builder(activity)
+		val view: View = activity.layoutInflater.inflate(R.layout.layout_searchable_dialog_filter, null)
+		builder.setView(view)
+		val bind: LayoutSearchableDialogFilterBinding = LayoutSearchableDialogFilterBinding.bind(view)
+		val dialog = builder.create()
+		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+		with(bind) {
+			listItems.layoutManager = LinearLayoutManager(activity)
+			val listAdapter = NSMyFilterRecycleAdapter(activity)
+			listItems.adapter = listAdapter
+			listAdapter.clearData()
+			listAdapter.updateData(categoryData)
+
+			tvApply.setOnClickListener {
+				dialog.dismiss()
+				with(productModel) {
+					val data = NSApplication.getInstance().getFilterList()
+					if (data.isEmpty()) {
+						productBinding.categoriesTypeSpinner.text = "All"
+						categoryName = "All"
+						categoryId = "0"
+					} else {
+						val itemSelected = "${data.size} Item Selected"
+						productBinding.categoriesTypeSpinner.text = itemSelected
+					}
+					pageIndex = "1"
+					for (dat in data) {
+						if (categoryId?.isNotEmpty() == true) {
+							categoryId = ",$categoryId"
+						}
+						categoryId = dat
+					}
+					getProductListData(pageIndex, "", true, isBottomProgress = false)
+				}
+			}
+
+			etSearch.addTextChangedListener(object : TextWatcher {
+				override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+				}
+
+				override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+					val tempData = ArrayList<NSCategoryData>()
+					for (nsCategoryData in categoryData) {
+						if (nsCategoryData.categoryName != null) {
+							if (nsCategoryData.categoryName!!.lowercase(Locale.getDefault())
+									.contains(
+										charSequence.toString().lowercase(
+											Locale.getDefault()
+										)
+									)
+							) {
+								tempData.add(nsCategoryData)
+							}
+						}
+					}
+					if (charSequence.toString().isEmpty()) {
+						tempData.clear()
+						tempData.addAll(categoryData)
+					}
+					listAdapter.clearData()
+					listAdapter.updateData(tempData)
+				}
+
+				override fun afterTextChanged(p0: Editable?) {
+
+				}
+			})
+		}
+
+		dialog.show()
+	}
+
 }
