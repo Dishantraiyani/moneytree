@@ -37,6 +37,29 @@ object NSProductRepository {
         })
     }
 
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getProductStockList(pageIndex: String, search: String, categoryId: String = "",
+					   viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getProductStockList(pageIndex, search, categoryId, object :
+			NSRetrofitCallback<NSProductListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_LIST) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSProductListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
     /**
      * To get joining voucher data API
      *

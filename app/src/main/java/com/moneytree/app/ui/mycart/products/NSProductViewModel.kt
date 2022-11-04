@@ -24,7 +24,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
     var productResponse: NSProductListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
-	var categoryId: String? = null
+	var categoryId: String? = ""
 	var categoryName: String? = null
 
 
@@ -73,21 +73,20 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
      * Get voucher list data
      *
      */
-    fun getProductListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
+    fun getProductStockListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
         if (pageIndex == "1") {
             productList.clear()
         }
         if (isShowProgress) {
             isProgressShowing.value = true
+			isBottomProgressShowing.value = false
         }
         if (isBottomProgress) {
             isBottomProgressShowing.value = true
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-		if (categoryId != null) {
-			NSProductRepository.getProductList(pageIndex, search, categoryId!!, this)
-		}
+		categoryId?.let { NSProductRepository.getProductStockList(pageIndex, search, it, this) }
     }
 
     override fun <T> onSuccess(data: T) {

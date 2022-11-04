@@ -732,6 +732,27 @@ class NSApiManager {
 	 *
 	 * @param callback  The callback for the result
 	 */
+	fun getProductStockList(
+		pageIndex: String,
+		search: String,
+		categoryId: String,
+		callback: NSRetrofitCallback<NSProductListResponse>
+	) {
+		request(
+			unAuthorised3020Client.productStockList(
+				NSUserManager.getAuthToken()!!,
+				pageIndex,
+				search,
+				categoryId
+			), callback
+		)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
 	fun getActivationList(
 		pageIndex: String,
 		search: String,
@@ -1158,6 +1179,15 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("product-master-api")
 	fun productList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String,
+		@Field("category_id") categoryId: String
+	): Call<NSProductListResponse>
+
+	@FormUrlEncoded
+	@POST("product-master-stock-api")
+	fun productStockList(
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
 		@Field("search") search: String,

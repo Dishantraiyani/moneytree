@@ -62,7 +62,7 @@
 		<TextView
 			android:id="@+id/tv_qty_title"
 			style="@style/LoginSubFontsWrap"
-			android:text="@string/qty"
+			android:text="@string/stock_qty"
 			android:textSize="@dimen/_10sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
@@ -70,19 +70,19 @@
 			android:paddingStart="@dimen/_10sdp"
 			android:lines="1"
 			android:layout_marginTop="@dimen/_3sdp"
-			android:fontFamily="@font/inter_semi_bold"
+			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
 			app:layout_constraintStart_toEndOf="@id/tv_rate"
 			app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
 		<TextView
-			android:id="@+id/tv_qty"
+			android:id="@+id/tv_stock_qty"
 			style="@style/LoginSubFontsWrap"
 			tools:text="1"
 			android:textSize="@dimen/_10sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
-			android:textColor="@color/orange"
+			android:textColor="@color/black"
 			android:lines="1"
 			android:layout_marginTop="@dimen/_3sdp"
 			android:fontFamily="@font/inter_medium"
@@ -126,11 +126,11 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
-			android:background="@drawable/orange_border"
-			android:paddingHorizontal="@dimen/_5sdp"
+			android:background="@drawable/gray_round_second"
 			android:paddingVertical="@dimen/_1sdp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
+			android:paddingHorizontal="@dimen/_5sdp"
 			android:layout_marginBottom="@dimen/_10sdp"
 			android:layout_marginEnd="@dimen/_5sdp">
 
@@ -138,24 +138,35 @@
 				android:id="@+id/add"
 				android:layout_width="@dimen/_20sdp"
 				android:layout_height="@dimen/_20sdp"
-				android:padding="@dimen/_2sdp"
+				android:padding="@dimen/_3sdp"
 				android:src="@drawable/ic_add"
+				android:tint="@color/black"
 				android:layout_marginEnd="@dimen/_5sdp"
-				android:layout_gravity="center_vertical"/>
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint" />
 
-			<View
-				android:layout_width="1dp"
-				android:layout_height="match_parent"
-				android:background="@color/line_color"/>
+			<TextView
+				android:id="@+id/tv_qty"
+				style="@style/LoginSubFontsWrap"
+				tools:text="1"
+				android:textSize="@dimen/_12sdp"
+				android:gravity="center"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:layout_gravity="center"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium" />
 
 			<ImageView
 				android:id="@+id/remove"
 				android:layout_width="@dimen/_20sdp"
 				android:layout_height="@dimen/_20sdp"
-				android:padding="@dimen/_2sdp"
+				android:padding="@dimen/_3sdp"
+				android:tint="@color/black"
 				android:layout_marginStart="@dimen/_5sdp"
 				android:src="@drawable/ic_minus_black"
-				android:layout_gravity="center_vertical"/>
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint" />
 		</LinearLayout>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
@@ -165,7 +176,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:padding="@dimen/_5sdp"
-		android:visibility="visible">
+		android:visibility="gone">
 
 		<ImageView
 			android:id="@+id/iv_product_img_grid"
@@ -260,7 +271,7 @@
 		<TextView
 			android:id="@+id/tv_qty_title_grid"
 			style="@style/LoginSubFontsWrap"
-			android:text="@string/qty"
+			android:text="@string/stock_qty"
 			android:textSize="@dimen/_9sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
@@ -275,13 +286,13 @@
 			app:layout_constraintBottom_toBottomOf="@+id/qut_grid"/>
 
 		<TextView
-			android:id="@+id/tv_qty_grid"
+			android:id="@+id/tv_stock_qty_grid"
 			style="@style/LoginSubFontsZeroWrap"
 			tools:text="1"
 			android:textSize="@dimen/_9sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
-			android:textColor="@color/orange"
+			android:textColor="@color/black"
 			android:lines="1"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
@@ -296,9 +307,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
-			android:background="@drawable/orange_border"
 			android:paddingHorizontal="@dimen/_5sdp"
 			android:paddingVertical="@dimen/_1sdp"
+			android:background="@drawable/gray_round_second"
 			android:layout_marginTop="@dimen/_5sdp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/tv_price_title_grid"
@@ -309,23 +320,30 @@
 				android:id="@+id/add_grid"
 				android:layout_width="@dimen/_16sdp"
 				android:layout_height="@dimen/_16sdp"
-				android:padding="@dimen/_2sdp"
+				android:padding="@dimen/_3sdp"
 				android:src="@drawable/ic_add"
 				android:focusable="true"
 				android:clickable="true"
 				android:layout_marginEnd="@dimen/_5sdp"
 				android:layout_gravity="center_vertical"/>
 
-			<View
-				android:layout_width="1dp"
-				android:layout_height="match_parent"
-				android:background="@color/line_color"/>
+			<TextView
+				android:id="@+id/tv_qty_grid"
+				style="@style/LoginSubFontsWrap"
+				tools:text="1"
+				android:textSize="@dimen/_11sdp"
+				android:gravity="center"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium"
+				android:layout_gravity="center" />
 
 			<ImageView
 				android:id="@+id/remove_grid"
 				android:layout_width="@dimen/_16sdp"
 				android:layout_height="@dimen/_16sdp"
-				android:padding="@dimen/_2sdp"
+				android:padding="@dimen/_3sdp"
 				android:focusable="true"
 				android:clickable="true"
 				android:layout_marginStart="@dimen/_5sdp"

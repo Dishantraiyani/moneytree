@@ -84,6 +84,7 @@ class NSCartListRecycleAdapter(
                     tvProductName.text = productName
                     tvRate.text = addText(activity, R.string.rate_title, rate!!)
 					tvQty.text = itemQty.toString()
+					tvStockQty.text = stockQty
 
 					val amount : Int = sdPrice?.toInt() ?: 0
 					val finalAmount = itemQty * amount

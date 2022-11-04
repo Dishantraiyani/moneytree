@@ -11,7 +11,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,7 +21,6 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.callbacks.NSPositiveCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
@@ -56,16 +54,6 @@ class NSProductFragment : NSFragment() {
 		fun newInstance() = NSProductFragment()
 	}
 
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		arguments?.let {
-			with(productModel) {
-				categoryId = it.getString(NSConstants.KEY_PRODUCT_CATEGORY)
-				categoryName = it.getString(NSConstants.KEY_PRODUCT_CATEGORY_NAME)
-			}
-		}
-	}
-
 	override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -94,18 +82,8 @@ class NSProductFragment : NSFragment() {
 					setCartCount()
 					setTotalAmount()
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
-					val data = NSApplication.getInstance().getFilterList()
-					if (data.isEmpty()) {
-						categoriesTypeSpinner.text = "All"
-						categoryName = "All"
-						categoryId = "0"
-					} else {
-						val itemSelected = "${data.size} Item Selected"
-						categoriesTypeSpinner.text = itemSelected
-
-					}
 				}
-                setVoucherAdapter()
+                setProductStockAdapter()
 				getProductCategory(true)
             }
         }
@@ -120,7 +98,7 @@ class NSProductFragment : NSFragment() {
             with(productBinding) {
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
-                    getProductListData(pageIndex, "", false, isBottomProgress = false)
+                    getProductStockListData(pageIndex, "", false, isBottomProgress = false)
                 }
 
 				with(layoutHeader) {
@@ -174,7 +152,7 @@ class NSProductFragment : NSFragment() {
 											hideKeyboard(cardSearch)
 											with(productModel) {
 												tempProductList.addAll(productList)
-												getProductListData(
+												getProductStockListData(
 													pageIndex,
 													strSearch,
 													true,
@@ -230,6 +208,7 @@ class NSProductFragment : NSFragment() {
 				}
 
 				withContext(Dispatchers.Main) {
+					productListAdapter?.clearData()
 					productListAdapter?.updateData(productList)
 				}
 			}
@@ -248,7 +227,7 @@ class NSProductFragment : NSFragment() {
     /**
      * To add data of vouchers in list
      */
-    private fun setVoucherAdapter() {
+    private fun setProductStockAdapter() {
         with(productBinding) {
             with(productModel) {
 				if (!isGridMode) {
@@ -262,7 +241,7 @@ class NSProductFragment : NSFragment() {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
-                                getProductListData(pageIndex, "", true, isBottomProgress = true)
+                                getProductStockListData(pageIndex, "", false, isBottomProgress = true)
                             }
                         }
                     }, object : NSProductDetailCallback {
@@ -275,8 +254,7 @@ class NSProductFragment : NSFragment() {
 						}
 					})
                 rvProductList.adapter = productListAdapter
-                pageIndex = "1"
-                getProductListData(pageIndex, "", true, isBottomProgress = false)
+				setCategory()
             }
         }
     }
@@ -315,7 +293,7 @@ class NSProductFragment : NSFragment() {
 							if (productResponse!!.nextPage) {
 								val page: Int = productList.size/NSConstants.PAGINATION + 1
 								pageIndex = page.toString()
-								getProductListData(pageIndex, "", true, isBottomProgress = true)
+								getProductStockListData(pageIndex, "", false, isBottomProgress = true)
 							}
 						}
 					}, object : NSProductDetailCallback {
@@ -464,7 +442,7 @@ class NSProductFragment : NSFragment() {
         }
     }
 
-	fun showFilterDialog(activity: Activity, categoryData: MutableList<NSCategoryData>) {
+	private fun showFilterDialog(activity: Activity, categoryData: MutableList<NSCategoryData>) {
 		val builder = AlertDialog.Builder(activity)
 		val view: View = activity.layoutInflater.inflate(R.layout.layout_searchable_dialog_filter, null)
 		builder.setView(view)
@@ -480,25 +458,7 @@ class NSProductFragment : NSFragment() {
 
 			tvApply.setOnClickListener {
 				dialog.dismiss()
-				with(productModel) {
-					val data = NSApplication.getInstance().getFilterList()
-					if (data.isEmpty()) {
-						productBinding.categoriesTypeSpinner.text = "All"
-						categoryName = "All"
-						categoryId = "0"
-					} else {
-						val itemSelected = "${data.size} Item Selected"
-						productBinding.categoriesTypeSpinner.text = itemSelected
-					}
-					pageIndex = "1"
-					for (dat in data) {
-						if (categoryId?.isNotEmpty() == true) {
-							categoryId = ",$categoryId"
-						}
-						categoryId = dat
-					}
-					getProductListData(pageIndex, "", true, isBottomProgress = false)
-				}
+				setCategory()
 			}
 
 			etSearch.addTextChangedListener(object : TextWatcher {
@@ -538,4 +498,29 @@ class NSProductFragment : NSFragment() {
 		dialog.show()
 	}
 
+	private fun setCategory() {
+		with(productBinding) {
+			with(productModel) {
+				val data = NSApplication.getInstance().getFilterList()
+				if (data.isEmpty()) {
+					productBinding.categoriesTypeSpinner.text = "All"
+					categoryName = "All"
+					categoryId = ""
+				} else {
+					val itemSelected = "${data.size} Item Selected"
+					productBinding.categoriesTypeSpinner.text = itemSelected
+				}
+				pageIndex = "1"
+				categoryId = ""
+				for (dat in data) {
+					if (categoryId?.isNotEmpty() == true) {
+						categoryId += ",$dat"
+					} else {
+						categoryId = dat
+					}
+				}
+				getProductStockListData(pageIndex, "", true, isBottomProgress = false)
+			}
+		}
+	}
 }

@@ -372,10 +372,10 @@ class NSHomeFragment : NSFragment() {
                             switchActivity(MTProductsCategoryActivity::class.java)
                         }
 
-						llMyCart.setOnClickListener {
+						/*llMyCart.setOnClickListener {
 							drawer.closeDrawer(GravityCompat.START)
 							switchActivity(NSProductsCategoryActivity::class.java)
-						}
+						}*/
 
                         llActivate.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)

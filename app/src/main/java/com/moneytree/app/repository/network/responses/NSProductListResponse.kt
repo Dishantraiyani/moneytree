@@ -71,5 +71,8 @@ data class ProductDataDTO(
 	val productImage: String? = null,
 
 	@field:SerializedName("product_slug")
-	val productSlug: String? = null
+	val productSlug: String? = null,
+
+	@field:SerializedName("stock_qty")
+	val stockQty: String? = null
 )

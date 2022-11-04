@@ -88,6 +88,7 @@ class NSProductDetailFragment : NSFragment() {
 							itemQty = selectedItem.itemQty
 						}
 						tvQtyGrid.text = itemQty.toString()
+						tvStockQty.text = stockQty
 						setCartCount()
 						setTotalAmount()
 					}

@@ -113,6 +113,9 @@ class NSCartFragment : NSFragment() {
 				}
 
 				totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+				if (totalAmountValue <= 0) {
+					voucherDataManage(false)
+				}
 			}
 		}
 	}

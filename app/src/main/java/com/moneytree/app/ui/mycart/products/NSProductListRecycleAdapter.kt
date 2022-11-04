@@ -92,6 +92,8 @@ class NSProductListRecycleAdapter(
 					val url = BuildConfig.BASE_URL_IMAGE + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder).into(ivProductImg)
 					tvProductName.text = productName
+					tvStockQty.text = stockQty
+					tvStockQtyGrid.text = stockQty
 					tvRate.text = addText(activity, R.string.rate_title, rate!!)
 
 					val selectedItem = NSApplication.getInstance().getProduct(response)
