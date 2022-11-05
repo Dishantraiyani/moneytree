@@ -55,6 +55,7 @@ class NSWalletFragment : NSFragment() {
         with(mainBinding) {
             with(walletModel) {
                 with(layoutHeader) {
+					NSConstants.tabName = this@NSWalletFragment.javaClass
                     tvHeaderBack.text = resources.getString(R.string.wallet)
                     clBack.visibility = View.VISIBLE
                     ivSearch.visibility = View.VISIBLE

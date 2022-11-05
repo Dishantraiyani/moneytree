@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
@@ -26,9 +27,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class NSProductDetailFragment : NSFragment() {
-    private var _binding: NsFragmentProductDetailBinding? = null
+	private var _binding: NsFragmentProductDetailBinding? = null
 
-    private val productBinding get() = _binding!!
+	private val productBinding get() = _binding!!
 	private var productDetail: ProductDataDTO? = null
 	private var strProductDetail: String? = null
 
@@ -51,20 +52,20 @@ class NSProductDetailFragment : NSFragment() {
 	}
 
 	override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = NsFragmentProductDetailBinding.inflate(inflater, container, false)
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
+		_binding = NsFragmentProductDetailBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
-        return productBinding.root
-    }
+		return productBinding.root
+	}
 
-    /**
-     * View created
-     */
-    private fun viewCreated() {
-        with(productBinding) {
+	/**
+	 * View created
+	 */
+	private fun viewCreated() {
+		with(productBinding) {
 			with(layoutHeader) {
 				clBack.visible()
 				ivCart.visible()
@@ -73,7 +74,10 @@ class NSProductDetailFragment : NSFragment() {
 					tvCartCount.visible()
 					with(productDetail!!) {
 						val intent = Intent()
-						activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL, intent)
+						activity.setResult(
+							NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL,
+							intent
+						)
 						tvHeaderBack.text = productName
 						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -94,8 +98,8 @@ class NSProductDetailFragment : NSFragment() {
 					}
 				}
 			}
-        }
-    }
+		}
+	}
 
 	@Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
 	fun onResultEvent(event: NSActivityEvent) {
@@ -110,12 +114,13 @@ class NSProductDetailFragment : NSFragment() {
 			CoroutineScope(Dispatchers.IO).launch {
 				var totalAmountValue = 0
 				for (data in NSApplication.getInstance().getProductList()) {
-					val amount1 : Int = data.sdPrice?.toInt() ?: 0
+					val amount1: Int = data.sdPrice?.toInt() ?: 0
 					val finalAmount1 = data.itemQty * amount1
 					totalAmountValue += finalAmount1
 				}
 				withContext(Dispatchers.Main) {
-					totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+					totalAmount.text =
+						addText(activity, R.string.price_value, totalAmountValue.toString())
 				}
 			}
 
@@ -158,10 +163,10 @@ class NSProductDetailFragment : NSFragment() {
 		}
 	}
 
-    /**
-     * Set listener
-     */
-    private fun setListener() {
+	/**
+	 * Set listener
+	 */
+	private fun setListener() {
 		with(productBinding) {
 			with(layoutHeader) {
 				ivBack.setOnClickListener(object : SingleClickListener() {
@@ -220,21 +225,31 @@ class NSProductDetailFragment : NSFragment() {
 				})*/
 			}
 		}
-    }
+	}
 
 	private fun addCart(response: ProductDataDTO, finalAmount: Int) {
 		with(productBinding) {
 			with(response) {
-				itemQty += 1
-				tvQtyGrid.text = itemQty.toString()
+				var stock = 0
+				stock = try {
+					stockQty?.toInt() ?: 0
+				} catch (e: Exception) {
+					0
+				}
+				if (itemQty <= stock && stock != 0) {
+					itemQty += 1
+					tvQtyGrid.text = itemQty.toString()
 
-				val amount1: Int = sdPrice?.toInt() ?: 0
-				val finalAmount1 = itemQty * amount1
-				isProductValid = finalAmount > 0
+					val amount1: Int = sdPrice?.toInt() ?: 0
+					val finalAmount1 = itemQty * amount1
+					isProductValid = finalAmount > 0
 
-				NSApplication.getInstance().setProductList(response)
-				tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
-				setTotalAmount()
+					NSApplication.getInstance().setProductList(response)
+					tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
+					setTotalAmount()
+				} else {
+					Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
+				}
 			}
 		}
 	}

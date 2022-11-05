@@ -53,6 +53,7 @@ class NSRegisterFragment : NSFragment() {
     private fun viewCreated() {
         with(registerBinding) {
             with(layoutHeader) {
+				NSConstants.tabName = this@NSRegisterFragment.javaClass
                 clBack.visibility = View.VISIBLE
                 tvHeaderBack.text = activity.resources.getString(R.string.register)
                 ivBack.visibility = View.VISIBLE

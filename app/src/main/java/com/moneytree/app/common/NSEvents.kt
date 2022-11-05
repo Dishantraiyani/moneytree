@@ -48,6 +48,13 @@ class NSTabChange(var tab: Int)
 class BackPressEvent
 
 /**
+ * Back press event
+ *
+ * @constructor Create empty Back press event
+ */
+class BackPressFragmentHomeEvent
+
+/**
  * Search close event
  *
  * @constructor Create empty Search close event

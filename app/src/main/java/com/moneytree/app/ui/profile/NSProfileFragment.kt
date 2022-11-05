@@ -53,6 +53,7 @@ class NSProfileFragment : NSFragment() {
         with(profileBinding) {
             with(profileModel) {
                 with(layoutHeader) {
+					NSConstants.tabName = this@NSProfileFragment.javaClass
                     tvHeaderBack.text = resources.getString(R.string.profile_title)
                     clBack.visibility = View.VISIBLE
                 }

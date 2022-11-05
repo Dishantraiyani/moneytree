@@ -192,7 +192,7 @@
 						android:orientation="vertical"
 						android:gravity="center"
 						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintEnd_toStartOf="@id/cl_voucher"
+						app:layout_constraintEnd_toStartOf="@id/cl_voucher_btn"
 						app:layout_constraintTop_toBottomOf="@id/view_line2"
 						app:layout_constraintBottom_toBottomOf="parent">
 
@@ -232,6 +232,92 @@
 					</androidx.constraintlayout.widget.ConstraintLayout>
 
 					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/cl_voucher_btn"
+						android:layout_width="0dp"
+						android:layout_height="0dp"
+						android:orientation="vertical"
+						android:gravity="center"
+						app:layout_constraintStart_toEndOf="@id/cl_down_line"
+						app:layout_constraintEnd_toStartOf="@id/cl_coin_btn"
+						app:layout_constraintTop_toBottomOf="@id/view_line2"
+						app:layout_constraintBottom_toBottomOf="parent">
+
+						<ImageView
+							android:id="@+id/iv_vouchers"
+							android:layout_width="@dimen/_18sdp"
+							android:layout_height="@dimen/_18sdp"
+							android:src="@drawable/ic_voucher_sec"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:visibility="visible"
+							app:layout_constraintVertical_chainStyle="packed"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toTopOf="@id/tv_vouchers_title"
+							app:layout_constraintTop_toTopOf="parent"/>
+
+						<TextView
+							android:id="@+id/tv_vouchers_title"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_9sdp"
+							android:text="@string/vouchers"
+							android:textColor="@color/black"
+							android:fontFamily="@font/inter_regular"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:visibility="visible"
+							android:layout_marginTop="@dimen/_8sdp"
+							app:layout_constraintTop_toBottomOf="@+id/iv_vouchers"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent"/>
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/cl_coin_btn"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:gravity="center"
+						app:layout_constraintStart_toEndOf="@id/cl_voucher_btn"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/view_line2"
+						app:layout_constraintBottom_toBottomOf="parent">
+
+						<ImageView
+							android:id="@+id/iv_slots"
+							android:layout_width="@dimen/_18sdp"
+							android:layout_height="@dimen/_18sdp"
+							android:src="@drawable/ic_slot"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:visibility="visible"
+							app:layout_constraintVertical_chainStyle="packed"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toTopOf="@id/tv_slots_title"
+							app:layout_constraintTop_toTopOf="parent"/>
+
+						<TextView
+							android:id="@+id/tv_slots_title"
+							style="@style/LayoutWidthHeightWrap"
+							android:textSize="@dimen/_9sdp"
+							android:text="@string/coins"
+							android:textColor="@color/black"
+							android:fontFamily="@font/inter_regular"
+							android:layout_gravity="center"
+							android:includeFontPadding="false"
+							android:layout_marginTop="@dimen/_8sdp"
+							android:visibility="visible"
+							app:layout_constraintTop_toBottomOf="@id/iv_slots"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent"/>
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+					<!--<androidx.constraintlayout.widget.ConstraintLayout
 						android:id="@+id/cl_voucher"
 						android:layout_width="0dp"
 						android:layout_height="0dp"
@@ -283,6 +369,7 @@
 						android:layout_height="0dp"
 						android:orientation="vertical"
 						android:gravity="center"
+						android:visibility="gone"
 						app:layout_constraintStart_toEndOf="@id/cl_voucher"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintTop_toBottomOf="@id/view_line2"
@@ -321,7 +408,7 @@
 							app:layout_constraintTop_toBottomOf="@id/tv_join_voucher"
 							app:layout_constraintBottom_toBottomOf="parent"/>
 
-					</androidx.constraintlayout.widget.ConstraintLayout>
+					</androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
@@ -397,7 +484,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:visibility="gone"
-					android:layout_marginBottom="@dimen/_10sdp"
+					android:layout_marginTop="@dimen/_10sdp"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintTop_toBottomOf="@id/layout_header">
@@ -475,263 +562,11 @@
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 
-				<androidx.constraintlayout.widget.ConstraintLayout
-					android:id="@+id/cl_slot_voucher"
+				<androidx.cardview.widget.CardView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
+					app:cardElevation="@dimen/_1sdp"
 					android:layout_marginTop="@dimen/_10sdp"
-					android:layout_marginBottom="@dimen/_10sdp"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/layout_header">
-
-					<androidx.cardview.widget.CardView
-						android:id="@+id/card_slots_voucher"
-						android:layout_width="0dp"
-						android:layout_height="@dimen/_60sdp"
-						app:cardCornerRadius="@dimen/_3sdp"
-						app:cardElevation="@dimen/_2sdp"
-						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintTop_toTopOf="parent"
-						app:layout_constraintBottom_toBottomOf="parent">
-
-						<androidx.constraintlayout.widget.ConstraintLayout
-							android:layout_width="match_parent"
-							android:layout_height="match_parent">
-
-							<androidx.constraintlayout.widget.ConstraintLayout
-								android:id="@+id/cl_coin_btn"
-								android:layout_width="0dp"
-								android:layout_height="match_parent"
-								android:orientation="vertical"
-								android:gravity="center"
-								app:layout_constraintStart_toStartOf="parent"
-								app:layout_constraintEnd_toStartOf="@id/cl_voucher_btn"
-								app:layout_constraintTop_toTopOf="parent"
-								app:layout_constraintBottom_toBottomOf="parent">
-
-								<ImageView
-									android:id="@+id/iv_slots"
-									android:layout_width="@dimen/_18sdp"
-									android:layout_height="@dimen/_18sdp"
-									android:src="@drawable/ic_slot"
-									android:layout_gravity="center"
-									android:includeFontPadding="false"
-									android:visibility="visible"
-									android:layout_marginTop="@dimen/_8sdp"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintBottom_toTopOf="@id/tv_slots_title"
-									app:layout_constraintTop_toTopOf="parent"/>
-
-								<TextView
-									android:id="@+id/tv_slots_title"
-									style="@style/LayoutWidthHeightWrap"
-									android:textSize="@dimen/_9sdp"
-									android:text="@string/coins"
-									android:textColor="@color/black"
-									android:fontFamily="@font/inter_regular"
-									android:layout_gravity="center"
-									android:includeFontPadding="false"
-									android:layout_marginBottom="@dimen/_8sdp"
-									android:visibility="visible"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintBottom_toBottomOf="parent"/>
-
-							</androidx.constraintlayout.widget.ConstraintLayout>
-
-							<androidx.constraintlayout.widget.ConstraintLayout
-								android:id="@+id/cl_voucher_btn"
-								android:layout_width="0dp"
-								android:layout_height="match_parent"
-								android:orientation="vertical"
-								android:gravity="center"
-								app:layout_constraintStart_toEndOf="@id/cl_coin_btn"
-								app:layout_constraintEnd_toStartOf="@id/cl_reports"
-								app:layout_constraintTop_toTopOf="parent"
-								app:layout_constraintBottom_toBottomOf="parent">
-
-								<ImageView
-									android:id="@+id/iv_vouchers"
-									android:layout_width="@dimen/_18sdp"
-									android:layout_height="@dimen/_18sdp"
-									android:src="@drawable/ic_voucher_sec"
-									android:layout_gravity="center"
-									android:includeFontPadding="false"
-									android:visibility="visible"
-									android:layout_marginTop="@dimen/_8sdp"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintBottom_toTopOf="@id/tv_vouchers_title"
-									app:layout_constraintTop_toTopOf="parent"/>
-
-								<TextView
-									android:id="@+id/tv_vouchers_title"
-									style="@style/LayoutWidthHeightWrap"
-									android:textSize="@dimen/_9sdp"
-									android:text="@string/vouchers"
-									android:textColor="@color/black"
-									android:fontFamily="@font/inter_regular"
-									android:layout_gravity="center"
-									android:includeFontPadding="false"
-									android:layout_marginBottom="@dimen/_8sdp"
-									android:visibility="visible"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintBottom_toBottomOf="parent"/>
-
-							</androidx.constraintlayout.widget.ConstraintLayout>
-
-							<androidx.constraintlayout.widget.ConstraintLayout
-								android:id="@+id/cl_reports"
-								android:layout_width="0dp"
-								android:layout_height="match_parent"
-								android:orientation="vertical"
-								android:gravity="center"
-								app:layout_constraintStart_toEndOf="@id/cl_voucher_btn"
-								app:layout_constraintEnd_toEndOf="parent"
-								app:layout_constraintTop_toTopOf="parent"
-								app:layout_constraintBottom_toBottomOf="parent">
-
-								<ImageView
-									android:id="@+id/iv_reports"
-									android:layout_width="@dimen/_18sdp"
-									android:layout_height="@dimen/_18sdp"
-									android:src="@drawable/ic_report"
-									android:layout_gravity="center"
-									android:includeFontPadding="false"
-									android:visibility="visible"
-									android:layout_marginTop="@dimen/_8sdp"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintBottom_toTopOf="@id/tv_reports_title"
-									app:layout_constraintTop_toTopOf="parent"/>
-
-								<TextView
-									android:id="@+id/tv_reports_title"
-									style="@style/LayoutWidthHeightWrap"
-									android:textSize="@dimen/_9sdp"
-									android:text="@string/reports"
-									android:textColor="@color/black"
-									android:fontFamily="@font/inter_regular"
-									android:layout_gravity="center"
-									android:includeFontPadding="false"
-									android:layout_marginBottom="@dimen/_8sdp"
-									android:visibility="visible"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintBottom_toBottomOf="parent"/>
-
-							</androidx.constraintlayout.widget.ConstraintLayout>
-
-
-						</androidx.constraintlayout.widget.ConstraintLayout>
-
-					</androidx.cardview.widget.CardView>
-
-				</androidx.constraintlayout.widget.ConstraintLayout>
-
-				<androidx.cardview.widget.CardView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					app:cardElevation="@dimen/_1sdp"
-					android:layout_marginBottom="@dimen/_10sdp"
-					android:visibility="gone">
-
-					<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:orientation="vertical">
-
-						<androidx.constraintlayout.widget.ConstraintLayout
-							android:id="@+id/cl_slots"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:paddingVertical="@dimen/_14sdp"
-							android:paddingHorizontal="@dimen/_15sdp">
-
-							<TextView
-								android:id="@+id/tv_slot"
-								style="@style/ProfileZeroWrap"
-								android:text="@string/slots"
-								android:fontFamily="@font/inter_regular"
-								android:textColor="@color/orange"
-								android:textStyle="bold"
-								app:layout_constraintEnd_toStartOf="@id/iv_slot_next"
-								app:layout_constraintStart_toStartOf="parent"
-								app:layout_constraintTop_toTopOf="parent" />
-
-							<ImageView
-								android:id="@+id/iv_slot_next"
-								android:layout_width="@dimen/_12sdp"
-								android:layout_height="@dimen/_12sdp"
-								android:src="@drawable/arrow_right"
-								android:tint="@color/orange"
-								app:guidelineUseRtl="true"
-								app:layout_constraintEnd_toEndOf="parent"
-								app:layout_constraintTop_toTopOf="parent"
-								app:layout_constraintBottom_toBottomOf="parent"
-								android:contentDescription="@string/next"
-								tools:ignore="UseAppTint" />
-
-						</androidx.constraintlayout.widget.ConstraintLayout>
-
-						<View
-							android:layout_width="match_parent"
-							android:layout_height="0.7dp"
-							android:background="#eef0f1"
-							/>
-
-						<androidx.constraintlayout.widget.ConstraintLayout
-							android:id="@+id/cl_vouchers"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:paddingVertical="@dimen/_14sdp"
-							android:paddingHorizontal="@dimen/_15sdp"
-							>
-
-							<ImageView
-								android:id="@+id/iv_voucher"
-								android:layout_width="@dimen/_18sdp"
-								android:layout_height="@dimen/_18sdp"
-								android:src="@drawable/ic_voucher_sec"
-								app:layout_constraintTop_toTopOf="parent"
-								app:layout_constraintBottom_toBottomOf="parent"
-								app:layout_constraintStart_toStartOf="parent"/>
-
-							<TextView
-								style="@style/ProfileZeroWrap"
-								android:text="@string/vouchers"
-								android:fontFamily="@font/inter_regular"
-								android:textColor="@color/black"
-								android:layout_marginStart="@dimen/_5sdp"
-								app:layout_constraintEnd_toStartOf="@id/iv_voucher_next"
-								app:layout_constraintStart_toEndOf="@id/iv_voucher"
-								app:layout_constraintTop_toTopOf="parent" />
-
-							<ImageView
-								android:id="@+id/iv_voucher_next"
-								android:layout_width="@dimen/_12sdp"
-								android:layout_height="@dimen/_12sdp"
-								android:src="@drawable/arrow_right"
-								app:guidelineUseRtl="true"
-								app:layout_constraintEnd_toEndOf="parent"
-								app:layout_constraintTop_toTopOf="parent"
-								app:layout_constraintBottom_toBottomOf="parent"
-								android:contentDescription="@string/next" />
-
-						</androidx.constraintlayout.widget.ConstraintLayout>
-
-					</LinearLayout>
-
-				</androidx.cardview.widget.CardView>
-
-				<androidx.cardview.widget.CardView
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					app:cardElevation="@dimen/_1sdp"
 					android:layout_marginBottom="@dimen/_10sdp">
 					<LinearLayout
 						android:layout_width="match_parent"

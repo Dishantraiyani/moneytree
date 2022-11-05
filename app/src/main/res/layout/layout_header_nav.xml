@@ -343,14 +343,14 @@
 			</LinearLayout>
 
 			<LinearLayout
-				android:id="@+id/ll_my_cart"
+				android:id="@+id/ll_my_reports"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="horizontal"
 				android:fontFamily="@font/inter_regular"
 				android:paddingHorizontal="@dimen/_15sdp"
 				android:paddingVertical="@dimen/_15sdp"
-				android:visibility="gone"
+				android:visibility="visible"
 				app:layout_constraintTop_toBottomOf="@id/ll_activate"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
@@ -359,7 +359,7 @@
 				<ImageView
 					android:layout_width="@dimen/_18sdp"
 					android:layout_height="@dimen/_18sdp"
-					android:src="@drawable/ic_shopping_cart_black"
+					android:src="@drawable/ic_reports_nav"
 					android:tint="@color/orange"
 					tools:ignore="UseAppTint"
 					android:contentDescription="@string/vouchers"/>
@@ -367,7 +367,7 @@
 				<TextView
 					style="@style/LayoutWidthHeightWrap"
 					android:textSize="@dimen/_14sdp"
-					android:text="@string/my_cart"
+					android:text="@string/reports"
 					android:textColor="@color/black"
 					android:fontFamily="@font/inter_regular"
 					android:includeFontPadding="false"
@@ -386,7 +386,7 @@
 				android:orientation="horizontal"
 				android:paddingHorizontal="@dimen/_15sdp"
 				android:paddingVertical="@dimen/_15sdp"
-				app:layout_constraintTop_toBottomOf="@id/ll_my_cart"
+				app:layout_constraintTop_toBottomOf="@id/ll_my_reports"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				tools:ignore="UseCompoundDrawables">

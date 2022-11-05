@@ -38,6 +38,7 @@
         <entry key="app/src/main/res/layout/activity_recharge.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_recharge_history.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/activity_success.xml" value="0.27395833333333336" />
+        <entry key="app/src/main/res/layout/dialog_close.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/dialog_popup_home.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/dialog_update.xml" value="0.32083333333333336" />
         <entry key="app/src/main/res/layout/fragment_level_member_tree.xml" value="0.32083333333333336" />

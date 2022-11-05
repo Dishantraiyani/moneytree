@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -132,7 +133,8 @@ class NSProductListRecycleAdapter(
 					})
 
 					//Grid
-					Glide.with(activity).load(url).error(R.drawable.placeholder).into(ivProductImgGrid)
+					Glide.with(activity).load(url).error(R.drawable.placeholder)
+						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
 					tvPriceGrid.text = sdPrice?.let { addText(activity, R.string.price_value, it) }
@@ -149,20 +151,32 @@ class NSProductListRecycleAdapter(
 		private fun addCart(response: ProductDataDTO, finalAmount: Int) {
 			with(productBinding) {
 				with(response) {
-					if (itemQty == 0) {
-						NSApplication.getInstance().setProductList(response)
+					var stock = 0
+					stock = try {
+						stockQty?.toInt() ?: 0
+					} catch (e: Exception) {
+						0
 					}
-					itemQty += 1
-					tvQty.text = itemQty.toString()
-					tvQtyGrid.text = itemQty.toString()
+					if (itemQty <= stock && stock != 0) {
+						if (itemQty == 0) {
+							NSApplication.getInstance().setProductList(response)
+						}
+						itemQty += 1
+						tvQty.text = itemQty.toString()
+						tvQtyGrid.text = itemQty.toString()
 
-					val amount1: Int = sdPrice?.toInt() ?: 0
-					val finalAmount1 = itemQty * amount1
-					isProductValid = finalAmount > 0
+						val amount1: Int = sdPrice?.toInt() ?: 0
+						val finalAmount1 = itemQty * amount1
+						isProductValid = finalAmount > 0
 
-					tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
-					tvPriceGrid.text = addText(activity, R.string.price_value, finalAmount1.toString())
-					onCartTotalClick.onResponse()
+						tvPrice.text =
+							addText(activity, R.string.price_value, finalAmount1.toString())
+						tvPriceGrid.text =
+							addText(activity, R.string.price_value, finalAmount1.toString())
+						onCartTotalClick.onResponse()
+					} else {
+						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
+					}
 				}
 			}
 		}
@@ -182,8 +196,10 @@ class NSProductListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
-						tvPriceGrid.text = addText(activity, R.string.price_value, finalAmount1.toString())
+						tvPrice.text =
+							addText(activity, R.string.price_value, finalAmount1.toString())
+						tvPriceGrid.text =
+							addText(activity, R.string.price_value, finalAmount1.toString())
 						onCartTotalClick.onResponse()
 					}
 				}

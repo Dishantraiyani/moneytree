@@ -71,6 +71,7 @@ class NSProductFragment : NSFragment() {
         with(productBinding) {
             with(productModel) {
 				with(layoutHeader) {
+					NSConstants.tabName = this@NSProductFragment.javaClass
 					clBack.visible()
 					ivCart.visible()
 					tvHeaderBack.text = activity.resources.getString(R.string.shop)

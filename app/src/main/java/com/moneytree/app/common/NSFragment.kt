@@ -16,6 +16,7 @@ import com.moneytree.app.common.utils.NSAlertUtils
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.hideKeyboard
 import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.noNetwork.NoNetworkActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

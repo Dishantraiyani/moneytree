@@ -93,6 +93,7 @@ class NSHomeFragment : NSFragment() {
         with(homeBinding) {
             with(homeModel) {
                 with(layoutHeader) {
+					NSConstants.tabName = this@NSHomeFragment.javaClass
                     clBack.visibility = View.VISIBLE
                     tvHeaderBack.text = activity.resources.getString(R.string.app_name)
                     ivBack.visibility = View.INVISIBLE
@@ -225,11 +226,11 @@ class NSHomeFragment : NSFragment() {
             layoutHeader.ivMenu.setOnClickListener { drawer.openDrawer(GravityCompat.START) }
             drawer.closeDrawer(GravityCompat.START)
 
-            clReports.setOnClickListener {
+            /*clReports.setOnClickListener {
                 switchActivity(
                     NSReportsActivity::class.java
                 )
-            }
+            }*/
 
             clVoucherBtn.setOnClickListener {
                 switchActivity(
@@ -292,9 +293,9 @@ class NSHomeFragment : NSFragment() {
             with(homeModel) {
                 if (isDashboardData) {
                     tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
-                    tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
+                    /*tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
                     tvJoinVoucher.text =
-                        addText(activity, R.string.dashboard_data, setJoinVoucher())
+                        addText(activity, R.string.dashboard_data, setJoinVoucher())*/
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
                     NSApplication.getInstance().setWalletBalance(setWallet())
                     //setBold(setRoyaltyStatus())
@@ -372,10 +373,12 @@ class NSHomeFragment : NSFragment() {
                             switchActivity(MTProductsCategoryActivity::class.java)
                         }
 
-						/*llMyCart.setOnClickListener {
+						llMyReports.setOnClickListener {
 							drawer.closeDrawer(GravityCompat.START)
-							switchActivity(NSProductsCategoryActivity::class.java)
-						}*/
+							switchActivity(
+								NSReportsActivity::class.java
+							)
+						}
 
                         llActivate.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)

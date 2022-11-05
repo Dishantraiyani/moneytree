@@ -53,5 +53,6 @@ class NSConstants {
         const val PAGINATION = 25
         var IS_LOGIN_SUCCESS: Boolean = false
 		var isGridMode: Boolean = false
+		var tabName: Class<*>? = null
     }
 }

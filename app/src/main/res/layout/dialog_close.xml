@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_30sdp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvDialogTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="@dimen/_15sdp"
+                android:gravity="center"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/inter_medium"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+			<TextView
+				android:id="@+id/tvInformation"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/are_you_sure_want_to_close_this_application"
+				android:textSize="@dimen/_11sdp"
+				android:paddingHorizontal="@dimen/_15sdp"
+				android:layout_marginTop="@dimen/_3sdp"
+				android:fontFamily="@font/inter_medium"
+				android:textColor="@color/gray_text"
+				android:includeFontPadding="false"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tvDialogTitle"/>
+
+			<View
+				android:id="@+id/view_line1"
+				android:layout_marginTop="@dimen/_20sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tvInformation"
+				android:layout_width="0dp"
+				android:layout_height="1dp"
+				android:background="@color/line_color"/>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/_40sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/view_line1">
+
+				<TextView
+					android:id="@+id/tv_cancel"
+					style="@style/LayoutWidthHeightZeroWrap"
+					android:gravity="center"
+					android:text="@string/no_title"
+					android:textColor="@color/gray"
+					android:textSize="@dimen/_13sdp"
+					android:padding="@dimen/_12sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toStartOf="@id/view_line"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"/>
+
+				<View
+					android:id="@+id/view_line"
+					app:layout_constraintStart_toEndOf="@id/tv_cancel"
+					app:layout_constraintEnd_toStartOf="@id/tv_ok"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"
+					android:layout_width="1dp"
+					android:layout_height="0dp"
+					android:background="@color/line_color"/>
+
+				<TextView
+					android:id="@+id/tv_ok"
+					style="@style/LayoutWidthHeightZeroWrap"
+					android:gravity="center"
+					android:text="@string/yes_title"
+					android:textColor="@color/light_yellow"
+					android:textSize="@dimen/_13sdp"
+					android:padding="@dimen/_12sdp"
+					app:layout_constraintStart_toEndOf="@id/view_line"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"/>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
+
