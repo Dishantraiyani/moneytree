@@ -21,6 +21,7 @@ import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentMyCartBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
+import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
 
 class NSCartFragment : NSFragment() {
     private val productModel: NSCartViewModel by lazy {
@@ -76,7 +77,10 @@ class NSCartFragment : NSFragment() {
 						}
 					})
 
-
+					proceed.setOnClickListener {
+						switchActivity(PurchaseCompleteActivity::class.java)
+						finish()
+					}
 				}
             }
         }
@@ -144,7 +148,7 @@ class NSCartFragment : NSFragment() {
     private fun voucherDataManage(isVoucherVisible: Boolean) {
         with(productBinding) {
 			rvCartItem.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
-			llItem.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
+			llItem.visibility = if (isVoucherVisible) View.VISIBLE else View.VISIBLE
             emptyCart.visibility = if (isVoucherVisible) View.GONE else View.VISIBLE
         }
     }

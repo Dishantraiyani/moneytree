@@ -554,7 +554,8 @@
     <string name="my_cart">My Cart</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="added">Remove to Cart</string>
-	<string name="shop">Shop</string>
+    <string name="shop">Shop</string>
     <string name="apply">Apply</string>
     <string name="are_you_sure_want_to_close_this_application">Are you sure want to close this application?</string>
+	<string name="enter_member_id">Enter Member Id</string>
 </resources>

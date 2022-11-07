@@ -26,6 +26,13 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".ui.mycart.purchaseComplete.PurchaseCompleteActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.offers.OffersActivity"
             android:exported="false" />
         <activity
@@ -84,8 +91,7 @@
             android:name=".ui.mycart.products.NSProductsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
-		<activity
+        <activity
             android:name=".ui.products.MTProductsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -93,8 +99,7 @@
             android:name=".ui.mycart.productCategory.NSProductsCategoryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
-		<activity
+        <activity
             android:name=".ui.productCategory.MTProductsCategoryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
