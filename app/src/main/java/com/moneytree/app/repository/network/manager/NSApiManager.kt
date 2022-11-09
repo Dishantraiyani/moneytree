@@ -3,7 +3,6 @@ package com.moneytree.app.repository.network.manager
 import com.google.gson.GsonBuilder
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
-import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.requests.*
@@ -929,6 +928,23 @@ class NSApiManager {
 		)
 	}
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun saveMyCart(
+		memberId: String, walletType: String, remark: String, productList: String,
+		callback: NSRetrofitCallback<NSSuccessResponse>
+	) {
+		request(
+			unAuthorised3020Client.saveMyCart(
+				NSUserManager.getAuthToken()!!,
+				memberId, walletType, remark, productList
+			), callback
+		)
+	}
+
 }
 
 /**
@@ -1288,5 +1304,12 @@ interface RTApiInterface {
 		@Field("qr_user_id") qrUserId: String,
 		@Field("name") name: String,
 		@Field("upi_id") upi_id: String,
+	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("save-my-cart")
+	fun saveMyCart(
+		@Field("token_id") token: String,
+		@Field("member_id") memberId: String, @Field("wallet_type") walletType: String, @Field("remark") remark: String, @Field("product_list") productList: String,
 	): Call<NSSuccessResponse>
 }

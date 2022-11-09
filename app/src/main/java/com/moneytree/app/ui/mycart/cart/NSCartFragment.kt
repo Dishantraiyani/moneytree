@@ -17,11 +17,14 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentMyCartBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NSCartFragment : NSFragment() {
     private val productModel: NSCartViewModel by lazy {
@@ -78,7 +81,7 @@ class NSCartFragment : NSFragment() {
 					})
 
 					proceed.setOnClickListener {
-						switchActivity(PurchaseCompleteActivity::class.java)
+						switchResultActivity(dataResult, PurchaseCompleteActivity::class.java)
 						finish()
 					}
 				}

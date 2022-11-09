@@ -103,7 +103,7 @@ class NSProductDetailFragment : NSFragment() {
 
 	@Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
 	fun onResultEvent(event: NSActivityEvent) {
-		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE) {
+		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL) {
 			setTotalAmount()
 			updateProducts()
 		}

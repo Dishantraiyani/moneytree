@@ -53,6 +53,7 @@ class NSApiErrorHandler {
 		const val ERROR_UP_LINE_MEMBER_TREE = "error_up_line_member_tree"
         const val ERROR_CHECK_VERSION = "error_check_version"
         const val ERROR_QR_SCAN = "error_qr_scan"
+		const val ERROR_PRODUCT_SEND_DATA = "error_product_send_data"
 
         /**
          * To get the error messages from API endpoints
