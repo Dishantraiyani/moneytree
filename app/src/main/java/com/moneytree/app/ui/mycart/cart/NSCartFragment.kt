@@ -151,7 +151,7 @@ class NSCartFragment : NSFragment() {
     private fun voucherDataManage(isVoucherVisible: Boolean) {
         with(productBinding) {
 			rvCartItem.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
-			llItem.visibility = if (isVoucherVisible) View.VISIBLE else View.VISIBLE
+			llItem.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
             emptyCart.visibility = if (isVoucherVisible) View.GONE else View.VISIBLE
         }
     }
