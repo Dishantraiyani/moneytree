@@ -1,6 +1,7 @@
-package com.moneytree.app.ui.mycart.purchaseComplete
+package com.moneytree.app.ui.mycart.stockComplete
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,40 +17,39 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.visible
-import com.moneytree.app.databinding.NsFragmentPurchaseCompleteBinding
-import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import com.moneytree.app.databinding.NsFragmentStockCompleteBinding
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class NSPurchaseFragment : NSFragment() {
-	private val productModel: NSPurchaseViewModel by lazy {
-		ViewModelProvider(this)[NSPurchaseViewModel::class.java]
+class NSStockCompleteFragment : NSFragment() {
+	private val stockModel: NSStockCompleteViewModel by lazy {
+		ViewModelProvider(this)[NSStockCompleteViewModel::class.java]
 	}
-	private var _binding: NsFragmentPurchaseCompleteBinding? = null
+	private var _binding: NsFragmentStockCompleteBinding? = null
 
-	private val purchaseCompleteBinding get() = _binding!!
+	private val stockCompleteBinding get() = _binding!!
 
 	companion object {
-		fun newInstance() = NSPurchaseFragment()
+		fun newInstance() = NSStockCompleteFragment()
 	}
 
 	override fun onCreateView(
 		inflater: LayoutInflater, container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		_binding = NsFragmentPurchaseCompleteBinding.inflate(inflater, container, false)
+		_binding = NsFragmentStockCompleteBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
-		return purchaseCompleteBinding.root
+		return stockCompleteBinding.root
 	}
 
 	/**
 	 * View created
 	 */
 	private fun viewCreated() {
-		with(purchaseCompleteBinding) {
-			with(productModel) {
+		with(stockCompleteBinding) {
+			with(stockModel) {
 				with(layoutHeader) {
 					clBack.visible()
 					tvHeaderBack.text = activity.resources.getString(R.string.repurchase)
@@ -67,8 +67,8 @@ class NSPurchaseFragment : NSFragment() {
 	 * Set listener
 	 */
 	private fun setListener() {
-		with(productModel) {
-			with(purchaseCompleteBinding) {
+		with(stockModel) {
+			with(stockCompleteBinding) {
 				with(layoutHeader) {
 					ivBack.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
@@ -78,7 +78,7 @@ class NSPurchaseFragment : NSFragment() {
 
 					etMemberId.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
 						if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-							getMemberDetail(etMemberId.text.toString(), true)
+							checkStockList(etMemberId.text.toString(), true)
 							return@OnEditorActionListener true
 						}
 						false
@@ -89,7 +89,7 @@ class NSPurchaseFragment : NSFragment() {
 							if (etMemberId.text.toString().isEmpty()) {
 								etMemberId.error = "Enter Member Id"
 								return
-							} else if (selectedWalletType.isEmpty()) {
+							} else if (selectedStockType.isEmpty()) {
 								Toast.makeText(activity, "Please Select Wallet Type", Toast.LENGTH_SHORT).show()
 								return
 							} else if (etMemberName.text.toString().isEmpty()) {
@@ -100,7 +100,7 @@ class NSPurchaseFragment : NSFragment() {
 							val remark = etRemark.text.toString()
 							val productList = NSApplication.getInstance().getProductList()
 							if (productList.size > 0) {
-								saveMyCart(memberId, selectedWalletType, remark, Gson().toJson(productList), true)
+								saveMyCart(memberId, selectedStockType, remark, Gson().toJson(productList), true)
 							} else {
 								Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
 							}
@@ -112,7 +112,7 @@ class NSPurchaseFragment : NSFragment() {
 	}
 
 	private fun setTotalAmount() {
-		with(purchaseCompleteBinding) {
+		with(stockCompleteBinding) {
 			var totalAmountValue = 0
 			for (data in NSApplication.getInstance().getProductList()) {
 				val amount1: Int = data.sdPrice?.toInt() ?: 0
@@ -126,19 +126,30 @@ class NSPurchaseFragment : NSFragment() {
 	}
 
 	private fun setWalletTypes() {
-		with(productModel) {
-			with(purchaseCompleteBinding) {
+		with(stockModel) {
+			with(stockCompleteBinding) {
 				val walletListType: MutableList<String> = arrayListOf()
-				walletListType.addAll(resources.getStringArray(R.array.wallet_types))
+				if (NSConstants.SOCKET_TYPE == NSConstants.SUPER_SOCKET_TYPE) {
+					walletListType.addAll(resources.getStringArray(R.array.stockiest_types_super))
+					cardStockiestType.setCardBackgroundColor(Color.parseColor(activity.resources.getString(R.string.white)))
+					stockiestTypeSpinner.isEnabled = true
+					stockiestTypeSpinner.isClickable = true
+				} else if (NSConstants.SOCKET_TYPE == NSConstants.NORMAL_SOCKET_TYPE) {
+					walletListType.addAll(resources.getStringArray(R.array.stockiest_types))
+					cardStockiestType.setCardBackgroundColor(Color.parseColor(activity.resources.getString(R.string.background_gray)))
+					stockiestTypeSpinner.isEnabled = false
+					stockiestTypeSpinner.isClickable = false
+				}
+
 				val adapter = ArrayAdapter(activity, R.layout.layout_spinner, walletListType)
-				walletTypeSpinner.adapter = adapter
+				stockiestTypeSpinner.adapter = adapter
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-				walletTypeSpinner.onItemSelectedListener =
+				stockiestTypeSpinner.onItemSelectedListener =
 					object : AdapterView.OnItemSelectedListener {
 						override fun onItemSelected(
 							p0: AdapterView<*>?, view: View?, position: Int, id: Long
 						) {
-							selectedWalletType = walletListType[position]
+							selectedStockType = walletListType[position]
 						}
 
 						override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -154,11 +165,11 @@ class NSPurchaseFragment : NSFragment() {
 	 * @param isProduct when data available it's true
 	 */
 	private fun setMemberData(isProduct: Boolean) {
-		with(purchaseCompleteBinding) {
-			with(productModel) {
+		with(stockCompleteBinding) {
+			with(stockModel) {
 				if (isProduct) {
-					etMemberName.text = memberDetailModel?.fullname
-					etMobile.text = memberDetailModel?.mobile
+					etMemberName.text = stockListModel?.fullname
+					etMobile.text = stockListModel?.mobile
 				}
 			}
 		}
@@ -168,8 +179,8 @@ class NSPurchaseFragment : NSFragment() {
 	 * To observe the view model for data changes
 	 */
 	private fun observeViewModel() {
-		with(productModel) {
-			with(purchaseCompleteBinding) {
+		with(stockModel) {
+			with(stockCompleteBinding) {
 				isProgressShowing.observe(
 					viewLifecycleOwner
 				) { shouldShowProgress ->

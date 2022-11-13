@@ -44,6 +44,7 @@ class MTProductCategoryFragment : NSFragment() {
     private fun viewCreated() {
         with(productCategoryBinding) {
             with(productCategoryModel) {
+				NSConstants.tabName = this@MTProductCategoryFragment.javaClass
 				with(layoutHeader) {
 					clBack.visible()
 					tvHeaderBack.text = activity.resources.getString(R.string.categories)

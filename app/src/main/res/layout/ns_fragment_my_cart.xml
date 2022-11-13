@@ -144,5 +144,54 @@
 
 	</LinearLayout>
 
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_bottom_sheet"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:visibility="gone"
+		android:background="#22000000">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:gravity="center"
+			android:paddingVertical="@dimen/_15sdp"
+			android:paddingHorizontal="@dimen/_10sdp"
+			android:background="@drawable/half_top_corners"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent">
+
+			<Button
+				android:id="@+id/btn_stock"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:layout_width="match_parent"
+				android:background="@drawable/login_button_border"
+				android:text="@string/stock"
+				android:textColor="@color/white"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_5sdp" />
+
+			<Button
+				android:id="@+id/btn_repurchase"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:layout_width="match_parent"
+				android:background="@drawable/orange_border_five"
+				android:text="@string/repurchase"
+				android:textColor="@color/orange"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_10sdp" />
+
+		</LinearLayout>
+
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

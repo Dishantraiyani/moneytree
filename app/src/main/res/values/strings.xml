@@ -276,6 +276,15 @@
 		<item>Self</item>
 	</string-array>
 
+	<string-array name="stockiest_types_super">
+		<item>Stockiest</item>
+		<item>PUP</item>
+	</string-array>
+
+	<string-array name="stockiest_types">
+		<item>PUP</item>
+	</string-array>
+
     <string-array name="status_list">
         <item>All</item>
         <item>Pending</item>
@@ -564,4 +573,6 @@
     <string name="are_you_sure_want_to_close_this_application">Are you sure want to close this application?</string>
 	<string name="enter_member_id">Enter Member Id</string>
     <string name="wallet_use">Wallet Use</string>
+    <string name="stockiest_type">Stockiest Type</string>
+	<string name="stock">Stock Transfer</string>
 </resources>

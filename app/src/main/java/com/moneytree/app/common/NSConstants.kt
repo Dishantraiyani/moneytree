@@ -50,6 +50,10 @@ class NSConstants {
 		const val KEY_QR_CODE_ID = "key_qr_code_id"
 		const val KEY_WALLET_AMOUNT = "key_wallet_amount"
 		const val KEY_SUCCESS_FAIL = "key_success_fail"
+		var SOCKET_TYPE: String? = null
+		const val SUPER_SOCKET_TYPE: String = "Super Stockiest"
+		const val  NORMAL_SOCKET_TYPE: String = "Stockiest"
+
         //Pagination
         const val PAGINATION = 25
         var IS_LOGIN_SUCCESS: Boolean = false

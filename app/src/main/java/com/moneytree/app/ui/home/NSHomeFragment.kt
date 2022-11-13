@@ -296,6 +296,7 @@ class NSHomeFragment : NSFragment() {
                     /*tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
                     tvJoinVoucher.text =
                         addText(activity, R.string.dashboard_data, setJoinVoucher())*/
+					NSConstants.SOCKET_TYPE = getSocketType()
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
                     NSApplication.getInstance().setWalletBalance(setWallet())
                     //setBold(setRoyaltyStatus())
@@ -305,6 +306,7 @@ class NSHomeFragment : NSFragment() {
                         addText(activity, R.string.my_earning, setEarningAmount())
 					setupViewPager(viewPager)
 					showPopup(getPopUpImage())
+					EventBus.getDefault().post(NSChangeNavigationMenuNameEvent())
                     //This is display Message slider
                     /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
                         tvMessage.setTextColor(Color.parseColor(data!!.colour))

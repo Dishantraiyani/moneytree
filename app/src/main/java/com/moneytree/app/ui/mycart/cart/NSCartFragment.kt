@@ -15,14 +15,12 @@ import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
-import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.common.utils.switchResultActivity
-import com.moneytree.app.common.utils.visible
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMyCartBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
+import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -81,9 +79,47 @@ class NSCartFragment : NSFragment() {
 					})
 
 					proceed.setOnClickListener {
-						switchResultActivity(dataResult, PurchaseCompleteActivity::class.java)
-						finish()
+						if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
+							switchResultActivity(
+								dataResult,
+								PurchaseCompleteActivity::class.java
+							)
+							finish()
+						} else {
+							if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE) || NSConstants.SOCKET_TYPE.equals(
+									NSConstants.NORMAL_SOCKET_TYPE
+								)
+							) {
+								clBottomSheet.visible()
+
+							} else {
+								switchResultActivity(
+									dataResult,
+									PurchaseCompleteActivity::class.java
+								)
+								finish()
+							}
+						}
+
 					}
+
+					clBottomSheet.setOnClickListener {
+						clBottomSheet.gone()
+					}
+
+					btnRepurchase.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							switchResultActivity(dataResult, PurchaseCompleteActivity::class.java)
+							finish()
+						}
+					})
+
+					btnStock.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							switchResultActivity(dataResult, StockCompleteActivity::class.java)
+							finish()
+						}
+					})
 				}
             }
         }

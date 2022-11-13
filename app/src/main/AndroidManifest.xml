@@ -91,6 +91,10 @@
             android:name=".ui.mycart.products.NSProductsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
+		<activity
+			android:name=".ui.mycart.stockComplete.StockCompleteActivity"
+			android:exported="false"
+			android:screenOrientation="portrait" />
         <activity
             android:name=".ui.products.MTProductsActivity"
             android:exported="false"

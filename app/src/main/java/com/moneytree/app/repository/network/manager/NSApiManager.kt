@@ -650,6 +650,18 @@ class NSApiManager {
 	}
 
 	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun checkStockList(stockType: String, stockId: String, callback: NSRetrofitCallback<NSMemberDetailResponse>) {
+		request(
+			unAuthorised3020Client.checkStockList(NSUserManager.getAuthToken()!!, stockType, stockId),
+			callback
+		)
+	}
+
+	/**
 	 * To call the package list data API
 	 *
 	 * @param callback  The callback for the result
@@ -1312,4 +1324,12 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("member_id") memberId: String, @Field("wallet_type") walletType: String, @Field("remark") remark: String, @Field("product_list") productList: String,
 	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("stockiest-check-api")
+	fun checkStockList(
+		@Field("token_id") token: String,
+		@Field("stockiest_type") stockListType: String,
+		@Field("stockiest_id") stockListId: String
+	): Call<NSMemberDetailResponse>
 }

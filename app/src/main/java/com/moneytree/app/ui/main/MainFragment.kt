@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSUserDataCallback
@@ -12,6 +13,8 @@ import com.moneytree.app.databinding.FragmentMainBinding
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.mycart.products.NSProductFragment
+import com.moneytree.app.ui.productCategory.MTProductCategoryFragment
+import com.moneytree.app.ui.products.MTProductFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
 import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.wallets.NSWalletFragment
@@ -78,7 +81,19 @@ class MainFragment : NSFragment() {
 						//replaceFragment(NSPackageListFragment.newInstance(), false, fragmentMainContainer.id)
                     }
                     R.id.tb_shop -> {
-                        replaceFragment(NSProductFragment.newInstance(), false, fragmentMainContainer.id)
+						if (NSConstants.SOCKET_TYPE == null) {
+							replaceFragment(
+								MTProductCategoryFragment.newInstance(),
+								false,
+								fragmentMainContainer.id
+							)
+						} else {
+							replaceFragment(
+								NSProductFragment.newInstance(),
+								false,
+								fragmentMainContainer.id
+							)
+						}
                     }
                     R.id.tb_wallets -> {
                         replaceFragment(NSWalletFragment.newInstance(), false, fragmentMainContainer.id)
@@ -92,6 +107,18 @@ class MainFragment : NSFragment() {
         }
     }
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onNavigationMenuNameChange(event: NSChangeNavigationMenuNameEvent) {
+		with(mainBinding) {
+			if (NSConstants.SOCKET_TYPE == null) {
+				navigationMenu.menu[2].setIcon(R.drawable.ic_product)
+				navigationMenu.menu[2].setTitle(R.string.products)
+			} else {
+				navigationMenu.menu[2].setIcon(R.drawable.ic_store)
+				navigationMenu.menu[2].setTitle(R.string.shop)
+			}
+		}
+	}
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onFragmentEvent(event: NSFragmentChange) {

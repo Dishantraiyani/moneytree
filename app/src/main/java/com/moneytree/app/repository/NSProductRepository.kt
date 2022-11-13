@@ -216,4 +216,26 @@ object NSProductRepository {
 			}
 		})
 	}
+
+	/**
+	 * To make logout
+	 *
+	 * @param viewModelCallback The callback to communicate back to view model
+	 */
+	fun checkStockList(stockType: String, stockId: String, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.checkStockList(stockType, stockId, object : NSRetrofitCallback<NSMemberDetailResponse>(
+			viewModelCallback, NSApiErrorHandler.ERROR_CHECK_STOKE_TYPE
+		) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSMemberDetailResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

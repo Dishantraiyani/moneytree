@@ -169,6 +169,19 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
         }
     }
 
+	fun getSocketType(): String? {
+		with(dashboardData) {
+			with(this?.data!!) {
+				return if (stockiestType?.isNotEmpty() == true) {
+					stockiestType
+				} else {
+					null
+				}
+			}
+		}
+	}
+
+
 	fun getPopUpImage(): String {
 		with(dashboardData) {
 			with(this?.data!!) {

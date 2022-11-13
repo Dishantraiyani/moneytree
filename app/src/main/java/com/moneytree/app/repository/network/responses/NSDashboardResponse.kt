@@ -51,7 +51,9 @@ data class NSDashboardData(
     @SerializedName("royalty_name")
     val royaltyName: String? = null,
     @SerializedName("earning_amount")
-    val earningAmount: String = "0.00"
+    val earningAmount: String = "0.00",
+	@SerializedName("stockiest_type")
+	val stockiestType: String? = null
 )
 
 /**

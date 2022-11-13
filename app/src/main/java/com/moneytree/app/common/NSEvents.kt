@@ -105,6 +105,8 @@ class NSRedeemWalletUpdateEvent()
 
 class NSRedeemWalletUpdateTransferEvent()
 
+class NSChangeNavigationMenuNameEvent()
+
 /**
  * Event that triggered when the permission check
  */

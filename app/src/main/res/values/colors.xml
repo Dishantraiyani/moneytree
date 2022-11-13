@@ -7,6 +7,7 @@
     <color name="teal_700">#eba94a</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="white">#FFFFFFFF</string>
 
     <color name="orange">#eba94a</color>
     <color name="orange_alpha">#20eba94a</color>
@@ -21,6 +22,7 @@
     <color name="light_gray">#FEFAEF</color>
 
     <color name="background_gray">#F2F2F7</color>
+    <string name="background_gray">#F2F2F7</string>
 
     <color name="green">#0FCE6E</color>
     <color name="image_background">#E5E5EA</color>

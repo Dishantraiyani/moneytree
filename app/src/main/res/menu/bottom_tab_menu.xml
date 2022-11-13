@@ -10,8 +10,7 @@
         android:title="@string/register" />
 
     <item android:id="@+id/tb_shop"
-        android:icon="@drawable/ic_store"
-        android:title="@string/shop" />
+		android:title="" />
 
     <item android:id="@+id/tb_wallets"
         android:icon="@drawable/ic_wallet"
