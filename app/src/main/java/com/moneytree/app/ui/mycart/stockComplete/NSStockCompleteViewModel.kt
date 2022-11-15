@@ -56,11 +56,11 @@ class NSStockCompleteViewModel(application: Application) : NSViewModel(applicati
 	 * Get redeem list data
 	 *
 	 */
-	fun saveMyCart(memberId: String,walletType: String, remark: String,productList: String, isShowProgress: Boolean) {
+	fun saveSocketStockTransferMyCart(memberId: String, stockType: String, remark: String, productList: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
-		NSProductRepository.saveMyCart(memberId, walletType, remark, productList, object: NSGenericViewModelCallback {
+		NSProductRepository.saveSocketStockTransferMyCart(memberId, stockType, remark, productList, object: NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				successResponse = data as NSSuccessResponse

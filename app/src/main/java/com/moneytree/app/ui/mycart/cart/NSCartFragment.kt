@@ -58,6 +58,7 @@ class NSCartFragment : NSFragment() {
 					tvHeaderBack.text = activity.resources.getString(R.string.my_cart)
 					val intent = Intent()
 					activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)
+					NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE
 				}
                 setVoucherAdapter()
             }

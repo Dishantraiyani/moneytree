@@ -59,5 +59,6 @@ class NSConstants {
         var IS_LOGIN_SUCCESS: Boolean = false
 		var isGridMode: Boolean = false
 		var tabName: Class<*>? = null
+		var STOCK_UPDATE: Int = -1
     }
 }

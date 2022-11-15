@@ -18,6 +18,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentStockCompleteBinding
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -90,7 +91,7 @@ class NSStockCompleteFragment : NSFragment() {
 								etMemberId.error = "Enter Member Id"
 								return
 							} else if (selectedStockType.isEmpty()) {
-								Toast.makeText(activity, "Please Select Wallet Type", Toast.LENGTH_SHORT).show()
+								Toast.makeText(activity, "Please Select Stock Type", Toast.LENGTH_SHORT).show()
 								return
 							} else if (etMemberName.text.toString().isEmpty()) {
 								Toast.makeText(activity, "Please Enter Valid Member Id", Toast.LENGTH_SHORT).show()
@@ -100,7 +101,7 @@ class NSStockCompleteFragment : NSFragment() {
 							val remark = etRemark.text.toString()
 							val productList = NSApplication.getInstance().getProductList()
 							if (productList.size > 0) {
-								saveMyCart(memberId, selectedStockType, remark, Gson().toJson(productList), true)
+								saveSocketStockTransferMyCart(memberId, selectedStockType, remark, Gson().toJson(productList), true)
 							} else {
 								Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
 							}
@@ -233,7 +234,8 @@ class NSStockCompleteFragment : NSFragment() {
 	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
 		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_POSITIVE && event.alertKey == NSConstants.PRODUCT_SEND_CLICK) {
 			val intent = Intent()
-			activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL, intent)
+			activity.setResult(NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL, intent)
+			NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL
 			finish()
 		}
 	}

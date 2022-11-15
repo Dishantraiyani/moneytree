@@ -222,7 +222,8 @@ class NSPurchaseFragment : NSFragment() {
 	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
 		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_POSITIVE && event.alertKey == NSConstants.PRODUCT_SEND_CLICK) {
 			val intent = Intent()
-			activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL, intent)
+			activity.setResult(NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL, intent)
+			NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL
 			finish()
 		}
 	}

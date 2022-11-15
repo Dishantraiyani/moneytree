@@ -185,11 +185,16 @@ class NSProductFragment : NSFragment() {
 
 	@Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
 	fun onResultEvent(event: NSActivityEvent) {
-		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL) {
+		if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL) {
 			with(productModel) {
 				if (productListAdapter != null) {
-					setTotalAmount()
-					updateProducts()
+					if (NSConstants.STOCK_UPDATE == NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL) {
+						pageIndex = "1"
+						getProductStockListData(pageIndex, "", true, isBottomProgress = false)
+					} else {
+						setTotalAmount()
+						updateProducts()
+					}
 				}
 			}
 		}

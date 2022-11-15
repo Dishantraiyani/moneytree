@@ -218,6 +218,30 @@ object NSProductRepository {
 	}
 
 	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun saveSocketStockTransferMyCart(memberId: String, walletType: String, remark: String, productList: String,
+				   viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.saveSocketStockTransferMyCart(memberId, walletType, remark, productList, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_SEND_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+
+	/**
 	 * To make logout
 	 *
 	 * @param viewModelCallback The callback to communicate back to view model

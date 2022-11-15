@@ -78,6 +78,7 @@ class NSProductDetailFragment : NSFragment() {
 							NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL,
 							intent
 						)
+						NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL
 						tvHeaderBack.text = productName
 						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)

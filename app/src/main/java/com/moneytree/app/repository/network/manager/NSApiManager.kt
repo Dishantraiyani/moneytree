@@ -957,6 +957,23 @@ class NSApiManager {
 		)
 	}
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun saveSocketStockTransferMyCart(
+		memberId: String, walletType: String, remark: String, productList: String,
+		callback: NSRetrofitCallback<NSSuccessResponse>
+	) {
+		request(
+			unAuthorised3020Client.saveSocketStockTransferMyCart(
+				NSUserManager.getAuthToken()!!,
+				memberId, walletType, remark, productList
+			), callback
+		)
+	}
+
 }
 
 /**
@@ -1323,6 +1340,13 @@ interface RTApiInterface {
 	fun saveMyCart(
 		@Field("token_id") token: String,
 		@Field("member_id") memberId: String, @Field("wallet_type") walletType: String, @Field("remark") remark: String, @Field("product_list") productList: String,
+	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("save-stockiest-stock-transfer")
+	fun saveSocketStockTransferMyCart(
+		@Field("token_id") token: String,
+		@Field("member_id") memberId: String, @Field("stock_type") walletType: String, @Field("remark") remark: String, @Field("product_list") productList: String,
 	): Call<NSSuccessResponse>
 
 	@FormUrlEncoded

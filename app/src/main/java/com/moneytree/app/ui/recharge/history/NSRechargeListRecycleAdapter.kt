@@ -107,8 +107,19 @@ class NSRechargeListRecycleAdapter(
 
 					btnActive.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							val fileName: String = invoice?.substring(invoice!!.lastIndexOf('/') + 1)!!
-							activity.startActivity(PdfViewerActivity.launchPdfFromUrl(activity, invoice, fileName, Environment.DIRECTORY_DOCUMENTS, true))
+							if (invoice != null) {
+								val fileName: String =
+									invoice?.substring(invoice!!.lastIndexOf('/') + 1)!!
+								activity.startActivity(
+									PdfViewerActivity.launchPdfFromUrl(
+										activity,
+										invoice,
+										fileName,
+										Environment.DIRECTORY_DOCUMENTS,
+										true
+									)
+								)
+							}
 						}
 					})
 

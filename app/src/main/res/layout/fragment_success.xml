@@ -21,7 +21,6 @@
 			android:layout_gravity="center_horizontal"
 			android:contentDescription="@string/success"
 			android:padding="@dimen/_10sdp"
-			android:src="@drawable/ic_success"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +31,6 @@
 			android:layout_marginTop="@dimen/_10sdp"
 			android:fontFamily="@font/inter_semi_bold"
 			android:gravity="center"
-			android:text="@string/success"
 			android:textSize="@dimen/_18sdp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +41,6 @@
 			style="@style/QueThemeVertical"
 			android:layout_marginTop="@dimen/_1sdp"
 			android:gravity="center"
-			android:text="@string/success_msg"
 			android:textSize="@dimen/_11sdp"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
