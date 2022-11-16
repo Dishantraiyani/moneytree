@@ -126,7 +126,13 @@ class NSProductListRecycleAdapter(
 						removeCart(response, finalAmount)
 					}
 
-					clProductLayout.setOnClickListener(object : SingleClickListener() {
+					ivDetail.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							onProductClick.onResponse(response)
+						}
+					})
+
+					ivProductImg.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
 						}
@@ -139,7 +145,7 @@ class NSProductListRecycleAdapter(
 					tvProductNameGrid.isSelected = true
 					tvPriceGrid.text = sdPrice?.let { addText(activity, R.string.price_value, it) }
 					tvRateGrid.text = addText(activity, R.string.rate_title, rate)
-					clProductLayoutGrid.setOnClickListener(object : SingleClickListener() {
+					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
 						}

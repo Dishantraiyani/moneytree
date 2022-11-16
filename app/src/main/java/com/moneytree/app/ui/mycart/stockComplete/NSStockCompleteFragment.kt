@@ -204,6 +204,12 @@ class NSStockCompleteFragment : NSFragment() {
 								successResponse?.message,
 								NSConstants.PRODUCT_SEND_CLICK
 							)
+						} else {
+							showSuccessDialog(
+								activity.resources.getString(R.string.app_name),
+								successResponse?.message,
+								""
+							)
 						}
 					}
 				}

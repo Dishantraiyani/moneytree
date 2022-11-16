@@ -38,9 +38,22 @@
 			android:textSize="@dimen/_12sdp"
 			android:fontFamily="@font/inter_semi_bold"
 			android:paddingEnd="@dimen/_5sdp"
-			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/iv_detail"
 			app:layout_constraintStart_toEndOf="@id/iv_product_img"
 			app:layout_constraintTop_toTopOf="parent" />
+
+		<ImageView
+			android:id="@+id/iv_detail"
+			android:layout_width="@dimen/_18sdp"
+			android:layout_height="@dimen/_18sdp"
+			android:padding="@dimen/_3sdp"
+			android:src="@drawable/arrow_right"
+			android:layout_marginEnd="@dimen/_5sdp"
+			android:layout_gravity="center_vertical"
+			tools:ignore="UseAppTint"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@id/tv_product_name"
+			app:layout_constraintBottom_toBottomOf="@id/tv_product_name"/>
 
 		<TextView
 			android:id="@+id/tv_rate"

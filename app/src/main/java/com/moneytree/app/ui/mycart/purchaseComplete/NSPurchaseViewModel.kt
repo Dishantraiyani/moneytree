@@ -2,6 +2,7 @@ package com.moneytree.app.ui.mycart.purchaseComplete
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.NSUserRepository
@@ -65,6 +66,9 @@ class NSPurchaseViewModel(application: Application) : NSViewModel(application) {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				successResponse = data as NSSuccessResponse
+				if (successResponse?.status == true) {
+					NSApplication.getInstance().clearProductList()
+				}
 				isProductSendDataAvailable.value = true
 			}
 
