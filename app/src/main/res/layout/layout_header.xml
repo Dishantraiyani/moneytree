@@ -71,6 +71,24 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
+		<ImageView
+			android:id="@+id/iv_history"
+			android:layout_width="@dimen/_24sdp"
+			android:layout_height="@dimen/_24sdp"
+			android:src="@drawable/ic_shop_history"
+			android:tint="@color/white"
+			android:gravity="center"
+			android:padding="@dimen/_1sdp"
+			android:visibility="gone"
+			android:clickable="true"
+			android:focusable="true"
+			android:layout_marginEnd="@dimen/_10sdp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/iv_search"
+			tools:ignore="UseAppTint"
+			android:contentDescription="@string/search_hint"/>
+
         <ImageView
             android:id="@+id/iv_search"
             android:layout_width="@dimen/_24sdp"

@@ -24,7 +24,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class NSOfferFragment : NSFragment() {
     private val offerModel: NSOffersViewModel by lazy {
-        ViewModelProvider(this).get(NSOffersViewModel::class.java)
+		ViewModelProvider(this)[NSOffersViewModel::class.java]
     }
     private var _binding: NsFragmentOffersBinding? = null
 

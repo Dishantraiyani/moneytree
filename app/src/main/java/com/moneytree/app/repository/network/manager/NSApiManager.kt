@@ -974,6 +974,42 @@ class NSApiManager {
 		)
 	}
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getRepurchaseHistory(pageIndex: String, search: String, callback: NSRetrofitCallback<NSRepurchaseStockModel>) {
+		request(
+			unAuthorised3020Client.getStockRepurchaseHistoryList(NSUserManager.getAuthToken()!!, pageIndex, search),
+			callback
+		)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getStockTransferList(pageIndex: String, search: String, callback: NSRetrofitCallback<NSRepurchaseStockModel>) {
+		request(
+			unAuthorised3020Client.getStockTransferHistoryList(NSUserManager.getAuthToken()!!, pageIndex, search),
+			callback
+		)
+	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getStockTransferInfo(stockId: String, callback: NSRetrofitCallback<NSRePurchaseInfoResponse>) {
+		request(
+			unAuthorised3020Client.getStockTransferInfo(NSUserManager.getAuthToken()!!, stockId),
+			callback
+		)
+	}
+
 }
 
 /**
@@ -1356,4 +1392,27 @@ interface RTApiInterface {
 		@Field("stockiest_type") stockListType: String,
 		@Field("stockiest_id") stockListId: String
 	): Call<NSMemberDetailResponse>
+
+	@FormUrlEncoded
+	@POST("stockiest-repurchase-list")
+	fun getStockRepurchaseHistoryList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String
+	): Call<NSRepurchaseStockModel>
+
+	@FormUrlEncoded
+	@POST("stockiest-stock-transfer-list")
+	fun getStockTransferHistoryList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String
+	): Call<NSRepurchaseStockModel>
+
+	@FormUrlEncoded
+	@POST("stockiest-stock-transfer-info")
+	fun getStockTransferInfo(
+		@Field("token_id") token: String,
+		@Field("stock_transfer_id") stockTransferId: String
+	): Call<NSRePurchaseInfoResponse>
 }

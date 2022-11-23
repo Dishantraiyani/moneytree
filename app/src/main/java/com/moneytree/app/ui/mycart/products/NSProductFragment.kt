@@ -22,16 +22,16 @@ import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
-import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.switchResultActivity
-import com.moneytree.app.common.utils.visible
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.LayoutSearchableDialogFilterBinding
 import com.moneytree.app.databinding.NsFragmentProductsBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
+import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
+import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
+import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -80,6 +80,7 @@ class NSProductFragment : NSFragment() {
 					tvCategories.visible()
 					tvCartCount.visible()
 					cardCategoriesType.visible()
+					ivHistory.visible()
 					setCartCount()
 					setTotalAmount()
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
@@ -101,6 +102,40 @@ class NSProductFragment : NSFragment() {
                     pageIndex = "1"
                     getProductStockListData(pageIndex, "", false, isBottomProgress = false)
                 }
+
+				layoutHeader.ivHistory.setOnClickListener {
+					if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
+						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
+					} else {
+						if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE) || NSConstants.SOCKET_TYPE.equals(
+								NSConstants.NORMAL_SOCKET_TYPE
+							)
+						) {
+							clBottomSheet.visible()
+
+						} else {
+							switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
+						}
+					}
+				}
+
+				clBottomSheet.setOnClickListener {
+					clBottomSheet.gone()
+				}
+
+				btnRepurchase.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						clBottomSheet.gone()
+						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
+					}
+				})
+
+				btnStock.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						clBottomSheet.gone()
+						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.SOCKET_HISTORY))
+					}
+				})
 
 				with(layoutHeader) {
 					ivBack.setOnClickListener(object : SingleClickListener() {

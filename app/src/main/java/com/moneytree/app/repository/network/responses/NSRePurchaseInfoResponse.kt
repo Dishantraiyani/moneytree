@@ -18,7 +18,7 @@ data class NSRePurchaseInfoResponse(
     var nextPage: Boolean = false,
     @SerializedName("data")
     @Expose
-    var data: MutableList<NSRePurchaseInfoData>? = null
+    var data: MutableList<NSRePurchaseInfoData> = arrayListOf()
 )
 
 /**
@@ -48,5 +48,11 @@ data class NSRePurchaseInfoData(
     var amount: String? = null,
     @SerializedName("created_at")
     @Expose
-    var createdAt: String? = null
+    var createdAt: String? = null,
+	@SerializedName("stock_transfer_item_id")
+	@Expose
+	var stockTransferItemId: String? = null,
+	@SerializedName("stock_transfer_id")
+	@Expose
+	var stockTransferId: String? = null,
 )

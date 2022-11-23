@@ -55,6 +55,9 @@ class NSApiErrorHandler {
         const val ERROR_CHECK_VERSION = "error_check_version"
         const val ERROR_QR_SCAN = "error_qr_scan"
 		const val ERROR_PRODUCT_SEND_DATA = "error_product_send_data"
+		const val ERROR_REPURCHASE_STOCK_DATA = "error_repurchase_stock_data"
+		const val ERROR_STOCK_TRANSFER_DATA = "error_stock_transfer_data"
+		const val ERROR_STOCK_TRANSFER_DETAIL_DATA = "error_stock_transfer_detail_data"
 
         /**
          * To get the error messages from API endpoints

@@ -262,4 +262,73 @@ object NSProductRepository {
 			}
 		})
 	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getRepurchaseHistoryList(pageIndex: String, search: String,
+						  viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getRepurchaseHistory(pageIndex, search, object :
+			NSRetrofitCallback<NSRepurchaseStockModel>(viewModelCallback, NSApiErrorHandler.ERROR_REPURCHASE_STOCK_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSRepurchaseStockModel
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getStockTransferHistoryList(pageIndex: String, search: String,
+								 viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getStockTransferList(pageIndex, search, object :
+			NSRetrofitCallback<NSRepurchaseStockModel>(viewModelCallback, NSApiErrorHandler.ERROR_STOCK_TRANSFER_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSRepurchaseStockModel
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To get joining voucher data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun getStockTransferInfo(stockId: String,
+								 viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getStockTransferInfo(stockId, object :
+			NSRetrofitCallback<NSRePurchaseInfoResponse>(viewModelCallback, NSApiErrorHandler.ERROR_STOCK_TRANSFER_DETAIL_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSRePurchaseInfoResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

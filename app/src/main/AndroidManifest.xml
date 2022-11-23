@@ -26,15 +26,29 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
-            android:name=".ui.mycart.purchaseComplete.PurchaseCompleteActivity"
+            android:name=".ui.offers.OfferDetailActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
+            android:name=".ui.mycart.purchaseComplete.PurchaseCompleteActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+		<activity
+			android:name=".ui.mycart.stockDetail.StockDetailActivity"
+			android:exported="false" />
+        <activity
             android:name=".ui.offers.OffersActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.mycart.history.NSRepuhaseOrStockHistoryActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.noNetwork.NoNetworkActivity"
             android:exported="false"
@@ -91,10 +105,10 @@
             android:name=".ui.mycart.products.NSProductsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-		<activity
-			android:name=".ui.mycart.stockComplete.StockCompleteActivity"
-			android:exported="false"
-			android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mycart.stockComplete.StockCompleteActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.products.MTProductsActivity"
             android:exported="false"

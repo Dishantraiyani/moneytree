@@ -31,6 +31,7 @@ class NSConstants {
 		const val KEY_MEMBER_FORM_ACTIVATION_FORM = "key_member_form_activation_form"
 		const val KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL = "key_member_form_activation_form_detail"
 		const val KEY_MEMBER_LEVEL_NUMBER = "key_member_level_number"
+		const val KEY_OFFER_DETAIL_TYPE = "key_offer_detail_type"
 
 		const val KEY_BANNER_URL = "key_banner_url"
 		const val KEY_BANNER_POSITION = "key_banner_position"
@@ -53,6 +54,12 @@ class NSConstants {
 		var SOCKET_TYPE: String? = null
 		const val SUPER_SOCKET_TYPE: String = "Super Stockiest"
 		const val  NORMAL_SOCKET_TYPE: String = "Stockiest"
+		const val  SOCKET_HISTORY: String = "Stock"
+		const val  REPURCHASE_HISTORY: String = "Repurchase"
+		const val  RETAIL_LIST: String = "Retail"
+		const val  ROYALTY_LIST: String = "Royalty"
+		const val STOCK_DETAIL_ID = "stock_detail_id"
+		const val KEY_STOCK_TYPE = "key_stock_type"
 
         //Pagination
         const val PAGINATION = 25
@@ -60,5 +67,6 @@ class NSConstants {
 		var isGridMode: Boolean = false
 		var tabName: Class<*>? = null
 		var STOCK_UPDATE: Int = -1
+		const val STOCK_HISTORY_LIST: String = "stock_history_list"
     }
 }

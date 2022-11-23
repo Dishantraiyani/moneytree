@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
@@ -13,7 +14,9 @@ import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentRepurchaseListBinding
+import com.moneytree.app.ui.offers.OfferDetailActivity
 import com.moneytree.app.ui.repurchaseInfo.NSRePurchaseInfoFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -22,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class NSRePurchaseListFragment : NSFragment() {
     private val repurchaseListModel: NSRePurchaseListViewModel by lazy {
-        ViewModelProvider(this).get(NSRePurchaseListViewModel::class.java)
+		ViewModelProvider(this)[NSRePurchaseListViewModel::class.java]
     }
     private var _binding: NsFragmentRepurchaseListBinding? = null
 
@@ -90,7 +93,9 @@ class NSRePurchaseListFragment : NSFragment() {
                             val data = rePurchaseList[position]
                             val bundle = Bundle()
                             bundle.putString(NSConstants.KEY_REPURCHASE_INFO, data.repurchaseId)
-                            EventBus.getDefault().post(NSFragmentChange(NSRePurchaseInfoFragment.newInstance(bundle)))
+                            bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.REPURCHASE_HISTORY)
+							switchActivity(OfferDetailActivity::class.java, bundle)
+                            ///EventBus.getDefault().post(NSFragmentChange(NSRePurchaseInfoFragment.newInstance(bundle)))
                         }
 
                     })

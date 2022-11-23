@@ -123,7 +123,7 @@
 		app:layout_constraintEnd_toEndOf="parent">
 
 		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/rv_product_list"
+			android:id="@+id/rv_history_list"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:paddingTop="@dimen/_10sdp"
@@ -142,7 +142,7 @@
 		android:background="@color/white"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintBottom_toTopOf="@id/ll_item">
+		app:layout_constraintBottom_toBottomOf="parent">
 
 		<ProgressBar
 			android:layout_width="@dimen/_22sdp"
@@ -150,135 +150,5 @@
 			android:layout_centerInParent="true" />
 
 	</RelativeLayout>
-
-	<LinearLayout
-		android:id="@+id/ll_item"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:background="@color/holo_red_dark"
-		android:gravity="bottom|end"
-		android:visibility="gone"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintBottom_toBottomOf="parent">
-
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/_45sdp"
-			android:layout_gravity="bottom"
-			android:background="@drawable/box6"
-			android:baselineAligned="false"
-			android:orientation="vertical">
-
-			<TextView
-				android:id="@+id/textView3"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="8dp"
-				android:layout_marginTop="10dp"
-				android:text="@string/total_savings"
-				android:textColor="@color/black"
-				android:visibility="gone"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
-
-			<TextView
-				android:id="@+id/total_discount"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text=""
-				android:visibility="gone"
-				app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
-				app:layout_constraintStart_toStartOf="@+id/total_amount" />
-
-			<TextView
-				android:id="@+id/textView5"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/_8sdp"
-				android:text="@string/total_amount"
-				android:textColor="@color/black"
-				android:fontFamily="@font/inter_medium"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/textView3"
-				app:layout_constraintBottom_toBottomOf="parent"/>
-
-			<TextView
-				android:id="@+id/total_amount"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/_8sdp"
-				android:textColor="@color/black"
-				android:fontFamily="@font/inter_semi_bold"
-				app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
-				app:layout_constraintStart_toEndOf="@+id/textView5" />
-
-			<TextView
-				android:id="@+id/proceed"
-				android:layout_width="@dimen/_60sdp"
-				android:layout_height="@dimen/_28sdp"
-				android:layout_marginHorizontal="@dimen/_10sdp"
-				android:background="@drawable/orange_button_order_border"
-				android:text="@string/view"
-				android:textColor="@color/white"
-				android:gravity="center"
-				android:fontFamily="@font/inter_medium"
-				app:layout_constraintBottom_toBottomOf="parent"
-				app:layout_constraintRight_toRightOf="parent"
-				app:layout_constraintTop_toTopOf="parent" />
-
-		</androidx.constraintlayout.widget.ConstraintLayout>
-	</LinearLayout>
-
-	<androidx.cardview.widget.CardView
-		android:id="@+id/cl_bottom_sheet"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:visibility="gone"
-		app:cardBackgroundColor="#22000000"
-		android:background="#22000000">
-
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:gravity="center"
-			android:paddingVertical="@dimen/_15sdp"
-			android:paddingHorizontal="@dimen/_10sdp"
-			android:layout_gravity="bottom"
-			android:background="@drawable/half_top_corners"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent">
-
-			<Button
-				android:id="@+id/btn_stock"
-				style="@style/LayoutWidthHeightZeroWrap"
-				android:layout_width="match_parent"
-				android:background="@drawable/login_button_border"
-				android:text="@string/stock"
-				android:textColor="@color/white"
-				android:textAllCaps="true"
-				android:textSize="@dimen/_12sdp"
-				android:fontFamily="@font/inter_regular"
-				android:layout_marginHorizontal="@dimen/_5sdp" />
-
-			<Button
-				android:id="@+id/btn_repurchase"
-				style="@style/LayoutWidthHeightZeroWrap"
-				android:layout_width="match_parent"
-				android:background="@drawable/orange_border_five"
-				android:text="@string/repurchase"
-				android:textColor="@color/orange"
-				android:textAllCaps="true"
-				android:textSize="@dimen/_12sdp"
-				android:fontFamily="@font/inter_regular"
-				android:layout_marginHorizontal="@dimen/_5sdp"
-				android:layout_marginTop="@dimen/_10sdp" />
-
-		</LinearLayout>
-
-
-	</androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

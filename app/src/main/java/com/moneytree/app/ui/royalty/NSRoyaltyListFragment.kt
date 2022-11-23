@@ -13,7 +13,9 @@ import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentRoyaltyListBinding
+import com.moneytree.app.ui.offers.OfferDetailActivity
 import com.moneytree.app.ui.royaltyInfo.NSRoyaltyInfoFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -90,7 +92,9 @@ class NSRoyaltyListFragment : NSFragment() {
                             val data = royaltyList[position]
                             val bundle = Bundle()
                             bundle.putString(NSConstants.KEY_ROYALTY_INFO, data.royaltyOfferMainId)
-                            EventBus.getDefault().post(NSFragmentChange(NSRoyaltyInfoFragment.newInstance(bundle)))
+							bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.ROYALTY_LIST)
+							switchActivity(OfferDetailActivity::class.java, bundle)
+                           // EventBus.getDefault().post(NSFragmentChange(NSRoyaltyInfoFragment.newInstance(bundle)))
                         }
 
                     })
