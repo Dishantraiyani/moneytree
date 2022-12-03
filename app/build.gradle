@@ -140,5 +140,5 @@ dependencies {
 	implementation 'com.github.HaarigerHarald:android-youtubeExtractor:master-SNAPSHOT'
 
 	implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
-	implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
+	implementation 'com.github.thealeksandr:PFLockScreen-Android:1.0.0-beta7'
 }

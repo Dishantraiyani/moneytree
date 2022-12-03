@@ -396,7 +396,7 @@
 				<ImageView
 					android:layout_width="@dimen/_18sdp"
 					android:layout_height="@dimen/_18sdp"
-					android:src="@drawable/ic_reports_nav"
+					android:src="@drawable/ic_youtube_nav"
 					android:tint="@color/orange"
 					tools:ignore="UseAppTint"
 					android:contentDescription="@string/vouchers"/>
@@ -433,7 +433,7 @@
 				<ImageView
 					android:layout_width="@dimen/_18sdp"
 					android:layout_height="@dimen/_18sdp"
-					android:src="@drawable/ic_reports_nav"
+					android:src="@drawable/ic_instagram_nav"
 					android:tint="@color/orange"
 					tools:ignore="UseAppTint"
 					android:contentDescription="@string/vouchers"/>
