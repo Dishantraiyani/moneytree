@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<View
+		android:id="@+id/panel"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@android:color/black"
+		android:clickable="true"
+		android:focusable="true" />
+
+	<TextView
+		android:id="@+id/text_text1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentBottom="true"
+		android:text="custom Ui example"
+
+		android:textColor="@android:color/white"
+		android:textSize="20sp" />
+
+	<ProgressBar
+		android:id="@+id/progressbar"
+		style="?android:attr/progressBarStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+
+		android:layout_alignParentStart="true"
+		android:layout_alignParentTop="true" />
+
+	<TextView
+		android:id="@+id/video_current_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+
+		android:layout_alignParentTop="true"
+		android:layout_alignParentEnd="true"
+		android:textColor="@color/ayp_red" />
+
+	<TextView
+		android:id="@+id/video_duration"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentBottom="true"
+		android:textColor="@color/ayp_red" />
+
+	<Button
+		android:id="@+id/play_pause_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentEnd="true"
+
+		android:layout_centerVertical="true"
+		android:text="Play/Pause" />
+
+	<Button
+		android:id="@+id/enter_exit_fullscreen_button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentStart="true"
+
+		android:layout_centerVertical="true"
+		android:text="Enter/exit fullscreen" />
+
+</RelativeLayout>

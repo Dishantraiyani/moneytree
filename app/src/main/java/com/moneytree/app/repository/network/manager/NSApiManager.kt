@@ -1,5 +1,6 @@
 package com.moneytree.app.repository.network.manager
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.google.gson.GsonBuilder
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
@@ -15,10 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -39,6 +37,12 @@ class NSApiManager {
 
 		val unAuthorised3020Client: RTApiInterface by lazy {
 			buildRetrofit(unAuthorisedOkHttpClient, "").create(
+				RTApiInterface::class.java
+			)
+		}
+
+		val youtubeClient: RTApiInterface by lazy {
+			buildRetrofitYoutube(unAuthorisedOkHttpClient, "").create(
 				RTApiInterface::class.java
 			)
 		}
@@ -130,6 +134,23 @@ class NSApiManager {
 		private fun buildRetrofit(okHttpClient: OkHttpClient, endpoint: String): Retrofit =
 			Retrofit.Builder().apply {
 				baseUrl(BuildConfig.BASE_URL + endpoint)
+				client(okHttpClient)
+				addConverterFactory(
+					GsonConverterFactory.create(
+						GsonBuilder().setLenient().create()
+					)
+				)
+			}.build()
+
+		/**
+		 * To builds the retrofit client with baseUrl and Client sent
+		 *
+		 * @param okHttpClient Client with request and header details
+		 * @return Retrofit reference retrofit builder
+		 */
+		private fun buildRetrofitYoutube(okHttpClient: OkHttpClient, endpoint: String): Retrofit =
+			Retrofit.Builder().apply {
+				baseUrl(BuildConfig.YOUTUBE_URL + endpoint)
 				client(okHttpClient)
 				addConverterFactory(
 					GsonConverterFactory.create(
@@ -1010,6 +1031,17 @@ class NSApiManager {
 		)
 	}
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getYoutubeVideos(youtubeRequestMap: Map<String, String>, callback: NSRetrofitCallback<YoutubeResponse>) {
+		request(
+			youtubeClient.getYoutubeVideos(youtubeRequestMap),
+			callback
+		)
+	}
 }
 
 /**
@@ -1415,4 +1447,9 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("stock_transfer_id") stockTransferId: String
 	): Call<NSRePurchaseInfoResponse>
+
+	@GET("search")
+	fun getYoutubeVideos(
+		@QueryMap param: Map<String, String>
+	): Call<YoutubeResponse>
 }

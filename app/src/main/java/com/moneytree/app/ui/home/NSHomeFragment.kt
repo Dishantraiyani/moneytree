@@ -36,6 +36,7 @@ import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
+import com.moneytree.app.ui.youtube.YoutubeActivity
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
@@ -363,6 +364,13 @@ class NSHomeFragment : NSFragment() {
                             drawer.closeDrawer(GravityCompat.START)
                             switchActivity(
                                 NSVouchersActivity::class.java
+                            )
+                        }
+
+						llYoutube.setOnClickListener {
+                            drawer.closeDrawer(GravityCompat.START)
+                            switchActivity(
+                                YoutubeActivity::class.java
                             )
                         }
 

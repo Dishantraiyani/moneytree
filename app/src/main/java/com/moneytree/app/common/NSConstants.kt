@@ -68,5 +68,7 @@ class NSConstants {
 		var tabName: Class<*>? = null
 		var STOCK_UPDATE: Int = -1
 		const val STOCK_HISTORY_LIST: String = "stock_history_list"
+		const val YOUTUBE_DETAIL = "key_youtube_detail"
+		const val YOUTUBE_FULL_RESPONSE = "key_youtube_full_response"
     }
 }
