@@ -1,7 +1,9 @@
 package com.moneytree.app.ui.home
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -28,7 +30,6 @@ import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
-import com.moneytree.app.ui.mycart.productCategory.NSProductsCategoryActivity
 import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
@@ -46,7 +47,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
@@ -394,6 +395,27 @@ class NSHomeFragment : NSFragment() {
                             drawer.closeDrawer(GravityCompat.START)
                             switchActivity(NSActivateActivity::class.java)
                         }
+
+						llInstagram.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							val instagramUrl = "https://instagram.com/joinmoneytree?igshid=MTg0ZDhmNDA="
+							val uri: Uri = Uri.parse(instagramUrl)
+							val likeIng = Intent(Intent.ACTION_VIEW, uri)
+
+							likeIng.setPackage("com.instagram.android")
+
+							try {
+								startActivity(likeIng)
+							} catch (e: ActivityNotFoundException) {
+								startActivity(
+									Intent(
+										Intent.ACTION_VIEW,
+										Uri.parse(instagramUrl)
+									)
+								)
+							}
+
+						}
 
                         llRePurchase.setOnClickListener {
 							pref.offerTabPosition = 0

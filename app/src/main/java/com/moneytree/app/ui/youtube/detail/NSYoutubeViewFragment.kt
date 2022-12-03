@@ -160,6 +160,11 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
 		}
 	}
 
+	override fun onDestroy() {
+		super.onDestroy()
+		youtubeBinding.videoFullScreenPlayer.release()
+	}
+
 	/**
 	 * To add data of royal in list
 	 */
