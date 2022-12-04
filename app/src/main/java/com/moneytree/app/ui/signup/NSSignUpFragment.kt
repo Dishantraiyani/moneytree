@@ -1,5 +1,6 @@
 package com.moneytree.app.ui.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.RemoteException
 import android.text.method.LinkMovementMethod
@@ -8,16 +9,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
+import com.beautycoder.pflockscreen.security.PFResult
+import com.beautycoder.pflockscreen.security.PFSecurityManager
+import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback
+import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.TAG
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentSignupBinding
+import com.moneytree.app.ui.lock.LockActivity
 
 
 class NSSignUpFragment : NSFragment() {
@@ -148,7 +158,31 @@ class NSSignUpFragment : NSFragment() {
 
 				isRegisterSuccessAvailable.observe(viewLifecycleOwner) {
 					if (it) {
-						onBackPress()
+						PFPinCodeViewModel().isPinCodeEncryptionKeyExist.observe(
+							requireActivity(),
+							object : Observer<PFResult<Boolean?>?> {
+								override fun onChanged(result: PFResult<Boolean?>?) {
+									if (result == null) {
+										onBackPress()
+										return
+									}
+									if (result.error != null) {
+										onBackPress()
+										return
+									}
+									result.result?.let { it ->
+										if (it) {
+											onBackPress()
+										} else {
+											switchActivity(LockActivity::class.java, bundleOf(
+												NSConstants.KEY_LOCK_SCREEN to 1))
+											finish()
+										}
+									}
+								}
+							}
+						)
+						//onBackPress()
 					}
 				}
 

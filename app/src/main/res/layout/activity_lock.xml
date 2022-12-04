@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.lock.LockActivity">
+
+	<FrameLayout
+		android:id="@+id/frame_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+
+	<TextView
+		android:id="@+id/tv_skip"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		android:text="@string/skip"
+		android:layout_margin="@dimen/_10sdp"
+		android:textColor="@color/orange"
+		android:fontFamily="@font/inter_medium"
+		android:textSize="@dimen/_13sdp"
+		android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

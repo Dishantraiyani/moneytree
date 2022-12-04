@@ -8,14 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
+import com.beautycoder.pflockscreen.security.PFResult
+import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentLoginBinding
+import com.moneytree.app.repository.network.responses.NSDataUser
+import com.moneytree.app.ui.lock.LockActivity
 import com.moneytree.app.ui.main.NSMainActivity
 import com.moneytree.app.ui.signup.SignUpActivity
 import org.greenrobot.eventbus.Subscribe
@@ -137,10 +142,38 @@ class NSLoginFragment : NSFragment() {
 			}
 		}
 
+		PFPinCodeViewModel().isPinCodeEncryptionKeyExist.observe(
+			requireActivity(),
+			object : Observer<PFResult<Boolean?>?> {
+				override fun onChanged(result: PFResult<Boolean?>?) {
+					if (result == null) {
+						openMainScreen(loginEvent.data)
+						return
+					}
+					if (result.error != null) {
+						openMainScreen(loginEvent.data)
+						return
+					}
+					result.result?.let { it ->
+						if (it) {
+							openMainScreen(loginEvent.data)
+						} else {
+							switchActivity(
+								LockActivity::class.java, bundleOf(
+								NSConstants.KEY_LOCK_SCREEN to 2))
+							finish()
+						}
+					}
+				}
+			}
+		)
+	}
+
+	private fun openMainScreen(data: NSDataUser?) {
 		switchActivity(
 			NSMainActivity::class.java,
 			bundleOf(
-				NSConstants.KEY_LOGIN_DATA to Gson().toJson(loginEvent.data)
+				NSConstants.KEY_LOGIN_DATA to Gson().toJson(data)
 			),
 			flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 		)
