@@ -7,6 +7,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.main.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.unitTest.iml" />
     </modules>
   </component>
 </project>

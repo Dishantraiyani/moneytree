@@ -30,8 +30,6 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
-import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
-import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -107,12 +105,8 @@ class NSProductFragment : NSFragment() {
 					if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
 						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
 					} else {
-						if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE) || NSConstants.SOCKET_TYPE.equals(
-								NSConstants.NORMAL_SOCKET_TYPE
-							)
-						) {
+						if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
 							clBottomSheet.visible()
-
 						} else {
 							switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
 						}

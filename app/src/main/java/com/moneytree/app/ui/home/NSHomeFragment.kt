@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +45,8 @@ import com.smarteist.autoimageslider.SliderView
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
 import io.github.g00fy2.quickie.config.ScannerConfig
+import maulik.barcodescanner.OnScannerResponse
+import maulik.barcodescanner.ui.BarcodeScanningActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -62,7 +65,6 @@ class NSHomeFragment : NSFragment() {
 	private val DELAY_MS: Long = 500
 	private val PERIOD_MS: Long = 5000
 	private var currentPage = 0
-	private val scanQrCode = registerForActivityResult(ScanQRCode(), ::showSnackbar)
 
     companion object {
         fun newInstance() = NSHomeFragment()
@@ -256,7 +258,8 @@ class NSHomeFragment : NSFragment() {
 
 			clQrCode.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
-					scanQrCode.launch(null)
+					//scanQrCode.launch(null)
+					openCameraWithScanner()
 				}
 			})
 
@@ -528,24 +531,27 @@ class NSHomeFragment : NSFragment() {
         checkUpdateDialog(homeModel.chekVersionResponse)
     }
 
-	private fun showSnackbar(result: QRResult) {
-		val text = when (result) {
-			is QRResult.QRSuccess -> {
-				switchActivity(QRCodeActivity::class.java, bundleOf(NSConstants.KEY_QR_CODE_ID to result.content.rawValue, NSConstants.KEY_WALLET_AMOUNT to homeModel.setWallet()))
-				return
+	private fun openCameraWithScanner() {
+		BarcodeScanningActivity.start(requireContext(), BarcodeScanningActivity.ScannerSDK.ZXING, object :
+			OnScannerResponse {
+			override fun onScan(isSuccess: Boolean, value: String) {
+				showSnackbar(isSuccess, value)
 			}
-			QRResult.QRUserCanceled -> "User canceled"
-			QRResult.QRMissingPermission -> "Missing permission"
-			is QRResult.QRError -> "${result.exception.javaClass.simpleName}: ${result.exception.localizedMessage}"
-		}
+		})
+	}
 
-		Snackbar.make(homeBinding.root, text, Snackbar.LENGTH_INDEFINITE).apply {
-			view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
-				maxLines = 5
-				setTextIsSelectable(true)
-			}
-			setAction(R.string.ok) { }
-			setActionTextColor(Color.parseColor(activity.resources.getString(R.string.orange)))
-		}.show()
+	private fun showSnackbar(isSuccess: Boolean, value: String) {
+		if (isSuccess) {
+			switchActivity(QRCodeActivity::class.java, bundleOf(NSConstants.KEY_QR_CODE_ID to value, NSConstants.KEY_WALLET_AMOUNT to homeModel.setWallet()))
+		} else {
+			Snackbar.make(homeBinding.root, "User canceled", Snackbar.LENGTH_INDEFINITE).apply {
+				view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
+					maxLines = 5
+					setTextIsSelectable(true)
+				}
+				setAction(R.string.ok) { }
+				setActionTextColor(Color.parseColor(activity.resources.getString(R.string.orange)))
+			}.show()
+		}
 	}
 }

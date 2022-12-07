@@ -87,12 +87,8 @@ class NSCartFragment : NSFragment() {
 							)
 							finish()
 						} else {
-							if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE) || NSConstants.SOCKET_TYPE.equals(
-									NSConstants.NORMAL_SOCKET_TYPE
-								)
-							) {
+							if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
 								clBottomSheet.visible()
-
 							} else {
 								switchResultActivity(
 									dataResult,

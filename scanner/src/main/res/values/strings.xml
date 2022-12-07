@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">ScannerX</string>
+    <string name="start_scanning">Start Scanning</string>
+    <string name="turn_flash_on_off">Turn Flash On/Off</string>
+    <string name="view_finder">View Finder</string>
+    <string name="scanning_with">Scanning with</string>
+    <string name="scanner_library">Scanner Library</string>
+    <string name="result">Result</string>
+    <string name="copy">Copy</string>
+    <string name="scan_with_ml_kit">Scan with ML Kit</string>
+    <string name="scan_with_zxing">Scan with ZXing</string>
+    <string name="developed_by_maulik_hirani">Developed by Maulik Hirani</string>
+    <string name="scanner">Select QR Code</string>
+	<string name="quickie_scan_qr_code">Scan QR code</string>
+	<string name="amount_charges">When Amount will be less then 1000\nthen 10Rs extra charges \nand when more then 1000Rs on 1%\nextra charges Applicable.</string>
+</resources>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="false"
+    tools:background="@android:color/white"
+    tools:context=".ui.BarcodeScanningActivity">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraPreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <maulik.barcodescanner.ui.custom.ViewFinderOverlay
+        android:id="@+id/overlay"
+        android:layerType="software"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+	<ImageView
+		android:id="@+id/ivCloseDocument"
+		android:layout_width="@dimen/_15sdp"
+		android:layout_height="@dimen/_15sdp"
+		android:layout_gravity="end"
+		android:layout_margin="@dimen/_20sdp"
+		android:tint="@android:color/white"
+		android:src="@drawable/ic_close"
+		tools:ignore="UseAppTint"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentTop="true"/>
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/title_text_view"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top|center_horizontal"
+		android:drawablePadding="16dp"
+		android:ellipsize="end"
+		android:gravity="center"
+		android:maxLines="2"
+		android:paddingBottom="8dp"
+		android:paddingEnd="24dp"
+		android:paddingStart="24dp"
+		android:paddingTop="8dp"
+		android:text="@string/quickie_scan_qr_code"
+		android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+		android:textColor="@android:color/white"
+		app:drawableTopCompat="@drawable/quickie_ic_qrcode"
+		android:layout_below="@id/ivCloseDocument"
+		android:layout_centerHorizontal="true"
+		/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="top|center_horizontal"
+		android:drawablePadding="16dp"
+		android:ellipsize="end"
+		android:gravity="center"
+		android:layout_marginHorizontal="@dimen/_40sdp"
+		android:layout_marginBottom="@dimen/_40sdp"
+		android:text="@string/amount_charges"
+		android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+		android:textColor="@android:color/white"
+		android:lineSpacingExtra="2dp"
+		android:layout_centerHorizontal="true"
+		android:layout_alignParentBottom="true"
+		/>
+
+</RelativeLayout>

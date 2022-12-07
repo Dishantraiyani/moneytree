@@ -53,7 +53,7 @@ class NSStockCompleteFragment : NSFragment() {
 			with(stockModel) {
 				with(layoutHeader) {
 					clBack.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.repurchase)
+					tvHeaderBack.text = activity.resources.getString(R.string.product_transfer)
 					/*val intent = Intent()
 					activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)*/
 				}

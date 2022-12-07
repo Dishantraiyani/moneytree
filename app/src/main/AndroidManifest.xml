@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HubzDriver"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup"
+        tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
         <activity
             android:name=".ui.lock.LockActivity"
