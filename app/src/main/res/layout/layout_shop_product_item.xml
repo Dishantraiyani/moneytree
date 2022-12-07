@@ -277,7 +277,7 @@
 			android:layout_marginTop="@dimen/_3sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
-			app:layout_constraintEnd_toStartOf="@id/qut_grid"
+			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@id/tv_price_title_grid"
 			app:layout_constraintTop_toBottomOf="@+id/tv_rate_grid" />
 

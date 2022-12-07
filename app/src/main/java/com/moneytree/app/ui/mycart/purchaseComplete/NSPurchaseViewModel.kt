@@ -23,6 +23,8 @@ class NSPurchaseViewModel(application: Application) : NSViewModel(application) {
 	var isProductSendDataAvailable = MutableLiveData<Boolean>()
 	var successResponse: NSSuccessResponse? = null
 	var selectedWalletType: String = ""
+	var finalAmount: String = "0"
+
 
 	fun getMemberDetail(memberId: String, isShowProgress: Boolean) {
 		if (isShowProgress) {

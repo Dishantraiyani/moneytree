@@ -102,7 +102,7 @@ class NSCartListRecycleAdapter(
 						} catch (e: Exception) {
 							0
 						}
-						if (itemQty <= stock && stock != 0) {
+						if (itemQty < stock && stock != 0) {
 							itemQty += 1
 							tvQty.text = itemQty.toString()
 

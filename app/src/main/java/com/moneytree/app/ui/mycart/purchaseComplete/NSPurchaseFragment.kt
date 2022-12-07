@@ -95,6 +95,9 @@ class NSPurchaseFragment : NSFragment() {
 							} else if (etMemberName.text.toString().isEmpty()) {
 								Toast.makeText(activity, "Please Enter Valid Member Id", Toast.LENGTH_SHORT).show()
 								return
+							} else if (NSConstants.WALLET_BALANCE.toDouble() < productModel.finalAmount.toDouble()) {
+								Toast.makeText(activity, activity.resources.getString(R.string.not_enough_balance), Toast.LENGTH_SHORT).show()
+								return
 							}
 							val memberId = etMemberId.text.toString()
 							val remark = etRemark.text.toString()
@@ -122,6 +125,7 @@ class NSPurchaseFragment : NSFragment() {
 			tvProductTitle.text =
 				"${NSApplication.getInstance().getProductList().size} Item Selected"
 			tvAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+			productModel.finalAmount = totalAmountValue.toString()
 		}
 	}
 
@@ -138,13 +142,24 @@ class NSPurchaseFragment : NSFragment() {
 						override fun onItemSelected(
 							p0: AdapterView<*>?, view: View?, position: Int, id: Long
 						) {
-							selectedWalletType = walletListType[position]
+							if (position != 0) {
+								selectedWalletType = walletListType[position]
+								checkWalletBalanceAvailable()
+							} else {
+								selectedWalletType = ""
+							}
 						}
 
 						override fun onNothingSelected(p0: AdapterView<*>?) {
 						}
 					}
 			}
+		}
+	}
+
+	private fun checkWalletBalanceAvailable() {
+		if (NSConstants.WALLET_BALANCE.toDouble() < productModel.finalAmount.toDouble()) {
+			showAlertDialog(activity.resources.getString(R.string.not_enough_balance))
 		}
 	}
 

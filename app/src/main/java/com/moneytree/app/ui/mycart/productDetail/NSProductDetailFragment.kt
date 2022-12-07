@@ -237,7 +237,7 @@ class NSProductDetailFragment : NSFragment() {
 				} catch (e: Exception) {
 					0
 				}
-				if (itemQty <= stock && stock != 0) {
+				if (itemQty < stock && stock != 0) {
 					itemQty += 1
 					tvQtyGrid.text = itemQty.toString()
 

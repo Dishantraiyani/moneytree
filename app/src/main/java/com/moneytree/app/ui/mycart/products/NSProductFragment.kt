@@ -312,6 +312,7 @@ class NSProductFragment : NSFragment() {
 					}
 					withContext(Dispatchers.Main) {
 						totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+						llItem.setVisibility(totalAmountValue > 0)
 					}
 				}
 

@@ -163,7 +163,7 @@ class NSProductListRecycleAdapter(
 					} catch (e: Exception) {
 						0
 					}
-					if (itemQty <= stock && stock != 0) {
+					if (itemQty < stock && stock != 0) {
 						if (itemQty == 0) {
 							NSApplication.getInstance().setProductList(response)
 						}

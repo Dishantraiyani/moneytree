@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.home
 
 import android.app.Application
+import android.provider.SyncStateContract.Constants
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -160,11 +161,12 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     fun setWallet(): String {
         with(dashboardData) {
             with(this?.data!!) {
-                return if (wltAmt.isValidList()) {
+                NSConstants.WALLET_BALANCE = if (wltAmt.isValidList()) {
                     wltAmt?.get(0)?.amount ?: "0"
                 } else {
                     "0"
                 }
+				return NSConstants.WALLET_BALANCE
             }
         }
     }
