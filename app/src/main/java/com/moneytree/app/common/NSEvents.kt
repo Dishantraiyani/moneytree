@@ -115,4 +115,6 @@ class NSActivityEvent(
 	val data: Intent?
 )
 
+class NSActivityPermissionEvent(val isGranted: Boolean)
+
 class NetworkCheckEvent

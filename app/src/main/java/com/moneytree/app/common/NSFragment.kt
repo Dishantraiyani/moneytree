@@ -167,4 +167,16 @@ open class NSFragment : Fragment() {
 			val data = result.data
 			EventBus.getDefault().post(NSActivityEvent(resultCode, data))
 		}
+
+	val activityResultPermission =
+		registerForActivityResult(
+			ActivityResultContracts.RequestPermission()){isGranted ->
+			// Handle Permission granted/rejected
+			if (isGranted) {
+				EventBus.getDefault().post(NSActivityPermissionEvent(isGranted))
+			} else {
+				// Permission is denied
+			}
+		}
+
 }

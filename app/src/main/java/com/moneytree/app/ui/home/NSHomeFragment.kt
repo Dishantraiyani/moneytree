@@ -1,5 +1,6 @@
 package com.moneytree.app.ui.home
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
@@ -259,7 +260,8 @@ class NSHomeFragment : NSFragment() {
 			clQrCode.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
 					//scanQrCode.launch(null)
-					openCameraWithScanner()
+					activityResultPermission.launch(Manifest.permission.CAMERA)
+					//openCameraWithScanner()
 				}
 			})
 
@@ -445,6 +447,13 @@ class NSHomeFragment : NSFragment() {
         }
     }
 
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onPermissionResultEvent(event: NSActivityPermissionEvent) {
+		if (event.isGranted) {
+			openCameraWithScanner()
+		}
+	}
+
     /**
      * To observe the view model for data changes
      */
@@ -532,6 +541,7 @@ class NSHomeFragment : NSFragment() {
     }
 
 	private fun openCameraWithScanner() {
+
 		BarcodeScanningActivity.start(requireContext(), BarcodeScanningActivity.ScannerSDK.ZXING, object :
 			OnScannerResponse {
 			override fun onScan(isSuccess: Boolean, value: String) {
