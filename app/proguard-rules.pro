@@ -72,6 +72,7 @@
 -dontwarn com.google.firebase.messaging.**
 -keep class io.github.g00fy2.** { *; }
 -keep class com.franmontiel.localechanger.** { *;}
+-keep class com.beautycoder.pflockscreen.** { *; }
 
 -keepattributes *Annotation*
 -keepclassmembers class * {

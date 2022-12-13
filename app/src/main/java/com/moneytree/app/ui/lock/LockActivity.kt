@@ -115,7 +115,7 @@ class LockActivity : NSActivity() {
 		val builder = PFFLockScreenConfiguration.Builder(this)
 			.setTitle(if (isPinExist) "Unlock with your pin code or fingerprint" else "Create Code")
 			.setCodeLength(4)
-			.setLeftButton("Can't remeber")
+			.setLeftButton("")
 			.setNewCodeValidation(true)
 			.setNewCodeValidationTitle("Please input code again")
 			.setUseFingerprint(true).setAutoShowFingerprint(true)

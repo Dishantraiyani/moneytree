@@ -23,8 +23,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 		debug {
-			minifyEnabled false
-			shrinkResources false
+			minifyEnabled true
+			shrinkResources true
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
     }
@@ -32,8 +32,8 @@ android {
     productFlavors {
         development {
             dimension "moneytree"
-            versionCode 5
-            versionName "1.3"
+            versionCode 6
+            versionName "1.4"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
             buildConfigField 'String', 'BASE_URL_IMAGE', ' "https://moneytree.biz/upload/product/" '

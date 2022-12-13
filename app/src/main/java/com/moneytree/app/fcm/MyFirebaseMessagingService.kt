@@ -63,7 +63,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun sendNotification(fcmResponse: NSFcmResponse) {
 		val intent: Intent = Intent(this, NSMainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_ONE_SHOT else PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
