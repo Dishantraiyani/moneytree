@@ -10,7 +10,7 @@
         android:supportsRtl="true">
         <activity android:name=".ui.BarcodeScanningActivity"
             android:screenOrientation="sensorPortrait"
-            android:exported="false"/>
+            android:exported="true"/>
     </application>
 
 </manifest>

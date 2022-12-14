@@ -32,7 +32,7 @@ android {
     productFlavors {
         development {
             dimension "moneytree"
-            versionCode 6
+            versionCode 8
             versionName "1.4"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
