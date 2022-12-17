@@ -53,7 +53,8 @@ class NSYoutubeViewModel(application: Application) : NSViewModel(application) {
 		}
 		youtubeRequestMap.clear()
 		youtubeRequestMap["key"] = "AIzaSyCw5Wbju4gtWuIudqYcRy7h2T424GQcnMo"
-		youtubeRequestMap["channelId"] = "UCwZuiF2VbJazXZ7BU_r9vEA"
+		//youtubeRequestMap["channelId"] = "UCwZuiF2VbJazXZ7BU_r9vEA"
+		youtubeRequestMap["channelId"] = "UCVdmNa50qiK4jlT46LFFjWg"
 		youtubeRequestMap["part"] = "snippet,id"
 		youtubeRequestMap["order"] = "date"
 		youtubeRequestMap["maxResults"] = "${NSConstants.PAGINATION}"

@@ -12,5 +12,5 @@
     <string name="developed_by_maulik_hirani">Developed by Maulik Hirani</string>
     <string name="scanner">Select QR Code</string>
 	<string name="quickie_scan_qr_code">Scan QR code</string>
-	<string name="amount_charges">When Amount will be less then 1000\nthen 10Rs extra charges \nand when more then 1000Rs on 1%\nextra charges Applicable.</string>
+	<string name="amount_charges">10rs surcharge on 1000rs,\n1% surcharge on more than 1000rs.</string>
 </resources>

@@ -404,7 +404,7 @@ class NSHomeFragment : NSFragment() {
 
 						llInstagram.setOnClickListener {
 							drawer.closeDrawer(GravityCompat.START)
-							val instagramUrl = "https://instagram.com/joinmoneytree?igshid=MTg0ZDhmNDA="
+							val instagramUrl = "https://www.instagram.com/moneytreeofficial_india/"
 							val uri: Uri = Uri.parse(instagramUrl)
 							val likeIng = Intent(Intent.ACTION_VIEW, uri)
 
