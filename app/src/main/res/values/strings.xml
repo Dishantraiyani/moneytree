@@ -255,6 +255,7 @@
 
     <string-array name="recharge_list_history">
         <item>All</item>
+		<item>QR SCAN</item>
         <item>Prepaid</item>
         <item>Postpaid</item>
         <item>DTH</item>
