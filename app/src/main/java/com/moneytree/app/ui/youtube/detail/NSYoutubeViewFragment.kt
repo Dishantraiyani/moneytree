@@ -1,7 +1,9 @@
 package com.moneytree.app.ui.youtube.detail
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
-import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSInfoSelectCallback
@@ -18,14 +19,12 @@ import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentYoutubeViewBinding
-import com.moneytree.app.repository.NSRoyaltyRepository.getRoyaltyListData
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController
 
 
 class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
@@ -154,6 +153,15 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
 					srlRefresh.setOnRefreshListener {
 						pageIndex = ""
 						getYoutubeVideos(pageIndex, false, isBottomProgress = false)
+					}
+
+					tvSubscribe.setOnClickListener {
+						startActivity(
+							Intent(
+								Intent.ACTION_VIEW,
+								Uri.parse("https://www.youtube.com/channel/UCVdmNa50qiK4jlT46LFFjWg")
+							)
+						)
 					}
 				}
 			}

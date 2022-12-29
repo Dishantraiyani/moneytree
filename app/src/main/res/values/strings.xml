@@ -594,4 +594,5 @@
 	<string name="skip">Skip</string>
 	<string name="not_enough_balance">Not Enough Balance Available</string>
     <string name="product_transfer">Product Transfer</string>
+    <string name="subscribe">Subscribe</string>
 </resources>
