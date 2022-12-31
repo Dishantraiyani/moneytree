@@ -7,9 +7,17 @@ import com.google.gson.annotations.SerializedName
  * The class representing the response body of notification
  */
 data class NSNotificationListResponse(
+	@SerializedName("status")
+	@Expose
+	var status: Boolean = false,
+	@SerializedName("message")
+	@Expose
+	var message: String? = null,
+	@SerializedName("nextPage")
+	val nextPage: Boolean = false,
     @SerializedName("data")
     @Expose
-    var orderData: MutableList<NSNotificationListData>? = null
+    var data: MutableList<NSNotificationListData>? = null
 )
 
 /**
@@ -19,10 +27,16 @@ data class NSNotificationListData(
     @SerializedName("title")
     @Expose
     var title: String? = null,
-    @SerializedName("sub_title")
+    @SerializedName("entrydate")
     @Expose
-    var subTitle: String? = null,
-    @SerializedName("created_at")
-    @Expose
-    var createdAt: String? = null
+    var entrydate: String? = null,
+	@SerializedName("memberid")
+	@Expose
+	var memberid: String? = null,
+	@SerializedName("img")
+	@Expose
+	var img: String? = null,
+	@SerializedName("body")
+	@Expose
+	var body: String? = null
 )

@@ -29,6 +29,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
+		<activity
+			android:name=".ui.notification.NSNotificationActivity"
+			android:exported="false"/>
         <activity
             android:name=".ui.lock.LockActivity"
             android:exported="false">

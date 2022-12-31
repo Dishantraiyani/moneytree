@@ -32,6 +32,7 @@ import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
@@ -380,6 +381,13 @@ class NSHomeFragment : NSFragment() {
                                 YoutubeActivity::class.java
                             )
                         }
+
+						llNotification.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(
+								NSNotificationActivity::class.java
+							)
+						}
 
                         llWallet.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))

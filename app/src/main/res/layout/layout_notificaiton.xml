@@ -1,76 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/cl_notification" xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<androidx.cardview.widget.CardView android:id="@+id/cl_notification" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="@dimen/_8sdp"
+	app:cardCornerRadius="@dimen/_5sdp"
+	android:layout_marginHorizontal="@dimen/_8sdp"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_notification_layout"
-        style="@style/LayoutWidthHeightZeroWrap"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:paddingVertical="@dimen/_5sdp"
-        android:paddingHorizontal="@dimen/_5sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_notification_title"
-            style="@style/LoginSubFontsZeroWrap"
-            tools:text="Notification"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:paddingStart="@dimen/_10sdp"
-            android:lines="1"
-            android:textStyle="bold"
-            android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toStartOf="@id/tv_notification_time"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_transaction_status"
+			android:layout_width="match_parent"
+			style="@style/LayoutWidthHeightZeroWrap"
+			android:layout_marginTop="@dimen/_8sdp"
+			android:paddingHorizontal="@dimen/_10sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_notification_time"
-            style="@style/LoginSubFontsZeroWrap"
-            tools:text="10:00"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:gravity="center|start"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_5sdp"
-            android:lines="1"
-            app:layout_constraintWidth="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/tv_notification_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+			<TextView
+				android:id="@+id/tv_notification_title"
+				style="@style/LoginSubFontsZeroWrap"
+				tools:text="Title"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/black"
+				android:gravity="center|start"
+				android:textStyle="bold"
+				android:fontFamily="@font/inter_regular"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toStartOf="@id/tv_notification_time"
+				app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_notification_sub"
-            style="@style/LoginSubFontsZeroWrap"
-            tools:text="998899"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/gray_text"
-            android:gravity="center|start"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_notification_title" />
+			<TextView
+				android:id="@+id/tv_notification_time"
+				style="@style/LoginSubFontsZeroWrap"
+				android:gravity="center|end"
+				android:lines="1"
+				android:textColor="@color/gray_text"
+				app:guidelineUseRtl="true"
+				android:textSize="@dimen/_10sdp"
+				android:alpha="0.6"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				tools:text="Credit" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+		</androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:id="@+id/view_line"
-        android:layout_width="0dp"
-        android:layout_height="0.8dp"
-        android:background="@color/line_color"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_notification_layout"
-        />
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_date"
+			android:layout_width="match_parent"
+			style="@style/LayoutWidthHeightZeroWrap"
+			android:layout_marginTop="@dimen/_4sdp"
+			android:paddingHorizontal="@dimen/_10sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/cl_transaction_status">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+			<TextView
+				android:id="@+id/tv_notification_sub"
+				style="@style/LoginSubFontsZeroWrap"
+				android:textColor="@color/gray_text"
+				tools:text="Description"
+				android:textSize="@dimen/_11sdp"
+				android:gravity="start"
+				android:paddingTop="0dp"
+				android:paddingBottom="@dimen/_8sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+		<View
+			android:id="@+id/view_line"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:visibility="gone"
+			android:background="@color/line_color"
+			android:layout_marginTop="@dimen/_8sdp"
+			app:layout_constraintTop_toBottomOf="@id/cl_date"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1042,6 +1042,16 @@ class NSApiManager {
 			callback
 		)
 	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getNotifications(pageIndex: String, callback: NSRetrofitCallback<NSNotificationListResponse>) {
+		request(unAuthorised3020Client.getNotifications(NSUserManager.getAuthToken()!!, pageIndex), callback)
+	}
+
 }
 
 /**
@@ -1452,4 +1462,11 @@ interface RTApiInterface {
 	fun getYoutubeVideos(
 		@QueryMap param: Map<String, String>
 	): Call<YoutubeResponse>
+
+	@FormUrlEncoded
+	@POST("notification-list")
+	fun getNotifications(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String
+	): Call<NSNotificationListResponse>
 }

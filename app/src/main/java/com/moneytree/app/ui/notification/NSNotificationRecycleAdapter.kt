@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSNotificationCallback
+import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.databinding.LayoutNotificaitonBinding
 import com.moneytree.app.repository.network.responses.NSNotificationListData
 
 class NSNotificationRecycleAdapter(
-    onCallBack: NSNotificationCallback
+	onCallBack: NSNotificationCallback,
+	val onPageChange: NSPageChangeCallback,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val onNSNotificationCallback = onCallBack
     private val notificationData: MutableList<NSNotificationListData> = arrayListOf()
@@ -35,6 +38,12 @@ class NSNotificationRecycleAdapter(
             val holder: NSNotificationViewHolder = holderRec
             holder.bind(notificationData[holder.absoluteAdapterPosition])
         }
+
+		if (position == notificationData.size - 1) {
+			if (((position + 1) % NSConstants.PAGINATION) == 0) {
+				onPageChange.onPageChange()
+			}
+		}
     }
 
     override fun getItemCount(): Int {
@@ -58,8 +67,8 @@ class NSNotificationRecycleAdapter(
             with(notificationBinding) {
                 with(response) {
                     tvNotificationTitle.text = title
-                    tvNotificationTime.text = createdAt
-                    tvNotificationSub.text = subTitle
+                    tvNotificationTime.text = entrydate
+                    tvNotificationSub.text = body
                     if (absoluteAdapterPosition == itemCount - 1) {
                         viewLine.visibility = View.GONE
                     }

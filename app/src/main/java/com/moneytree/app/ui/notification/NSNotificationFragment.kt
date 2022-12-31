@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSNotificationCallback
+import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentNotificationBinding
 import com.moneytree.app.repository.network.responses.NSNotificationListData
 
@@ -39,6 +42,12 @@ class NSNotificationFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
+		notificationBinding.apply {
+			layoutHeader.apply {
+				clBack.visible()
+				tvHeaderBack.text = activity.resources.getString(R.string.notification_title)
+			}
+		}
         setNotificationAdapter()
         observeViewModel()
     }
@@ -48,13 +57,14 @@ class NSNotificationFragment : NSFragment() {
      */
     private fun setListener() {
         with(notificationBinding) {
-            clBack.setOnClickListener {
+            layoutHeader.ivBack.setOnClickListener {
                 onBackPress()
             }
 
             with(notificationModel) {
                 srlRefresh.setOnRefreshListener {
-                    getNotificationData(false)
+					pageIndex = "1"
+					getNotificationData(pageIndex, false, isBottomProgress = false)
                 }
             }
         }
@@ -72,9 +82,19 @@ class NSNotificationFragment : NSFragment() {
                         override fun onClick(data: NSNotificationListData) {
 
                         }
-                    })
+                    }, object : NSPageChangeCallback {
+						override fun onPageChange() {
+							if (notificationResponse!!.nextPage) {
+								val page: Int = notificationList.size/ NSConstants.PAGINATION + 1
+								pageIndex = page.toString()
+								getNotificationData(pageIndex, true, isBottomProgress = true)
+							}
+						}
+
+					})
                 rvNotificationList.adapter = notificationAdapter
-                getNotificationData(true)
+				pageIndex = "1"
+                getNotificationData(pageIndex, true, isBottomProgress = false)
             }
         }
     }
@@ -106,6 +126,12 @@ class NSNotificationFragment : NSFragment() {
         }
     }
 
+	private fun bottomProgress(isShowProgress: Boolean) {
+		with(notificationBinding) {
+			cvProgress.visibility = if (isShowProgress) View.VISIBLE else View.GONE
+		}
+	}
+
     /**
      * To observe the view model for data changes
      */
@@ -117,6 +143,12 @@ class NSNotificationFragment : NSFragment() {
                 ) { shouldShowProgress ->
                     updateProgress(shouldShowProgress)
                 }
+
+				isBottomProgressShowing.observe(
+					viewLifecycleOwner
+				) { isBottomProgressShowing ->
+					bottomProgress(isBottomProgressShowing)
+				}
 
                 isNotificationDataAvailable.observe(
                     viewLifecycleOwner
@@ -145,10 +177,6 @@ class NSNotificationFragment : NSFragment() {
 
                 validationErrorId.observe(viewLifecycleOwner) { errorId ->
                     showAlertDialog(getString(errorId))
-                }
-
-                isRefreshComplete.observe(viewLifecycleOwner) {
-                    getNotificationData(!srlRefresh.isRefreshing)
                 }
             }
         }
