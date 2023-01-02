@@ -41,7 +41,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 			val sound = map["sound"]
 			val imageUrl = map["img"]
 			val orderId = map["order_id"]
-			fcmResponse = NSFcmResponse(title, body, channelId, sound, if (imageUrl == null) null else imageUrl.toString(), orderId)
+			val type = map["type"]
+			fcmResponse = NSFcmResponse(title, body, channelId, sound, if (imageUrl == null) null else imageUrl.toString(), orderId, type)
 			sendNotification(fcmResponse!!)
         } else {
             remoteMessage.notification?.let {

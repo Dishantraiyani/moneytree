@@ -27,11 +27,13 @@ class NSConstants {
 		const val KEY_PRODUCT_CATEGORY = "key_product_category"
 		const val KEY_PRODUCT_CATEGORY_NAME = "key_product_category_name"
 		const val KEY_PRODUCT_DETAIL = "key_product_detail"
+		const val KEY_NOTIFICATION_DETAIL = "key_notification_detail"
 		const val KEY_MEMBER_ACTIVATION_FORM = "key_member_activation_form"
 		const val KEY_MEMBER_FORM_ACTIVATION_FORM = "key_member_form_activation_form"
 		const val KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL = "key_member_form_activation_form_detail"
 		const val KEY_MEMBER_LEVEL_NUMBER = "key_member_level_number"
 		const val KEY_OFFER_DETAIL_TYPE = "key_offer_detail_type"
+		const val KEY_DEFAULT_TYPE = "default_type"
 
 		const val KEY_BANNER_URL = "key_banner_url"
 		const val KEY_BANNER_POSITION = "key_banner_position"

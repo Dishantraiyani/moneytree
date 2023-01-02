@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.moneytree.app.R
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSNotificationCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
@@ -69,6 +72,7 @@ class NSNotificationRecycleAdapter(
                     tvNotificationTitle.text = title
                     tvNotificationTime.text = entrydate
                     tvNotificationSub.text = body
+					Glide.with(NSApplication.getInstance().applicationContext).load(img).error(R.drawable.placeholder).into(ivNotificationImg)
                     if (absoluteAdapterPosition == itemCount - 1) {
                         viewLine.visibility = View.GONE
                     }

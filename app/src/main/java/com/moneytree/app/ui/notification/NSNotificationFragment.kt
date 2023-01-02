@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSNotificationCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentNotificationBinding
 import com.moneytree.app.repository.network.responses.NSNotificationListData
+import com.moneytree.app.ui.notificationDetail.NSNotificationDetailActivity
 
 
 class NSNotificationFragment : NSFragment() {
@@ -80,7 +84,11 @@ class NSNotificationFragment : NSFragment() {
                 notificationAdapter =
                     NSNotificationRecycleAdapter(object : NSNotificationCallback {
                         override fun onClick(data: NSNotificationListData) {
+							if (data.type.equals(NSConstants.KEY_DEFAULT_TYPE)) {
+								switchActivity(NSNotificationDetailActivity::class.java, bundleOf(NSConstants.KEY_NOTIFICATION_DETAIL to Gson().toJson(data)))
+							} else {
 
+							}
                         }
                     }, object : NSPageChangeCallback {
 						override fun onPageChange() {

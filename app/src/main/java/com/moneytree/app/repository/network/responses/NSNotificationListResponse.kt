@@ -2,6 +2,7 @@ package com.moneytree.app.repository.network.responses
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.moneytree.app.common.NSConstants
 
 /**
  * The class representing the response body of notification
@@ -38,5 +39,8 @@ data class NSNotificationListData(
 	var img: String? = null,
 	@SerializedName("body")
 	@Expose
-	var body: String? = null
+	var body: String? = null,
+	@SerializedName("type")
+	@Expose
+	var type: String? = NSConstants.KEY_DEFAULT_TYPE
 )
