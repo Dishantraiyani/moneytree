@@ -196,6 +196,7 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 				val rechargeMainListData = data as NSRechargeListResponse
 				rechargeResponse = rechargeMainListData
 				if (rechargeMainListData.data.isValidList()) {
+					rechargeList.clear()
 					rechargeList.addAll(rechargeMainListData.data)
 				} else {
 					rechargeList.clear()

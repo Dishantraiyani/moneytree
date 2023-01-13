@@ -22,6 +22,7 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.responses.NSFcmResponse
 import com.moneytree.app.ui.main.NSMainActivity
+import com.moneytree.app.ui.notification.NSNotificationActivity
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
@@ -63,7 +64,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(fcmResponse: NSFcmResponse) {
-		val intent: Intent = Intent(this, NSMainActivity::class.java)
+		var intent: Intent = Intent(this, NSMainActivity::class.java)
+		/*if (fcmResponse.type.equals(NSConstants.KEY_DEFAULT_TYPE)) {
+			intent = Intent(this, NSMainActivity::class.java)
+		} else {
+			intent = Intent(this, NSNotificationActivity::class.java)
+		}*/
+
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_ONE_SHOT else PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -77,7 +84,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentTitle(if (fcmResponse.title == null) "" else fcmResponse.title)
             .setContentText(if (fcmResponse.body == null) "" else fcmResponse.body)
             .setAutoCancel(true)
-            .setSound(if (fcmResponse.sound.isNullOrEmpty()) defaultSoundUri else Uri.parse(fcmResponse.sound))
+			.setShowWhen(true)
+			.setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
+			.setSound(if (fcmResponse.sound.isNullOrEmpty()) defaultSoundUri else Uri.parse(fcmResponse.sound))
             .setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -87,6 +96,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val channel = NotificationChannel(channelId,
                 resources.getString(R.string.app_name),
                 NotificationManager.IMPORTANCE_DEFAULT)
+			channel.setShowBadge(true)
             notificationManager.createNotificationChannel(channel)
         }
 

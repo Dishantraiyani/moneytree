@@ -33,11 +33,7 @@ class NSRechargeListRecycleAdapter(
 
     fun updateData(rechargeList: MutableList<RechargeListDataItem>) {
         rechargeData.addAll(rechargeList)
-        if (rechargeList.isValidList()) {
-            notifyItemRangeChanged(0, rechargeData.size - 1)
-        } else {
-            notifyDataSetChanged()
-        }
+		notifyDataSetChanged()
     }
 
     fun clearData() {

@@ -99,6 +99,11 @@ class NSQRCodeFragment : NSFragment() {
 								if (da.length > 2) {
 									upiId = da.substring(3)
 								}
+							} else if (da.contains("am=")) {
+								if (da.length > 2) {
+									etAmount.isEnabled = false
+									etAmount.setText(da.substring(3))
+								}
 							}
 						}
 

@@ -57,6 +57,9 @@ class NSRechargeHistoryViewModel(application: Application) : NSViewModel(applica
         rechargeResponse = rechargeMainListData
         if (rechargeMainListData.data != null) {
             if (rechargeMainListData.data.isValidList()) {
+				if (pageIndex == "1") {
+					rechargeList.clear()
+				}
                 rechargeList.addAll(rechargeMainListData.data)
                 isRechargeDataAvailable.value = rechargeList.isValidList()
             } else if (pageIndex == "1" || searchData.isNotEmpty()){

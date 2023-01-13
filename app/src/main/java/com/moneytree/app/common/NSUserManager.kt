@@ -10,12 +10,12 @@ object NSUserManager {
     private val prefs = NSApplication.getInstance().getPrefs()
 
     //Status of user logged in
-    val isUserLoggedIn: Boolean get() = !getAuthToken().isNullOrBlank()
+    val isUserLoggedIn: Boolean get() = !getAuthToken().isBlank()
 
     /**
      * To get authentication token
      */
-    fun getAuthToken() = prefs.authToken
+    fun getAuthToken() = prefs.authToken?:""
 
     /**
      * To save headers in preference
