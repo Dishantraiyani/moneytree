@@ -10,6 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.money.tree.app"
+        //applicationId "com.money.lucktimer"
         minSdk 21
         targetSdk 33
         multiDexEnabled true

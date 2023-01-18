@@ -1,12 +1,16 @@
 package maulik.barcodescanner.ui
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Size
 import android.view.OrientationEventListener
 import android.view.Surface
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -14,7 +18,12 @@ import androidx.camera.core.Preview
 import androidx.camera.core.TorchState
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.github.drjacky.imagepicker.ImagePicker
 import com.google.common.util.concurrent.ListenableFuture
+import com.google.zxing.*
+import com.google.zxing.common.HybridBinarizer
 import maulik.barcodescanner.OnScannerResponse
 import maulik.barcodescanner.R
 import maulik.barcodescanner.analyzer.MLKitBarcodeAnalyzer
@@ -77,6 +86,10 @@ class BarcodeScanningActivity : AppCompatActivity() {
         binding.ivCloseDocument.setOnClickListener {
             onBackPressed()
         }
+
+		binding.ivGallery.setOnClickListener {
+			launcher.launch(ImagePicker.with(this).galleryOnly().createIntent())
+		}
     }
 
     override fun onBackPressed() {
@@ -176,6 +189,61 @@ class BarcodeScanningActivity : AppCompatActivity() {
 
 
     }
+
+	private val launcher =
+		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+			if (it.resultCode == Activity.RESULT_OK) {
+				val uri = it.data?.data!!
+				Glide.with(this@BarcodeScanningActivity)
+					.asBitmap()
+					.load(FilePath.getPathFromURI(this, uri))
+					.into(object : CustomTarget<Bitmap?>() {
+						override fun onResourceReady(
+							bMap: Bitmap,
+							transition: com.bumptech.glide.request.transition.Transition<in Bitmap?>?
+						) {
+							var contents: String? = null
+							val intArray = IntArray(bMap.width * bMap.height)
+							bMap.getPixels(
+								intArray,
+								0,
+								bMap.width,
+								0,
+								0,
+								bMap.width,
+								bMap.height
+							)
+							val source: LuminanceSource =
+								RGBLuminanceSource(bMap.width, bMap.height, intArray)
+							val bitmap = BinaryBitmap(HybridBinarizer(source))
+							val reader: Reader = MultiFormatReader()
+							val result: Result?
+							try {
+								result = reader.decode(bitmap)
+								contents = result.text
+
+							} catch (e: NotFoundException) {
+								e.printStackTrace()
+							} catch (e: ChecksumException) {
+								e.printStackTrace()
+							} catch (e: FormatException) {
+								e.printStackTrace()
+							}
+							if (contents.isNullOrEmpty()) {
+								scanCallback?.onScan(false, "")
+							} else {
+								scanCallback?.onScan(true, contents)
+								finish()
+							}
+						}
+
+						override fun onLoadCleared(placeholder: Drawable?) {
+							//mDecodeImageCallback.decodeFail(0, "Decode image failed3.")
+							scanCallback?.onScan(false, "")
+						}
+					})
+			}
+		}
 
     override fun onDestroy() {
         super.onDestroy()
