@@ -37,19 +37,109 @@
 				android:layout_marginTop="@dimen/_15sdp"
 				android:textSize="@dimen/_10sdp"/>
 
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/_4sdp">
+
+				<androidx.cardview.widget.CardView
+					android:id="@+id/card_wallet_amount"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					app:cardCornerRadius="@dimen/_5sdp"
+					android:layout_marginVertical="@dimen/_1sdp"
+					android:layout_marginHorizontal="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toStartOf="@id/btn_search"
+					app:layout_constraintTop_toTopOf="parent">
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/cl_wallet_amount"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="@dimen/_1sdp"
+						app:guidelineUseRtl="true"
+						app:chainUseRtl="true"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+
+						<ImageView
+							android:id="@+id/iv_wallet_amount"
+							android:layout_width="@dimen/_15sdp"
+							android:layout_height="@dimen/_15sdp"
+							android:src="@drawable/ic_transfer"
+							android:layout_marginStart="@dimen/_10sdp"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent"
+							android:contentDescription="@string/username_title" />
+
+						<EditText
+							android:id="@+id/et_transaction_id"
+							style="@style/LoginSubFontsZeroWrap"
+							android:minHeight="@dimen/_38sdp"
+							android:textColor="@color/black"
+							android:background="@drawable/phone_white_background"
+							android:paddingHorizontal="@dimen/_10sdp"
+							android:hint="@string/enter_transaction_id"
+							android:lines="1"
+							android:gravity="center_vertical"
+							android:textColorHint="@color/hint_color"
+							app:layout_constraintTop_toTopOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintStart_toEndOf="@id/iv_wallet_amount"
+							app:layout_constraintEnd_toEndOf="parent" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.cardview.widget.CardView>
+
+				<ImageView
+					android:id="@+id/btn_search"
+					android:layout_width="@dimen/_38sdp"
+					android:layout_height="@dimen/_38sdp"
+					android:src="@drawable/ic_search"
+					android:tint="@color/white"
+					android:padding="@dimen/_7sdp"
+					style="@style/LayoutWidthHeightZeroWrap"
+					android:background="@drawable/login_button_border"
+					android:visibility="gone"
+					android:fontFamily="@font/inter_regular"
+					android:layout_marginHorizontal="@dimen/_5sdp"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="@id/card_wallet_amount"
+					app:layout_constraintBottom_toBottomOf="@id/card_wallet_amount"
+					tools:ignore="UseAppTint" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<TextView
+				android:id="@+id/tv_member_name"
+				style="@style/LoginSubFontsWrap"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:text="@string/member_name"
+				android:textColor="@color/black"
+				android:visibility="gone"
+				android:textSize="@dimen/_10sdp" />
+
 			<androidx.cardview.widget.CardView
-				android:id="@+id/card_wallet_amount"
+				android:id="@+id/card_member"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/_6sdp"
 				app:cardCornerRadius="@dimen/_5sdp"
+				android:visibility="gone"
+				app:cardBackgroundColor="@color/gray_background"
 				android:layout_marginHorizontal="@dimen/_5sdp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
-				app:layout_constraintTop_toTopOf="parent">
+				app:layout_constraintTop_toBottomOf="@+id/card_wallet_amount">
 
 				<androidx.constraintlayout.widget.ConstraintLayout
-					android:id="@+id/cl_wallet_amount"
+					android:id="@+id/cl_member"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
@@ -60,30 +150,30 @@
 					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
 
 					<ImageView
-						android:id="@+id/iv_wallet_amount"
+						android:id="@+id/iv_member"
 						android:layout_width="@dimen/_15sdp"
 						android:layout_height="@dimen/_15sdp"
-						android:src="@drawable/ic_transfer"
+						android:src="@drawable/tab_profile"
 						android:layout_marginStart="@dimen/_10sdp"
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
 						android:contentDescription="@string/username_title" />
 
-					<EditText
-						android:id="@+id/et_transaction_id"
+					<TextView
+						android:id="@+id/tv_member"
 						style="@style/LoginSubFontsZeroWrap"
 						android:minHeight="@dimen/_38sdp"
 						android:textColor="@color/black"
-						android:background="@drawable/phone_white_background"
 						android:paddingHorizontal="@dimen/_10sdp"
-						android:hint="@string/enter_transaction_id"
+						android:hint="@string/member_name"
 						android:gravity="center_vertical"
 						android:textColorHint="@color/hint_color"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
-						app:layout_constraintStart_toEndOf="@id/iv_wallet_amount"
-						app:layout_constraintEnd_toEndOf="parent" />
+						app:layout_constraintStart_toEndOf="@id/iv_member"
+						app:layout_constraintEnd_toEndOf="parent"
+						/>
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 

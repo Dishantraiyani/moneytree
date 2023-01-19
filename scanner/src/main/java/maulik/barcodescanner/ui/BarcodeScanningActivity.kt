@@ -238,7 +238,6 @@ class BarcodeScanningActivity : AppCompatActivity() {
 						}
 
 						override fun onLoadCleared(placeholder: Drawable?) {
-							//mDecodeImageCallback.decodeFail(0, "Decode image failed3.")
 							scanCallback?.onScan(false, "")
 						}
 					})

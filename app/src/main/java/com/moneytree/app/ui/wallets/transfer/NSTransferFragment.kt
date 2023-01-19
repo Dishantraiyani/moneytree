@@ -77,6 +77,9 @@ class NSTransferFragment : NSFragment() {
 					tvRemark.gone()
 					tvPassword.gone()
 					clRemark.gone()
+					btnSearch.visible()
+					tvMemberName.visible()
+					cardMember.visible()
 					clTransactionPassword.gone()
 					tvHeaderBack.text = activity.resources.getString(R.string.voucher_transfer)
 					tvPackageNameTitle.visible()
@@ -99,12 +102,22 @@ class NSTransferFragment : NSFragment() {
 					onBackPress()
 				}
 
+				btnSearch.setOnClickListener {
+					val id = etTransactionId.text.toString()
+					if (id.isNotEmpty()) {
+						transferModel.getMemberDetail(id, true)
+					} else {
+						etTransactionId.error = activity.resources.getString(R.string.please_enter_transation_id)
+					}
+				}
+
 				btnSubmit.setOnClickListener(object : OnSingleClickListener() {
 					override fun onSingleClick(v: View?) {
 						val transactionId = etTransactionId.text.toString()
 						val password = etTransactionPassword.text.toString()
 						val remark = etRemark.text.toString()
 						val amount = etAmount.text.toString()
+						val memberName = tvMember.text.toString()
 
 						if (transactionId.isEmpty()) {
 							etTransactionId.error =
@@ -140,6 +153,16 @@ class NSTransferFragment : NSFragment() {
 									).show()
 									return
 								}
+
+								if (isTransferFromVoucher && memberName.isEmpty()) {
+									Toast.makeText(
+										activity,
+										activity.resources.getString(R.string.member_name_not_empty),
+										Toast.LENGTH_SHORT
+									).show()
+									return
+								}
+
 								val model = NSWalletTransferModel(
 									transactionId,
 									password,
@@ -180,7 +203,7 @@ class NSTransferFragment : NSFragment() {
 				val aa = ArrayAdapter(activity, R.layout.layout_spinner_item, strPackageList)
 				aa.setDropDownViewResource(R.layout.layout_spinner_item)
 				adBinding.spinnerPackage.adapter = aa
-				adBinding.spinnerPackage.setOnItemSelectedListener(object :
+				adBinding.spinnerPackage.onItemSelectedListener = object :
 					AdapterView.OnItemSelectedListener {
 					override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 						if (p2 == 0) {
@@ -198,7 +221,7 @@ class NSTransferFragment : NSFragment() {
 					override fun onNothingSelected(p0: AdapterView<*>?) {
 
 					}
-				})
+				}
 			}
 		}
 	}
@@ -219,6 +242,20 @@ class NSTransferFragment : NSFragment() {
 					viewLifecycleOwner
 				) { isNotification ->
 					setPackageData(isNotification)
+				}
+
+				isMemberDataAvailable.observe(
+					viewLifecycleOwner
+				) { isMember ->
+					if (isMember) {
+						if (memberDetailModel != null) {
+							tvMember.text = memberDetailModel?.data?.fullname
+						}
+					} else {
+						if (memberDetailModel != null) {
+							showAlertDialog(memberDetailModel?.message)
+						}
+					}
 				}
 
 				isVoucherDataAvailable.observe(

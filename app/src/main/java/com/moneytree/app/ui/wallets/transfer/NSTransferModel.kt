@@ -24,6 +24,8 @@ class NSTransferModel(application: Application) : NSViewModel(application),
 	var isPackageDataAvailable = MutableLiveData<Boolean>()
 	var isVoucherDataAvailable = MutableLiveData<Boolean>()
 	var voucherQuantity: String? = null
+	var memberDetailModel: NSMemberDetailResponse? = null
+	var isMemberDataAvailable = MutableLiveData<Boolean>()
 
 	/**
 	 * Get register list data
@@ -102,4 +104,34 @@ class NSTransferModel(application: Application) : NSViewModel(application),
 	override fun <T> onNoNetwork(localData: T) {
 		handleNoNetwork()
 	}
+
+	fun getMemberDetail(memberId: String, isShowProgress: Boolean) {
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSUserRepository.getMemberDetail(memberId, object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+				memberDetailModel = data as NSMemberDetailResponse?
+				if (memberDetailModel == null) {
+					memberDetailModel = NSMemberDetailResponse(status = false, message = "Member Not Found.")
+				}
+
+				isMemberDataAvailable.value = memberDetailModel?.status?:false
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+		})
+	}
+
 }

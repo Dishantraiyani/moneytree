@@ -596,4 +596,5 @@
     <string name="product_transfer">Product Transfer</string>
     <string name="subscribe">Subscribe</string>
 	<string name="notification_details">Details</string>
+	<string name="member_name_not_empty">Member Name can not be empty</string>
 </resources>

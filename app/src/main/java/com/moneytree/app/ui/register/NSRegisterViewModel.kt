@@ -29,6 +29,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 	var activationPackageList: MutableList<NSActivationPackageData> = arrayListOf()
 	var isActivationPackageDataAvailable = MutableLiveData<Boolean>()
 	var dataMember: NSRegisterListData? = null
+	var successResponse: NSSuccessResponse? = null
 
 	//Spinner value for registration form
     var registrationType: MutableList<String> = arrayListOf()
@@ -44,7 +45,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 		NSRegisterRepository.saveRegisterApi(fullName, email, mobile, password, object : NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
-				val registerMainData = data as NSSuccessResponse
+				successResponse = data as NSSuccessResponse
 				isRegisterSuccessAvailable.value = true
 			}
 

@@ -43,6 +43,7 @@ class NSConstants {
         const val REDEEM_SAVE_CLICK = "redeem_save_button_click"
         const val RECHARGE_SAVE_CLICK = "recharge_save_button_click"
         const val MEMBER_ACTIVATE_CLICK = "member_activate_button_click"
+        const val MEMBER_REGISTER_SUCCESS = "member_register_success"
         const val MEMBER_TH_ACTIVATE_CLICK = "member_th_activate_button_click"
         const val LOGOUT_CLICK = "logout_button_click"
 		const val PRODUCT_SEND_CLICK = "product_send_button_click"
