@@ -119,6 +119,15 @@ class NSTransferFragment : NSFragment() {
 						val amount = etAmount.text.toString()
 						val memberName = tvMember.text.toString()
 
+						if (isTransferFromVoucher && memberName.isEmpty()) {
+							Toast.makeText(
+								activity,
+								activity.resources.getString(R.string.member_name_not_empty),
+								Toast.LENGTH_SHORT
+							).show()
+							return
+						}
+
 						if (transactionId.isEmpty()) {
 							etTransactionId.error =
 								activity.resources.getString(R.string.please_enter_transation_id)
@@ -154,14 +163,7 @@ class NSTransferFragment : NSFragment() {
 									return
 								}
 
-								if (isTransferFromVoucher && memberName.isEmpty()) {
-									Toast.makeText(
-										activity,
-										activity.resources.getString(R.string.member_name_not_empty),
-										Toast.LENGTH_SHORT
-									).show()
-									return
-								}
+
 
 								val model = NSWalletTransferModel(
 									transactionId,
@@ -250,8 +252,11 @@ class NSTransferFragment : NSFragment() {
 					if (isMember) {
 						if (memberDetailModel != null) {
 							tvMember.text = memberDetailModel?.data?.fullname
+						} else {
+							tvMember.text = ""
 						}
 					} else {
+						tvMember.text = ""
 						if (memberDetailModel != null) {
 							showAlertDialog(memberDetailModel?.message)
 						}

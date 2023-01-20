@@ -121,14 +121,20 @@ class NSTransferModel(application: Application) : NSViewModel(application),
 			}
 
 			override fun onError(errors: List<Any>) {
+				memberDetailModel = null
+				isMemberDataAvailable.value = false
 				handleError(errors)
 			}
 
 			override fun onFailure(failureMessage: String?) {
+				memberDetailModel = null
+				isMemberDataAvailable.value = false
 				handleFailure(failureMessage)
 			}
 
 			override fun <T> onNoNetwork(localData: T) {
+				memberDetailModel = null
+				isMemberDataAvailable.value = false
 				handleNoNetwork()
 			}
 		})
