@@ -204,6 +204,7 @@
 		<item name="pdfView_actionBarTint">@color/orange</item>
 		<item name="pdfView_downloadIcon">@drawable/ic_downloads</item>
 		<item name="pdfView_titleTextStyle">@style/MyTabTextAppearanceSecond</item>
+		<item name="pdfView_downloadIconTint">@color/white</item>
 	</style>
 
 	<style name="MyTabTextAppearanceSecond" parent="TextAppearance.AppCompat.Button">

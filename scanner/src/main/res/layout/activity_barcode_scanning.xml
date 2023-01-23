@@ -71,14 +71,17 @@
 
 	<ImageView
 		android:id="@+id/iv_gallery"
-		android:layout_width="@dimen/_15sdp"
-		android:layout_height="@dimen/_15sdp"
-		android:layout_gravity="end"
-		android:layout_margin="@dimen/_20sdp"
-		android:tint="@android:color/white"
-		android:src="@drawable/ic_gallery"
-		tools:ignore="UseAppTint"
+		android:layout_width="@dimen/_18sdp"
+		android:layout_height="@dimen/_18sdp"
+		android:layout_alignParentTop="true"
 		android:layout_alignParentEnd="true"
-		android:layout_alignParentTop="true"/>
+		android:layout_gravity="end"
+		android:layout_marginStart="@dimen/_20sdp"
+		android:layout_marginTop="@dimen/_20sdp"
+		android:layout_marginEnd="@dimen/_20sdp"
+		android:layout_marginBottom="@dimen/_20sdp"
+		android:src="@drawable/ic_gallery"
+		android:tint="@android:color/white"
+		tools:ignore="UseAppTint" />
 
 </RelativeLayout>

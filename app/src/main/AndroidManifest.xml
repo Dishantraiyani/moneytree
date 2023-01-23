@@ -32,6 +32,9 @@
         tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
 		<activity
+			android:name=".ui.downloads.NSDownloadPlansActivity"
+			android:exported="false"/>
+		<activity
 			android:name=".ui.notificationDetail.NSNotificationDetailActivity"
 			android:exported="false"/>
 		<activity

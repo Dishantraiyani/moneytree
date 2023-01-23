@@ -31,6 +31,7 @@ import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
+import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
@@ -409,6 +410,12 @@ class NSHomeFragment : NSFragment() {
                             drawer.closeDrawer(GravityCompat.START)
                             switchActivity(NSActivateActivity::class.java)
                         }
+
+						llDownload.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(NSDownloadPlansActivity::class.java)
+						}
+
 
 						llInstagram.setOnClickListener {
 							drawer.closeDrawer(GravityCompat.START)
