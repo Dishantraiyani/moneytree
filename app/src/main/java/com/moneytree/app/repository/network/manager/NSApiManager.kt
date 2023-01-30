@@ -1,10 +1,12 @@
 package com.moneytree.app.repository.network.manager
 
+import android.os.Build
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.google.gson.GsonBuilder
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.requests.*
 import com.moneytree.app.repository.network.responses.*
@@ -203,9 +205,11 @@ class NSApiManager {
 			unAuthorised3020Client.login(
 				loginRequest.userName!!,
 				loginRequest.password!!,
-				NSApplication.getInstance().getLoginPrefs().notificationToken!!
+				NSApplication.getInstance().getLoginPrefs().notificationToken!!,
+				NSUtilities.getDeviceInfo(NSApplication.getInstance().applicationContext)
 			), callback
 		)
+
 	}
 
 	/**
@@ -928,7 +932,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.qrScan(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				amount,
 				note,
 				qrUserId,
@@ -1064,7 +1068,8 @@ interface RTApiInterface {
 	fun login(
 		@Field("username") username: String,
 		@Field("password") password: String,
-		@Field("notification_token") token: String
+		@Field("notification_token") token: String,
+		@Field("device_detail") deviceDetail: String
 	): Call<NSUserResponse>
 
 	@FormUrlEncoded

@@ -5,19 +5,21 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.PackageInfoFlags
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
-import java.util.*
 
 
 /**
@@ -207,4 +209,21 @@ object NSUtilities {
 		}
 	}
 
+	// endregion
+	// --------------------------------------
+	// region System
+	// --------------------------------------
+	fun getDeviceInfo(context: Context): String {
+		val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+		val manufacturer = Build.MANUFACTURER
+		val model = Build.MODEL
+		val versionName: String = try {
+			val manager = context.packageManager
+			val info = manager.getPackageInfo(context.packageName, 0)
+			info.versionName
+		} catch (e: java.lang.Exception) {
+			"0.0"
+		}
+		return "udid=$androidId||name=$manufacturer||model=$model||version=$versionName"
+	}
 }

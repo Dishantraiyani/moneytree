@@ -137,7 +137,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_recharge_list_not_found"
         style="@style/LayoutWidthHeightZero"
-        app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/cv_progress"
         app:layout_constraintTop_toBottomOf="@id/card_recharge_type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -176,7 +176,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_refresh"
         style="@style/LayoutWidthHeightZero"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cv_progress"
         app:layout_constraintTop_toBottomOf="@id/card_recharge_type"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

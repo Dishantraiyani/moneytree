@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ import com.moneytree.app.databinding.NsFragmentRechargeHistoryBinding
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 import com.moneytree.app.repository.network.responses.RechargeListDataItem
 import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
+import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.recharge.mobile.NSMobileRechargeFragment
 import com.moneytree.app.ui.register.NSAddRegisterFragment
@@ -211,11 +213,32 @@ class NSRechargeHistoryFragment : NSFragment() {
 				rechargeListAdapter = NSRechargeListRecycleAdapter(activity, false, object:
 					NSRechargeRepeatCallback {
 					override fun onClick(rechargeData: RechargeListDataItem) {
-						switchActivity(
-							NSRechargeActivity::class.java,
-							bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to rechargeData.rechargeType, NSConstants.KEY_RECHARGE_DETAIL to Gson().toJson(rechargeData)), flags = intArrayOf(
-								Intent.FLAG_ACTIVITY_CLEAR_TOP)
-						)
+						if (rechargeData.rechargeType?.lowercase()?.contains("qr scan") == true) {
+							if (rechargeData.qrScanUrl?.contains("pa=") == true) {
+								switchActivity(
+									QRCodeActivity::class.java,
+									bundleOf(
+										NSConstants.KEY_QR_CODE_ID to rechargeData.qrScanUrl,
+										NSConstants.KEY_WALLET_AMOUNT to NSConstants.WALLET_BALANCE
+									),
+									flags = intArrayOf(
+										Intent.FLAG_ACTIVITY_CLEAR_TOP
+									)
+								)
+							} else {
+								Toast.makeText(activity, "QR Detail Not Available.", Toast.LENGTH_SHORT).show()
+							}
+						} else {
+							switchActivity(
+								NSRechargeActivity::class.java,
+								bundle = bundleOf(
+									NSConstants.KEY_RECHARGE_TYPE to rechargeData.rechargeType,
+									NSConstants.KEY_RECHARGE_DETAIL to Gson().toJson(rechargeData)
+								), flags = intArrayOf(
+									Intent.FLAG_ACTIVITY_CLEAR_TOP
+								)
+							)
+						}
 					}
 				}, object : NSPageChangeCallback {
 					override fun onPageChange() {
@@ -287,9 +310,9 @@ class NSRechargeHistoryFragment : NSFragment() {
 
                 isRechargeDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isNotification ->
+                ) { isRecharge ->
                     srlRefresh.isRefreshing = false
-                    setRegisterData(isNotification)
+                    setRegisterData(isRecharge)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

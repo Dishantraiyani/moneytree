@@ -62,5 +62,8 @@ data class RechargeListDataItem(
 	val memberid: String? = null,
 
 	@field:SerializedName("invoice")
-	var invoice: String? = null
+	var invoice: String? = null,
+
+	@field:SerializedName("qr_scan_url")
+	var qrScanUrl: String? = null
 )
