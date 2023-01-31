@@ -12,10 +12,7 @@ import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.common.utils.switchResultActivity
-import com.moneytree.app.common.utils.visible
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
@@ -80,7 +77,7 @@ class NSProductDetailFragment : NSFragment() {
 						)
 						NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL
 						tvHeaderBack.text = productName
-						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
+						Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
 							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
 							.error(R.drawable.placeholder).into(ivProductImg)

@@ -12,6 +12,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
@@ -62,7 +63,7 @@ class MTProductDetailFragment : NSFragment() {
 				if (productDetail != null) {
 					with(productDetail!!) {
 						tvHeaderBack.text = productName
-						Glide.with(activity).load(BuildConfig.BASE_URL_IMAGE + productImage)
+						Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
 							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
 							.error(R.drawable.placeholder).into(ivProductImg)

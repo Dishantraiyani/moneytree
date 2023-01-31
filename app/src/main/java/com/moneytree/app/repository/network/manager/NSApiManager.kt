@@ -135,7 +135,7 @@ class NSApiManager {
 		 */
 		private fun buildRetrofit(okHttpClient: OkHttpClient, endpoint: String): Retrofit =
 			Retrofit.Builder().apply {
-				baseUrl(BuildConfig.BASE_URL + endpoint)
+				baseUrl(NSUtilities.decrypt(BuildConfig.BASE_URL) + endpoint)
 				client(okHttpClient)
 				addConverterFactory(
 					GsonConverterFactory.create(

@@ -14,12 +14,14 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.moneytree.app.R
 import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
+import java.io.UnsupportedEncodingException
 
 
 /**
@@ -225,5 +227,25 @@ object NSUtilities {
 			"0.0"
 		}
 		return "udid=$androidId||name=$manufacturer||model=$model||version=$versionName"
+	}
+
+	fun decrypt(coded: String): String {
+		var coded = coded
+		coded = encryption(coded)
+		var valueDecoded: ByteArray? = ByteArray(0)
+		try {
+			valueDecoded = Base64.decode(coded.toByteArray(charset("UTF-8")), Base64.DEFAULT)
+		} catch (e: UnsupportedEncodingException) {
+		}
+		return String(valueDecoded!!)
+	}
+
+	private fun encryption(coded: String): String {
+		var valueDecoded: ByteArray? = ByteArray(0)
+		try {
+			valueDecoded = Base64.decode(coded.toByteArray(charset("UTF-8")), Base64.DEFAULT)
+		} catch (e: UnsupportedEncodingException) {
+		}
+		return String(valueDecoded!!)
 	}
 }

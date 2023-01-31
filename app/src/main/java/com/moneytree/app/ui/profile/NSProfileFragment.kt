@@ -136,13 +136,13 @@ class NSProfileFragment : NSFragment() {
                 activity.startActivity(intent)
             }
             5 -> {
-                NSUtilities.openBrowser(activity, BuildConfig.TERMS)
+                NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.TERMS))
             }
             6 -> {
-                NSUtilities.openBrowser(activity, BuildConfig.PRIVACY)
+                NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.PRIVACY))
             }
 			7 -> {
-				NSUtilities.openBrowser(activity, BuildConfig.REFUND)
+				NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.REFUND))
 			}
             8 -> {
                 with(activity.resources) {

@@ -14,6 +14,7 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
@@ -86,7 +87,7 @@ class MTProductListRecycleAdapter(
                 with(response) {
 					clProductLayout.setVisibility(!isGrid)
 					clProductLayoutGrid.setVisibility(isGrid)
-					val url = BuildConfig.BASE_URL_IMAGE+productImage
+					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder).diskCacheStrategy(DiskCacheStrategy.NONE)
 						.skipMemoryCache(true).into(ivProductImg)
                     tvProductName.text = productName

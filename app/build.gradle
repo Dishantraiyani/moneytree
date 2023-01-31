@@ -36,12 +36,12 @@ android {
             versionCode 13
             versionName "1.9"
             applicationIdSuffix ".dev"
-            buildConfigField 'String', 'BASE_URL', ' "https://moneytree.biz/" '
-            buildConfigField 'String', 'BASE_URL_IMAGE', ' "https://moneytree.biz/upload/product/" '
-            buildConfigField 'String', 'BASE_URL_IMAGE_POPUP', ' "https://moneytree.biz/upload/popup/" '
-            buildConfigField 'String', 'TERMS', ' "https://moneytree.biz/terms-and-condition" '
-            buildConfigField 'String', 'PRIVACY', ' "https://moneytree.biz/privacy-policy" '
-            buildConfigField 'String', 'REFUND', ' "https://moneytree.biz/return-and-refunds" '
+            buildConfigField 'String', 'BASE_URL', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkx3PT0K" '
+            buildConfigField 'String', 'BASE_URL_IMAGE', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzVndiRzloWkM5d2NtOWtkV04wTHc9PQo=" '
+            buildConfigField 'String', 'BASE_URL_IMAGE_POPUP', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzVndiRzloWkM5d2IzQjFjQzg9Cg==" '
+            buildConfigField 'String', 'TERMS', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzUmxjbTF6TFdGdVpDMWpiMjVrYVhScGIyND0K" '
+            buildConfigField 'String', 'PRIVACY', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzQnlhWFpoWTNrdGNHOXNhV041Cg==" '
+            buildConfigField 'String', 'REFUND', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzSmxkSFZ5YmkxaGJtUXRjbVZtZFc1a2N3PT0K" '
             buildConfigField 'String', 'PREFERENCE', ' "MoneyTree" '
             buildConfigField 'String', 'LOGIN_PREFERENCE', ' "MoneyTreeLogin" '
             buildConfigField 'String', 'MAIL_ID', ' "test@gmail.com" '
