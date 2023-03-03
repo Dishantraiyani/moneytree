@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.moneytree.app.R
 import com.moneytree.app.common.NSViewModel
-import com.moneytree.app.ui.wallets.redeem.NSRedeemFragment
+import com.moneytree.app.ui.wallets.redeemHistory.NSRedeemFragment
 import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 
 

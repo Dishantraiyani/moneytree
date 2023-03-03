@@ -128,23 +128,26 @@ class NSProfileFragment : NSFragment() {
                     )
                 )
             }
-            2 -> {
+			2 -> {
+				NSUtilities.callCustomerCare(requireContext(), NSConstants.CUSTOMER_CARE)
+			}
+            3 -> {
 				switchActivity(NSInviteActivity::class.java)
             }
-            3, 4 -> {
+            4, 5 -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + activity.packageName))
                 activity.startActivity(intent)
             }
-            5 -> {
+            6 -> {
                 NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.TERMS))
             }
-            6 -> {
+            7 -> {
                 NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.PRIVACY))
             }
-			7 -> {
+			8 -> {
 				NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.REFUND))
 			}
-            8 -> {
+            9 -> {
                 with(activity.resources) {
                     showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
                 }

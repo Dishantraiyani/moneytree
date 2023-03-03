@@ -17,6 +17,7 @@ import android.provider.Settings
 import android.util.Base64
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.moneytree.app.R
 import com.moneytree.app.databinding.DialogPopupHomeBinding
@@ -247,5 +248,11 @@ object NSUtilities {
 		} catch (e: UnsupportedEncodingException) {
 		}
 		return String(valueDecoded!!)
+	}
+
+	fun callCustomerCare(context: Context, call: String) {
+		val intent = Intent(Intent.ACTION_DIAL)
+		intent.data = Uri.parse("tel:${call}")
+		context.startActivity(intent)
 	}
 }

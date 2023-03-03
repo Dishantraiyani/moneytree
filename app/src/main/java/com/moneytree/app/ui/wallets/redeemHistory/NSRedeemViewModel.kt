@@ -1,15 +1,12 @@
-package com.moneytree.app.ui.wallets.redeem
+package com.moneytree.app.ui.wallets.redeemHistory
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.repository.NSVoucherRepository
 import com.moneytree.app.repository.NSWalletRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSRedeemListResponse
-import com.moneytree.app.repository.network.responses.NSVoucherListData
-import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 import com.moneytree.app.repository.network.responses.NSWalletRedeemData
 
 

@@ -14,6 +14,7 @@ import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutRechargeHistoryItemBinding
@@ -100,6 +101,16 @@ class NSRechargeListRecycleAdapter(
 					val isCreditCheck = transactionStatus!!.lowercase() == "success"
 					tvStatusValue.text = transactionStatus
 					tvStatusValue.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
+
+					if (transactionStatus.lowercase() == "pending" || transactionStatus.lowercase() == "failed") {
+						viewLine.gone()
+						btnActive.gone()
+						btnRepeat.gone()
+					} else {
+						viewLine.visible()
+						btnActive.visible()
+						btnRepeat.visible()
+					}
 
 					btnActive.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {

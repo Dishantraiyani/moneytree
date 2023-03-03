@@ -1,12 +1,12 @@
 package com.moneytree.app.ui.home
 
 import android.Manifest
+import android.app.ProgressDialog.show
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.Looper
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -45,9 +45,6 @@ import com.moneytree.app.ui.youtube.YoutubeActivity
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
-import io.github.g00fy2.quickie.QRResult
-import io.github.g00fy2.quickie.ScanQRCode
-import io.github.g00fy2.quickie.config.ScannerConfig
 import maulik.barcodescanner.OnScannerResponse
 import maulik.barcodescanner.ui.BarcodeScanningActivity
 import org.greenrobot.eventbus.EventBus
@@ -281,7 +278,8 @@ class NSHomeFragment : NSFragment() {
                 if (isUserData) {
                     with(nsUserData!!) {
                         tvUserName.text = addText(activity, R.string.name, userName!!)
-                        tvAccountNo.text = addText(activity, R.string.ac_no, acNo!!)
+
+						setAccountNumber(true)
                         navigationView()
                         tvActive.visible()
 
@@ -297,6 +295,20 @@ class NSHomeFragment : NSFragment() {
             }
         }
     }
+
+	private fun setAccountNumber(isMasking: Boolean) {
+		homeBinding.apply {
+			homeModel.apply {
+				val mask = nsUserData?.acNo?.replace("\\w(?=\\w{4})".toRegex(), "X")?:""
+				tvAccountNo.text = addText(activity, R.string.ac_no, if (isMasking) mask else nsUserData?.acNo?:"")
+
+				tvAccountNoShow.setOnClickListener {
+					tvAccountNoShow.text = activity.resources.getString(if (!isMasking) R.string.show else R.string.hide)
+					setAccountNumber(!isMasking)
+				}
+			}
+		}
+	}
 
     private fun setDashboardData(isDashboardData: Boolean) {
         with(homeBinding) {
@@ -416,6 +428,9 @@ class NSHomeFragment : NSFragment() {
 							switchActivity(NSDownloadPlansActivity::class.java)
 						}
 
+						llContactUs.setOnClickListener {
+							NSUtilities.callCustomerCare(requireContext(), NSConstants.CUSTOMER_CARE)
+						}
 
 						llInstagram.setOnClickListener {
 							drawer.closeDrawer(GravityCompat.START)

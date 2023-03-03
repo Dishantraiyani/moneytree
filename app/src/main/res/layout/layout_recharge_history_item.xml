@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 		android:paddingTop="@dimen/_5sdp"
-		android:paddingBottom="0dp"
+		android:paddingBottom="@dimen/_8sdp"
         android:paddingHorizontal="@dimen/_5sdp">
 
         <TextView
@@ -169,6 +169,7 @@
 			android:layout_width="0dp"
 			android:layout_height="1dp"
 			android:layout_marginTop="@dimen/_6sdp"
+			android:visibility="gone"
 			android:background="@color/line_color"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -184,8 +185,9 @@
 			android:textColor="@color/white"
 			android:paddingHorizontal="@dimen/_10sdp"
 			android:textSize="@dimen/_8sdp"
-			android:layout_marginVertical="@dimen/_8sdp"
+			android:layout_marginTop="@dimen/_8sdp"
 			android:layout_marginStart="@dimen/_6sdp"
+			android:visibility="gone"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@id/btn_repeat"
 			app:layout_constraintStart_toStartOf="parent"
@@ -203,8 +205,9 @@
 			android:layout_marginStart="@dimen/_5sdp"
 			android:paddingHorizontal="@dimen/_10sdp"
 			android:textSize="@dimen/_8sdp"
+			android:visibility="gone"
 			app:layout_constraintBottom_toBottomOf="parent"
-			android:layout_marginVertical="@dimen/_8sdp"
+			android:layout_marginTop="@dimen/_8sdp"
 			android:layout_marginEnd="@dimen/_6sdp"
 			app:layout_constraintStart_toEndOf="@id/btn_active"
 			app:layout_constraintEnd_toEndOf="parent"

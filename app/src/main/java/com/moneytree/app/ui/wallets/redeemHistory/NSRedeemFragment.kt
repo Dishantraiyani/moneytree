@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.wallets.redeem
+package com.moneytree.app.ui.wallets.redeemHistory
 
 import android.os.Bundle
 import android.util.Log

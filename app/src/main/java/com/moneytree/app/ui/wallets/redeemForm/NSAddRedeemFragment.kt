@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.databinding.NsFragmentAddRedeemBinding
-import com.moneytree.app.ui.levelMember.LevelMemberTreeFragment
-import com.moneytree.app.ui.wallets.redeem.NSRedeemViewModel
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 

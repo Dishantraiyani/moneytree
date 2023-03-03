@@ -1,7 +1,6 @@
-package com.moneytree.app.ui.wallets.redeem
+package com.moneytree.app.ui.wallets.redeemHistory
 
 import android.app.Activity
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +10,6 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutRedeemBinding
-import com.moneytree.app.databinding.LayoutTransactionBinding
-import com.moneytree.app.repository.network.responses.NSVoucherListData
 import com.moneytree.app.repository.network.responses.NSWalletRedeemData
 
 class NSRedeemRecycleAdapter(
