@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:background="@color/background_gray"
     tools:context=".ui.register.NSRegisterFragment">
 
     <include android:id="@+id/layout_header"
@@ -14,6 +15,7 @@
         style="@style/LayoutWidthHeightZero"
         android:paddingVertical="@dimen/_10sdp"
         android:paddingHorizontal="@dimen/_10sdp"
+		android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_header"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,7 +1,6 @@
 package com.moneytree.app.repository.network.manager
 
 import android.os.Build
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.google.gson.GsonBuilder
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
@@ -1056,6 +1055,15 @@ class NSApiManager {
 		request(unAuthorised3020Client.getNotifications(NSUserManager.getAuthToken()!!, pageIndex), callback)
 	}
 
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getDownloadList(callback: NSRetrofitCallback<DownloadListResponse>) {
+		request(unAuthorised3020Client.getDownloadList(NSUserManager.getAuthToken()), callback)
+	}
+
 }
 
 /**
@@ -1474,4 +1482,10 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String
 	): Call<NSNotificationListResponse>
+
+	@FormUrlEncoded
+	@POST("download-list")
+	fun getDownloadList(
+		@Field("token_id") token: String
+	): Call<DownloadListResponse>
 }

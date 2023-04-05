@@ -600,4 +600,7 @@
     <string name="downloads">Download</string>
 	<string name="show">Show</string>
 	<string name="hide">Hide</string>
+    <string name="wallets">Wallets</string>
+	<string name="wallet_recharge">Wallet Recharge</string>
+	<string name="redemption">Redemption</string>
 </resources>

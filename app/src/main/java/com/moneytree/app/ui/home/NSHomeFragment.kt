@@ -41,6 +41,8 @@ import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
+import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
+import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import com.moneytree.app.ui.youtube.YoutubeActivity
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
@@ -109,6 +111,7 @@ class NSHomeFragment : NSFragment() {
                 checkVersion()
                 getDashboardData(true)
                 addRechargeItems()
+				setRechargeLayout()
             }
         }
         observeViewModel()
@@ -271,6 +274,50 @@ class NSHomeFragment : NSFragment() {
             })
         }
     }
+
+	private fun setRechargeLayout() {
+		homeBinding.layoutWalletRecharge.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_recharge)
+			tvFieldName.text = activity.resources.getString(R.string.recharge)
+			llRecharge.setOnClickListener {
+				switchActivity(
+					NSRechargeActivity::class.java,
+					bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to homeModel.fieldName[0])
+				)
+			}
+		}
+
+		homeBinding.layoutWalletReport.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_report)
+			tvFieldName.text = activity.resources.getString(R.string.reports)
+			llRecharge.setOnClickListener {
+				switchActivity(
+					NSReportsActivity::class.java
+				)
+			}
+		}
+
+		homeBinding.layoutWalletTransfer.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_transfer)
+			tvFieldName.text = activity.resources.getString(R.string.transfer)
+			llRecharge.setOnClickListener {
+				switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false))
+			}
+		}
+
+		homeBinding.layoutWalletRedemption.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_redeam)
+			tvFieldName.text = activity.resources.getString(R.string.redemption)
+			llRecharge.setOnClickListener {
+				switchResultActivity(
+					dataResult, NSAddRedeemActivity::class.java,
+					bundleOf(
+						NSConstants.KEY_AVAILABLE_BALANCE to homeModel.dashboardData?.data?.wltAmt?.get(0)?.amount
+					)
+				)
+			}
+		}
+	}
 
     private fun setUserData(isUserData: Boolean) {
         with(homeBinding) {

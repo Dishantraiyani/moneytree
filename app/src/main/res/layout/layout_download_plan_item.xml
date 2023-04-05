@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/cl_download_plan" xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_5sdp"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginBottom="@dimen/_10sdp"
 	android:paddingHorizontal="@dimen/_9sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+	android:background="@drawable/white_background"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<TextView
 		android:id="@+id/tv_plan_name"
@@ -16,14 +17,34 @@
 		android:textColor="@color/black"
 		android:lines="1"
 		android:textStyle="bold"
+		android:layout_marginTop="@dimen/_12sdp"
 		android:fontFamily="@font/inter_semi_bold"
-		android:paddingVertical="@dimen/_12sdp"
 		android:paddingStart="@dimen/_1sdp"
 		android:paddingEnd="@dimen/_5sdp"
+		android:textSize="@dimen/_12sdp"
 		app:layout_constraintEnd_toStartOf="@id/iv_next"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintBottom_toTopOf="@id/view_line"/>
+		app:layout_constraintBottom_toTopOf="@id/tv_description"/>
+
+	<TextView
+		android:id="@+id/tv_description"
+		style="@style/LoginSubFontsZeroWrap"
+		tools:text="Active Members: "
+		android:textSize="@dimen/_10sdp"
+		android:gravity="start"
+		app:guidelineUseRtl="true"
+		android:textColor="@color/gray"
+		android:lines="1"
+		android:paddingEnd="@dimen/_5sdp"
+		android:paddingStart="@dimen/_1sdp"
+		android:layout_marginTop="@dimen/_1sdp"
+		android:fontFamily="@font/inter_medium"
+		android:layout_marginBottom="@dimen/_12sdp"
+		app:layout_constraintTop_toBottomOf="@id/tv_plan_name"
+		app:layout_constraintEnd_toStartOf="@id/iv_next"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintBottom_toTopOf="@id/view_line" />
 
 	<ImageView
 		android:id="@+id/iv_next"
@@ -39,6 +60,7 @@
 		android:id="@+id/view_line"
 		android:layout_width="0dp"
 		android:layout_height="1dp"
+		android:visibility="gone"
 		android:background="@color/line_color"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"

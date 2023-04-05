@@ -82,16 +82,7 @@ class NSDownloadPlanFragment : NSFragment() {
 				rvDownloadList.layoutManager = LinearLayoutManager(activity)
 				adapter = NSDownloadPlanRecycleAdapter(requireActivity())
 				rvDownloadList.adapter = adapter
-				setDownloadData()
-			}
-		}
-	}
-
-	private fun setDownloadData() {
-		binding.apply {
-			downloadModel.apply {
-				setDownloadList()
-				adapter?.updateData(downloadList)
+				getDownloadList()
 			}
 		}
 	}
@@ -107,6 +98,12 @@ class NSDownloadPlanFragment : NSFragment() {
                 ) { shouldShowProgress ->
                     updateProgress(shouldShowProgress)
                 }
+
+				isDownloadListAvailable.observe(
+					viewLifecycleOwner
+				) {
+					adapter?.updateData(downloadList)
+				}
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
                     showAlertDialog(errorMessage)

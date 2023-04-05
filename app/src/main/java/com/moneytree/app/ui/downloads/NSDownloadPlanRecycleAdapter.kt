@@ -18,19 +18,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutDownloadPlanItemBinding
+import com.moneytree.app.repository.network.responses.DownloadDataItem
 import com.moneytree.app.repository.network.responses.NSDownloadData
 import com.rajat.pdfviewer.PdfViewerActivity
 
 class NSDownloadPlanRecycleAdapter(val activity: Activity) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-	private val downloadData: MutableList<NSDownloadData> = arrayListOf()
+	private val downloadData: MutableList<DownloadDataItem> = arrayListOf()
 
-    fun updateData(downloadList: MutableList<NSDownloadData>) {
+    fun updateData(downloadList: MutableList<DownloadDataItem>) {
         downloadData.addAll(downloadList)
-        if (downloadList.isValidList()) {
-            notifyItemRangeChanged(0, downloadData.size - 1)
-        } else {
-            notifyDataSetChanged()
-        }
+		notifyDataSetChanged()
     }
 
     fun clearData() {
@@ -67,18 +64,19 @@ class NSDownloadPlanRecycleAdapter(val activity: Activity) : RecyclerView.Adapte
          *
          * @param response The voucher details
          */
-        fun bind(response: NSDownloadData) {
+        fun bind(response: DownloadDataItem) {
             with(voucherBinding) {
                 with(response) {
                     tvPlanName.text = title
+                    tvDescription.text = desc
 					clDownloadPlan.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							if (link != null) {
+							if (pdf != null) {
 								val fileName: String? = title
 								activity.startActivity(
 									PdfViewerActivity.launchPdfFromUrl(
 										activity,
-										link,
+										pdf,
 										fileName,
 										Environment.DIRECTORY_DOCUMENTS,
 										true

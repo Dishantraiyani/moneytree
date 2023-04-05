@@ -102,7 +102,7 @@ class NSRechargeListRecycleAdapter(
 					tvStatusValue.text = transactionStatus
 					tvStatusValue.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
 
-					if (transactionStatus.lowercase() == "pending" || transactionStatus.lowercase() == "failed") {
+					if (/*transactionStatus.lowercase() == "pending" || */transactionStatus.lowercase() == "failed") {
 						viewLine.gone()
 						btnActive.gone()
 						btnRepeat.gone()

@@ -101,8 +101,10 @@ class NSQRCodeFragment : NSFragment() {
 								}
 							} else if (da.contains("am=")) {
 								if (da.length > 2) {
-									etAmount.isEnabled = false
-									etAmount.setText(da.substring(3))
+									if (da.substring(3).isNotEmpty() && da.substring(3) != "0") {
+										etAmount.isEnabled = false
+										etAmount.setText(da.substring(3))
+									}
 								}
 							}
 						}

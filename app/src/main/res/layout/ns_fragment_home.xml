@@ -591,6 +591,71 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:cardElevation="@dimen/_1sdp"
+					android:layout_marginTop="@dimen/_10sdp">
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						android:layout_margin="@dimen/_1sdp">
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="15sp"
+							android:layout_marginTop="13.6dp"
+							android:fontFamily="@font/inter_regular"
+							android:textStyle="normal"
+							android:paddingLeft="16.7dp"
+							android:textColor="@color/black"
+							android:text="@string/wallets"
+							/>
+						<View
+							android:layout_width="match_parent"
+							android:layout_height="0.7dp"
+							android:background="#eef0f1"
+							android:layout_marginTop="13.1dp"/>
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:orientation="horizontal"
+							android:paddingVertical="@dimen/_10sdp">
+
+							<include android:id="@+id/layout_wallet_recharge"
+								layout="@layout/layout_item_recharges_small"
+								android:layout_width="0dp"
+								android:layout_weight="1"
+								android:layout_height="wrap_content"/>
+
+							<include android:id="@+id/layout_wallet_transfer"
+								layout="@layout/layout_item_recharges_small"
+								android:layout_width="0dp"
+								android:layout_weight="1"
+								android:layout_height="wrap_content"/>
+
+							<include android:id="@+id/layout_wallet_redemption"
+								layout="@layout/layout_item_recharges_small"
+								android:layout_width="0dp"
+								android:layout_weight="1"
+								android:layout_height="wrap_content"/>
+
+							<include android:id="@+id/layout_wallet_report"
+								layout="@layout/layout_item_recharges_small"
+								android:layout_width="0dp"
+								android:layout_weight="1"
+								android:layout_height="wrap_content"/>
+
+
+						</LinearLayout>
+
+
+
+					</LinearLayout>
+				</androidx.cardview.widget.CardView>
+
+				<androidx.cardview.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					app:cardElevation="@dimen/_1sdp"
 					android:layout_marginTop="@dimen/_10sdp"
 					android:layout_marginBottom="@dimen/_10sdp">
 					<LinearLayout
