@@ -5,6 +5,8 @@ import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.responses.NSRegisterListResponse
+import com.moneytree.app.repository.network.responses.NSSendMessageResponse
+import com.moneytree.app.repository.network.responses.NSSetDefaultResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import retrofit2.Response
 
@@ -74,6 +76,52 @@ object NSRegisterRepository {
 			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_DIRECT_REGISTER_SAVE_DATA) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To save register data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun setDefault(userId: String,
+							  viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.setDefault(userId, object :
+			NSRetrofitCallback<NSSetDefaultResponse>(viewModelCallback, NSApiErrorHandler.ERROR_SET_DEFAULT) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSetDefaultResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	/**
+	 * To save register data API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun sendMessage(userId: String,
+				   viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.sendMessage(userId, object :
+			NSRetrofitCallback<NSSendMessageResponse>(viewModelCallback, NSApiErrorHandler.ERROR_SEND_MESSAGE) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSendMessageResponse
 				if (data.status) {
 					viewModelCallback.onSuccess(response.body())
 				} else {

@@ -61,6 +61,8 @@ class NSApiErrorHandler {
 		const val ERROR_YOUTUBE_DATA = "error_youtube_data"
 		const val ERROR_NOTIFICATION_LIST = "error_notification_list"
 		const val ERROR_DOWNLOAD_LIST = "error_download_list"
+		const val ERROR_SET_DEFAULT = "error_set_default"
+		const val ERROR_SEND_MESSAGE = "error_send_message"
 
         /**
          * To get the error messages from API endpoints

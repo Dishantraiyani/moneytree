@@ -92,19 +92,12 @@
 				app:layout_constraintEnd_toStartOf="@id/tv_balance"
 				app:layout_constraintStart_toEndOf="@id/tv_account_no">
 
-				<TextView
-					android:id="@+id/tv_account_no_show"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="@string/show"
-					android:textSize="@dimen/_8sdp"
-					android:fontFamily="@font/inter_medium"
-					android:background="@drawable/active_btn"
-					android:paddingHorizontal="@dimen/_3sdp"
-					android:paddingVertical="@dimen/_1sdp"
-					android:layout_marginStart="@dimen/_5sdp"
-					android:textColor="@color/white"
-					android:includeFontPadding="false"/>
+				<ImageView
+					android:id="@+id/iv_show_hide"
+					android:layout_width="@dimen/_15sdp"
+					android:layout_height="@dimen/_15sdp"
+					android:src="@drawable/ic_visible_view"
+					android:layout_marginStart="@dimen/_5sdp" />
 
 			</RelativeLayout>
 
@@ -644,7 +637,6 @@
 								android:layout_weight="1"
 								android:layout_height="wrap_content"/>
 
-
 						</LinearLayout>
 
 
@@ -658,11 +650,13 @@
 					app:cardElevation="@dimen/_1sdp"
 					android:layout_marginTop="@dimen/_10sdp"
 					android:layout_marginBottom="@dimen/_10sdp">
+
 					<LinearLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:orientation="vertical"
 						android:layout_margin="@dimen/_1sdp">
+
 						<TextView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -674,11 +668,13 @@
 							android:textColor="@color/black"
 							android:text="@string/recharges_amp_pay_bills"
 							/>
+
 						<View
 							android:layout_width="match_parent"
 							android:layout_height="0.7dp"
 							android:background="#eef0f1"
 							android:layout_marginTop="13.1dp"/>
+
 						<androidx.recyclerview.widget.RecyclerView
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
@@ -686,6 +682,7 @@
 							android:paddingBottom="5dp"
 							android:nestedScrollingEnabled="false"
 							android:layout_gravity="center_horizontal">
+
 						</androidx.recyclerview.widget.RecyclerView>
 					</LinearLayout>
 				</androidx.cardview.widget.CardView>

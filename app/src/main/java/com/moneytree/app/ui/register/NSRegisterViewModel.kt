@@ -157,4 +157,59 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 
 		})
 	}
+
+	fun setDefault(userId: String, isShowProgress: Boolean) {
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSRegisterRepository.setDefault(userId, object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+
+				pageIndex = "1"
+				getRegisterListData(pageIndex, "", false, isBottomProgress = false)
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+
+		})
+	}
+
+	fun sendMessage(userId: String, isShowProgress: Boolean) {
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
+		NSRegisterRepository.sendMessage(userId, object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				isProgressShowing.value = false
+
+				val response = data as NSSendMessageResponse
+				//Show Success dialog
+				handleFailure(response.message)
+			}
+
+			override fun onError(errors: List<Any>) {
+				handleError(errors)
+			}
+
+			override fun onFailure(failureMessage: String?) {
+				handleFailure(failureMessage)
+			}
+
+			override fun <T> onNoNetwork(localData: T) {
+				handleNoNetwork()
+			}
+
+		})
+	}
 }

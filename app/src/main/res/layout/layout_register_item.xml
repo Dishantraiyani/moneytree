@@ -148,6 +148,40 @@
 			app:layout_constraintTop_toTopOf="parent"
 			/>
 
+		<TextView
+			android:id="@+id/btn_set_default"
+			style="@style/LayoutWidthHeightZeroWrap"
+			android:layout_height="@dimen/_25sdp"
+			android:background="@drawable/black_button_border"
+			android:fontFamily="@font/inter_semi_bold"
+			android:text="@string/set_default"
+			android:textColor="@color/black"
+			android:textSize="@dimen/_8sdp"
+			android:gravity="center"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:layout_marginStart="@dimen/_10sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/btn_send_message"
+			app:layout_constraintTop_toBottomOf="@+id/tv_date"
+			/>
+
+		<TextView
+			android:id="@+id/btn_send_message"
+			style="@style/LayoutWidthHeightZeroWrap"
+			android:layout_height="@dimen/_25sdp"
+			android:background="@drawable/orange_button_border"
+			android:fontFamily="@font/inter_medium"
+			android:text="@string/send_sms"
+			android:textColor="@color/orange"
+			android:textSize="@dimen/_8sdp"
+			android:gravity="center"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:layout_marginStart="@dimen/_10sdp"
+			app:layout_constraintStart_toEndOf="@id/btn_set_default"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_date"
+			/>
+
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,6 +14,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSRegisterActiveSelectCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
@@ -137,10 +138,23 @@ class NSRegisterFragment : NSFragment() {
         with(registerBinding) {
             with(registerListModel) {
                 rvRegisterList.layoutManager = LinearLayoutManager(activity)
-				registerListAdapter = NSRegisterListRecycleAdapter(activity, object: NSMemberActiveSelectCallback {
+				registerListAdapter = NSRegisterListRecycleAdapter(activity, object:
+					NSRegisterActiveSelectCallback {
 					override fun onClick(data: NSRegisterListData) {
 						dataMember = data
 						getActivationPackage(data.username!!, true)
+					}
+
+					override fun onDefault(data: NSRegisterListData) {
+						if (data.userId != null) {
+							setDefault(data.userId!!, true)
+						}
+					}
+
+					override fun onMessageSend(data: NSRegisterListData) {
+						if (data.userId != null) {
+							sendMessage(data.userId!!, true)
+						}
 					}
 				}, object : NSPageChangeCallback {
 					override fun onPageChange() {

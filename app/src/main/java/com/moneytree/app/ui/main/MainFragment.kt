@@ -78,8 +78,7 @@ class MainFragment : NSFragment() {
                     }
                     R.id.tb_register -> {
                         replaceFragment(NSRegisterFragment.newInstance(), false, fragmentMainContainer.id)
-						//replaceFragment(NSPackageListFragment.newInstance(), false, fragmentMainContainer.id)
-                    }
+					}
                     R.id.tb_shop -> {
 						if (NSConstants.SOCKET_TYPE == null) {
 							replaceFragment(

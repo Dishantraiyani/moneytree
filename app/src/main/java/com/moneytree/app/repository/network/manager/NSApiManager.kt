@@ -1064,6 +1064,23 @@ class NSApiManager {
 		request(unAuthorised3020Client.getDownloadList(NSUserManager.getAuthToken()), callback)
 	}
 
+	/**
+	 * To call the set default register data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun setDefault(userId: String, callback: NSRetrofitCallback<NSSetDefaultResponse>) {
+		request(unAuthorised3020Client.setDefaultAPi(NSUserManager.getAuthToken(), userId), callback)
+	}
+
+	/**
+	 * To call the set default register data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun sendMessage(userId: String, callback: NSRetrofitCallback<NSSendMessageResponse>) {
+		request(unAuthorised3020Client.sendMessage(NSUserManager.getAuthToken(), userId), callback)
+	}
 }
 
 /**
@@ -1488,4 +1505,18 @@ interface RTApiInterface {
 	fun getDownloadList(
 		@Field("token_id") token: String
 	): Call<DownloadListResponse>
+
+	@FormUrlEncoded
+	@POST("set_default_register")
+	fun setDefaultAPi(
+		@Field("token_id") token: String,
+		@Field("user_id") userId: String
+	): Call<NSSetDefaultResponse>
+
+	@FormUrlEncoded
+	@POST("send_message_user")
+	fun sendMessage(
+		@Field("token_id") token: String,
+		@Field("user_id") userId: String
+	): Call<NSSendMessageResponse>
 }

@@ -10,16 +10,15 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.utils.NSUtilities
-import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.callbacks.NSRegisterActiveSelectCallback
+import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.LayoutRegisterItemBinding
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 
 class NSRegisterListRecycleAdapter(
-    activityNS: Activity,
-	private val packageActiveCallback: NSMemberActiveSelectCallback,
-    onPageChange: NSPageChangeCallback
+	activityNS: Activity,
+	private val packageActiveCallback: NSRegisterActiveSelectCallback,
+	onPageChange: NSPageChangeCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
     private val registerData: MutableList<NSRegisterListData> = arrayListOf()
@@ -83,6 +82,25 @@ class NSRegisterListRecycleAdapter(
                     tvDate.text = createdAt?.let { addText(activity, R.string.date_register, it) }
                     tvFullNameRegister.text = fullName?.let { addText(activity, R.string.full_name_value, it) }
                     tvPackageName.text = if (packageName == null) "" else packageName
+
+					if (response.setDefault?.lowercase().equals("n")) {
+						btnSetDefault.visible()
+					} else {
+						btnSetDefault.gone()
+					}
+
+
+					btnSetDefault.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							packageActiveCallback.onDefault(response)
+						}
+					})
+
+					btnSendMessage.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							packageActiveCallback.onDefault(response)
+						}
+					})
 
 					val isActive = directActivation.equals("NOT REQUIRED")
 					btnActive.isEnabled = !isActive

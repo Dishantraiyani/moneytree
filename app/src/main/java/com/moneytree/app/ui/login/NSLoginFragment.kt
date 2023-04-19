@@ -2,16 +2,13 @@ package com.moneytree.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.RemoteException
-import android.util.Log
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.android.installreferrer.api.InstallReferrerClient
-import com.android.installreferrer.api.InstallReferrerStateListener
 import com.beautycoder.pflockscreen.security.PFResult
 import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.google.gson.Gson
@@ -25,6 +22,7 @@ import com.moneytree.app.ui.main.NSMainActivity
 import com.moneytree.app.ui.signup.SignUpActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+
 
 class NSLoginFragment : NSFragment() {
 	private val loginViewModel: NSLoginViewModel by lazy {
@@ -65,6 +63,7 @@ class NSLoginFragment : NSFragment() {
 					strPassword = loginPref!!.prefPassword
 					etUserName.setText(strUserName)
 					etPassword.setText(strPassword)
+					etPassword.transformationMethod = PasswordTransformationMethod()
 				}
 			}
 		}

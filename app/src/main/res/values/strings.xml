@@ -603,4 +603,6 @@
     <string name="wallets">Wallets</string>
 	<string name="wallet_recharge">Wallet Recharge</string>
 	<string name="redemption">Redemption</string>
+    <string name="set_default">Set Default</string>
+	<string name="send_sms">Send SMS</string>
 </resources>

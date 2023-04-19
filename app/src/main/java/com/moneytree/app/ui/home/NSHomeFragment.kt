@@ -1,19 +1,16 @@
 package com.moneytree.app.ui.home
 
 import android.Manifest
-import android.app.ProgressDialog.show
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
-import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -38,9 +35,11 @@ import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
+import com.moneytree.app.ui.register.NSAddRegisterFragment
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
+import com.moneytree.app.ui.wallets.NSWalletFragment
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import com.moneytree.app.ui.youtube.YoutubeActivity
@@ -52,7 +51,6 @@ import maulik.barcodescanner.ui.BarcodeScanningActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.*
 
 
 class NSHomeFragment : NSFragment() {
@@ -63,10 +61,6 @@ class NSHomeFragment : NSFragment() {
     private val homeBinding get() = _binding!!
     private var homeListModelClassArrayList1: ArrayList<GridModel>? = null
     private var bAdapterNS: GridRecycleAdapter? = null
-	private var timer: Timer? = null
-	private val DELAY_MS: Long = 500
-	private val PERIOD_MS: Long = 5000
-	private var currentPage = 0
 
     companion object {
         fun newInstance() = NSHomeFragment()
@@ -138,60 +132,6 @@ class NSHomeFragment : NSFragment() {
 					viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE);
 					viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
 					viewPager.startAutoCycle();
-					//indicator.setViewPager(viewPager)
-                    /*val adapter = ViewPagerMDAdapter(requireActivity())
-                    adapter.setFragment(mFragmentList)
-                    viewPager.adapter = adapter*/
-
-					//adapter.registerAdapterDataObserver(indicator.adapterDataObserver)
-
-					/*val handler = Handler(Looper.getMainLooper())
-					val runnable = Runnable {
-						if (currentPage >= mFragmentList.size) {
-							currentPage = 0
-						}
-						viewPager.setCurrentItem(currentPage++, true)
-					}
-
-					timer = Timer()
-					timer!!.schedule(object : TimerTask() {
-						override fun run() {
-							handler.post(runnable)
-						}
-					}, DELAY_MS, PERIOD_MS)
-
-					viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
-						override fun onPageScrolled(
-							position: Int,
-							positionOffset: Float,
-							positionOffsetPixels: Int
-						) {
-
-						}
-
-						override fun onPageSelected(position: Int) {
-							currentPage = position + 1
-						}
-
-						override fun onPageScrollStateChanged(state: Int) {
-							if (state == ViewPager.SCROLL_STATE_IDLE) {
-								if (pagerAdapter == null) return
-								val itemCount = pagerAdapter.count ?: 0
-								if (itemCount < 2) {
-									return
-								}
-								val index = viewPager.currentItem
-								if (index == 0) {
-									viewPager.setCurrentItem(itemCount - 2, false) //Real last item
-								} else if (index == itemCount - 1) {
-									viewPager.setCurrentItem(0, false) //Real first item
-								}
-							}
-						}
-
-
-					})*/
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -203,15 +143,18 @@ class NSHomeFragment : NSFragment() {
         with(homeBinding) {
             with(homeModel) {
                 val layoutManager = GridLayoutManager(activity, 4)
-                recyclerView.layoutManager = layoutManager
-                recyclerView.itemAnimator = DefaultItemAnimator()
-                homeListModelClassArrayList1 = ArrayList()
+				recyclerView.layoutManager = layoutManager
+				recyclerView.itemAnimator = DefaultItemAnimator()
+
+				homeListModelClassArrayList1 = ArrayList()
                 fieldName = resources.getStringArray(R.array.recharge_list_home)
-                for (i in fieldName.indices) {
+
+				for (i in fieldName.indices) {
                     val gridModel = GridModel(fieldName[i], fieldImage[i])
                     homeListModelClassArrayList1!!.add(gridModel)
                 }
-                bAdapterNS = GridRecycleAdapter(
+
+				bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
                         override fun onClick(position: Int) {
 							switchActivity(
@@ -234,12 +177,6 @@ class NSHomeFragment : NSFragment() {
             layoutHeader.ivMenu.setOnClickListener { drawer.openDrawer(GravityCompat.START) }
             drawer.closeDrawer(GravityCompat.START)
 
-            /*clReports.setOnClickListener {
-                switchActivity(
-                    NSReportsActivity::class.java
-                )
-            }*/
-
             clVoucherBtn.setOnClickListener {
                 switchActivity(
                     NSVouchersActivity::class.java
@@ -250,20 +187,9 @@ class NSHomeFragment : NSFragment() {
 				EventBus.getDefault().post(NSTabChange(R.id.tb_register))
 			}
 
-            clCoinBtn.setOnClickListener {
-                /*switchActivity(
-                    NSSlotsActivity::class.java,
-                    bundleOf(
-                        NSConstants.KEY_SLOTS_INFO to Gson().toJson(homeModel.dashboardData!!.data!!.slotList)
-                    )
-                )*/
-            }
-
 			clQrCode.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
-					//scanQrCode.launch(null)
 					activityResultPermission.launch(Manifest.permission.CAMERA)
-					//openCameraWithScanner()
 				}
 			})
 
@@ -291,9 +217,10 @@ class NSHomeFragment : NSFragment() {
 			ivFieldImage.setImageResource(R.drawable.ic_wallet_report)
 			tvFieldName.text = activity.resources.getString(R.string.reports)
 			llRecharge.setOnClickListener {
-				switchActivity(
+				EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
+				/*switchActivity(
 					NSReportsActivity::class.java
-				)
+				)*/
 			}
 		}
 
@@ -325,7 +252,6 @@ class NSHomeFragment : NSFragment() {
                 if (isUserData) {
                     with(nsUserData!!) {
                         tvUserName.text = addText(activity, R.string.name, userName!!)
-
 						setAccountNumber(true)
                         navigationView()
                         tvActive.visible()
@@ -349,8 +275,8 @@ class NSHomeFragment : NSFragment() {
 				val mask = nsUserData?.acNo?.replace("\\w(?=\\w{4})".toRegex(), "X")?:""
 				tvAccountNo.text = addText(activity, R.string.ac_no, if (isMasking) mask else nsUserData?.acNo?:"")
 
-				tvAccountNoShow.setOnClickListener {
-					tvAccountNoShow.text = activity.resources.getString(if (!isMasking) R.string.show else R.string.hide)
+				ivShowHide.setOnClickListener {
+					ivShowHide.setImageResource(if (!isMasking) R.drawable.ic_visible_view else R.drawable.ic_in_visible_view)
 					setAccountNumber(!isMasking)
 				}
 			}
@@ -368,7 +294,6 @@ class NSHomeFragment : NSFragment() {
 					NSConstants.SOCKET_TYPE = getSocketType()
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
                     NSApplication.getInstance().setWalletBalance(setWallet())
-                    //setBold(setRoyaltyStatus())
                     tvStatusRoyalty.text =
                         addText(activity, R.string.status_royalty, setRoyaltyStatus())
                     layoutHeader.tvAmountData.text =
@@ -387,20 +312,6 @@ class NSHomeFragment : NSFragment() {
                     }*/
                 }
             }
-        }
-    }
-
-    private fun setBold(value: String) {
-        with(homeBinding) {
-            val html = "Status: <b>${
-                value.lowercase().replaceFirstChar {
-                    if (it.isLowerCase()) it.titlecase(
-                        Locale.getDefault()
-                    ) else it.toString()
-                }
-            }</b>"
-            tvStatusRoyalty.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
-            tvStatusRoyalty.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
@@ -503,7 +414,6 @@ class NSHomeFragment : NSFragment() {
                         llRePurchase.setOnClickListener {
 							pref.offerTabPosition = 0
 							switchActivity(OffersActivity::class.java)
-                            //EventBus.getDefault().post(NSTabChange(R.id.tb_offers))
                         }
 
                         llLogout.setOnClickListener(object : SingleClickListener() {
@@ -613,21 +523,19 @@ class NSHomeFragment : NSFragment() {
 
     override fun onResume() {
         super.onResume()
-        //	NSUtilities.showUpdateDialog(activity, false)
         checkUpdateDialog(homeModel.chekVersionResponse)
     }
 
 	private fun openCameraWithScanner() {
-
 		BarcodeScanningActivity.start(requireContext(), BarcodeScanningActivity.ScannerSDK.ZXING, object :
 			OnScannerResponse {
 			override fun onScan(isSuccess: Boolean, value: String) {
-				showSnackbar(isSuccess, value)
+				showSnackBar(isSuccess, value)
 			}
 		})
 	}
 
-	private fun showSnackbar(isSuccess: Boolean, value: String) {
+	private fun showSnackBar(isSuccess: Boolean, value: String) {
 		if (isSuccess) {
 			switchActivity(QRCodeActivity::class.java, bundleOf(NSConstants.KEY_QR_CODE_ID to value, NSConstants.KEY_WALLET_AMOUNT to homeModel.setWallet()))
 		} else {
