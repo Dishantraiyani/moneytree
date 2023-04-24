@@ -24,6 +24,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.rajat.pdfviewer.util.NSPdfPath
 import kotlinx.android.synthetic.main.activity_pdf_viewer.*
 import kotlinx.android.synthetic.main.pdf_view_tool_bar.*
 import java.io.File
@@ -36,6 +37,7 @@ class PdfViewerActivity : AppCompatActivity() {
 
     private var permissionGranted: Boolean? = false
     private var menuItem: MenuItem? = null
+    private var shareItem: MenuItem? = null
     private var fileUrl: String? = null
 
     companion object {
@@ -190,6 +192,7 @@ class PdfViewerActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         menuItem = menu?.findItem(R.id.download)
+		//shareItem = menu?.findItem(R.id.share)
         return true
     }
 
@@ -200,7 +203,10 @@ class PdfViewerActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.download) checkPermission(PERMISSION_CODE)
-        if (item.itemId == android.R.id.home) {
+		/*if (item.itemId == R.id.share) {
+			NSPdfPath.sharePdf(this@PdfViewerActivity, "")
+		}*/
+		if (item.itemId == android.R.id.home) {
             finish() // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item)

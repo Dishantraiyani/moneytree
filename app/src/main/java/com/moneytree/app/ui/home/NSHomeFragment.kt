@@ -339,6 +339,10 @@ class NSHomeFragment : NSFragment() {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_register))
                         }
 
+						llRegisterSeller.setOnClickListener {
+							NSUtilities.openBrowser(activity, "https://moneytree.biz/Seller/Login")
+						}
+
                         llVouchers.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)
                             switchActivity(

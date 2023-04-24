@@ -8,4 +8,5 @@
         android:title="Download"
         app:iconTint="?attr/pdfView_downloadIconTint"
         app:showAsAction="always" />
+
 </menu>

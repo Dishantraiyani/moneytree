@@ -38,7 +38,7 @@ open class NSViewModel(mApplication: Application) : AndroidViewModel(mApplicatio
         isProgressShowing.value = false
         isBottomProgressShowing.value = false
 
-        if (apiErrorList.contains("Session TimeOut!!\n") || apiErrorList.contains("Token Id Incorrect..")) {
+        if (apiErrorList.contains("Session TimeOut!!") || apiErrorList.contains("Session TimeOut!!\n") || apiErrorList.contains("Token Id Incorrect..")) {
             NSApplication.getInstance().getPrefs().clearPrefData()
             NSApplication.getInstance().startActivity(Intent(NSApplication.getInstance(), NSLoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
         } else {

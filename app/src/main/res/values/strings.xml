@@ -195,6 +195,7 @@
     <string name="balance">₹%1$s</string>
     <string name="vouchers">Vouchers</string>
     <string name="register">Register</string>
+    <string name="register_as_seller">Register as seller</string>
     <string name="repurchase">Repurchase</string>
     <string name="direct_retail">Direct Retail</string>
     <string name="royalty_offer">Royalty Offer</string>
@@ -400,7 +401,7 @@
     <string name="repurchase_data">Repurchase: %1$s</string>
     <string name="no_redeem_available">No Redemption Available</string>
     <string name="transaction_id">Transaction Id: %1$s</string>
-    <string name="entry_date">Entry Date: %1$s</string>
+    <string name="entry_date">Date: %1$s</string>
     <string name="available_wallet_amount">Available Wallet Amount</string>
     <string name="transfer_id">Transfer Id</string>
     <string name="transaction_password">Transaction Password</string>

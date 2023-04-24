@@ -98,7 +98,7 @@ class NSRegisterListRecycleAdapter(
 
 					btnSendMessage.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							packageActiveCallback.onDefault(response)
+							packageActiveCallback.onMessageSend(response)
 						}
 					})
 

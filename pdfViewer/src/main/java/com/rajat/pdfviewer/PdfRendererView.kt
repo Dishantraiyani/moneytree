@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
+import com.rajat.pdfviewer.util.NSPdfPath
 import kotlinx.android.synthetic.main.pdf_rendererview.view.*
 import java.io.File
 import java.net.URLEncoder
@@ -109,6 +110,7 @@ class PdfRendererView @JvmOverloads constructor(
     }
 
     private fun init(file: File, pdfQuality: PdfQuality) {
+		NSPdfPath.PDF_PATH = file
         pdfRendererCore = PdfRendererCore(context, file, pdfQuality)
         pdfRendererCoreInitialised = true
         pdfViewAdapter = PdfViewAdapter(pdfRendererCore, pageMargin, enableLoadingForPages)
