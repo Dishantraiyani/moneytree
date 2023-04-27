@@ -531,7 +531,7 @@ class NSHomeFragment : NSFragment() {
     }
 
 	private fun openCameraWithScanner() {
-		BarcodeScanningActivity.start(requireContext(), BarcodeScanningActivity.ScannerSDK.ZXING, object :
+		BarcodeScanningActivity.start(requireContext(), BarcodeScanningActivity.ScannerSDK.MLKIT, object :
 			OnScannerResponse {
 			override fun onScan(isSuccess: Boolean, value: String) {
 				showSnackBar(isSuccess, value)
