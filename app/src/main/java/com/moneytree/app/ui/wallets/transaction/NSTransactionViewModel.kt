@@ -22,6 +22,9 @@ class NSTransactionViewModel(application: Application) : NSViewModel(application
     var transactionResponse: NSWalletListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
+	var startingDate: String = ""
+	var endingDate: String = ""
+	var selectedType: String = ""
 
     /**
      * Get transaction list data
@@ -39,7 +42,7 @@ class NSTransactionViewModel(application: Application) : NSViewModel(application
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-        NSWalletRepository.getWalletList(pageIndex, search, this)
+        NSWalletRepository.getWalletList(pageIndex, search, startingDate, endingDate, selectedType, this)
     }
 
     override fun <T> onSuccess(data: T) {

@@ -22,6 +22,8 @@ class NSRedeemViewModel(application: Application) : NSViewModel(application),
     var redeemResponse: NSRedeemListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
+	var startingDate: String = ""
+	var endingDate: String = ""
 
     /**
      * Get redeem list data
@@ -39,7 +41,7 @@ class NSRedeemViewModel(application: Application) : NSViewModel(application),
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-        NSWalletRepository.getWalletRedeemList(pageIndex, search, this)
+        NSWalletRepository.getWalletRedeemList(pageIndex, search, "", "",this)
     }
 
     override fun <T> onSuccess(data: T) {

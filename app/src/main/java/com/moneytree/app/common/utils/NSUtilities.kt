@@ -2,12 +2,11 @@ package com.moneytree.app.common.utils
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
-import android.content.pm.PackageManager.PackageInfoFlags
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,13 +15,20 @@ import android.os.Build
 import android.provider.Settings
 import android.util.Base64
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.moneytree.app.R
+import com.moneytree.app.common.NSDateTimeHelper
+import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
+import com.moneytree.app.databinding.LayoutDateRangeSelectBinding
 import java.io.UnsupportedEncodingException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 /**
@@ -254,5 +260,73 @@ object NSUtilities {
 		val intent = Intent(Intent.ACTION_DIAL)
 		intent.data = Uri.parse("tel:${call}")
 		context.startActivity(intent)
+	}
+
+	public fun setDateRange(layoutDateRange: LayoutDateRangeSelectBinding, activity: Activity, isFilterVisible: Boolean = false, callback: NSDateRangeCallback) {
+		layoutDateRange.clFilterType.setVisibility(isFilterVisible)
+		var startingDate = NSDateTimeHelper.getCurrentDate()
+		var endingDate = NSDateTimeHelper.getCurrentDate()
+
+		layoutDateRange.tvStartDate.text = startingDate
+		layoutDateRange.tvEndDate.text = endingDate
+
+		val list = NSDateTimeHelper.getCurrentDate().split("-")
+		val filterListType: MutableList<String> = arrayListOf()
+		filterListType.addAll(activity.resources.getStringArray(R.array.transaction_filter))
+		var selectedFilterType = filterListType[0]
+
+		layoutDateRange.tvStartDate.setOnClickListener {
+			val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
+				startingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear)}-$year"
+				layoutDateRange.tvStartDate.text = startingDate
+				checkDateRange(activity, startingDate, endingDate, selectedFilterType, callback)
+			}, list[2].toInt(), list[1].toInt(), list[0].toInt())
+			dpd.show()
+		}
+
+		layoutDateRange.tvEndDate.setOnClickListener {
+			val endDate = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
+				endingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear)}-$year"
+				layoutDateRange.tvEndDate.text = endingDate
+				checkDateRange(activity, startingDate, endingDate, selectedFilterType,callback)
+			}, list[2].toInt(), list[1].toInt(), list[0].toInt())
+			endDate.show()
+		}
+
+
+		val adapter = ArrayAdapter(activity, R.layout.layout_spinner, filterListType)
+		layoutDateRange.statusTypeSpinner.adapter = adapter
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+		layoutDateRange.statusTypeSpinner.onItemSelectedListener =
+			object : AdapterView.OnItemSelectedListener {
+				override fun onItemSelected(
+					p0: AdapterView<*>?, view: View?, position: Int, id: Long
+				) {
+					selectedFilterType = filterListType[position]
+					callback.onDateRangeSelect(startingDate, endingDate, filterListType[position])
+				}
+
+				override fun onNothingSelected(p0: AdapterView<*>?) {
+				}
+			}
+	}
+
+	private fun getDateZero(value: Int): String {
+		return if (value < 10) {
+			"0$value"
+		} else {
+			value.toString()
+		}
+	}
+
+	private fun checkDateRange(activity: Activity, startingDate: String, endingDate: String, type: String, callback: NSDateRangeCallback) {
+		val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH)
+		val strDate: Date = sdf.parse(startingDate)?: Date()
+		val endDate: Date = sdf.parse(endingDate)?: Date()
+		if (strDate.before(endDate) || strDate == endDate) {
+			callback.onDateRangeSelect(startingDate, endingDate, type)
+		} else {
+			Toast.makeText(activity, "Please Select Valid Date", Toast.LENGTH_SHORT).show()
+		}
 	}
 }

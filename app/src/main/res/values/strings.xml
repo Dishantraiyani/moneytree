@@ -279,6 +279,12 @@
         <item>Self</item>
     </string-array>
 
+	<string-array name="transaction_filter">
+		<item>All</item>
+		<item>Credit</item>
+		<item>Debit</item>
+	</string-array>
+
     <string-array name="stockiest_types_super">
         <item>Stockiest</item>
         <item>PUP</item>
@@ -606,4 +612,6 @@
 	<string name="redemption">Redemption</string>
     <string name="set_default">Set Default</string>
 	<string name="send_sms">Send SMS</string>
+    <string name="please_enter_transaction_password">Please Enter Transaction Password.</string>
+    <string name="enter_transaction_password">Enter Transaction Password.</string>
 </resources>

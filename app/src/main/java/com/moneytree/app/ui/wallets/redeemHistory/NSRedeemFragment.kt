@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRedeemBinding
@@ -34,6 +36,7 @@ class NSRedeemFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRedeemBinding.inflate(inflater, container, false)
+		observeViewModel()
         return redeemBinding.root
     }
 
@@ -49,7 +52,6 @@ class NSRedeemFragment : NSFragment() {
      */
     private fun viewCreated() {
         setRedeemAdapter()
-        observeViewModel()
     }
 
     /**
@@ -59,18 +61,23 @@ class NSRedeemFragment : NSFragment() {
         with(redeemBinding) {
             with(redeemListModel) {
                 srlRefresh.setOnRefreshListener {
-                    pageIndex = "1"
-                    getRedeemListData(pageIndex, "", false, isBottomProgress = false)
+					callRedeemFirstPage(false)
                 }
             }
         }
     }
 
+	private fun callRedeemFirstPage(isShowProgress: Boolean) {
+		redeemListModel.apply {
+			pageIndex = "1"
+			getRedeemListData(pageIndex, "", isShowProgress, isBottomProgress = false)
+		}
+	}
+
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	fun onWalletUpdateData(event: NSRedeemWalletUpdateEvent) {
 		with(redeemListModel) {
-			pageIndex = "1"
-			getRedeemListData(pageIndex, "", true, isBottomProgress = false)
+			callRedeemFirstPage(true)
 		}
 	}
 
@@ -92,8 +99,16 @@ class NSRedeemFragment : NSFragment() {
                         }
                     })
                 rvRedeemList.adapter = redeemListAdapter
-                pageIndex = "1"
-                getRedeemListData(pageIndex, "", true, isBottomProgress = false)
+				callRedeemFirstPage(true)
+				NSUtilities.setDateRange(redeemBinding.layoutDateRange, activity, false, object : NSDateRangeCallback {
+					override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
+						redeemListModel.apply {
+							startingDate = startDate
+							endingDate = endDate
+							callRedeemFirstPage(true)
+						}
+					}
+				})
             }
         }
     }

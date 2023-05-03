@@ -589,13 +589,16 @@ class NSApiManager {
 	fun getWalletList(
 		pageIndex: String,
 		search: String,
+		startDate: String,
+		endDate: String,
+		type: String,
 		callback: NSRetrofitCallback<NSWalletListResponse>
 	) {
 		request(
 			unAuthorised3020Client.getWalletList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
-				search
+				search, startDate, endDate, type
 			), callback
 		)
 	}
@@ -608,13 +611,15 @@ class NSApiManager {
 	fun walletRedeemList(
 		pageIndex: String,
 		search: String,
+		startDate: String,
+		endDate: String,
 		callback: NSRetrofitCallback<NSRedeemListResponse>
 	) {
 		request(
 			unAuthorised3020Client.walletRedemptionList(
 				NSUserManager.getAuthToken()!!,
 				pageIndex,
-				search
+				search, startDate, endDate
 			), callback
 		)
 	}
@@ -1240,7 +1245,10 @@ interface RTApiInterface {
 	fun getWalletList(
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
-		@Field("search") search: String
+		@Field("search") search: String,
+		@Field("start_date") startDate: String,
+		@Field("end_date") endDate: String,
+		@Field("type") type: String
 	): Call<NSWalletListResponse>
 
 	@FormUrlEncoded
@@ -1255,7 +1263,9 @@ interface RTApiInterface {
 	fun walletRedemptionList(
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
-		@Field("search") search: String
+		@Field("search") search: String,
+		@Field("start_date") startDate: String,
+		@Field("end_date") endDate: String
 	): Call<NSRedeemListResponse>
 
 	@FormUrlEncoded

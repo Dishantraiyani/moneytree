@@ -9,7 +9,7 @@ object NSDateTimeHelper {
     private const val DATE_FORMAT_ORDER_SHOW = "dd-MM-yyyy | HH:mm a"
     private const val DATE_FORMAT_FROM_API_TRANSACTION = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     private const val DATE_FORMAT_FROM_API = "yyyy-MM-dd'T'HH:mm:ss"
-    private const val DATE_FORMAT_CURRENT_TIME = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    private const val DATE_FORMAT_CURRENT_TIME = "dd-MM-yyyy"
     private const val DATE_FORMAT_USER_ = "dd MMM, HH:mma"
     private const val DATE_FORMAT_GROUP_DATE = "yyyy-MM-dd"
     private const val DATE_FORMAT_GROUP_TIME = "HH:mm a"

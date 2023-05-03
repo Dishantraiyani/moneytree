@@ -34,6 +34,7 @@ class NSTransferFragment : NSFragment() {
 	private var isTransferFromVoucher: Boolean = false
 	private var packageId: String? = null
 	private var voucherQty: Int = 0
+	private var availableAmount: String = "0"
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = NSTransferFragment().apply {
@@ -48,6 +49,8 @@ class NSTransferFragment : NSFragment() {
 			if (isTransferFromVoucher) {
 				packageId = it.getString(NSConstants.KEY_IS_PACKAGE_ID)
 				voucherQty = it.getInt(NSConstants.KEY_IS_VOUCHER_QUANTITY)
+				availableAmount = it.getString(NSConstants.KEY_AVAILABLE_BALANCE)?:"0.0"
+
 			}
 		}
 	}
@@ -86,6 +89,9 @@ class NSTransferFragment : NSFragment() {
 					cardPackageName.visible()
 					transferModel.getPackageListData(true)
 				} else {
+					tvAvailableAmount.text = availableAmount
+					tvAvailableBalanceTitle.visible()
+					cardAvailableAmount.visible()
 					tvHeaderBack.text = activity.resources.getString(R.string.wallet_transfer)
 				}
 			}
@@ -150,7 +156,7 @@ class NSTransferFragment : NSFragment() {
 							return
 						} else if (password.isEmpty() && !isTransferFromVoucher) {
 							etTransactionPassword.error =
-								activity.resources.getString(R.string.please_enter_password)
+								activity.resources.getString(R.string.please_enter_transaction_password)
 							return
 						} else {
 							if (amount.toDouble() > 0) {

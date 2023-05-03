@@ -22,6 +22,10 @@
 		<item name="pf_delete_button">@style/MyLockScreenDeleteButtonStyle</item>
     </style>
 
+	<style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+		<item name="colorAccent">@color/purple_200</item>
+	</style>
+
 	<!--LockScreen-->
 	<style name="MyLockScreenStyle">
 		<item name="android:background">@drawable/phone_gray_background</item>

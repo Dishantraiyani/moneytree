@@ -144,7 +144,7 @@
 						app:layout_constraintBottom_toBottomOf="parent"
 						app:layout_constraintStart_toEndOf="@id/iv_amount"
 						app:layout_constraintEnd_toEndOf="parent"
-						android:inputType="number"
+						android:inputType="numberSigned"
 						android:imeOptions="actionNext"/>
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
@@ -214,7 +214,7 @@
 						android:textColor="@color/black"
 						android:background="@drawable/phone_white_background"
 						android:paddingHorizontal="@dimen/_10sdp"
-						android:hint="@string/enter_password"
+						android:hint="@string/enter_transaction_password"
 						android:textColorHint="@color/hint_color"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"

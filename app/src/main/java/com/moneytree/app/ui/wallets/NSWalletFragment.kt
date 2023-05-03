@@ -90,7 +90,7 @@ class NSWalletFragment : NSFragment() {
                     }
 
                     tvTransfer.setOnClickListener {
-                        switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false))
+                        switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false, NSConstants.KEY_AVAILABLE_BALANCE to amountAvailable))
                     }
 
                     ivSearch.setOnClickListener {
@@ -134,6 +134,7 @@ class NSWalletFragment : NSFragment() {
                     val adapter = ViewPagerMDAdapter(requireActivity())
                     adapter.setFragment(mFragmentList)
                     viewPager.adapter = adapter
+					viewPager.isUserInputEnabled = false
                     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                         tab.text = mFragmentTitleList[position]
                     }.attach()

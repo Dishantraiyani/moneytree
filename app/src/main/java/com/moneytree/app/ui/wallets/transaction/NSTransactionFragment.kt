@@ -9,8 +9,16 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSLog
+import com.moneytree.app.common.NSRedeemWalletUpdateTransferEvent
+import com.moneytree.app.common.NSWalletAmount
+import com.moneytree.app.common.SearchCloseEvent
+import com.moneytree.app.common.SearchStringEvent
+import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentTransactionBinding
 import org.greenrobot.eventbus.EventBus
@@ -58,18 +66,23 @@ class NSTransactionFragment : NSFragment() {
         with(transactionBinding) {
             with(transactionListModel) {
                 srlRefresh.setOnRefreshListener {
-                    pageIndex = "1"
-                    getTransactionListData(pageIndex, "", false, isBottomProgress = false)
+					callTransactionFirstPage(false)
                 }
             }
         }
     }
 
+	private fun callTransactionFirstPage(isShowProgress: Boolean) {
+		transactionListModel.apply {
+			pageIndex = "1"
+			getTransactionListData(pageIndex, "", isShowProgress, isBottomProgress = false)
+		}
+	}
+
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	fun onWalletUpdateData(event: NSRedeemWalletUpdateTransferEvent) {
 		with(transactionListModel) {
-			pageIndex = "1"
-			getTransactionListData(pageIndex, "", true, isBottomProgress = false)
+			callTransactionFirstPage(true)
 		}
 	}
 
@@ -92,9 +105,20 @@ class NSTransactionFragment : NSFragment() {
                     })
                 rvTransactions.adapter = transactionListAdapter
                 pageIndex = "1"
-                Handler(Looper.getMainLooper()).postDelayed({
-                    getTransactionListData(pageIndex, "", true, isBottomProgress = false)
-                }, 200)
+				NSUtilities.setDateRange(transactionBinding.layoutDateRange, activity, true, object : NSDateRangeCallback {
+					override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
+						transactionListModel.apply {
+							startingDate = startDate
+							endingDate = endDate
+							selectedType = type
+						}
+						callTransactionFirstPage(true)
+					}
+
+				})
+                /*Handler(Looper.getMainLooper()).postDelayed({
+					callTransactionFirstPage(true)
+                }, 200)*/
             }
         }
     }

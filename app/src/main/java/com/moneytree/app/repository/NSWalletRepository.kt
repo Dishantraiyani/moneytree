@@ -19,10 +19,10 @@ object NSWalletRepository {
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */
-    fun getWalletList(pageIndex: String, search: String,
+    fun getWalletList(pageIndex: String, search: String, startDate: String, endDate: String, type: String,
         viewModelCallback: NSGenericViewModelCallback
     ) {
-        apiManager.getWalletList(pageIndex, search, object :
+        apiManager.getWalletList(pageIndex, search, startDate, endDate, type, object :
             NSRetrofitCallback<NSWalletListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_WALLET_LIST_DATA) {
             override fun <T> onResponse(response: Response<T>) {
                 val data = response.body() as NSWalletListResponse
@@ -42,10 +42,10 @@ object NSWalletRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun getWalletRedeemList(pageIndex: String, search: String,
+	fun getWalletRedeemList(pageIndex: String, search: String, startDate: String, endDate: String,
 									 viewModelCallback: NSGenericViewModelCallback
 	) {
-		apiManager.walletRedeemList(pageIndex, search, object :
+		apiManager.walletRedeemList(pageIndex, search, startDate, endDate, object :
 			NSRetrofitCallback<NSRedeemListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REDEEM_LIST_DATA) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSRedeemListResponse
