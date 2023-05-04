@@ -294,26 +294,38 @@ object NSUtilities {
 		}
 
 
-		val adapter = ArrayAdapter(activity, R.layout.layout_spinner, filterListType)
-		layoutDateRange.statusTypeSpinner.adapter = adapter
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-		layoutDateRange.statusTypeSpinner.onItemSelectedListener =
-			object : AdapterView.OnItemSelectedListener {
-				override fun onItemSelected(
-					p0: AdapterView<*>?, view: View?, position: Int, id: Long
-				) {
-					selectedFilterType = filterListType[position]
-					callback.onDateRangeSelect(startingDate, endingDate, filterListType[position])
-				}
+		if (isFilterVisible) {
+			val adapter = ArrayAdapter(activity, R.layout.layout_spinner, filterListType)
+			layoutDateRange.statusTypeSpinner.adapter = adapter
+			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+			layoutDateRange.statusTypeSpinner.onItemSelectedListener =
+				object : AdapterView.OnItemSelectedListener {
+					override fun onItemSelected(
+						p0: AdapterView<*>?, view: View?, position: Int, id: Long
+					) {
+						selectedFilterType = filterListType[position]
+						callback.onDateRangeSelect(
+							startingDate,
+							endingDate,
+							filterListType[position]
+						)
+					}
 
-				override fun onNothingSelected(p0: AdapterView<*>?) {
+					override fun onNothingSelected(p0: AdapterView<*>?) {
+					}
 				}
-			}
+		} else {
+			callback.onDateRangeSelect(startingDate, endingDate, "All")
+		}
 	}
 
 	private fun getDateZero(value: Int): String {
 		return if (value < 10) {
-			"0$value"
+			if (value == 0) {
+				"01"
+			} else {
+				"0$value"
+			}
 		} else {
 			value.toString()
 		}

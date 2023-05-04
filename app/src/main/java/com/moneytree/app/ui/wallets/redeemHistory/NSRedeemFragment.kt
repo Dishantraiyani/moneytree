@@ -99,7 +99,6 @@ class NSRedeemFragment : NSFragment() {
                         }
                     })
                 rvRedeemList.adapter = redeemListAdapter
-				callRedeemFirstPage(true)
 				NSUtilities.setDateRange(redeemBinding.layoutDateRange, activity, false, object : NSDateRangeCallback {
 					override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
 						redeemListModel.apply {
@@ -109,6 +108,7 @@ class NSRedeemFragment : NSFragment() {
 						}
 					}
 				})
+				callRedeemFirstPage(true)
             }
         }
     }
@@ -127,13 +127,12 @@ class NSRedeemFragment : NSFragment() {
     private fun setRedeemData(isRedeem: Boolean) {
         with(redeemListModel) {
             redeemDataManage(isRedeem)
+			var amount = "0"
+			if (redeemResponse?.walletAmount.isValidList()) {
+				amount = redeemResponse!!.walletAmount[0].amount ?:"0"
+			}
+			EventBus.getDefault().post(NSWalletAmount(amount))
             if (isRedeem) {
-				var amount = "0"
-				if (redeemResponse!!.walletAmount.isValidList()) {
-					amount = redeemResponse!!.walletAmount[0].amount!!
-				}
-				EventBus.getDefault().post(NSWalletAmount(amount))
-
 				redeemListAdapter!!.clearData()
                 redeemListAdapter!!.updateData(redeemList)
             }

@@ -137,12 +137,12 @@ class NSTransactionFragment : NSFragment() {
     private fun setTransactionData(isTransaction: Boolean) {
         with(transactionListModel) {
             transactionDataManage(isTransaction)
+			var amount = "0"
+			if (transactionResponse?.walletAmount.isValidList()) {
+				amount = transactionResponse!!.walletAmount[0].amount?:"0"
+			}
+			EventBus.getDefault().post(NSWalletAmount(amount))
             if (isTransaction) {
-                var amount = "0"
-                if (transactionResponse!!.walletAmount.isValidList()) {
-                    amount = transactionResponse!!.walletAmount[0].amount!!
-                }
-                EventBus.getDefault().post(NSWalletAmount(amount))
                 transactionListAdapter!!.clearData()
                 transactionListAdapter!!.updateData(transactionList)
             }
