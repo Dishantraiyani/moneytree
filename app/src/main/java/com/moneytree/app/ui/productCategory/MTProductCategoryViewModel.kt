@@ -19,7 +19,6 @@ import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 class MTProductCategoryViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var categoryList: MutableList<NSCategoryData> = arrayListOf()
-    var tempVoucherList: MutableList<NSCategoryData> = arrayListOf()
     var isCategoryDataAvailable = MutableLiveData<Boolean>()
 
     /**

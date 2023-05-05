@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSProductCategoryCallback
 import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.common.utils.NSUtilities.showPopUpHome
@@ -26,26 +27,25 @@ import com.moneytree.app.common.utils.NSUtilities.showUpdateDialog
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
+import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
+import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
+import com.moneytree.app.ui.productCategory.MTProductCategoryViewModel
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
+import com.moneytree.app.ui.products.MTProductsActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
-import com.moneytree.app.ui.register.NSAddRegisterFragment
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
-import com.moneytree.app.ui.wallets.NSWalletFragment
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import com.moneytree.app.ui.youtube.YoutubeActivity
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
 import maulik.barcodescanner.OnScannerResponse
 import maulik.barcodescanner.ui.BarcodeScanningActivity
 import org.greenrobot.eventbus.EventBus
@@ -57,6 +57,9 @@ class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
         ViewModelProvider(this)[NSHomeViewModel::class.java]
     }
+	private val productCategoryModel: MTProductCategoryViewModel by lazy {
+		ViewModelProvider(this)[MTProductCategoryViewModel::class.java]
+	}
     private var _binding: NsFragmentHomeBinding? = null
     private val homeBinding get() = _binding!!
     private var homeListModelClassArrayList1: ArrayList<GridModel>? = null
@@ -64,16 +67,6 @@ class NSHomeFragment : NSFragment() {
 
     companion object {
         fun newInstance() = NSHomeFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            with(homeModel) {
-                strHomeData = it.getString(NSConstants.KEY_HOME_DETAIL)
-                getHomeDetail()
-            }
-        }
     }
 
     override fun onCreateView(
@@ -91,25 +84,62 @@ class NSHomeFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(homeBinding) {
-            with(homeModel) {
-                with(layoutHeader) {
-					NSConstants.tabName = this@NSHomeFragment.javaClass
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.app_name)
-                    ivBack.visibility = View.INVISIBLE
-                    ivMenu.visibility = View.VISIBLE
-                    tvAmountData.visibility = View.VISIBLE
-                }
-                getUserDetail()
-                checkVersion()
-                getDashboardData(true)
-                addRechargeItems()
-				setRechargeLayout()
-            }
-        }
+		with(homeModel) {
+			setHeader()
+			checkVersion()
+			getUserDetail()
+			getDashboardData(true)
+			addRechargeItems()
+			setRechargeLayout()
+		}
         observeViewModel()
     }
+
+	/**
+	 * Set listener
+	 */
+	private fun setListener() {
+		with(homeBinding) {
+			layoutHeader.ivMenu.setOnClickListener {
+				drawer.openDrawer(GravityCompat.START)
+			}
+
+			drawer.closeDrawer(GravityCompat.START)
+
+			clVoucherBtn.setOnClickListener {
+				switchActivity(
+					NSVouchersActivity::class.java
+				)
+			}
+
+			clDownLine.setOnClickListener {
+				EventBus.getDefault().post(NSTabChange(R.id.tb_register))
+			}
+
+			clQrCode.setOnClickListener(object : SingleClickListener() {
+				override fun performClick(v: View?) {
+					activityResultPermission.launch(Manifest.permission.CAMERA)
+				}
+			})
+
+			tvUpdate.setOnClickListener(object : SingleClickListener() {
+				override fun performClick(v: View?) {
+					switchActivity(NSActivateActivity::class.java)
+				}
+			})
+		}
+	}
+
+	private fun setHeader() {
+		homeBinding.layoutHeader.apply {
+			NSConstants.tabName = this@NSHomeFragment.javaClass
+			clBack.visible()
+			tvHeaderBack.text = activity.resources.getString(R.string.app_name)
+			ivBack.invisible()
+			ivMenu.visible()
+			tvAmountData.visible()
+		}
+	}
 
 	private fun showPopup(fileName: String) {
 		with(homeBinding) {
@@ -119,25 +149,6 @@ class NSHomeFragment : NSFragment() {
 			}
 		}
 	}
-
-    // Add Fragments to Tabs
-    private fun setupViewPager(viewPager: SliderView) {
-        with(homeModel) {
-            with(homeBinding) {
-                try {
-					rlBanner.setVisibility(mFragmentList.isValidList())
-					val pagerAdapter = SliderAdapter(requireActivity(), mFragmentList)
-					viewPager.setSliderAdapter(pagerAdapter)
-					pagerAdapter.notifyDataSetChanged()
-					viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE);
-					viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-					viewPager.startAutoCycle();
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        }
-    }
 
     private fun addRechargeItems() {
         with(homeBinding) {
@@ -169,37 +180,7 @@ class NSHomeFragment : NSFragment() {
         }
     }
 
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-        with(homeBinding) {
-            layoutHeader.ivMenu.setOnClickListener { drawer.openDrawer(GravityCompat.START) }
-            drawer.closeDrawer(GravityCompat.START)
 
-            clVoucherBtn.setOnClickListener {
-                switchActivity(
-                    NSVouchersActivity::class.java
-                )
-            }
-
-			clDownLine.setOnClickListener {
-				EventBus.getDefault().post(NSTabChange(R.id.tb_register))
-			}
-
-			clQrCode.setOnClickListener(object : SingleClickListener() {
-				override fun performClick(v: View?) {
-					activityResultPermission.launch(Manifest.permission.CAMERA)
-				}
-			})
-
-            tvUpdate.setOnClickListener(object : SingleClickListener() {
-                override fun performClick(v: View?) {
-                    switchActivity(NSActivateActivity::class.java)
-                }
-            })
-        }
-    }
 
 	private fun setRechargeLayout() {
 		homeBinding.layoutWalletRecharge.apply {
@@ -246,38 +227,36 @@ class NSHomeFragment : NSFragment() {
 		}
 	}
 
-    private fun setUserData(isUserData: Boolean) {
+    private fun setUserData(userDetail: NSDataUser) {
         with(homeBinding) {
             with(homeModel) {
-                if (isUserData) {
-                    with(nsUserData!!) {
-                        tvUserName.text = addText(activity, R.string.name, userName!!)
-						setAccountNumber(true)
-                        navigationView()
-                        tvActive.visible()
+				userDetail.apply {
+					tvUserName.text = addText(activity, R.string.name, userName!!)
+					setAccountNumber(true, userDetail)
+					tvActive.visible()
 
-                        if (nsUserData!!.isActive.equals("Y")) {
-                            pref.isActive = true
-                            tvActive.text = "${nsUserData?.packageName?.uppercase()} (${activity.resources.getString(R.string.active)})"
-                        } else {
-                            pref.isActive = false
-                            tvActive.text = activity.resources.getString(R.string.deActive)
-                        }
-                    }
-                }
+					if (isActive.equals("Y")) {
+						pref.isActive = true
+						tvActive.text = "${packageName?.uppercase()} (${activity.resources.getString(R.string.active)})"
+					} else {
+						pref.isActive = false
+						tvActive.text = activity.resources.getString(R.string.deActive)
+					}
+					navigationView(userDetail)
+				}
             }
         }
     }
 
-	private fun setAccountNumber(isMasking: Boolean) {
+	private fun setAccountNumber(isMasking: Boolean, userDetail: NSDataUser) {
 		homeBinding.apply {
 			homeModel.apply {
-				val mask = nsUserData?.acNo?.replace("\\w(?=\\w{4})".toRegex(), "X")?:""
-				tvAccountNo.text = addText(activity, R.string.ac_no, if (isMasking) mask else nsUserData?.acNo?:"")
+				val mask = userDetail.acNo?.replace("\\w(?=\\w{4})".toRegex(), "X")?:""
+				tvAccountNo.text = addText(activity, R.string.ac_no, if (isMasking) mask else userDetail.acNo?:"")
 
 				ivShowHide.setOnClickListener {
 					ivShowHide.setImageResource(if (!isMasking) R.drawable.ic_visible_view else R.drawable.ic_in_visible_view)
-					setAccountNumber(!isMasking)
+					setAccountNumber(!isMasking, userDetail)
 				}
 			}
 		}
@@ -288,9 +267,6 @@ class NSHomeFragment : NSFragment() {
             with(homeModel) {
                 if (isDashboardData) {
                     tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
-                    /*tvVoucher.text = addText(activity, R.string.dashboard_data, setVoucher())
-                    tvJoinVoucher.text =
-                        addText(activity, R.string.dashboard_data, setJoinVoucher())*/
 					NSConstants.SOCKET_TYPE = getSocketType()
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
                     NSApplication.getInstance().setWalletBalance(setWallet())
@@ -298,27 +274,19 @@ class NSHomeFragment : NSFragment() {
                         addText(activity, R.string.status_royalty, setRoyaltyStatus())
                     layoutHeader.tvAmountData.text =
                         addText(activity, R.string.my_earning, setEarningAmount())
-					setupViewPager(viewPager)
+					HomeRepository.setupViewPager(activity, homeBinding, homeModel, viewPager)
 					showPopup(getPopUpImage())
 					EventBus.getDefault().post(NSChangeNavigationMenuNameEvent())
-                    //This is display Message slider
-                    /*if (data!!.directRetailStatus.isNotEmpty() && data!!.colour.isNotEmpty()) {
-                        tvMessage.setTextColor(Color.parseColor(data!!.colour))
-                        tvMessage.text = data!!.directRetailStatus
-                        tvMessage.visibility = View.VISIBLE
-                        tvMessage.isSelected = true
-                    } else {
-                        tvMessage.visibility = View.GONE
-                    }*/
+					productCategoryModel.getProductCategory(true)
                 }
             }
         }
     }
 
-    private fun navigationView() {
+    private fun navigationView(userDetail: NSDataUser) {
         with(homeBinding) {
             with(homeModel) {
-                with(nsUserData!!) {
+                userDetail.apply {
                     val navView: View = navView.getHeaderView(0)
                     val navBinding = LayoutHeaderNavBinding.bind(navView)
                     with(navBinding) {
@@ -445,6 +413,25 @@ class NSHomeFragment : NSFragment() {
 		}
 	}
 
+	private fun setCategoryData() {
+		homeBinding.apply {
+			with(productCategoryModel) {
+				val layoutManager = GridLayoutManager(activity, 4)
+				rvProducts.layoutManager = layoutManager
+				rvProducts.itemAnimator = DefaultItemAnimator()
+
+				val categoryListAdapter = MTCategoryHomeRecycleAdapter(object : NSProductCategoryCallback {
+					override fun onResponse(categoryData: NSCategoryData) {
+						switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
+					}
+				})
+				rvProducts.adapter = categoryListAdapter
+				categoryListAdapter.clearData()
+				categoryListAdapter.updateData(categoryList)
+			}
+		}
+	}
+
     /**
      * To observe the view model for data changes
      */
@@ -456,10 +443,14 @@ class NSHomeFragment : NSFragment() {
                 updateProgress(shouldShowProgress)
             }
 
+			productCategoryModel.isCategoryDataAvailable.observe(viewLifecycleOwner) {
+				setCategoryData()
+			}
+
             isUserDataAvailable.observe(
                 viewLifecycleOwner
-            ) { isUserData ->
-                setUserData(isUserData)
+            ) { userDetail ->
+                setUserData(userDetail)
             }
 
             isDashboardDataAvailable.observe(

@@ -1,6 +1,8 @@
 package com.moneytree.app.ui.products
 
 import android.app.Activity
+import android.os.Build
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
+import com.onesignal.HTML
 import java.util.concurrent.ExecutionException
 
 
@@ -93,7 +96,12 @@ class MTProductListRecycleAdapter(
                     tvProductName.text = productName
                     tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
                     tvRate.text = addText(activity, R.string.rate_title, rate!!)
-                    tvDescription.text = description!!
+					tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+						Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
+					} else {
+						Html.fromHtml(description)
+					}
+                    //tvDescription.text = description!!
 					clProductLayout.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)

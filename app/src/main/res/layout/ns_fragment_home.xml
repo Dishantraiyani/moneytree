@@ -130,7 +130,7 @@
 					android:src="@drawable/ic_wallet"
 					android:layout_marginStart="@dimen/_5sdp"
 					android:layout_marginEnd="@dimen/_5sdp"
-					android:tint="@color/white"
+					android:tint="@color/gray"
 					tools:ignore="UseAppTint" />
 
 				<TextView
@@ -670,8 +670,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:cardElevation="@dimen/_1sdp"
-					android:layout_marginTop="@dimen/_10sdp"
-					android:layout_marginBottom="@dimen/_10sdp">
+					android:layout_marginTop="@dimen/_10sdp">
 
 					<LinearLayout
 						android:layout_width="match_parent"
@@ -701,6 +700,49 @@
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
 							android:id="@+id/recyclerView"
+							android:paddingBottom="5dp"
+							android:nestedScrollingEnabled="false"
+							android:layout_gravity="center_horizontal">
+
+						</androidx.recyclerview.widget.RecyclerView>
+					</LinearLayout>
+				</androidx.cardview.widget.CardView>
+
+				<androidx.cardview.widget.CardView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					app:cardElevation="@dimen/_1sdp"
+					android:layout_marginTop="@dimen/_10sdp"
+					android:layout_marginBottom="@dimen/_10sdp">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:orientation="vertical"
+						android:layout_margin="@dimen/_1sdp">
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="15sp"
+							android:layout_marginTop="13.6dp"
+							android:fontFamily="@font/inter_regular"
+							android:textStyle="normal"
+							android:paddingLeft="16.7dp"
+							android:textColor="@color/black"
+							android:text="@string/products"
+							/>
+
+						<View
+							android:layout_width="match_parent"
+							android:layout_height="0.7dp"
+							android:background="#eef0f1"
+							android:layout_marginTop="13.1dp"/>
+
+						<androidx.recyclerview.widget.RecyclerView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:id="@+id/rv_products"
 							android:paddingBottom="5dp"
 							android:nestedScrollingEnabled="false"
 							android:layout_gravity="center_horizontal">

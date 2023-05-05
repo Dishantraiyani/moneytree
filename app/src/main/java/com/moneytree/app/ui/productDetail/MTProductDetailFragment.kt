@@ -1,6 +1,8 @@
 package com.moneytree.app.ui.productDetail
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,7 +72,11 @@ class MTProductDetailFragment : NSFragment() {
 						tvProductName.text = productName
 						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
 						tvRate.text = addText(activity, R.string.rate_title, rate!!)
-						tvDescription.text = description!!
+						tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+							Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
+						} else {
+							Html.fromHtml(description)
+						}
 					}
 				}
 			}

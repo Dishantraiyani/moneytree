@@ -28,10 +28,7 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     var dashboardData: NSDashboardResponse? = null
     var chekVersionLiveData = MutableLiveData<NSCheckVersionResponse>()
     var chekVersionResponse: NSCheckVersionResponse? = null
-    var strHomeData : String? = null
-    private var homeDetail: NSNotificationListData? = null
-    var nsUserData: NSDataUser? = null
-    var isUserDataAvailable = MutableLiveData<Boolean>()
+    var isUserDataAvailable = MutableLiveData<NSDataUser>()
     val mFragmentList: MutableList<String> = ArrayList()
     var fieldName: Array<String> = arrayOf()
 	var isLogout = MutableLiveData<Boolean>()
@@ -51,20 +48,11 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
 		R.drawable.ic_water
     )
 
-    /**
-     * To get the home detail
-     */
-    fun getHomeDetail() {
-        if (!strHomeData.isNullOrEmpty()) {
-            homeDetail = Gson().fromJson(strHomeData, NSNotificationListData::class.java)
-        }
-    }
 
     fun getUserDetail() {
         MainDatabase.getUserData(object : NSUserDataCallback {
             override fun onResponse(userDetail: NSDataUser) {
-                nsUserData = userDetail
-                isUserDataAvailable.value = true
+                isUserDataAvailable.value = userDetail
             }
         })
     }
