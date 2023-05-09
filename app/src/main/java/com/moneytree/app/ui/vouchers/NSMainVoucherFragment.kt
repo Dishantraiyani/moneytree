@@ -13,7 +13,6 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
-import com.moneytree.app.ui.packageVoucher.packageList.NSPackageListActivity
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

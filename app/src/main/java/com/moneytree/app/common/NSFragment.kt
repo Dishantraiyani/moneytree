@@ -106,6 +106,11 @@ open class NSFragment : Fragment() {
         NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = NSConstants.LOGOUT_CLICK, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true)
     }
 
+	protected fun showCommonDialog(title: String?, message: String?, positiveButton: String, negativeButton: String, alertKey: String = NSConstants.COMMON_CLICK) {
+		val errorMessage: String = message ?: getString(R.string.something_went_wrong)
+		NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true)
+	}
+
     /**
      * To display the no network dialog
      */

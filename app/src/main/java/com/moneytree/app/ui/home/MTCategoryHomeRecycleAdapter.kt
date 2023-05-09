@@ -1,17 +1,20 @@
 package com.moneytree.app.ui.home
 
+import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.databinding.LayoutCategoryItemBinding
 import com.moneytree.app.databinding.LayoutItemRechargesBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
 
-class MTCategoryHomeRecycleAdapter(private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class MTCategoryHomeRecycleAdapter(private val context: Context, private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private val categoryData: MutableList<NSCategoryData> = arrayListOf()
 
     fun updateData(voucherList: MutableList<NSCategoryData>) {
@@ -60,6 +63,8 @@ class MTCategoryHomeRecycleAdapter(private val onClickResponse: NSProductCategor
         fun bind(response: NSCategoryData) {
             with(voucherBinding) {
                 with(response) {
+					val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
+					ivFieldImage.setImageDrawable(drawable)
                     tvFieldName.text = categoryName
 					llRecharge.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {

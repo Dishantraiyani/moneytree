@@ -115,7 +115,8 @@
 					android:layout_marginHorizontal="@dimen/_5sdp"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintEnd_toStartOf="@id/btn_search"
-					app:layout_constraintTop_toTopOf="parent">
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent">
 
 					<androidx.constraintlayout.widget.ConstraintLayout
 						android:id="@+id/cl_wallet_amount"

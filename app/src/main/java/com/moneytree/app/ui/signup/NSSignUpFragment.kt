@@ -21,14 +21,18 @@ import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback
 import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.common.NSAlertButtonClickEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentSignupBinding
 import com.moneytree.app.ui.lock.LockActivity
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class NSSignUpFragment : NSFragment() {
@@ -88,44 +92,56 @@ class NSSignUpFragment : NSFragment() {
 					btnSubmit.setOnClickListener(object : OnSingleClickListener() {
 						override fun onSingleClick(v: View?) {
 							with(activity.resources) {
-								val fullName = etFullName.text.toString()
-								val password = etPassword.text.toString()
-								val cPassword = etConfirmPassword.text.toString()
-								val email = etEmail.text.toString()
-								val phone = etPhone.text.toString()
-
-								if (fullName.isEmpty()) {
-									etFullName.error = getString(R.string.please_enter_name)
-									return
-								} else if (phone.isEmpty() || phone.length < 10) {
-									etPhone.error = getString(R.string.please_enter_valid_phone)
-									return
-								} else if (email.isEmpty()) {
-									etEmail.error = getString(R.string.please_enter_email)
-									return
-								} else if (password.isEmpty()) {
-									etPassword.error = getString(R.string.please_enter_password)
-									return
-								} else if (cPassword.isEmpty()) {
-									etConfirmPassword.error =
-										getString(R.string.please_enter_password)
-									return
-								} else if (password != cPassword) {
-									etConfirmPassword.error = getString(R.string.password_not_match)
-									return
-								} else if (!cbChecked.isChecked) {
-									Toast.makeText(
-										activity,
-										activity.resources.getString(R.string.please_accept_terms),
-										Toast.LENGTH_SHORT
-									).show()
-									return
-								} else {
-									saveRegisterData(etRefer.text.toString(), fullName, email, phone, password, true)
-								}
+								registerUser(true)
 							}
 						}
 					})
+				}
+			}
+		}
+	}
+
+	private fun registerUser(isReferal: Boolean) {
+		signUpBinding.apply {
+			signUpModel.apply {
+				val referral = etRefer.text.toString()
+				val fullName = etFullName.text.toString()
+				val password = etPassword.text.toString()
+				val cPassword = etConfirmPassword.text.toString()
+				val email = etEmail.text.toString()
+				val phone = etPhone.text.toString()
+
+				if (fullName.isEmpty()) {
+					etFullName.error = getString(R.string.please_enter_name)
+					return
+				} else if (phone.isEmpty() || phone.length < 10) {
+					etPhone.error = getString(R.string.please_enter_valid_phone)
+					return
+				} else if (email.isEmpty()) {
+					etEmail.error = getString(R.string.please_enter_email)
+					return
+				} else if (password.isEmpty()) {
+					etPassword.error = getString(R.string.please_enter_password)
+					return
+				} else if (cPassword.isEmpty()) {
+					etConfirmPassword.error =
+						getString(R.string.please_enter_password)
+					return
+				} else if (password != cPassword) {
+					etConfirmPassword.error = getString(R.string.password_not_match)
+					return
+				} else if (!cbChecked.isChecked) {
+					Toast.makeText(
+						activity,
+						activity.resources.getString(R.string.please_accept_terms),
+						Toast.LENGTH_SHORT
+					).show()
+					return
+				} else if (referral.isEmpty() && isReferal) {
+					showCommonDialog("SignUp", "Are you sure you want to register without referral?", "Yes", "No", NSConstants.SIGNUP_CLICK)
+					return
+				} else {
+					saveRegisterData(etRefer.text.toString(), fullName, email, phone, password, true)
 				}
 			}
 		}
@@ -232,5 +248,12 @@ class NSSignUpFragment : NSFragment() {
 				Log.d("TAG", "onInstallReferrerServiceDisconnected: ")
 			}
 		})
+	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
+		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_POSITIVE && event.alertKey == NSConstants.SIGNUP_CLICK) {
+			registerUser(false)
+		}
 	}
 }

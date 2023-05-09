@@ -156,7 +156,7 @@ class NSPackageDetailFragment : NSFragment() {
                 isPackageDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isNotification ->
-					tvVoucherQty.text = voucherQuantity
+					tvVoucherQty.text = voucherQuantity?:""
                     setPackageData(isNotification)
                 }
 

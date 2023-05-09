@@ -49,8 +49,8 @@ class NSTransferFragment : NSFragment() {
 			if (isTransferFromVoucher) {
 				packageId = it.getString(NSConstants.KEY_IS_PACKAGE_ID)
 				voucherQty = it.getInt(NSConstants.KEY_IS_VOUCHER_QUANTITY)
+			} else {
 				availableAmount = it.getString(NSConstants.KEY_AVAILABLE_BALANCE)?:"0.0"
-
 			}
 		}
 	}

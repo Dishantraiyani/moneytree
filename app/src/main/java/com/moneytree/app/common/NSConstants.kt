@@ -46,6 +46,8 @@ class NSConstants {
         const val MEMBER_REGISTER_SUCCESS = "member_register_success"
         const val MEMBER_TH_ACTIVATE_CLICK = "member_th_activate_button_click"
         const val LOGOUT_CLICK = "logout_button_click"
+        const val COMMON_CLICK = "common_button_click"
+        const val SIGNUP_CLICK = "sign_up_common_button_click"
 		const val PRODUCT_SEND_CLICK = "product_send_button_click"
 
 		const val KEY_RECHARGE_VERIFY = "key_recharge_verify"

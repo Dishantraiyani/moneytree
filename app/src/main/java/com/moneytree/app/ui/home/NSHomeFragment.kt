@@ -209,7 +209,7 @@ class NSHomeFragment : NSFragment() {
 			ivFieldImage.setImageResource(R.drawable.ic_wallet_transfer)
 			tvFieldName.text = activity.resources.getString(R.string.transfer)
 			llRecharge.setOnClickListener {
-				switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false))
+				switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false, NSConstants.KEY_AVAILABLE_BALANCE to homeModel.dashboardData?.data?.wltAmt?.get(0)?.amount))
 			}
 		}
 
@@ -420,7 +420,7 @@ class NSHomeFragment : NSFragment() {
 				rvProducts.layoutManager = layoutManager
 				rvProducts.itemAnimator = DefaultItemAnimator()
 
-				val categoryListAdapter = MTCategoryHomeRecycleAdapter(object : NSProductCategoryCallback {
+				val categoryListAdapter = MTCategoryHomeRecycleAdapter(requireContext(), object : NSProductCategoryCallback {
 					override fun onResponse(categoryData: NSCategoryData) {
 						switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
 					}
