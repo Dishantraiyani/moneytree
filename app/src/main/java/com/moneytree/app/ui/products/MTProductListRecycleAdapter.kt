@@ -93,6 +93,7 @@ class MTProductListRecycleAdapter(
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder).diskCacheStrategy(DiskCacheStrategy.NONE)
 						.skipMemoryCache(true).into(ivProductImg)
+
                     tvProductName.text = productName
                     tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
                     tvRate.text = addText(activity, R.string.rate_title, rate!!)

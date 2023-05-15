@@ -63,8 +63,14 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
         fun bind(response: NSCategoryData) {
             with(voucherBinding) {
                 with(response) {
-					val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
-					ivFieldImage.setImageDrawable(drawable)
+
+					try {
+						val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
+						ivFieldImage.setImageDrawable(drawable)
+					} catch (e: Exception) {
+						e.printStackTrace()
+					}
+
                     tvFieldName.text = categoryName
 					llRecharge.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
