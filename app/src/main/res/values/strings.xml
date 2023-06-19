@@ -614,4 +614,6 @@
 	<string name="send_sms">Send SMS</string>
     <string name="please_enter_transaction_password">Please Enter Transaction Password.</string>
     <string name="enter_transaction_password">Enter Transaction Password.</string>
+    <string name="screen1_title">Unlimited Calls For You</string>
+    <string name="screen1_desc">Call your friends, family, Relatives free of cost anytime anywhere.</string>
 </resources>

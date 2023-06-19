@@ -28,7 +28,7 @@ object NSDateTimeHelper {
     private fun getConvertedDate(
         dateString: String?, inputPattern: String, outputPattern: String): String {
         val calendar = Calendar.getInstance()
-        val format = SimpleDateFormat(inputPattern, Locale.ENGLISH)
+        val format = SimpleDateFormat(inputPattern, Locale.getDefault())
         format.timeZone = TimeZone.getTimeZone("UTC")
         val date: Date?
         try {
@@ -39,7 +39,7 @@ object NSDateTimeHelper {
         } catch (exception: ParseException) {
             NSLog.e(TAG, "getConvertedDate : Caught Exception ", exception)
         }
-        val newFormat = SimpleDateFormat(outputPattern, Locale.ENGLISH)
+        val newFormat = SimpleDateFormat(outputPattern, Locale.getDefault())
         format.timeZone = TimeZone.getTimeZone("UTC")
         return newFormat.format(calendar.time)
     }
@@ -52,7 +52,7 @@ object NSDateTimeHelper {
      */
     fun getDateValue(
         dateString: String?): Date? {
-        val format = SimpleDateFormat(DATE_FORMAT_FROM_API, Locale.ENGLISH)
+        val format = SimpleDateFormat(DATE_FORMAT_FROM_API, Locale.getDefault())
         format.timeZone = TimeZone.getTimeZone("UTC")
         val date: Date? = try {
             dateString?.let { format.parse(it) }
@@ -75,7 +75,7 @@ object NSDateTimeHelper {
      *
      */
     fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat(DATE_FORMAT_CURRENT_TIME, Locale.ENGLISH)
+        val sdf = SimpleDateFormat(DATE_FORMAT_CURRENT_TIME, Locale.getDefault())
         return sdf.format(Date())
     }
 
@@ -84,7 +84,7 @@ object NSDateTimeHelper {
      *
      */
     fun getCurrentDateNotification(): String {
-        val sdf = SimpleDateFormat(DATE_FOR_NOTIFICATION, Locale.ENGLISH)
+        val sdf = SimpleDateFormat(DATE_FOR_NOTIFICATION, Locale.getDefault())
         return sdf.format(Date())
     }
 
@@ -94,7 +94,7 @@ object NSDateTimeHelper {
      *
      */
     fun getCurrentDatePayment(): String {
-        val sdf = SimpleDateFormat(DATE_FORMAT_USER_, Locale.ENGLISH)
+        val sdf = SimpleDateFormat(DATE_FORMAT_USER_, Locale.getDefault())
         return sdf.format(Date())
     }
 
@@ -139,7 +139,7 @@ object NSDateTimeHelper {
         getConvertedDate(dateString, DATE_FORMAT_FROM_API, DATE_FOR_NOTIFICATION)
 
     fun getConvertedDate(date: Date = getNextDate(increaseDecrease = 1)): String {
-        val sdf = SimpleDateFormat(DATE_FOR_NOTIFICATION, Locale.ENGLISH)
+        val sdf = SimpleDateFormat(DATE_FOR_NOTIFICATION, Locale.getDefault())
         return sdf.format(date)
     }
 

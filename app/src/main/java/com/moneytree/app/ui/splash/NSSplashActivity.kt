@@ -19,12 +19,14 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
+import com.moneytree.app.common.NSWelcomePreferences
 import com.moneytree.app.common.PreferencesSettings
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsActivitySplashBinding
 import com.moneytree.app.ui.lock.LockActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.main.NSMainActivity
+import com.moneytree.app.ui.welcome.WelcomeActivity
 
 
 class NSSplashActivity : NSActivity() {
@@ -58,14 +60,22 @@ class NSSplashActivity : NSActivity() {
 	}
 
 	private fun checkValidationLogin() {
-		if (!NSUserManager.isUserLoggedIn) {
+		if (NSWelcomePreferences(this).isWelcome) {
+			if (!NSUserManager.isUserLoggedIn) {
+				switchActivity(
+					NSLoginActivity::class.java,
+					flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+				)
+				finish()
+			} else {
+				gotoDashboard()
+			}
+		} else {
 			switchActivity(
-				NSLoginActivity::class.java,
+				WelcomeActivity::class.java,
 				flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 			)
 			finish()
-		} else {
-			gotoDashboard()
 		}
 	}
 

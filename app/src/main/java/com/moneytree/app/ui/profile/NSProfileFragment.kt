@@ -25,7 +25,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class NSProfileFragment : NSFragment() {
     private val profileModel: NSProfileViewModel by lazy {
-        ViewModelProvider(this).get(NSProfileViewModel::class.java)
+        ViewModelProvider(this)[NSProfileViewModel::class.java]
     }
     private var _binding: NsFragmentProfileBinding? = null
 
@@ -52,13 +52,9 @@ class NSProfileFragment : NSFragment() {
         observeViewModel()
         with(profileBinding) {
             with(profileModel) {
-                with(layoutHeader) {
-					NSConstants.tabName = this@NSProfileFragment.javaClass
-                    tvHeaderBack.text = resources.getString(R.string.profile_title)
-                    clBack.visibility = View.VISIBLE
-                }
+                NSConstants.tabName = this@NSProfileFragment.javaClass
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.profile_title))
                 getUserDetail()
-                //getWalletData()
             }
         }
         setProfileAdapter()

@@ -270,26 +270,29 @@ object NSUtilities {
 		layoutDateRange.tvStartDate.text = startingDate
 		layoutDateRange.tvEndDate.text = endingDate
 
-		val list = NSDateTimeHelper.getCurrentDate().split("-")
+		var startDateList = if (layoutDateRange.tvStartDate.text.isNotEmpty())  layoutDateRange.tvStartDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
+		var endDateList = if (layoutDateRange.tvEndDate.text.isNotEmpty())  layoutDateRange.tvEndDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 		val filterListType: MutableList<String> = arrayListOf()
 		filterListType.addAll(activity.resources.getStringArray(R.array.transaction_filter))
 		var selectedFilterType = filterListType[0]
 
 		layoutDateRange.tvStartDate.setOnClickListener {
+			startDateList = if (layoutDateRange.tvStartDate.text.isNotEmpty())  layoutDateRange.tvStartDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 			val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
 				startingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear)}-$year"
 				layoutDateRange.tvStartDate.text = startingDate
 				checkDateRange(activity, startingDate, endingDate, selectedFilterType, callback)
-			}, list[2].toInt(), list[1].toInt(), list[0].toInt())
+			}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
 			dpd.show()
 		}
 
 		layoutDateRange.tvEndDate.setOnClickListener {
+			endDateList = if (layoutDateRange.tvEndDate.text.isNotEmpty())  layoutDateRange.tvEndDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 			val endDate = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
 				endingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear)}-$year"
 				layoutDateRange.tvEndDate.text = endingDate
 				checkDateRange(activity, startingDate, endingDate, selectedFilterType,callback)
-			}, list[2].toInt(), list[1].toInt(), list[0].toInt())
+			}, endDateList[2].toInt(), endDateList[1].toInt(), endDateList[0].toInt())
 			endDate.show()
 		}
 

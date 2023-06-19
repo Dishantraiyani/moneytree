@@ -31,25 +31,34 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
+        <activity
+            android:name=".ui.welcome.WelcomeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
 		<activity
 			android:name=".ui.downloads.NSDownloadPlansActivity"
-			android:exported="false"/>
+			android:exported="false"
+            android:screenOrientation="portrait"/>
 		<activity
 			android:name=".ui.notificationDetail.NSNotificationDetailActivity"
-			android:exported="false"/>
+			android:exported="false"
+            android:screenOrientation="portrait"/>
 		<activity
 			android:name=".ui.notification.NSNotificationActivity"
-			android:exported="false"/>
+			android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.lock.LockActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.youtube.YoutubeActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -57,43 +66,51 @@
         <activity
             android:name=".ui.youtube.detail.YoutubeViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.offers.OfferDetailActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.mycart.purchaseComplete.PurchaseCompleteActivity"
-            android:exported="false">
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.mycart.stockDetail.StockDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.offers.OffersActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.mycart.history.NSRepuhaseOrStockHistoryActivity"
             android:exported="false"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.noNetwork.NoNetworkActivity"
             android:exported="false"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.qrCode.QRCodeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.recharge.history.NSRechargeHistoryActivity"
             android:exported="false"

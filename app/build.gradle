@@ -43,6 +43,7 @@ android {
             buildConfigField 'String', 'PRIVACY', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzQnlhWFpoWTNrdGNHOXNhV041Cg==" '
             buildConfigField 'String', 'REFUND', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzSmxkSFZ5YmkxaGJtUXRjbVZtZFc1a2N3PT0K" '
             buildConfigField 'String', 'PREFERENCE', ' "MoneyTree" '
+            buildConfigField 'String', 'WELCOME_PREFERENCE', ' "Welcome_MoneyTree" '
             buildConfigField 'String', 'LOGIN_PREFERENCE', ' "MoneyTreeLogin" '
             buildConfigField 'String', 'MAIL_ID', ' "test@gmail.com" '
             buildConfigField 'String', 'PHONE_NUMBER', ' "+12373629297" '
