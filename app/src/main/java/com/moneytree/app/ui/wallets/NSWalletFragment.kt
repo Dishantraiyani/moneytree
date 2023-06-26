@@ -30,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class NSWalletFragment : NSFragment() {
     private val walletModel: NSWalletsViewModel by lazy {
-        ViewModelProvider(this).get(NSWalletsViewModel::class.java)
+        ViewModelProvider(this)[NSWalletsViewModel::class.java]
     }
     private var _binding: NsFragmentWalletBinding? = null
     private val mainBinding get() = _binding!!
@@ -54,12 +54,8 @@ class NSWalletFragment : NSFragment() {
     private fun viewCreated() {
         with(mainBinding) {
             with(walletModel) {
-                with(layoutHeader) {
-					NSConstants.tabName = this@NSWalletFragment.javaClass
-                    tvHeaderBack.text = resources.getString(R.string.wallet)
-                    clBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.VISIBLE
-                }
+                NSConstants.tabName = this@NSWalletFragment.javaClass
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.wallet), isSearch = true)
                 tvTransfer.visibility = View.VISIBLE
                 tvRedeem.visibility = View.GONE
                 setFragmentData(requireActivity())

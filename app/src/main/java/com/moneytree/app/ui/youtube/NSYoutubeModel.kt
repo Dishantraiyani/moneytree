@@ -15,11 +15,8 @@ import com.moneytree.app.repository.network.responses.YoutubeResponse
  * The view model class for voucher. It handles the business logic to communicate with the model for the voucher and provides the data to the observing UI component.
  */
 class NSYoutubeModel(application: Application) : NSViewModel(application) {
-    val youtubeList: MutableList<YoutubeItems> = ArrayList()
-    val youtubeRequestMap: HashMap<String, String> = hashMapOf()
-    var youtubeResponse: YoutubeResponse? = null
-    var isYoutubeVideosAvailable = MutableLiveData<Boolean>()
-    var isJoiningAdded: Boolean = false
+    private val youtubeList: MutableList<YoutubeItems> = ArrayList()
+    var isYoutubeVideosAvailable = MutableLiveData<YoutubeResponse>()
 	var pageIndex: String = ""
 
 	/**
@@ -36,9 +33,8 @@ class NSYoutubeModel(application: Application) : NSViewModel(application) {
 		if (isBottomProgress) {
 			isBottomProgressShowing.value = true
 		}
-		youtubeRequestMap.clear()
+		val youtubeRequestMap: HashMap<String, String> = hashMapOf()
 		youtubeRequestMap["key"] = "AIzaSyCw5Wbju4gtWuIudqYcRy7h2T424GQcnMo"
-		//youtubeRequestMap["channelId"] = "UCwZuiF2VbJazXZ7BU_r9vEA"
 		youtubeRequestMap["channelId"] = "UCVdmNa50qiK4jlT46LFFjWg"
 		youtubeRequestMap["part"] = "snippet,id"
 		youtubeRequestMap["order"] = "date"
@@ -46,27 +42,14 @@ class NSYoutubeModel(application: Application) : NSViewModel(application) {
 		if (pageIndex.isNotEmpty()) {
 			youtubeRequestMap["pageToken"] = pageIndex
 		}
+
 		NSYoutubeRepository.getYoutubeVideos(youtubeRequestMap, object : NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				if (isBottomProgress) {
 					isBottomProgressShowing.value = false
 				}
-				val youtubeResponseModel = data as YoutubeResponse
-				youtubeResponse = youtubeResponseModel
-				if (youtubeResponseModel.items.isValidList()) {
-					for (item in youtubeResponse?.items!!) {
-						if (item.id != null) {
-							if (item.id.videoId != null) {
-								youtubeList.add(item)
-							}
-						}
-					}
-					//youtubeList.addAll(youtubeResponseModel.items)
-					isYoutubeVideosAvailable.value = youtubeList.isValidList()
-				} else if (pageIndex == "1"){
-					isYoutubeVideosAvailable.value = false
-				}
+				isYoutubeVideosAvailable.value = data as YoutubeResponse?
 			}
 
 			override fun onError(errors: List<Any>) {
@@ -81,5 +64,9 @@ class NSYoutubeModel(application: Application) : NSViewModel(application) {
 				handleNoNetwork()
 			}
 		})
+	}
+
+	fun getFilteredList(response: YoutubeResponse?): MutableList<YoutubeItems>? {
+		return response?.items?.filterTo(youtubeList) { it.id?.videoId != null }
 	}
 }

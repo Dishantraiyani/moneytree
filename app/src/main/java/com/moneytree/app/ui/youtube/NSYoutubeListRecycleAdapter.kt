@@ -85,7 +85,7 @@ class NSYoutubeListRecycleAdapter(
 							}
 						}
 					}
-					Glide.with(activity).load(thumbUrl).error(R.drawable.placeholder).into(ivYoutubeThumb)
+					Glide.with(activity.applicationContext).load(thumbUrl).error(R.drawable.placeholder).into(ivYoutubeThumb)
 					tvDate.text = NSDateTimeHelper.getDateTimeForView(snippet?.publishTime)
 
                     clYoutube.setOnClickListener {

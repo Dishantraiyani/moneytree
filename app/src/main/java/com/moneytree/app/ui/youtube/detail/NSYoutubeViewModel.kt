@@ -22,7 +22,6 @@ class NSYoutubeViewModel(application: Application) : NSViewModel(application) {
     var youtubeResponse: YoutubeResponse? = null
     var youtubeSelectedItem: YoutubeItems? = null
     var isYoutubeVideosAvailable = MutableLiveData<Boolean>()
-    var isJoiningAdded: Boolean = false
 	var pageIndex: String = ""
 	var youtubeDetail: String? = ""
 	var youtubeFullResponse: String? = ""
@@ -53,7 +52,6 @@ class NSYoutubeViewModel(application: Application) : NSViewModel(application) {
 		}
 		youtubeRequestMap.clear()
 		youtubeRequestMap["key"] = "AIzaSyCw5Wbju4gtWuIudqYcRy7h2T424GQcnMo"
-		//youtubeRequestMap["channelId"] = "UCwZuiF2VbJazXZ7BU_r9vEA"
 		youtubeRequestMap["channelId"] = "UCVdmNa50qiK4jlT46LFFjWg"
 		youtubeRequestMap["part"] = "snippet,id"
 		youtubeRequestMap["order"] = "date"

@@ -11,14 +11,14 @@ class NSChangePasswordActivity : NSActivity() {
         super.onCreate(savedInstanceState)
         changePasswordBinding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(changePasswordBinding.root)
-        loadInitialFragment(intent.extras!!)
+        loadInitialFragment(intent.extras)
     }
 
     /**
      * To initialize transfer fragment
      *
      */
-    private fun loadInitialFragment(bundle: Bundle) {
+    private fun loadInitialFragment(bundle: Bundle?) {
         replaceCurrentFragment(NSChangePasswordFragment.newInstance(bundle), false, changePasswordBinding.changePasswordContainer.id)
     }
 }

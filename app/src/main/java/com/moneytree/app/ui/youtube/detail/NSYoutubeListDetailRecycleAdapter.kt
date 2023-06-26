@@ -2,6 +2,7 @@ package com.moneytree.app.ui.youtube.detail
 
 import android.app.Activity
 import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSDateTimeHelper
 import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutYoutubeDetailItemBinding
 import com.moneytree.app.databinding.LayoutYoutubeItemBinding
@@ -92,11 +94,15 @@ class NSYoutubeListDetailRecycleAdapter(
 							}
 						}
 					}
-					Glide.with(activity).load(thumbUrl).error(R.drawable.placeholder).into(ivYoutubeThumb)
+					Glide.with(activity.applicationContext).load(thumbUrl).error(R.drawable.placeholder).into(ivYoutubeThumb)
 					tvDate.text = NSDateTimeHelper.getDateTimeForView(snippet?.publishTime)
 
                     clYoutube.setOnClickListener {
                         onClickListener.onClick(absoluteAdapterPosition)
+                    }
+
+                    ivShare.setOnClickListener {
+                        NSUtilities.shareAll(activity, Uri.parse("https://www.youtube.com/watch?v=${response.id!!.videoId!!}").toString())
                     }
                 }
             }

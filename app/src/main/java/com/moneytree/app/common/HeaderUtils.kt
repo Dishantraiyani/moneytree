@@ -43,6 +43,9 @@ class HeaderUtils(private val binding: LayoutHeaderBinding,
             tvHeaderBack.text = headerTitle
             tvHeaderBack.setVisibility(headerTitle.isNotEmpty())
 
+            clBack.setOnClickListener {
+                activity.onBackPressed()
+            }
         }
     }
 

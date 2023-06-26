@@ -2,6 +2,7 @@ package com.moneytree.app.ui.profile.password
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.moneytree.app.common.NSSingleLiveEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.repository.NSChangePasswordRepository
 import com.moneytree.app.repository.NSUserRepository
@@ -11,7 +12,7 @@ import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
  * The view model class for change password. It handles the business logic to communicate with the model for the change password item and provides the data to the observing UI component.
  */
 class NSChangePasswordViewModel(application: Application) : NSViewModel(application) {
-    var isChangeDataAvailable = MutableLiveData<Boolean>()
+    var isChangeDataAvailable = NSSingleLiveEvent<Boolean>()
     var isChangePassword: Boolean = false
     var strCurrentPassword: String? = null
     var strNewPassword: String? = null

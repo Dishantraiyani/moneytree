@@ -10,7 +10,7 @@
         layout="@layout/layout_header"/>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/cl_royalty_not_found"
+		android:id="@+id/cl_youtube_not_found"
 		style="@style/LayoutWidthHeightZero"
 		app:layout_constraintBottom_toTopOf="@id/cv_progress"
 		app:layout_constraintTop_toBottomOf="@id/layout_header"
@@ -29,15 +29,15 @@
 			android:textSize="@dimen/_18sdp"
 			android:textStyle="bold"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toTopOf="@+id/tv_royalty_not_found_sub"
+			app:layout_constraintBottom_toTopOf="@+id/tv_youtube_found_sub"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"/>
 
 		<TextView
-			android:id="@+id/tv_royalty_not_found_sub"
+			android:id="@+id/tv_youtube_found_sub"
 			style="@style/LayoutWidthHeightZero"
 			android:clipToPadding="false"
-			android:text="@string/no_royalty_available"
+			android:text="@string/no_youtube_video_available"
 			android:textColor="@color/gray_text"
 			android:gravity="center|top"
 			android:textSize="@dimen/_14sdp"

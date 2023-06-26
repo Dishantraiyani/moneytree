@@ -15,6 +15,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentProfileBinding
+import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.invite.NSInviteActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.profile.edit.NSEditActivity
@@ -152,20 +153,18 @@ class NSProfileFragment : NSFragment() {
         }
     }
 
-    private fun setUserData(isUserData: Boolean) {
+    private fun setUserData(userDetail: NSDataUser) {
         with(profileBinding) {
             with(profileModel) {
-                if (isUserData) {
-                    with(nsUserData!!) {
-                        tvUserName.text = setUserName(activity, userName!!)
-                        tvMobile.text = setMobile(activity, mobile!!)
-                        tvEmailId.text = setEmail(activity, email!!)
-						referralCode = nsUserData!!.referCode
-                        if (!email.isNullOrEmpty()) {
-                            tvIcon.text = email!!.substring(0, 1).uppercase()
-                        } else {
-                            tvIcon.text = getString(R.string.app_first)
-                        }
+                with(userDetail) {
+                    tvUserName.text = setUserName(activity, userName!!)
+                    tvMobile.text = setMobile(activity, mobile!!)
+                    tvEmailId.text = setEmail(activity, email!!)
+                    referralCode = userDetail.referCode
+                    if (!email.isNullOrEmpty()) {
+                        tvIcon.text = email!!.substring(0, 1).uppercase()
+                    } else {
+                        tvIcon.text = getString(R.string.app_first)
                     }
                 }
             }
@@ -225,7 +224,6 @@ class NSProfileFragment : NSFragment() {
     fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
         if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_NEGATIVE && event.alertKey == NSConstants.LOGOUT_CLICK) {
            with(profileModel) {
-               apiValue = 1
                logout()
            }
         }

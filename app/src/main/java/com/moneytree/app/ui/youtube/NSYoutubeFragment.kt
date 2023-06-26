@@ -11,9 +11,11 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentYoutubeBinding
-import com.moneytree.app.ui.offers.OfferDetailActivity
+import com.moneytree.app.repository.network.responses.YoutubeItems
+import com.moneytree.app.repository.network.responses.YoutubeResponse
 import com.moneytree.app.ui.youtube.detail.YoutubeViewActivity
 
 class NSYoutubeFragment : NSFragment() {
@@ -43,15 +45,17 @@ class NSYoutubeFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(youtubeBinding) {
-            with(youtubeViewModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.youtube)
-                    ivBack.visibility = View.VISIBLE
-                }
-                setYoutubeAdapter()
+			youtubeViewModel.apply {
+				HeaderUtils(
+					layoutHeader,
+					requireActivity(),
+					clBackView = true,
+					headerTitle = resources.getString(R.string.youtube)
+				)
+				pageIndex = ""
+				getYoutubeVideos(pageIndex, true, isBottomProgress = false)
 				observeViewModel()
-            }
+			}
         }
     }
 
@@ -61,16 +65,10 @@ class NSYoutubeFragment : NSFragment() {
     private fun setListener() {
         with(youtubeBinding) {
             with(youtubeViewModel) {
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-
-					srlRefresh.setOnRefreshListener {
-						pageIndex = ""
-						getYoutubeVideos(pageIndex, false, isBottomProgress = false)
-					}
-                }
+				srlRefresh.setOnRefreshListener {
+					pageIndex = ""
+					getYoutubeVideos(pageIndex, false, isBottomProgress = false)
+				}
             }
         }
     }
@@ -78,33 +76,39 @@ class NSYoutubeFragment : NSFragment() {
 	/**
 	 * To add data of royal in list
 	 */
-	private fun setYoutubeAdapter() {
+	private fun setYoutubeAdapter(youtubeResponse: YoutubeResponse) {
 		with(youtubeBinding) {
 			with(youtubeViewModel) {
-				rvYoutubeList.layoutManager = LinearLayoutManager(activity)
-				youtubeAdapter =
-					NSYoutubeListRecycleAdapter(activity, object : NSPageChangeCallback {
-						override fun onPageChange() {
-							if (!youtubeResponse?.nextPageToken.isNullOrEmpty()) {
-								val page: Int = youtubeList.size/ NSConstants.PAGINATION + 1
-								pageIndex = youtubeResponse?.nextPageToken!!
-								getYoutubeVideos(pageIndex, false, isBottomProgress = true)
+				val youtubeList = getFilteredList(youtubeResponse)?: arrayListOf()
+				if (youtubeAdapter == null) {
+					rvYoutubeList.layoutManager = LinearLayoutManager(activity)
+					youtubeAdapter =
+						NSYoutubeListRecycleAdapter(activity, object : NSPageChangeCallback {
+							override fun onPageChange() {
+								if (!youtubeResponse.nextPageToken.isNullOrEmpty()) {
+									pageIndex = youtubeResponse.nextPageToken
+									getYoutubeVideos(pageIndex, false, isBottomProgress = true)
+								}
 							}
-						}
-					}, object : NSInfoSelectCallback {
-						override fun onClick(position: Int) {
-							val data = youtubeList[position]
-							val bundle = Bundle()
-							bundle.putString(NSConstants.YOUTUBE_DETAIL, Gson().toJson(data))
-							bundle.putString(NSConstants.YOUTUBE_FULL_RESPONSE, Gson().toJson(youtubeResponse))
-							switchActivity(YoutubeViewActivity::class.java, bundle)
-							// EventBus.getDefault().post(NSFragmentChange(NSRoyaltyInfoFragment.newInstance(bundle)))
-						}
+						}, object : NSInfoSelectCallback {
+							override fun onClick(position: Int) {
+								val data = youtubeList[position]
+								val bundle = Bundle()
+								bundle.putString(NSConstants.YOUTUBE_DETAIL, Gson().toJson(data))
+								bundle.putString(
+									NSConstants.YOUTUBE_FULL_RESPONSE,
+									Gson().toJson(youtubeResponse)
+								)
+								switchActivity(YoutubeViewActivity::class.java, bundle)
+								// EventBus.getDefault().post(NSFragmentChange(NSRoyaltyInfoFragment.newInstance(bundle)))
+							}
 
-					})
-				rvYoutubeList.adapter = youtubeAdapter
-				pageIndex = ""
-				getYoutubeVideos(pageIndex, true, isBottomProgress = false)
+						})
+					rvYoutubeList.adapter = youtubeAdapter
+					setYoutubeList(youtubeList)
+				} else {
+					setYoutubeList(youtubeList)
+				}
 			}
 		}
 	}
@@ -116,29 +120,25 @@ class NSYoutubeFragment : NSFragment() {
 	}
 
 	/**
-	 * Set Royalty data
+	 * Set Youtube data
 	 *
-	 * @param isRoyalty when data available it's true
+	 * @param youtubeList when data available it's true
 	 */
-	private fun setRoyaltyData(isRoyalty: Boolean) {
-		with(youtubeViewModel) {
-			royaltyDataManage(isRoyalty)
-			if (isRoyalty) {
-				youtubeAdapter!!.clearData()
-				youtubeAdapter!!.updateData(youtubeList)
-			}
-		}
+	private fun setYoutubeList(youtubeList: MutableList<YoutubeItems>) {
+		youtubeDataManage(youtubeList.isValidList())
+		youtubeAdapter?.clearData()
+		youtubeAdapter?.updateData(youtubeList)
 	}
 
 	/**
-	 * Royalty data manage
+	 * Youtube data manage
 	 *
 	 * @param isYoutubeVideoAvailable when Youtube available it's visible
 	 */
-	private fun royaltyDataManage(isYoutubeVideoAvailable: Boolean) {
+	private fun youtubeDataManage(isYoutubeVideoAvailable: Boolean) {
 		with(youtubeBinding) {
 			rvYoutubeList.visibility = if (isYoutubeVideoAvailable) View.VISIBLE else View.GONE
-			clRoyaltyNotFound.visibility = if (isYoutubeVideoAvailable) View.GONE else View.VISIBLE
+			clYoutubeNotFound.visibility = if (isYoutubeVideoAvailable) View.GONE else View.VISIBLE
 		}
 	}
 
@@ -162,9 +162,9 @@ class NSYoutubeFragment : NSFragment() {
 
 				isYoutubeVideosAvailable.observe(
 					viewLifecycleOwner
-				) { isRoyalty ->
+				) { youtubeList ->
 					srlRefresh.isRefreshing = false
-					setRoyaltyData(isRoyalty)
+					setYoutubeAdapter(youtubeList)
 				}
 
 				failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

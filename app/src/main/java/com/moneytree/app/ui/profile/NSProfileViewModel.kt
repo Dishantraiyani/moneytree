@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.R
+import com.moneytree.app.common.NSSingleLiveEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.database.MainDatabase
@@ -17,10 +18,8 @@ import com.moneytree.app.repository.network.responses.NSDataUser
 class NSProfileViewModel(application: Application) : NSViewModel(application) {
     var profileItemList: MutableList<String> = arrayListOf()
     var profileIconList: MutableList<Int> = arrayListOf()
-    var isUserDataAvailable = MutableLiveData<Boolean>()
-    var nsUserData: NSDataUser? = null
-    var apiValue: Int = 0
-    var isLogout = MutableLiveData<Boolean>()
+    var isUserDataAvailable = NSSingleLiveEvent<NSDataUser>()
+    var isLogout = NSSingleLiveEvent<Boolean>()
 
     /**
      * Get profile list data
@@ -46,7 +45,7 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
         }
     }
 
-    fun getProfileIconListData(activity: Activity) {
+    private fun getProfileIconListData(activity: Activity) {
         with(activity) {
             with(resources) {
                 profileIconList.clear()
@@ -67,8 +66,7 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
     fun getUserDetail() {
         MainDatabase.getUserData(object : NSUserDataCallback {
             override fun onResponse(userDetail: NSDataUser) {
-                nsUserData = userDetail
-                isUserDataAvailable.value = true
+                isUserDataAvailable.value = userDetail
             }
         })
     }

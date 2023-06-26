@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
@@ -15,7 +16,7 @@ import com.moneytree.app.databinding.NsFragmentEditBinding
 
 class NSChangePasswordFragment : NSFragment() {
     private val changePasswordModel: NSChangePasswordViewModel by lazy {
-        ViewModelProvider(this).get(NSChangePasswordViewModel::class.java)
+        ViewModelProvider(this)[NSChangePasswordViewModel::class.java]
     }
     private var _binding: NsFragmentChangePasswordBinding? = null
     private val cpBinding get() = _binding!!
@@ -51,11 +52,7 @@ class NSChangePasswordFragment : NSFragment() {
     private fun viewCreated() {
         with(cpBinding) {
             with(changePasswordModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(if (isChangePassword) R.string.change_password else R.string.change_tran_password)
-                    ivBack.visibility = View.VISIBLE
-                }
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = activity.resources.getString(if (isChangePassword) R.string.change_password else R.string.change_tran_password))
             }
         }
         observeViewModel()

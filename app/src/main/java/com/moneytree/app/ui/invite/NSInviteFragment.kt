@@ -17,11 +17,11 @@ import com.moneytree.app.repository.network.responses.NSDataUser
 
 
 class NSInviteFragment : NSFragment() {
-    private val activationFormModel: NSInviteModel by lazy {
+    private val inviteModel: NSInviteModel by lazy {
 		ViewModelProvider(this)[NSInviteModel::class.java]
     }
     private var _binding: NsFragmentInviteBinding? = null
-    private val activationFormBinding get() = _binding!!
+    private val inviteBinding get() = _binding!!
 
 	companion object {
 		fun newInstance() = NSInviteFragment()
@@ -34,15 +34,15 @@ class NSInviteFragment : NSFragment() {
         _binding = NsFragmentInviteBinding.inflate(inflater, container, false)
         viewCreated()
         setListener()
-        return activationFormBinding.root
+        return inviteBinding.root
     }
 
     /**
      * View created
      */
     private fun viewCreated() {
-        with(activationFormBinding) {
-            with(activationFormModel) {
+        with(inviteBinding) {
+            with(inviteModel) {
                 with(layoutHeader) {
                     clBack.visibility = View.VISIBLE
                     tvHeaderBack.text = activity.resources.getString(R.string.invite)
@@ -57,8 +57,8 @@ class NSInviteFragment : NSFragment() {
      * Set listener
      */
     private fun setListener() {
-        with(activationFormBinding) {
-            with(activationFormModel) {
+        with(inviteBinding) {
+            with(inviteModel) {
 
                 with(layoutHeader) {
                     clBack.setOnClickListener {
@@ -91,11 +91,11 @@ class NSInviteFragment : NSFragment() {
     }
 
 	private fun getUserDetail() {
-		with(activationFormModel) {
+		with(inviteModel) {
 			MainDatabase.getUserData(object : NSUserDataCallback {
 				override fun onResponse(userDetail: NSDataUser) {
 					nsUserData = userDetail
-					activationFormBinding.tvInviteCode.text = nsUserData!!.referCode
+					inviteBinding.tvInviteCode.text = nsUserData!!.referCode
 				}
 			})
 		}
