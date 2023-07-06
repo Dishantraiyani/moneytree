@@ -274,6 +274,7 @@ class NSHomeFragment : NSFragment() {
                         addText(activity, R.string.status_royalty, setRoyaltyStatus())
                     layoutHeader.tvAmountData.text =
                         addText(activity, R.string.my_earning, setEarningAmount())
+					clQrCode.setVisibility(dashboardData?.data?.qrStatus.equals("Active"))
 					HomeRepository.setupViewPager(activity, homeBinding, homeModel, viewPager)
 					showPopup(getPopUpImage())
 					EventBus.getDefault().post(NSChangeNavigationMenuNameEvent())

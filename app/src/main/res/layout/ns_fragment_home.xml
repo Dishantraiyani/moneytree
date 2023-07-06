@@ -761,6 +761,7 @@
 			android:layout_height="wrap_content"
 			app:cardBackgroundColor="@color/orange"
 			app:cardCornerRadius="@dimen/_40sdp"
+			android:visibility="gone"
 			android:layout_marginBottom="@dimen/_15sdp"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
