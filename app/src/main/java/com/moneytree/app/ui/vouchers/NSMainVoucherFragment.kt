@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
@@ -18,7 +19,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSMainVoucherFragment : NSFragment() {
+class NSMainVoucherFragment : NSFragment(), NSSearchCallback {
     private val voucherListModel: NSVouchersViewModel by lazy {
         ViewModelProvider(this).get(NSVouchersViewModel::class.java)
     }
@@ -45,12 +46,7 @@ class NSMainVoucherFragment : NSFragment() {
     private fun viewCreated() {
         with(voucherBinding) {
             with(voucherListModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.vouchers)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.VISIBLE
-                }
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.vouchers), isSearch = true, searchCallback = this@NSMainVoucherFragment)
                 setMainFragmentData(activity)
                 setupViewPager(voucherContainer)
             }
@@ -65,38 +61,12 @@ class NSMainVoucherFragment : NSFragment() {
             with(voucherListModel) {
 
                 with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-
-                    ivSearch.setOnClickListener {
-                        cardSearch.visibility = View.VISIBLE
-                    }
-
                     ivClose.setOnClickListener {
                         cardSearch.visibility = View.GONE
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
                         EventBus.getDefault().post(MainSearchCloseEvent())
                     }
-
-                    etSearch.setOnKeyListener(object: View.OnKeyListener{
-                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-                            if (event.action == KeyEvent.ACTION_DOWN) {
-                                when (keyCode) {
-                                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-                                        val strSearch = etSearch.text.toString()
-                                        if (strSearch.isNotEmpty()) {
-                                            hideKeyboard(cardSearch)
-                                            EventBus.getDefault().post(MainSearchStringEvent(strSearch))
-                                        }
-                                        return true
-                                    }
-                                }
-                            }
-                            return false
-                        }
-                    })
 
 					voucherBinding.btnSubmit.setOnClickListener ( object : OnSingleClickListener() {
 						override fun onSingleClick(v: View?) {
@@ -158,5 +128,9 @@ class NSMainVoucherFragment : NSFragment() {
         with(voucherBinding) {
             layoutHeader.etSearch.setText("")
         }
+    }
+
+    override fun onSearch(search: String) {
+        EventBus.getDefault().post(MainSearchStringEvent(search))
     }
 }

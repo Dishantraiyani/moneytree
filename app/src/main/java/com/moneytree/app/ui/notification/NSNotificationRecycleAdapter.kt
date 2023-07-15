@@ -44,7 +44,7 @@ class NSNotificationRecycleAdapter(
 
 		if (position == notificationData.size - 1) {
 			if (((position + 1) % NSConstants.PAGINATION) == 0) {
-				onPageChange.onPageChange()
+				onPageChange.onPageChange(1)
 			}
 		}
     }

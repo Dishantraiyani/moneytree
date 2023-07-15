@@ -16,9 +16,9 @@ import com.moneytree.app.databinding.LayoutRegisterItemBinding
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 
 class NSRegisterListRecycleAdapter(
-	activityNS: Activity,
-	private val packageActiveCallback: NSRegisterActiveSelectCallback,
-	onPageChange: NSPageChangeCallback
+    activityNS: Activity,
+    private val packageActiveCallback: NSRegisterActiveSelectCallback,
+    onPageChange: NSPageChangeCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
     private val registerData: MutableList<NSRegisterListData> = arrayListOf()
@@ -51,7 +51,7 @@ class NSRegisterListRecycleAdapter(
 
         if (position == registerData.size - 1) {
             if (((position + 1) % NSConstants.PAGINATION) == 0) {
-                onPageChangeCallback.onPageChange()
+                onPageChangeCallback.onPageChange(1)
             }
         }
     }
@@ -83,36 +83,37 @@ class NSRegisterListRecycleAdapter(
                     tvFullNameRegister.text = fullName?.let { addText(activity, R.string.full_name_value, it) }
                     tvPackageName.text = if (packageName == null) "" else packageName
 
-					if (response.setDefault?.lowercase().equals("n")) {
-						btnSetDefault.visible()
-					} else {
-						btnSetDefault.gone()
-					}
+                    if (response.setDefault?.lowercase().equals("n")) {
+                        btnSetDefault.visible()
+                    } else {
+                        btnSetDefault.gone()
+                    }
 
 
-					btnSetDefault.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							packageActiveCallback.onDefault(response)
-						}
-					})
+                    btnSetDefault.setOnClickListener(object : SingleClickListener() {
+                        override fun performClick(v: View?) {
+                            packageActiveCallback.onDefault(response)
+                        }
+                    })
 
-					btnSendMessage.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							packageActiveCallback.onMessageSend(response)
-						}
-					})
+                    btnSendMessage.setOnClickListener(object : SingleClickListener() {
+                        override fun performClick(v: View?) {
+                            packageActiveCallback.onMessageSend(response)
+                        }
+                    })
 
-					val isActive = directActivation.equals("NOT REQUIRED")
-					btnActive.isEnabled = !isActive
-					btnActive.setBackgroundResource(if (isActive) R.drawable.gray_button_order_border else R.drawable.blue_button_order_border)
-					btnActive.text = directActivation
-					btnActive.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							packageActiveCallback.onClick(response)
-						}
-					})
+                    val isActive = directActivation.equals("NOT REQUIRED")
+                    btnActive.isEnabled = !isActive
+                    btnActive.setBackgroundResource(if (isActive) R.drawable.gray_button_order_border else R.drawable.blue_button_order_border)
+                    btnActive.text = directActivation
+                    btnActive.setOnClickListener(object : SingleClickListener() {
+                        override fun performClick(v: View?) {
+                            packageActiveCallback.onClick(response)
+                        }
+                    })
                 }
             }
         }
     }
 }
+

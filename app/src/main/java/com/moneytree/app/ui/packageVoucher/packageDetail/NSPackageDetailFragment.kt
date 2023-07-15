@@ -57,11 +57,7 @@ class NSPackageDetailFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(packageBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.package_detail)
-                ivBack.visibility = View.VISIBLE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.package_detail))
             setPackageListAdapter()
         }
         observeViewModel()
@@ -73,20 +69,13 @@ class NSPackageDetailFragment : NSFragment() {
     private fun setListener() {
         with(packageBinding) {
             with(packageListModel) {
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                       onBackPress()
-                    }
-
-					btnSubmit.setOnClickListener {
-						switchResultActivity(dataResult, NSTransferActivity::class.java, bundleOf(
-							NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true,
-							NSConstants.KEY_IS_PACKAGE_ID to packageData!!.packageId,
-							NSConstants.KEY_IS_VOUCHER_QUANTITY to packageListModel.voucherQuantity
-						))
-					}
-
-				}
+                btnSubmit.setOnClickListener {
+                    switchResultActivity(dataResult, NSTransferActivity::class.java, bundleOf(
+                        NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true,
+                        NSConstants.KEY_IS_PACKAGE_ID to packageData!!.packageId,
+                        NSConstants.KEY_IS_VOUCHER_QUANTITY to packageListModel.voucherQuantity
+                    ))
+                }
             }
         }
     }

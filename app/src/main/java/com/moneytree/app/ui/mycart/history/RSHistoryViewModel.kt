@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback

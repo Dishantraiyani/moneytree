@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
@@ -51,13 +52,7 @@ class NSRePurchaseInfoFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(repurchaseBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.repurchase_info)
-                ivBack.visibility = View.VISIBLE
-                ivSearch.visibility = View.GONE
-                ivAddNew.visibility = View.GONE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.repurchase_info))
             setRepurchaseAdapter()
         }
         observeViewModel()
@@ -73,12 +68,6 @@ class NSRePurchaseInfoFragment : NSFragment() {
                     pageIndex = "1"
                     getRePurchaseListData(pageIndex, repurchaseId!!, false, isBottomProgress = false)
                 }
-
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                       onBackPress()
-                    }
-                }
             }
         }
     }
@@ -92,7 +81,7 @@ class NSRePurchaseInfoFragment : NSFragment() {
                 rvRepurchaseList.layoutManager = LinearLayoutManager(activity)
                 repurchaseListAdapter =
                     NSRePurchaseInfoRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (rePurchaseResponse!!.nextPage) {
                                 val page: Int = rePurchaseInfoList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()

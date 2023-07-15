@@ -69,11 +69,7 @@ class NSMemberActivationFormFragment : NSFragment() {
     private fun viewCreated() {
         with(activationFormBinding) {
             with(activationFormModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.member_activation)
-                    ivBack.visibility = View.VISIBLE
-                }
+				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.member_activation))
 				if (isMemberFormActive) {
 					cardMemberId.visible()
 					cardFullName.visible()
@@ -94,71 +90,64 @@ class NSMemberActivationFormFragment : NSFragment() {
     private fun setListener() {
         with(activationFormBinding) {
             with(activationFormModel) {
+				btnSubmit.setOnClickListener(object : OnSingleClickListener() {
+					override fun onSingleClick(v: View?) {
 
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
+						if (spinnerRegisterType.selectedItemPosition != 0) {
+							var registerType = registrationType[spinnerRegisterType.selectedItemPosition]
+							registerType = if (registerType == "Wallet Register") {
+								"W"
+							} else {
+								"V"
+							}
 
-					btnSubmit.setOnClickListener(object : OnSingleClickListener() {
-						override fun onSingleClick(v: View?) {
+							if (spinnerPackageType.selectedItemPosition != 0) {
+								val packageType =
+									packageList[spinnerPackageType.selectedItemPosition - 1]
+								val packageId = packageType.packageId
 
-							if (spinnerRegisterType.selectedItemPosition != 0) {
-								var registerType = registrationType[spinnerRegisterType.selectedItemPosition]
-								registerType = if (registerType == "Wallet Register") {
-									"W"
-								} else {
-									"V"
-								}
+								if (cbChecked.isChecked) {
 
-								if (spinnerPackageType.selectedItemPosition != 0) {
-									val packageType =
-										packageList[spinnerPackageType.selectedItemPosition - 1]
-									val packageId = packageType.packageId
-
-									if (cbChecked.isChecked) {
-
-										if (packageId != null) {
-											btnSubmit.isEnabled = false
-											if (memberListData?.username != null) {
-												saveActivation(
-													memberListData!!.username!!,
-													registerType,
-													packageId,
-													true
-												)
-											} else {
-												Toast.makeText(
-													activity,
-													activity.resources.getString(R.string.member_id_not_available),
-													Toast.LENGTH_SHORT
-												).show()
-											}
+									if (packageId != null) {
+										btnSubmit.isEnabled = false
+										if (memberListData?.username != null) {
+											saveActivation(
+												memberListData!!.username!!,
+												registerType,
+												packageId,
+												true
+											)
+										} else {
+											Toast.makeText(
+												activity,
+												activity.resources.getString(R.string.member_id_not_available),
+												Toast.LENGTH_SHORT
+											).show()
 										}
-									} else {
-										Toast.makeText(
-											activity,
-											activity.resources.getString(R.string.please_accept_terms),
-											Toast.LENGTH_SHORT
-										).show()
 									}
 								} else {
 									Toast.makeText(
 										activity,
-										activity.resources.getString(R.string.please_select_package_name),
+										activity.resources.getString(R.string.please_accept_terms),
 										Toast.LENGTH_SHORT
 									).show()
 								}
 							} else {
 								Toast.makeText(
 									activity,
-									activity.resources.getString(R.string.please_select_activation_type),
+									activity.resources.getString(R.string.please_select_package_name),
 									Toast.LENGTH_SHORT
 								).show()
 							}
+						} else {
+							Toast.makeText(
+								activity,
+								activity.resources.getString(R.string.please_select_activation_type),
+								Toast.LENGTH_SHORT
+							).show()
 						}
-					})
-                }
+					}
+				})
             }
         }
     }

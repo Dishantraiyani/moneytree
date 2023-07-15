@@ -1,22 +1,18 @@
 package com.moneytree.app.ui.recharge.detail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
-import com.moneytree.app.common.*
-import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentRechargeDetailBinding
-import com.moneytree.app.ui.activationForm.NSActivationFormFragment
-import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
-import com.moneytree.app.ui.success.SuccessActivity
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 
 class NSRechargeDetailFragment : NSFragment() {
@@ -57,11 +53,12 @@ class NSRechargeDetailFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(rgBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.detail_verify)
-                ivBack.visibility = View.VISIBLE
-            }
+			HeaderUtils(
+				layoutHeader,
+				requireActivity(),
+				clBackView = true,
+				headerTitle = resources.getString(R.string.detail_verify)
+			)
 			setValue()
 			observeViewModel()
         }
@@ -72,18 +69,12 @@ class NSRechargeDetailFragment : NSFragment() {
      */
     private fun setListener() {
         with(rgBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
-
-				btnSubmit.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						viewModel.saveRecharge(activity)
-					}
-				})
-            }
-        }
+            btnSubmit.setOnClickListener(object : SingleClickListener() {
+				override fun performClick(v: View?) {
+					viewModel.saveRecharge(activity)
+				}
+			})
+		}
     }
 
 	private fun setValue() {

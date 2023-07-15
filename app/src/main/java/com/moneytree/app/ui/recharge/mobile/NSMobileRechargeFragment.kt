@@ -468,7 +468,7 @@ class NSMobileRechargeFragment : NSFragment() {
 						)
 					}
 				}, object : NSPageChangeCallback {
-					override fun onPageChange() {
+					override fun onPageChange(pageNo: Int) {
 
 					}
 				})

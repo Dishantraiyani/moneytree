@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.databinding.FragmentMemberTreeBinding
@@ -37,35 +38,13 @@ class MemberTreeFragment : NSFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMemberTreeBinding.inflate(inflater, container, false)
         viewCreated()
-        setListener()
         return memberTreeBinding.root
-    }
-
-    private fun setListener() {
-        with(memberTreeBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
-            }
-        }
     }
 
     private fun viewCreated() {
         with(memberTreeBinding) {
             with(memberTreeViewModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    if (isMemberTree == true) {
-                        tvHeaderBack.text = requireActivity().resources.getString(R.string.member_tree)
-                    } else {
-                        tvHeaderBack.text = requireActivity().resources.getString(R.string.level_member_tree)
-                    }
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.GONE
-                    ivAddNew.visibility = View.GONE
-                }
-
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(if (isMemberTree == true) R.string.member_tree else R.string.level_member_tree))
                 if (isMemberTree == true) {
                     tvMemberNotFoundSub.text = requireActivity().resources.getString(R.string.no_member_tree_available)
                 } else {

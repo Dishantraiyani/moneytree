@@ -12,6 +12,7 @@ import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
@@ -21,9 +22,9 @@ import com.moneytree.app.ui.activationForm.NSActivationFormActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSActivationFragment : NSFragment() {
+class NSActivationFragment : NSFragment(), NSSearchCallback {
     private val activationModel: NSActivationViewModel by lazy {
-        ViewModelProvider(this).get(NSActivationViewModel::class.java)
+        ViewModelProvider(this)[NSActivationViewModel::class.java]
     }
     private var _binding: NsFragmentActivationBinding? = null
 
@@ -49,14 +50,8 @@ class NSActivationFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(activationBinding) {
-            with(activationModel) {
-				with(layoutHeader) {
-					clBack.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.activation_detail)
-					ivSearch.visible()
-				}
-                setActivationAdapter()
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.activation_detail), isSearch = true, searchCallback = this@NSActivationFragment)
+            setActivationAdapter()
         }
         observeViewModel()
     }
@@ -79,17 +74,7 @@ class NSActivationFragment : NSFragment() {
 				})
 
 				with(layoutHeader) {
-					ivBack.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onBackPress()
-						}
-					})
-
-					ivSearch.setOnClickListener {
-						cardSearch.visibility = View.VISIBLE
-					}
-
-					ivClose.setOnClickListener {
+                    ivClose.setOnClickListener {
 						cardSearch.visibility = View.GONE
 						etSearch.setText("")
 						hideKeyboard(cardSearch)
@@ -103,32 +88,6 @@ class NSActivationFragment : NSFragment() {
 							}
 						}
 					}
-
-					etSearch.setOnKeyListener(object: View.OnKeyListener{
-						override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-							if (event.action == KeyEvent.ACTION_DOWN) {
-								when (keyCode) {
-									KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-										val strSearch = etSearch.text.toString()
-										if (strSearch.isNotEmpty()) {
-											hideKeyboard(cardSearch)
-											with(activationModel) {
-												tempActivationList.addAll(activationList)
-												getActivationListData(
-													pageIndex,
-													strSearch,
-													true,
-													isBottomProgress = false
-												)
-											}
-										}
-										return true
-									}
-								}
-							}
-							return false
-						}
-					})
 				}
             }
         }
@@ -143,7 +102,7 @@ class NSActivationFragment : NSFragment() {
                 rvActivationList.layoutManager = LinearLayoutManager(activity)
                 activationListAdapter =
 					NSActivationListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (productResponse!!.nextPage) {
                                 val page: Int = activationList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
@@ -269,4 +228,16 @@ class NSActivationFragment : NSFragment() {
 			}
 		}
 	}
+
+    override fun onSearch(search: String) {
+        with(activationModel) {
+            tempActivationList.addAll(activationList)
+            getActivationListData(
+                pageIndex,
+                search,
+                true,
+                isBottomProgress = false
+            )
+        }
+    }
 }

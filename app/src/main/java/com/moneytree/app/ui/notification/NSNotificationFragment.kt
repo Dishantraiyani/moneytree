@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSNotificationCallback
@@ -47,10 +48,7 @@ class NSNotificationFragment : NSFragment() {
      */
     private fun viewCreated() {
 		notificationBinding.apply {
-			layoutHeader.apply {
-				clBack.visible()
-				tvHeaderBack.text = activity.resources.getString(R.string.notification_title)
-			}
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.notification_title))
 		}
         setNotificationAdapter()
         observeViewModel()
@@ -61,10 +59,6 @@ class NSNotificationFragment : NSFragment() {
      */
     private fun setListener() {
         with(notificationBinding) {
-            layoutHeader.ivBack.setOnClickListener {
-                onBackPress()
-            }
-
             with(notificationModel) {
                 srlRefresh.setOnRefreshListener {
 					pageIndex = "1"
@@ -91,7 +85,7 @@ class NSNotificationFragment : NSFragment() {
 							}
                         }
                     }, object : NSPageChangeCallback {
-						override fun onPageChange() {
+						override fun onPageChange(pageNo: Int) {
 							if (notificationResponse!!.nextPage) {
 								val page: Int = notificationList.size/ NSConstants.PAGINATION + 1
 								pageIndex = page.toString()

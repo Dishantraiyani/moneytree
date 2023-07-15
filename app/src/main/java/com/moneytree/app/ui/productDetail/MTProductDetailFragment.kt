@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
@@ -51,7 +52,6 @@ class MTProductDetailFragment : NSFragment() {
     ): View {
         _binding = NsFragmentProductDetailBinding.inflate(inflater, container, false)
 		viewCreated()
-		setListener()
         return productBinding.root
     }
 
@@ -60,8 +60,8 @@ class MTProductDetailFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(productBinding) {
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true)
 			with(layoutHeader) {
-				clBack.visible()
 				if (productDetail != null) {
 					with(productDetail!!) {
 						tvHeaderBack.text = productName
@@ -81,20 +81,5 @@ class MTProductDetailFragment : NSFragment() {
 				}
 			}
         }
-    }
-
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-		with(productBinding) {
-			with(layoutHeader) {
-				ivBack.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						onBackPress()
-					}
-				})
-			}
-		}
     }
 }

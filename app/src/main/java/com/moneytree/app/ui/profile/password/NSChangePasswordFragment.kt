@@ -64,29 +64,23 @@ class NSChangePasswordFragment : NSFragment() {
     private fun setListener() {
         with(cpBinding) {
             with(changePasswordModel) {
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
+                btnSubmit.setOnClickListener(object : SingleClickListener() {
+                    override fun performClick(v: View?) {
+                        strCurrentPassword = etPassword.text.toString()
+                        strNewPassword = etNewPassword.text.toString()
+                        if (isValid()) {
+                            btnSubmit.isEnabled = false
+                            if (isChangePassword) {
+                                changePassword()
+                            } else {
+                                changeTransPassword()
+                            }
+                        } else {
+                            showAlertDialog(activity.resources.getString(R.string.please_enter_password))
+                        }
                     }
 
-                    btnSubmit.setOnClickListener(object : SingleClickListener() {
-                        override fun performClick(v: View?) {
-                            strCurrentPassword = etPassword.text.toString()
-                            strNewPassword = etNewPassword.text.toString()
-                            if (isValid()) {
-                                btnSubmit.isEnabled = false
-                                if (isChangePassword) {
-                                    changePassword()
-                                } else {
-                                    changeTransPassword()
-                                }
-                            } else {
-                                showAlertDialog(activity.resources.getString(R.string.please_enter_password))
-                            }
-                        }
-
-                    })
-                }
+                })
             }
 
         }

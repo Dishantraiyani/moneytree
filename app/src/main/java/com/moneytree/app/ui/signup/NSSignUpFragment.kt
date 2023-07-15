@@ -21,6 +21,7 @@ import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback
 import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSAlertButtonClickEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
@@ -65,12 +66,7 @@ class NSSignUpFragment : NSFragment() {
 		with(signUpBinding) {
 			with(signUpModel) {
 				getNotificationToken()
-				with(layoutHeader) {
-					getReferrerCode()
-					clBack.visibility = View.VISIBLE
-					tvHeaderBack.text = activity.resources.getString(R.string.sign_up)
-					ivBack.visibility = View.VISIBLE
-				}
+				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.sign_up))
 				setTerms()
 			}
 		}
@@ -82,22 +78,13 @@ class NSSignUpFragment : NSFragment() {
 	 */
 	private fun setListener() {
 		with(signUpBinding) {
-			with(signUpModel) {
-
-				with(layoutHeader) {
-					clBack.setOnClickListener {
-						onBackPress()
+			btnSubmit.setOnClickListener(object : OnSingleClickListener() {
+				override fun onSingleClick(v: View?) {
+					with(activity.resources) {
+						registerUser(true)
 					}
-
-					btnSubmit.setOnClickListener(object : OnSingleClickListener() {
-						override fun onSingleClick(v: View?) {
-							with(activity.resources) {
-								registerUser(true)
-							}
-						}
-					})
 				}
-			}
+			})
 		}
 	}
 

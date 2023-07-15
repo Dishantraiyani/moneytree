@@ -14,26 +14,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.*
-import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSActivityEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRechargeHistoryBinding
-import com.moneytree.app.repository.network.responses.NSRegisterListData
 import com.moneytree.app.repository.network.responses.RechargeListDataItem
-import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
-import com.moneytree.app.ui.recharge.mobile.NSMobileRechargeFragment
-import com.moneytree.app.ui.register.NSAddRegisterFragment
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSRechargeHistoryFragment : NSFragment() {
+class NSRechargeHistoryFragment : NSFragment(), NSSearchCallback {
     private val rechargeListModel: NSRechargeHistoryViewModel by lazy {
 		ViewModelProvider(this)[NSRechargeHistoryViewModel::class.java]
     }
@@ -73,12 +71,12 @@ class NSRechargeHistoryFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(rechargeBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.recharge_history)
-                ivBack.visibility = View.VISIBLE
-                ivSearch.visibility = View.VISIBLE
-            }
+            HeaderUtils(
+                layoutHeader,
+                requireActivity(),
+                clBackView = true,
+                headerTitle = resources.getString(R.string.recharge_history), isSearch = true, searchCallback = this@NSRechargeHistoryFragment
+            )
             setRegisterAdapter()
 			setServiceProvider(true)
 			setStatusFilter()
@@ -98,19 +96,6 @@ class NSRechargeHistoryFragment : NSFragment() {
                 }
 
                 with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-
-                    ivSearch.setOnClickListener {
-                        cardSearch.visibility = View.VISIBLE
-                    }
-
-                    ivAddNew.setOnClickListener {
-						EventBus.getDefault()
-							.post(NSFragmentChange(NSAddRegisterFragment.newInstance()))
-                    }
-
                     ivClose.setOnClickListener {
                         cardSearch.visibility = View.GONE
                         etSearch.setText("")
@@ -123,27 +108,6 @@ class NSRechargeHistoryFragment : NSFragment() {
                             setRegisterData(rechargeList.isValidList())
                         }
                     }
-
-                    etSearch.setOnKeyListener(object: View.OnKeyListener{
-                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-                            if (event.action == KeyEvent.ACTION_DOWN) {
-                                when (keyCode) {
-                                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-                                        val strSearch = etSearch.text.toString()
-                                        if (strSearch.isNotEmpty()) {
-                                            hideKeyboard(cardSearch)
-                                            tempRechargeList.addAll(rechargeList)
-                                            getRechargeListData(pageIndex, strSearch, true,
-                                                isBottomProgress = false
-                                            )
-                                        }
-                                        return true
-                                    }
-                                }
-                            }
-                            return false
-                        }
-                    })
                 }
             }
         }
@@ -241,7 +205,7 @@ class NSRechargeHistoryFragment : NSFragment() {
 						}
 					}
 				}, object : NSPageChangeCallback {
-					override fun onPageChange() {
+					override fun onPageChange(pageNo: Int) {
 						if (rechargeResponse!!.nextPage) {
 							val page: Int = rechargeList.size/NSConstants.PAGINATION + 1
 							pageIndex = page.toString()
@@ -349,4 +313,14 @@ class NSRechargeHistoryFragment : NSFragment() {
 			}
 		}
 	}
+
+    override fun onSearch(search: String) {
+        with(rechargeListModel) {
+            tempRechargeList.addAll(rechargeList)
+            getRechargeListData(
+                pageIndex, search, true,
+                isBottomProgress = false
+            )
+        }
+    }
 }

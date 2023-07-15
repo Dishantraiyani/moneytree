@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
 import com.moneytree.app.common.utils.switchActivity
@@ -34,7 +35,6 @@ class NSDownloadPlanFragment : NSFragment() {
     ): View {
         _binding = NsFragmentDownloadPlansBinding.inflate(inflater, container, false)
         viewCreated()
-        setListener()
         return binding.root
     }
 
@@ -43,34 +43,10 @@ class NSDownloadPlanFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(binding) {
-            with(downloadModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.downloads)
-                    ivBack.visibility = View.VISIBLE
-                }
-
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.downloads))
         }
 		setDownloadPlanAdapter()
         observeViewModel()
-    }
-
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-        with(binding) {
-            with(downloadModel) {
-
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-
-                }
-            }
-        }
     }
 
 	/**

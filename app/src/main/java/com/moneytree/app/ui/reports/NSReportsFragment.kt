@@ -35,11 +35,7 @@ class NSReportsFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(reportsBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.reports)
-                ivBack.visibility = View.VISIBLE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.reports))
             replaceFragment(
                 MemberTreeFragment.newInstance(
                     bundleOf(
@@ -57,10 +53,6 @@ class NSReportsFragment : NSFragment() {
         with(reportsBinding) {
 
             with(layoutHeader) {
-                clBack.setOnClickListener {
-                   onBackPress()
-                }
-
                 tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
                     override fun onTabSelected(tab: TabLayout.Tab?) {
                         when (tab!!.position) {

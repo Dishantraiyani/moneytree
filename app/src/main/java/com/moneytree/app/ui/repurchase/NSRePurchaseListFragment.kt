@@ -81,7 +81,7 @@ class NSRePurchaseListFragment : NSFragment() {
                 rvRepurchaseList.layoutManager = LinearLayoutManager(activity)
                 repurchaseListAdapter =
                     NSRePurchaseListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (rePurchaseResponse!!.nextPage) {
                                 val page: Int = rePurchaseList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()

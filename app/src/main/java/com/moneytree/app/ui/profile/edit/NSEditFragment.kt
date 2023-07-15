@@ -9,6 +9,7 @@ import android.widget.EditText
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.databinding.NsFragmentAddRedeemBinding
@@ -44,11 +45,7 @@ class NSEditFragment : NSFragment() {
     private fun viewCreated() {
         with(adBinding) {
             with(editViewModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.edit)
-                    ivBack.visibility = View.VISIBLE
-                }
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.edit))
                 getUserDetail()
             }
         }
@@ -61,26 +58,20 @@ class NSEditFragment : NSFragment() {
     private fun setListener() {
         with(adBinding) {
             with(editViewModel) {
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
+                btnSubmit.setOnClickListener(object : SingleClickListener(){
+                    override fun performClick(v: View?) {
+                        btnSubmit.isEnabled = false
+                        strFullName = etFullName.text.toString()
+                        strAddress = etAddress.text.toString()
+                        strEmail = etEmail.text.toString()
+                        strMobile = etMobile.text.toString()
+                        strPanNo = etPanNo.text.toString()
+                        strBankIfsc = etBankIfsc.text.toString()
+                        strBankName = etBankName.text.toString()
+                        strAccNo = etAccountNo.text.toString()
+                        updateProfile(true)
                     }
-
-                    btnSubmit.setOnClickListener(object : SingleClickListener(){
-                        override fun performClick(v: View?) {
-                            btnSubmit.isEnabled = false
-                            strFullName = etFullName.text.toString()
-                            strAddress = etAddress.text.toString()
-                            strEmail = etEmail.text.toString()
-                            strMobile = etMobile.text.toString()
-                            strPanNo = etPanNo.text.toString()
-                            strBankIfsc = etBankIfsc.text.toString()
-                            strBankName = etBankName.text.toString()
-                            strAccNo = etAccountNo.text.toString()
-                            updateProfile(true)
-                        }
-                    })
-                }
+                })
             }
         }
     }

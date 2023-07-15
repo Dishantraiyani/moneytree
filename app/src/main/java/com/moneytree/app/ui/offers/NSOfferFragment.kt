@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.databinding.NsFragmentOffersBinding
 import com.moneytree.app.ui.downlineReOffer.NSDownlineReOfferFragment
 import com.moneytree.app.ui.repurchase.NSRePurchaseListFragment
@@ -22,7 +23,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSOfferFragment : NSFragment() {
+class NSOfferFragment : NSFragment(), NSSearchCallback {
     private val offerModel: NSOffersViewModel by lazy {
 		ViewModelProvider(this)[NSOffersViewModel::class.java]
     }
@@ -49,13 +50,7 @@ class NSOfferFragment : NSFragment() {
     private fun viewCreated() {
         with(offerBinding) {
             with(offerModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.offers)
-                    ivBack.visibility = View.VISIBLE
-                    ivSearch.visibility = View.VISIBLE
-                }
-
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.offers), isSearch = true, searchCallback = this@NSOfferFragment)
                 setFragmentData(activity)
                 setupViewPager(offerBinding.offerFrameContainer)
             }
@@ -123,40 +118,20 @@ class NSOfferFragment : NSFragment() {
         with(offerBinding) {
             with(offerModel) {
                 with(layoutHeader) {
-                    clBack.setOnClickListener {
-                      	onBackPress()
-                    }
-
-                    ivSearch.setOnClickListener {
-                        cardSearch.visibility = View.VISIBLE
-                    }
-
                     ivClose.setOnClickListener {
                         cardSearch.visibility = View.GONE
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
                         EventBus.getDefault().post(SearchCloseEvent(tabPosition))
                     }
-
-                    etSearch.setOnKeyListener(object: View.OnKeyListener{
-                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-                            if (event.action == KeyEvent.ACTION_DOWN) {
-                                when (keyCode) {
-                                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-                                        val strSearch = etSearch.text.toString()
-                                        if (strSearch.isNotEmpty()) {
-                                            hideKeyboard(cardSearch)
-                                            EventBus.getDefault().post(SearchStringEvent(strSearch, tabPosition))
-                                        }
-                                        return true
-                                    }
-                                }
-                            }
-                            return false
-                        }
-                    })
                 }
             }
+        }
+    }
+
+    override fun onSearch(search: String) {
+        with(offerModel) {
+            EventBus.getDefault().post(SearchStringEvent(search, tabPosition))
         }
     }
 }

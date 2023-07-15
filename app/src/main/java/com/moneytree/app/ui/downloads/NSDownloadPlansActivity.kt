@@ -2,9 +2,7 @@ package com.moneytree.app.ui.downloads
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityActivationFormBinding
 import com.moneytree.app.databinding.NsActivityDownloadPlansBinding
-import com.moneytree.app.ui.activationForm.NSActivationFormFragment
 
 class NSDownloadPlansActivity : NSActivity() {
     private lateinit var activateBinding: NsActivityDownloadPlansBinding

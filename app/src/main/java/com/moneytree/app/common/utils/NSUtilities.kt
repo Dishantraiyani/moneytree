@@ -15,6 +15,7 @@ import android.os.Build
 import android.provider.Settings
 import android.util.Base64
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -342,6 +343,13 @@ object NSUtilities {
 			callback.onDateRangeSelect(startingDate, endingDate, type)
 		} else {
 			Toast.makeText(activity, "Please Select Valid Date", Toast.LENGTH_SHORT).show()
+		}
+	}
+
+	fun hideKeyboard(activity: Activity, currentFocus: View) {
+		currentFocus.let { view ->
+			val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+			imm?.hideSoftInputFromWindow(view.windowToken, 0)
 		}
 	}
 }

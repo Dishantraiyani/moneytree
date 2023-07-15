@@ -22,6 +22,7 @@ import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.LayoutSearchableDialogFilterBinding
 import com.moneytree.app.databinding.NsFragmentProductsBinding
@@ -39,7 +40,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
-class NSProductFragment : NSFragment() {
+class NSProductFragment : NSFragment(), NSSearchCallback {
     private val productModel: NSProductViewModel by lazy {
         ViewModelProvider(this).get(NSProductViewModel::class.java)
     }
@@ -68,17 +69,12 @@ class NSProductFragment : NSFragment() {
     private fun viewCreated() {
         with(productBinding) {
             with(productModel) {
+				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.shop), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSProductFragment)
 				with(layoutHeader) {
 					NSConstants.tabName = this@NSProductFragment.javaClass
-					clBack.visible()
-					ivCart.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.shop)
-					ivSearch.visible()
-					ivAddNew.visible()
 					tvCategories.visible()
 					tvCartCount.visible()
 					cardCategoriesType.visible()
-					ivHistory.visible()
 					setCartCount()
 					setTotalAmount()
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
@@ -138,10 +134,6 @@ class NSProductFragment : NSFragment() {
 						}
 					})
 
-					ivSearch.setOnClickListener {
-						cardSearch.visibility = View.VISIBLE
-					}
-
 					ivAddNew.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							isGridMode = !isGridMode
@@ -171,32 +163,6 @@ class NSProductFragment : NSFragment() {
 							}
 						}
 					}
-
-					etSearch.setOnKeyListener(object: View.OnKeyListener{
-						override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-							if (event.action == KeyEvent.ACTION_DOWN) {
-								when (keyCode) {
-									KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-										val strSearch = etSearch.text.toString()
-										if (strSearch.isNotEmpty()) {
-											hideKeyboard(cardSearch)
-											with(productModel) {
-												tempProductList.addAll(productList)
-												getProductStockListData(
-													pageIndex,
-													strSearch,
-													true,
-													isBottomProgress = false
-												)
-											}
-										}
-										return true
-									}
-								}
-							}
-							return false
-						}
-					})
 
 					ivCart.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
@@ -272,7 +238,7 @@ class NSProductFragment : NSFragment() {
 				}
                 productListAdapter =
 					NSProductListRecycleAdapter(activity, isGridMode, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
@@ -325,7 +291,7 @@ class NSProductFragment : NSFragment() {
 				}
 				productListAdapter =
 					NSProductListRecycleAdapter(activity, isGrid, object : NSPageChangeCallback{
-						override fun onPageChange() {
+						override fun onPageChange(pageNo: Int) {
 							if (productResponse!!.nextPage) {
 								val page: Int = productList.size/NSConstants.PAGINATION + 1
 								pageIndex = page.toString()
@@ -557,6 +523,18 @@ class NSProductFragment : NSFragment() {
 				}
 				getProductStockListData(pageIndex, "", true, isBottomProgress = false)
 			}
+		}
+	}
+
+	override fun onSearch(search: String) {
+		with(productModel) {
+			tempProductList.addAll(productList)
+			getProductStockListData(
+				pageIndex,
+				search,
+				true,
+				isBottomProgress = false
+			)
 		}
 	}
 }

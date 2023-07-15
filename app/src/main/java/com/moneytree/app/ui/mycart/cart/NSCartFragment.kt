@@ -52,16 +52,11 @@ class NSCartFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(productBinding) {
-            with(productModel) {
-				with(layoutHeader) {
-					clBack.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.my_cart)
-					val intent = Intent()
-					activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)
-					NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE
-				}
-                setVoucherAdapter()
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.my_cart))
+            val intent = Intent()
+            activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)
+            NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE
+            setVoucherAdapter()
         }
         observeViewModel()
     }
@@ -73,11 +68,6 @@ class NSCartFragment : NSFragment() {
         with(productModel) {
             with(productBinding) {
 				with(layoutHeader) {
-					ivBack.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onBackPress()
-						}
-					})
 
 					proceed.setOnClickListener {
 						if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {

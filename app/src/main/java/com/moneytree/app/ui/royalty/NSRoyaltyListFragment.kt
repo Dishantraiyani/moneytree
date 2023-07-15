@@ -80,7 +80,7 @@ class NSRoyaltyListFragment : NSFragment() {
                 rvRoyaltyList.layoutManager = LinearLayoutManager(activity)
                 royaltyListAdapter =
                     NSRoyaltyListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (royaltyResponse!!.nextPage) {
                                 val page: Int = royaltyList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()

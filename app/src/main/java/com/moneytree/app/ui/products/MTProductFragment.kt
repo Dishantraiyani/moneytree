@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
@@ -24,7 +26,7 @@ import com.moneytree.app.databinding.NsFragmentProductsBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.productDetail.MTProductsDetailActivity
 
-class MTProductFragment : NSFragment() {
+class MTProductFragment : NSFragment(), NSSearchCallback {
     private val productModel: MTProductViewModel by lazy {
         ViewModelProvider(this).get(MTProductViewModel::class.java)
     }
@@ -65,11 +67,8 @@ class MTProductFragment : NSFragment() {
     private fun viewCreated() {
         with(productBinding) {
             with(productModel) {
+				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = categoryName?:"", isSearch = true, isAddNew = true, searchCallback = this@MTProductFragment)
 				with(layoutHeader) {
-					clBack.visible()
-					tvHeaderBack.text = categoryName
-					ivSearch.visible()
-					ivAddNew.visible()
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
 				}
                 setVoucherAdapter()
@@ -90,16 +89,6 @@ class MTProductFragment : NSFragment() {
                 }
 
 				with(layoutHeader) {
-					ivBack.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onBackPress()
-						}
-					})
-
-					ivSearch.setOnClickListener {
-						cardSearch.visibility = View.VISIBLE
-					}
-
 					ivAddNew.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							isGridMode = !isGridMode
@@ -123,32 +112,6 @@ class MTProductFragment : NSFragment() {
 							}
 						}
 					}
-
-					etSearch.setOnKeyListener(object: View.OnKeyListener{
-						override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-							if (event.action == KeyEvent.ACTION_DOWN) {
-								when (keyCode) {
-									KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-										val strSearch = etSearch.text.toString()
-										if (strSearch.isNotEmpty()) {
-											hideKeyboard(cardSearch)
-											with(productModel) {
-												tempProductList.addAll(productList)
-												getProductListData(
-													pageIndex,
-													strSearch,
-													true,
-													isBottomProgress = false
-												)
-											}
-										}
-										return true
-									}
-								}
-							}
-							return false
-						}
-					})
 				}
             }
         }
@@ -167,7 +130,7 @@ class MTProductFragment : NSFragment() {
 				}
                 productListAdapter =
 					MTProductListRecycleAdapter(activity, isGridMode, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
@@ -196,7 +159,7 @@ class MTProductFragment : NSFragment() {
 				}
 				productListAdapter =
 					MTProductListRecycleAdapter(activity, isGrid, object : NSPageChangeCallback{
-						override fun onPageChange() {
+						override fun onPageChange(pageNo: Int) {
 							if (productResponse!!.nextPage) {
 								val page: Int = productList.size/NSConstants.PAGINATION + 1
 								pageIndex = page.toString()
@@ -296,6 +259,18 @@ class MTProductFragment : NSFragment() {
                     showAlertDialog(getString(errorId))
                 }
             }
+        }
+    }
+
+    override fun onSearch(search: String) {
+        with(productModel) {
+            tempProductList.addAll(productList)
+            getProductListData(
+                pageIndex,
+                search,
+                true,
+                isBottomProgress = false
+            )
         }
     }
 }

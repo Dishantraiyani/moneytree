@@ -10,24 +10,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSDateRangeCallback
+import com.moneytree.app.common.callbacks.NSHeaderMainSearchCallback
+import com.moneytree.app.common.callbacks.NSHeaderSearchCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRedeemBinding
+import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class NSRedeemFragment : NSFragment() {
     private val redeemListModel: NSRedeemViewModel by lazy {
-        ViewModelProvider(this).get(NSRedeemViewModel::class.java)
+        ViewModelProvider(this)[NSRedeemViewModel::class.java]
     }
     private var _binding: NsFragmentRedeemBinding? = null
 
     private val redeemBinding get() = _binding!!
     private var redeemListAdapter: NSRedeemRecycleAdapter? = null
     companion object {
+
+        private var mainCallback: NSHeaderMainSearchCallback? = null
         fun newInstance() = NSRedeemFragment()
     }
 
@@ -37,7 +42,35 @@ class NSRedeemFragment : NSFragment() {
     ): View {
         _binding = NsFragmentRedeemBinding.inflate(inflater, container, false)
 		observeViewModel()
+        getCallback()
         return redeemBinding.root
+    }
+
+    private fun getCallback() {
+        mainCallback?.onHeader(object: NSHeaderSearchCallback {
+            override fun onHeader(text: String, tabPosition: Int, isClose: Boolean) {
+                if (isClose) {
+                    if(tabPosition == 1) {
+                        with(redeemListModel) {
+                            pageIndex = "1"
+                            if (tempRedeemList.isValidList()) {
+                                redeemList.clear()
+                                redeemList.addAll(tempRedeemList)
+                                tempRedeemList.clear()
+                                setRedeemData(redeemList.isValidList())
+                            }
+                        }
+                    }
+                } else {
+                    if(tabPosition == 1) {
+                        with(redeemListModel) {
+                            tempRedeemList.addAll(redeemList)
+                            getRedeemListData(pageIndex, text, true, isBottomProgress = false)
+                        }
+                    }
+                }
+            }
+        })
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -52,6 +85,10 @@ class NSRedeemFragment : NSFragment() {
      */
     private fun viewCreated() {
         setRedeemAdapter()
+    }
+
+    fun loadFragment(callback: NSHeaderMainSearchCallback?) {
+        mainCallback = callback
     }
 
     /**
@@ -90,7 +127,7 @@ class NSRedeemFragment : NSFragment() {
                 rvRedeemList.layoutManager = LinearLayoutManager(activity)
                 redeemListAdapter =
                     NSRedeemRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (redeemResponse!!.nextPage) {
                                 val page: Int = redeemList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
@@ -197,32 +234,6 @@ class NSRedeemFragment : NSFragment() {
                 validationErrorId.observe(viewLifecycleOwner) { errorId ->
                     showAlertDialog(getString(errorId))
                 }
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onSearchClose(event: SearchCloseEvent) {
-        NSLog.d(tags, "onSearchClose: $event")
-        if(event.position == 1) {
-            with(redeemListModel) {
-                pageIndex = "1"
-                if (tempRedeemList.isValidList()) {
-                    redeemList.clear()
-                    redeemList.addAll(tempRedeemList)
-                    tempRedeemList.clear()
-                    setRedeemData(redeemList.isValidList())
-                }
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onSearchStringEvent(event: SearchStringEvent) {
-        if(event.position == 1) {
-            with(redeemListModel) {
-                tempRedeemList.addAll(redeemList)
-                getRedeemListData(pageIndex, event.search, true, isBottomProgress = false)
             }
         }
     }

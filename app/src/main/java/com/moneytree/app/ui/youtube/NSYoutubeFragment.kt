@@ -84,7 +84,7 @@ class NSYoutubeFragment : NSFragment() {
 					rvYoutubeList.layoutManager = LinearLayoutManager(activity)
 					youtubeAdapter =
 						NSYoutubeListRecycleAdapter(activity, object : NSPageChangeCallback {
-							override fun onPageChange() {
+							override fun onPageChange(pageNo: Int) {
 								if (!youtubeResponse.nextPageToken.isNullOrEmpty()) {
 									pageIndex = youtubeResponse.nextPageToken
 									getYoutubeVideos(pageIndex, false, isBottomProgress = true)

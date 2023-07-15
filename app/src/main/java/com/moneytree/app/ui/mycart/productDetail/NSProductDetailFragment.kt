@@ -63,9 +63,8 @@ class NSProductDetailFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		with(productBinding) {
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, isCart = true)
 			with(layoutHeader) {
-				clBack.visible()
-				ivCart.visible()
 				if (productDetail != null) {
 					cardBottom.visible()
 					tvCartCount.visible()
@@ -167,12 +166,6 @@ class NSProductDetailFragment : NSFragment() {
 	private fun setListener() {
 		with(productBinding) {
 			with(layoutHeader) {
-				ivBack.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						onBackPress()
-					}
-				})
-
 				ivCart.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
 						switchResultActivity(dataResult, NSCartActivity::class.java)

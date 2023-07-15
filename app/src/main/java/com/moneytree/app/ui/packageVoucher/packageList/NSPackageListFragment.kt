@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.BackPressEvent
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSPackageClickCallback
@@ -46,11 +47,7 @@ class NSPackageListFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(packageBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.package_list)
-                ivBack.visibility = View.VISIBLE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.package_list))
             setPackageListAdapter()
         }
         observeViewModel()

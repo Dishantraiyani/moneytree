@@ -50,14 +50,7 @@ class NSStockCompleteFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		with(stockCompleteBinding) {
-			with(stockModel) {
-				with(layoutHeader) {
-					clBack.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.product_transfer)
-					/*val intent = Intent()
-					activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)*/
-				}
-			}
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.product_transfer))
 		}
 		observeViewModel()
 		setWalletTypes()
@@ -71,12 +64,6 @@ class NSStockCompleteFragment : NSFragment() {
 		with(stockModel) {
 			with(stockCompleteBinding) {
 				with(layoutHeader) {
-					ivBack.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onBackPress()
-						}
-					})
-
 					etMemberId.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
 						if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 							checkStockList(etMemberId.text.toString(), true)

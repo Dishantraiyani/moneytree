@@ -71,29 +71,24 @@ class NSTransferFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		with(adBinding) {
-			with(layoutHeader) {
-				clBack.visibility = View.VISIBLE
-				ivBack.visibility = View.VISIBLE
-				if (isTransferFromVoucher) {
-					tvAmountTitle.text = activity.resources.getString(R.string.voucher_qty)
-					etAmount.hint = activity.resources.getString(R.string.enter_voucher_qty)
-					tvRemark.gone()
-					tvPassword.gone()
-					clRemark.gone()
-					btnSearch.visible()
-					tvMemberName.visible()
-					cardMember.visible()
-					clTransactionPassword.gone()
-					tvHeaderBack.text = activity.resources.getString(R.string.voucher_transfer)
-					tvPackageNameTitle.visible()
-					cardPackageName.visible()
-					transferModel.getPackageListData(true)
-				} else {
-					tvAvailableAmount.text = availableAmount
-					tvAvailableBalanceTitle.visible()
-					cardAvailableAmount.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.wallet_transfer)
-				}
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(if (isTransferFromVoucher) R.string.voucher_transfer else R.string.wallet_transfer))
+			if (isTransferFromVoucher) {
+				tvAmountTitle.text = activity.resources.getString(R.string.voucher_qty)
+				etAmount.hint = activity.resources.getString(R.string.enter_voucher_qty)
+				tvRemark.gone()
+				tvPassword.gone()
+				clRemark.gone()
+				btnSearch.visible()
+				tvMemberName.visible()
+				cardMember.visible()
+				clTransactionPassword.gone()
+				tvPackageNameTitle.visible()
+				cardPackageName.visible()
+				transferModel.getPackageListData(true)
+			} else {
+				tvAvailableAmount.text = availableAmount
+				tvAvailableBalanceTitle.visible()
+				cardAvailableAmount.visible()
 			}
 		}
 	}
@@ -104,9 +99,6 @@ class NSTransferFragment : NSFragment() {
 	private fun setListener() {
 		with(adBinding) {
 			with(layoutHeader) {
-				clBack.setOnClickListener {
-					onBackPress()
-				}
 
 				btnSearch.setOnClickListener {
 					val id = etTransactionId.text.toString()

@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
@@ -49,7 +50,6 @@ class NSNotificationDetailFragment : NSFragment() {
     ): View {
         _binding = NsFragmentNotificationDetailBinding.inflate(inflater, container, false)
 		viewCreated()
-		setListener()
         return notificationBinding.root
     }
 
@@ -58,35 +58,17 @@ class NSNotificationDetailFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(notificationBinding) {
-			with(layoutHeader) {
-				clBack.visible()
-				if (notificationDetail != null) {
-					with(notificationDetail!!) {
-						tvHeaderBack.text = activity.resources.getString(R.string.notification_details)
-						Glide.with(activity).load(img)
-							.diskCacheStrategy(DiskCacheStrategy.NONE)
-							.skipMemoryCache(true)
-							.error(R.drawable.placeholder).into(ivNotificationImg)
-						tvProductName.text = title
-						tvDescription.text = body!!
-					}
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.notification_details))
+			if (notificationDetail != null) {
+				with(notificationDetail!!) {
+					Glide.with(activity).load(img)
+						.diskCacheStrategy(DiskCacheStrategy.NONE)
+						.skipMemoryCache(true)
+						.error(R.drawable.placeholder).into(ivNotificationImg)
+					tvProductName.text = title
+					tvDescription.text = body!!
 				}
 			}
         }
-    }
-
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-		with(notificationBinding) {
-			with(layoutHeader) {
-				ivBack.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						onBackPress()
-					}
-				})
-			}
-		}
     }
 }

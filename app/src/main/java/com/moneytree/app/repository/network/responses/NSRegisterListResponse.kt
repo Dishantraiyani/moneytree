@@ -16,9 +16,12 @@ data class NSRegisterListResponse(
     @SerializedName("nextPage")
     @Expose
     var nextPage: Boolean = false,
+    @SerializedName("pageIndex")
+    @Expose
+    var pageIndex: String = "1",
     @SerializedName("data")
     @Expose
-    var data: MutableList<NSRegisterListData>? = null
+    var data: MutableList<NSRegisterListData> = arrayListOf()
 )
 
 /**

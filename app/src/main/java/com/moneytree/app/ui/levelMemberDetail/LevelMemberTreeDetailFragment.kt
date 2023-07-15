@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.databinding.FragmentLevelMemberTreeDetailBinding
@@ -43,27 +44,15 @@ class LevelMemberTreeDetailFragment : NSFragment() {
 
     private fun setListener() {
         with(levelMemberTreeBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
-
-				srlRefresh.setOnRefreshListener {
-					levelMemberTreeViewModel.getMemberTreeData(false)
-				}
+            srlRefresh.setOnRefreshListener {
+                levelMemberTreeViewModel.getMemberTreeData(false)
             }
         }
     }
 
     private fun viewCreated() {
         with(levelMemberTreeBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = requireActivity().resources.getString(R.string.level_member_tree)
-                ivBack.visibility = View.VISIBLE
-                ivSearch.visibility = View.GONE
-                ivAddNew.visibility = View.GONE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.level_member_tree))
         }
 
         setMemberTreeAdapter()

@@ -85,7 +85,7 @@ class NSTransferVoucherFragment : NSFragment(), NSJoiningVoucherCallback {
                 rvVoucherList.layoutManager = LinearLayoutManager(activity)
                 voucherListAdapter =
                     NSVoucherListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (voucherResponse!!.nextPage) {
                                 val page: Int = voucherList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()

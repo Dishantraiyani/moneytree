@@ -45,11 +45,7 @@ class NSProductCategoryFragment : NSFragment() {
     private fun viewCreated() {
         with(productCategoryBinding) {
             with(productCategoryModel) {
-				with(layoutHeader) {
-					clBack.visible()
-					ivCart.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.categories)
-				}
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.categories), isCart = true)
                 setProductCategoryAdapter()
             }
         }
@@ -65,12 +61,6 @@ class NSProductCategoryFragment : NSFragment() {
                 srlRefresh.setOnRefreshListener {
                     getProductCategory(false)
                 }
-
-				layoutHeader.ivBack.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						onBackPress()
-					}
-				})
 
 				layoutHeader.ivCart.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {

@@ -19,7 +19,7 @@ class NSWalletsViewModel(application: Application) : NSViewModel(application) {
     var isTransactionAdded = false
     var isRedemptionAdded = false
 
-    fun setFragmentData(activity: FragmentActivity) {
+   /* fun setFragmentData(activity: FragmentActivity) {
         with(activity.resources) {
             mFragmentTitleList.clear()
             mFragmentTitleList.add(getString(R.string.transactions_title))
@@ -28,5 +28,5 @@ class NSWalletsViewModel(application: Application) : NSViewModel(application) {
         mFragmentList.clear()
         mFragmentList.add(NSTransactionFragment())
         mFragmentList.add(NSRedeemFragment())
-    }
+    }*/
 }

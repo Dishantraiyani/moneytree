@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSUserDataCallback
@@ -42,14 +43,8 @@ class NSInviteFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(inviteBinding) {
-            with(inviteModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.invite)
-                    ivBack.visibility = View.VISIBLE
-                }
-				getUserDetail()
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.invite))
+            getUserDetail()
         }
     }
 
@@ -59,12 +54,6 @@ class NSInviteFragment : NSFragment() {
     private fun setListener() {
         with(inviteBinding) {
             with(inviteModel) {
-
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-                }
 
 				llFacebookClickLayout.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {

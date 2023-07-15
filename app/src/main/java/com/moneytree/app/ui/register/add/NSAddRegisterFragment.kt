@@ -1,6 +1,6 @@
-package com.moneytree.app.ui.register
+package com.moneytree.app.ui.register.add
 
-import android.content.Intent
+import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.util.Log
@@ -13,12 +13,16 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSAlertButtonClickEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentAddRegisterBinding
-import com.moneytree.app.ui.activationForm.NSActivationFormFragment
+import com.moneytree.app.ui.register.NSRegisterViewModel
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -50,11 +54,12 @@ class NSAddRegisterFragment : NSFragment() {
 	private fun viewCreated() {
 		with(registerAddBinding) {
 			with(registerListModel) {
-				with(layoutHeader) {
-					clBack.visibility = View.VISIBLE
-					tvHeaderBack.text = activity.resources.getString(R.string.member_register)
-					ivBack.visibility = View.VISIBLE
-				}
+				HeaderUtils(
+					layoutHeader,
+					requireActivity(),
+					clBackView = true,
+					headerTitle = resources.getString(R.string.member_register)
+				)
 				addRegistrationType(activity)
 				setTerms()
 			}
@@ -69,91 +74,47 @@ class NSAddRegisterFragment : NSFragment() {
 		with(registerAddBinding) {
 			with(registerListModel) {
 
-				with(layoutHeader) {
-					clBack.setOnClickListener {
-						onBackPress()
-					}
+				btnSubmit.setOnClickListener(object : OnSingleClickListener() {
+					override fun onSingleClick(v: View?) {
+						with(activity.resources) {
+							val fullName = etFullName.text.toString()
+							val password = etPassword.text.toString()
+							val cPassword = etConfirmPassword.text.toString()
+							val email = etEmail.text.toString()
+							val phone = etPhone.text.toString()
 
-					ivSearch.setOnClickListener {
-						cardSearch.visibility = View.VISIBLE
-					}
-
-					btnSubmit.setOnClickListener(object : OnSingleClickListener() {
-						override fun onSingleClick(v: View?) {
-							with(activity.resources) {
-								val fullName = etFullName.text.toString()
-								val password = etPassword.text.toString()
-								val cPassword = etConfirmPassword.text.toString()
-								val email = etEmail.text.toString()
-								val phone = etPhone.text.toString()
-
-								if (fullName.isEmpty()) {
-									etFullName.error = getString(R.string.please_enter_name)
-									return
-								} else if (phone.isEmpty() || phone.length < 10) {
-									etPhone.error = getString(R.string.please_enter_valid_phone)
-									return
-								} else if (email.isEmpty()) {
-									etEmail.error = getString(R.string.please_enter_email)
-									return
-								} else if (password.isEmpty()) {
-									etPassword.error = getString(R.string.please_enter_password)
-									return
-								} else if (cPassword.isEmpty()) {
-									etConfirmPassword.error =
-										getString(R.string.please_enter_password)
-									return
-								} else if (password != cPassword) {
-									etConfirmPassword.error = getString(R.string.password_not_match)
-									return
-								} else if (!cbChecked.isChecked) {
-									Toast.makeText(
-										activity,
-										activity.resources.getString(R.string.please_accept_terms),
-										Toast.LENGTH_SHORT
-									).show()
-									return
-								} else {
-									saveRegisterData(fullName, email, phone, password, true)
-								}
+							if (fullName.isEmpty()) {
+								etFullName.error = getString(R.string.please_enter_name)
+								return
+							} else if (phone.isEmpty() || phone.length < 10) {
+								etPhone.error = getString(R.string.please_enter_valid_phone)
+								return
+							} else if (email.isEmpty()) {
+								etEmail.error = getString(R.string.please_enter_email)
+								return
+							} else if (password.isEmpty()) {
+								etPassword.error = getString(R.string.please_enter_password)
+								return
+							} else if (cPassword.isEmpty()) {
+								etConfirmPassword.error =
+									getString(R.string.please_enter_password)
+								return
+							} else if (password != cPassword) {
+								etConfirmPassword.error = getString(R.string.password_not_match)
+								return
+							} else if (!cbChecked.isChecked) {
+								Toast.makeText(
+									activity,
+									activity.resources.getString(R.string.please_accept_terms),
+									Toast.LENGTH_SHORT
+								).show()
+								return
+							} else {
+								saveRegisterData(fullName, email, phone, password, true)
 							}
 						}
-					})
-
-					ivClose.setOnClickListener {
-						cardSearch.visibility = View.GONE
-						etSearch.setText("")
-						hideKeyboard(cardSearch)
-						pageIndex = "1"
-						if (tempRegisterList.isValidList()) {
-							registerList.clear()
-							registerList.addAll(tempRegisterList)
-							tempRegisterList.clear()
-						}
 					}
-
-					etSearch.setOnKeyListener(object : View.OnKeyListener {
-						override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-							if (event.action == KeyEvent.ACTION_DOWN) {
-								when (keyCode) {
-									KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-										val strSearch = etSearch.text.toString()
-										if (strSearch.isNotEmpty()) {
-											hideKeyboard(cardSearch)
-											tempRegisterList.addAll(registerList)
-											getRegisterListData(
-												pageIndex, strSearch, true,
-												isBottomProgress = false
-											)
-										}
-										return true
-									}
-								}
-							}
-							return false
-						}
-					})
-				}
+				})
 			}
 		}
 	}
@@ -176,12 +137,6 @@ class NSAddRegisterFragment : NSFragment() {
 					viewLifecycleOwner
 				) { shouldShowProgress ->
 					updateProgress(shouldShowProgress)
-				}
-
-				isRegisterDataAvailable.observe(
-					viewLifecycleOwner
-				) { isNotification ->
-					Log.d(TAG, "onTabSelectEvent: $isNotification")
 				}
 
 				isRegisterSuccessAvailable.observe(viewLifecycleOwner) {
@@ -215,6 +170,7 @@ class NSAddRegisterFragment : NSFragment() {
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
 		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_POSITIVE && event.alertKey == NSConstants.MEMBER_REGISTER_SUCCESS) {
+			activity.setResult(RESULT_OK)
 			onBackPress()
 		}
 	}

@@ -5,24 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayout
-import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
-import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.common.utils.switchResultActivity
-import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentQrAmountBinding
-import com.moneytree.app.databinding.NsFragmentRechargeBinding
-import com.moneytree.app.ui.activationForm.NSActivationFormActivity
-import com.moneytree.app.ui.recharge.NSRechargeViewModel
-import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
-import com.moneytree.app.ui.recharge.mobile.NSMobileRechargeFragment
 
 
 class NSQRCodeFragment : NSFragment() {
@@ -61,15 +50,13 @@ class NSQRCodeFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(rgBinding) {
-			with(viewModel) {
-				with(layoutHeader) {
-					clBack.visibility = View.VISIBLE
-					tvHeaderBack.text = activity.resources.getString(R.string.qr_code)
-					ivBack.visibility = View.VISIBLE
-				}
-
-			}
-        }
+			HeaderUtils(
+				layoutHeader,
+				requireActivity(),
+				clBackView = true,
+				headerTitle = resources.getString(R.string.qr_code)
+			)
+		}
 		observeViewModel()
 		generateUpi()
     }
@@ -123,30 +110,24 @@ class NSQRCodeFragment : NSFragment() {
     private fun setListener() {
         with(rgBinding) {
 			with(viewModel) {
-				with(layoutHeader) {
-					clBack.setOnClickListener {
-						onBackPress()
-					}
+				btnSubmit.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						note = etNote.text.toString()
+						amount = etAmount.text.toString()
 
-					btnSubmit.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							note = etNote.text.toString()
-							amount = etAmount.text.toString()
-
-							if (qrCodeId.isNullOrEmpty()) {
-								Toast.makeText(activity, "Please Enter Valid Detail", Toast.LENGTH_SHORT).show()
-							} else if (amount.isNullOrEmpty()) {
-								etAmount.error = "Please Enter Amount"
-							} else if (amount?.toDouble()!! <= 0) {
-								etAmount.error = "Please Enter Valid Amount"
-							}  else if (amount?.toDouble()!! > walletAmount!!.toDouble()) {
-								etAmount.error = "Not Enough Balance Available"
-							} else {
-								qrCodeRecharge(activity)
-							}
+						if (qrCodeId.isNullOrEmpty()) {
+							Toast.makeText(activity, "Please Enter Valid Detail", Toast.LENGTH_SHORT).show()
+						} else if (amount.isNullOrEmpty()) {
+							etAmount.error = "Please Enter Amount"
+						} else if (amount?.toDouble()!! <= 0) {
+							etAmount.error = "Please Enter Valid Amount"
+						}  else if (amount?.toDouble()!! > walletAmount!!.toDouble()) {
+							etAmount.error = "Not Enough Balance Available"
+						} else {
+							qrCodeRecharge(activity)
 						}
-					})
-				}
+					}
+				})
 			}
         }
     }

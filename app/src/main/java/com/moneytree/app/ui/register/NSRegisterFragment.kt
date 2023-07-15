@@ -5,28 +5,32 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.*
-import com.moneytree.app.common.callbacks.NSMemberActiveSelectCallback
+import com.moneytree.app.common.BackPressEvent
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSActivityEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSFragmentChange
+import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSRegisterActiveSelectCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
-import com.moneytree.app.repository.NSRegisterRepository.getRegisterListData
 import com.moneytree.app.repository.network.responses.NSRegisterListData
-import com.moneytree.app.ui.activationForm.NSActivationFormActivity
 import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
+import com.moneytree.app.ui.register.add.NSAddRegisterFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSRegisterFragment : NSFragment() {
+class NSRegisterFragment : NSFragment(), NSSearchCallback {
     private val registerListModel: NSRegisterViewModel by lazy {
         ViewModelProvider(this).get(NSRegisterViewModel::class.java)
     }
@@ -54,14 +58,8 @@ class NSRegisterFragment : NSFragment() {
     private fun viewCreated() {
         with(registerBinding) {
             with(layoutHeader) {
-				NSConstants.tabName = this@NSRegisterFragment.javaClass
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.register)
-                ivBack.visibility = View.VISIBLE
-                ivSearch.visibility = View.VISIBLE
-				if (pref.isActive) {
-					ivAddNew.visibility = View.VISIBLE
-				}
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.register), isSearch = true, isAddNew = pref.isActive, searchCallback = this@NSRegisterFragment)
+                NSConstants.tabName = this@NSRegisterFragment.javaClass
             }
             setRegisterAdapter()
         }
@@ -84,13 +82,9 @@ class NSRegisterFragment : NSFragment() {
                         EventBus.getDefault().post(BackPressEvent())
                     }
 
-                    ivSearch.setOnClickListener {
-                        cardSearch.visibility = View.VISIBLE
-                    }
-
                     ivAddNew.setOnClickListener {
-						EventBus.getDefault()
-							.post(NSFragmentChange(NSAddRegisterFragment.newInstance()))
+                        EventBus.getDefault()
+                            .post(NSFragmentChange(NSAddRegisterFragment.newInstance()))
                     }
 
                     ivClose.setOnClickListener {
@@ -105,27 +99,6 @@ class NSRegisterFragment : NSFragment() {
                             setRegisterData(registerList.isValidList())
                         }
                     }
-
-                    etSearch.setOnKeyListener(object: View.OnKeyListener{
-                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-                            if (event.action == KeyEvent.ACTION_DOWN) {
-                                when (keyCode) {
-                                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-                                        val strSearch = etSearch.text.toString()
-                                        if (strSearch.isNotEmpty()) {
-                                            hideKeyboard(cardSearch)
-                                            tempRegisterList.addAll(registerList)
-                                            getRegisterListData(pageIndex, strSearch, true,
-                                                isBottomProgress = false
-                                            )
-                                        }
-                                        return true
-                                    }
-                                }
-                            }
-                            return false
-                        }
-                    })
                 }
             }
         }
@@ -138,33 +111,33 @@ class NSRegisterFragment : NSFragment() {
         with(registerBinding) {
             with(registerListModel) {
                 rvRegisterList.layoutManager = LinearLayoutManager(activity)
-				registerListAdapter = NSRegisterListRecycleAdapter(activity, object:
-					NSRegisterActiveSelectCallback {
-					override fun onClick(data: NSRegisterListData) {
-						dataMember = data
-						getActivationPackage(data.username!!, true)
-					}
+                registerListAdapter = NSRegisterListRecycleAdapter(activity, object:
+                    NSRegisterActiveSelectCallback {
+                    override fun onClick(data: NSRegisterListData) {
+                        dataMember = data
+                        getActivationPackage(data.username!!, true)
+                    }
 
-					override fun onDefault(data: NSRegisterListData) {
-						if (data.userId != null) {
-							setDefault(data.userId!!, true)
-						}
-					}
+                    override fun onDefault(data: NSRegisterListData) {
+                        if (data.userId != null) {
+                            setDefault(data.userId!!, true)
+                        }
+                    }
 
-					override fun onMessageSend(data: NSRegisterListData) {
-						if (data.userId != null) {
-							sendMessage(data.userId!!, true)
-						}
-					}
-				}, object : NSPageChangeCallback {
-					override fun onPageChange() {
-						if (registerResponse!!.nextPage) {
-							val page: Int = registerList.size/NSConstants.PAGINATION + 1
-							pageIndex = page.toString()
-							getRegisterListData(pageIndex, "", false, isBottomProgress = true)
-						}
-					}
-				})
+                    override fun onMessageSend(data: NSRegisterListData) {
+                        if (data.userId != null) {
+                            sendMessage(data.userId!!, true)
+                        }
+                    }
+                }, object : NSPageChangeCallback {
+                    override fun onPageChange(pageNo: Int) {
+                        if (registerResponse!!.nextPage) {
+                            val page: Int = registerList.size/NSConstants.PAGINATION + 1
+                            pageIndex = page.toString()
+                            getRegisterListData(pageIndex, "", false, isBottomProgress = true)
+                        }
+                    }
+                })
 
                 rvRegisterList.adapter = registerListAdapter
                 pageIndex = "1"
@@ -224,26 +197,26 @@ class NSRegisterFragment : NSFragment() {
                     bottomProgress(isBottomProgressShowing)
                 }
 
-				isActivationPackageDataAvailable.observe(
-					viewLifecycleOwner
-				) { isActivation ->
-					srlRefresh.isRefreshing = false
-					if (isActivation) {
-						if (activationPackageList.isValidList()) {
-							switchResultActivity(dataResult,
-								NSMemberActivationFormActivity::class.java,
-								bundleOf(
-									NSConstants.KEY_MEMBER_ACTIVATION_FORM to Gson().toJson(
-										activationPackageResponse
-									),
-									NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL to if (dataMember != null) Gson().toJson(dataMember) else "",
-									NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM to true
-								)
-							)
-						}
-						isActivationPackageDataAvailable.value = false
-					}
-				}
+                isActivationPackageDataAvailable.observe(
+                    viewLifecycleOwner
+                ) { isActivation ->
+                    srlRefresh.isRefreshing = false
+                    if (isActivation) {
+                        if (activationPackageList.isValidList()) {
+                            switchResultActivity(dataResult,
+                                NSMemberActivationFormActivity::class.java,
+                                bundleOf(
+                                    NSConstants.KEY_MEMBER_ACTIVATION_FORM to Gson().toJson(
+                                        activationPackageResponse
+                                    ),
+                                    NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM_DETAIL to if (dataMember != null) Gson().toJson(dataMember) else "",
+                                    NSConstants.KEY_MEMBER_FORM_ACTIVATION_FORM to true
+                                )
+                            )
+                        }
+                        isActivationPackageDataAvailable.value = false
+                    }
+                }
 
                 isRegisterDataAvailable.observe(
                     viewLifecycleOwner
@@ -277,13 +250,22 @@ class NSRegisterFragment : NSFragment() {
         }
     }
 
-	@Subscribe(threadMode = ThreadMode.MAIN)
-	fun onResultEvent(event: NSActivityEvent) {
-		if (event.resultCode == NSRequestCodes.REQUEST_MEMBER_ACTIVATION_FORM) {
-			with(registerListModel) {
-				pageIndex = "1"
-				getRegisterListData(pageIndex, "", true, isBottomProgress = false)
-			}
-		}
-	}
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onResultEvent(event: NSActivityEvent) {
+        if (event.resultCode == NSRequestCodes.REQUEST_MEMBER_ACTIVATION_FORM) {
+            with(registerListModel) {
+                pageIndex = "1"
+                getRegisterListData(pageIndex, "", true, isBottomProgress = false)
+            }
+        }
+    }
+
+    override fun onSearch(search: String) {
+        registerListModel.apply {
+            tempRegisterList.addAll(registerList)
+            getRegisterListData(pageIndex, search, true,
+                isBottomProgress = false
+            )
+        }
+    }
 }

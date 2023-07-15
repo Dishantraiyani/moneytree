@@ -55,7 +55,7 @@ class NSRechargeListRecycleAdapter(
 
         if (position == rechargeData.size - 1) {
             if (((position + 1) % NSConstants.PAGINATION) == 0) {
-                onPageChangeCallback.onPageChange()
+                onPageChangeCallback.onPageChange(1)
             }
         }
     }

@@ -67,12 +67,7 @@ class NSActivationFormFragment : NSFragment() {
     private fun viewCreated() {
         with(activationFormBinding) {
             with(activationFormModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = activity.resources.getString(R.string.member_activation)
-                    ivBack.visibility = View.VISIBLE
-					tvAmount.text = addText(activity, R.string.balance, NSApplication.getInstance().getWalletBalance())
-                }
+				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.member_activation), amountData = addText(activity, R.string.balance, NSApplication.getInstance().getWalletBalance()))
 				if (isMemberFormActive) {
 					cardMemberId.visible()
 					cardFullName.visible()
@@ -95,13 +90,6 @@ class NSActivationFormFragment : NSFragment() {
             with(activationFormModel) {
 
                 with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-
-                    ivSearch.setOnClickListener {
-                        cardSearch.visibility = View.VISIBLE
-                    }
 
 					btnSubmit.setOnClickListener(object : OnSingleClickListener() {
 						override fun onSingleClick(v: View?) {

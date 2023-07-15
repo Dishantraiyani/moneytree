@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.databinding.NsFragmentSlotBinding
@@ -42,7 +43,6 @@ class NSSlotFragment : NSFragment() {
     ): View {
         _binding = NsFragmentSlotBinding.inflate(inflater, container, false)
         viewCreated()
-        setListener()
         return slotBinding.root
     }
 
@@ -51,27 +51,10 @@ class NSSlotFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(slotBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.slots)
-                ivBack.visibility = View.VISIBLE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.slots))
             setSlotsAdapter()
         }
         observeViewModel()
-    }
-
-    /**
-     * Set listener
-     */
-    private fun setListener() {
-        with(slotBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
-            }
-        }
     }
 
     /**

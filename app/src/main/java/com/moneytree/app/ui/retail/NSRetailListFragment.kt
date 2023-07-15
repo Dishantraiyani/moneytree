@@ -80,7 +80,7 @@ class NSRetailListFragment : NSFragment() {
                 rvRetailList.layoutManager = LinearLayoutManager(activity)
                 retailListAdapter =
                     NSRetailListRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (retailResponse!!.nextPage) {
                                 val page: Int = retailList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()

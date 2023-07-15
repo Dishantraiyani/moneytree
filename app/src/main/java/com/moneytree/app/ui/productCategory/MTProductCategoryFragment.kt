@@ -45,10 +45,7 @@ class MTProductCategoryFragment : NSFragment() {
         with(productCategoryBinding) {
             with(productCategoryModel) {
 				NSConstants.tabName = this@MTProductCategoryFragment.javaClass
-				with(layoutHeader) {
-					clBack.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.categories)
-				}
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.categories))
                 setProductCategoryAdapter()
             }
         }
@@ -64,12 +61,6 @@ class MTProductCategoryFragment : NSFragment() {
                 srlRefresh.setOnRefreshListener {
                     getProductCategory(false)
                 }
-
-				layoutHeader.ivBack.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						onBackPress()
-					}
-				})
             }
         }
     }

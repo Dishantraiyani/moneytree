@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
@@ -51,13 +52,7 @@ class NSRoyaltyInfoFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(royaltyBinding) {
-            with(layoutHeader) {
-                clBack.visibility = View.VISIBLE
-                tvHeaderBack.text = activity.resources.getString(R.string.royalty_info)
-                ivBack.visibility = View.VISIBLE
-                ivSearch.visibility = View.GONE
-                ivAddNew.visibility = View.GONE
-            }
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.royalty_info))
             setRoyaltyAdapter()
         }
         observeViewModel()
@@ -73,12 +68,6 @@ class NSRoyaltyInfoFragment : NSFragment() {
                     pageIndex = "1"
                     getRoyaltyListData(pageIndex, royaltyId!!, false, isBottomProgress = false)
                 }
-
-                with(layoutHeader) {
-                    clBack.setOnClickListener {
-                       onBackPress()
-                    }
-                }
             }
         }
     }
@@ -92,7 +81,7 @@ class NSRoyaltyInfoFragment : NSFragment() {
                 rvRetailList.layoutManager = LinearLayoutManager(activity)
                 royaltyListAdapter =
                     NSRoyaltyInfoRecycleAdapter(activity, object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (royaltyResponse!!.nextPage) {
                                 val page: Int = royaltyInfoList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()

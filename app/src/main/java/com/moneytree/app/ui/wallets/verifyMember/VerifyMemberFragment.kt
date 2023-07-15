@@ -59,11 +59,7 @@ class VerifyMemberFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		with(adBinding) {
-			with(layoutHeader) {
-				clBack.visibility = View.VISIBLE
-				tvHeaderBack.text = activity.resources.getString(R.string.member_detail)
-				ivBack.visibility = View.VISIBLE
-			}
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.member_detail))
 		}
 	}
 
@@ -73,10 +69,6 @@ class VerifyMemberFragment : NSFragment() {
 	private fun setListener() {
 		with(adBinding) {
 			with(layoutHeader) {
-				clBack.setOnClickListener {
-					onBackPress()
-				}
-
 				btnSubmit.setOnClickListener (
 					object : OnSingleClickListener() {
 						override fun onSingleClick(v: View?) {

@@ -52,13 +52,9 @@ class NSAddRedeemFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		with(adBinding) {
-			with(layoutHeader) {
-				clBack.visibility = View.VISIBLE
-				tvHeaderBack.text = activity.resources.getString(R.string.redeem)
-				ivBack.visibility = View.VISIBLE
-				tvWalletAmount.text =
-					if (redeemModel.availableBalance.isNullOrEmpty()) "0" else redeemModel.availableBalance
-			}
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.redeem))
+			tvWalletAmount.text =
+				if (redeemModel.availableBalance.isNullOrEmpty()) "0" else redeemModel.availableBalance
 		}
 	}
 
@@ -68,10 +64,6 @@ class NSAddRedeemFragment : NSFragment() {
 	private fun setListener() {
 		with(adBinding) {
 			with(layoutHeader) {
-				clBack.setOnClickListener {
-					onBackPress()
-				}
-
 				btnSubmit.setOnClickListener (
 					object : OnSingleClickListener() {
 						override fun onSingleClick(v: View?) {

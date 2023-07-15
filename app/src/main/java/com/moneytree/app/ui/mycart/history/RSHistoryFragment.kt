@@ -10,12 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.callbacks.NSStockHistoryDetailCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
@@ -26,7 +28,7 @@ import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 import com.moneytree.app.ui.mycart.stockDetail.StockDetailActivity
 import com.moneytree.app.ui.productDetail.MTProductsDetailActivity
 
-class RSHistoryFragment : NSFragment() {
+class RSHistoryFragment : NSFragment(), NSSearchCallback {
     private val historyModel: RSHistoryViewModel by lazy {
 		ViewModelProvider(this)[RSHistoryViewModel::class.java]
     }
@@ -66,17 +68,7 @@ class RSHistoryFragment : NSFragment() {
     private fun viewCreated() {
         with(stockBinding) {
             with(historyModel) {
-				with(layoutHeader) {
-					clBack.visible()
-					with(activity.resources) {
-						tvHeaderBack.text = if (stockType.equals(NSConstants.SOCKET_HISTORY)) {
-							getString(R.string.stock_transfer)
-						} else {
-							getString(R.string.repurchase_history)
-						}
-					}
-					ivSearch.visible()
-				}
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(if (stockType.equals(NSConstants.SOCKET_HISTORY)) R.string.stock_transfer else R.string.repurchase_history), isSearch = true, searchCallback = this@RSHistoryFragment)
                 setVoucherAdapter()
             }
         }
@@ -95,16 +87,6 @@ class RSHistoryFragment : NSFragment() {
                 }
 
 				with(layoutHeader) {
-					ivBack.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onBackPress()
-						}
-					})
-
-					ivSearch.setOnClickListener {
-						cardSearch.visibility = View.VISIBLE
-					}
-
 					ivClose.setOnClickListener {
 						cardSearch.visibility = View.GONE
 						etSearch.setText("")
@@ -119,32 +101,6 @@ class RSHistoryFragment : NSFragment() {
 							}
 						}
 					}
-
-					etSearch.setOnKeyListener(object: View.OnKeyListener{
-						override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-							if (event.action == KeyEvent.ACTION_DOWN) {
-								when (keyCode) {
-									KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-										val strSearch = etSearch.text.toString()
-										if (strSearch.isNotEmpty()) {
-											hideKeyboard(cardSearch)
-											with(historyModel) {
-												tempProductList.addAll(productList)
-												getProductListData(
-													pageIndex,
-													strSearch,
-													true,
-													isBottomProgress = false
-												)
-											}
-										}
-										return true
-									}
-								}
-							}
-							return false
-						}
-					})
 				}
             }
         }
@@ -159,7 +115,7 @@ class RSHistoryFragment : NSFragment() {
 				rvHistoryList.layoutManager = LinearLayoutManager(activity)
                 stockListAdapter =
 					RSHistoryRecycleAdapter(activity, stockType.equals(NSConstants.SOCKET_HISTORY), object : NSPageChangeCallback{
-                        override fun onPageChange() {
+                        override fun onPageChange(pageNo: Int) {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
@@ -258,6 +214,18 @@ class RSHistoryFragment : NSFragment() {
                     showAlertDialog(getString(errorId))
                 }
             }
+        }
+    }
+
+    override fun onSearch(search: String) {
+        with(historyModel) {
+            tempProductList.addAll(productList)
+            getProductListData(
+                pageIndex,
+                search,
+                true,
+                isBottomProgress = false
+            )
         }
     }
 }

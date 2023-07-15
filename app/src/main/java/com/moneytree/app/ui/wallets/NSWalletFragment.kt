@@ -1,40 +1,52 @@
 package com.moneytree.app.ui.wallets
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.BackPressEvent
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSActivityEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRedeemWalletUpdateEvent
+import com.moneytree.app.common.NSRedeemWalletUpdateTransferEvent
+import com.moneytree.app.common.NSRedemptionEventTab
 import com.moneytree.app.common.NSRequestCodes.REQUEST_WALLET_UPDATE
 import com.moneytree.app.common.NSRequestCodes.REQUEST_WALLET_UPDATE_TRANSFER
+import com.moneytree.app.common.NSTransactionsEventTab
+import com.moneytree.app.common.NSWalletAmount
+import com.moneytree.app.common.ViewPagerMDAdapter
+import com.moneytree.app.common.callbacks.NSHeaderMainSearchCallback
+import com.moneytree.app.common.callbacks.NSHeaderSearchCallback
+import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
-import com.moneytree.app.databinding.FragmentMainBinding
 import com.moneytree.app.databinding.NsFragmentWalletBinding
-import com.moneytree.app.ui.vouchers.NSVouchersViewModel
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
+import com.moneytree.app.ui.wallets.redeemHistory.NSRedeemFragment
+import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class NSWalletFragment : NSFragment() {
+class NSWalletFragment : NSFragment(), NSHeaderMainSearchCallback, NSSearchCallback {
     private val walletModel: NSWalletsViewModel by lazy {
         ViewModelProvider(this)[NSWalletsViewModel::class.java]
     }
     private var _binding: NsFragmentWalletBinding? = null
     private val mainBinding get() = _binding!!
 	private var amountAvailable = "0"
+    private var searchCallback: NSHeaderSearchCallback? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,12 +67,25 @@ class NSWalletFragment : NSFragment() {
         with(mainBinding) {
             with(walletModel) {
                 NSConstants.tabName = this@NSWalletFragment.javaClass
-                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.wallet), isSearch = true)
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.wallet), isSearch = true, searchCallback = this@NSWalletFragment)
                 tvTransfer.visibility = View.VISIBLE
                 tvRedeem.visibility = View.GONE
                 setFragmentData(requireActivity())
                 setupViewPager(walletContainer)
             }
+        }
+    }
+
+    private fun setFragmentData(activity: FragmentActivity) {
+        walletModel.apply {
+            with(activity.resources) {
+                mFragmentTitleList.clear()
+                mFragmentTitleList.add(getString(R.string.transactions_title))
+                mFragmentTitleList.add(getString(R.string.redeem_title))
+            }
+            mFragmentList.clear()
+            mFragmentList.add(NSTransactionFragment.newInstance())
+            mFragmentList.add(NSRedeemFragment.newInstance())
         }
     }
 
@@ -89,34 +114,12 @@ class NSWalletFragment : NSFragment() {
                         switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false, NSConstants.KEY_AVAILABLE_BALANCE to amountAvailable))
                     }
 
-                    ivSearch.setOnClickListener {
-                        cardSearch.visibility = View.VISIBLE
-                    }
-
                     ivClose.setOnClickListener {
                         cardSearch.visibility = View.GONE
                         etSearch.setText("")
                         hideKeyboard(cardSearch)
-                        EventBus.getDefault().post(SearchCloseEvent(tabPosition))
+                        searchCallback?.onHeader("", tabPosition, true)
                     }
-
-                    etSearch.setOnKeyListener(object: View.OnKeyListener{
-                        override fun onKey(p0: View?, keyCode: Int, event: KeyEvent): Boolean {
-                            if (event.action == KeyEvent.ACTION_DOWN) {
-                                when (keyCode) {
-                                    KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
-                                        val strSearch = etSearch.text.toString()
-                                        if (strSearch.isNotEmpty()) {
-                                            hideKeyboard(cardSearch)
-                                            EventBus.getDefault().post(SearchStringEvent(strSearch, tabPosition))
-                                        }
-                                        return true
-                                    }
-                                }
-                            }
-                            return false
-                        }
-                    })
                 }
             }
         }
@@ -148,6 +151,8 @@ class NSWalletFragment : NSFragment() {
                                         )
                                         isTransactionAdded = true
                                     }
+                                    (mFragmentList[position] as NSTransactionFragment).loadFragment(this@NSWalletFragment)
+
                                 }
                                 1 -> {
                                     tvTransfer.visibility = View.GONE
@@ -158,6 +163,7 @@ class NSWalletFragment : NSFragment() {
                                         )
                                         isRedemptionAdded = true
                                     }
+                                    (mFragmentList[position] as NSRedeemFragment).loadFragment(this@NSWalletFragment)
                                 }
                             }
                         }
@@ -194,5 +200,15 @@ class NSWalletFragment : NSFragment() {
 
     companion object {
         fun newInstance() = NSWalletFragment()
+    }
+
+    override fun onHeader(callback: NSHeaderSearchCallback) {
+        searchCallback = callback
+    }
+
+    override fun onSearch(search: String) {
+        with(walletModel) {
+            searchCallback?.onHeader(search, tabPosition, false)
+        }
     }
 }

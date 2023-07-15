@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.callbacks.NSInfoSelectCallback
@@ -69,11 +71,7 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
     private fun viewCreated() {
         with(youtubeBinding) {
             with(youtubeViewModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    tvHeaderBack.text = youtubeSelectedItem?.snippet?.title
-                    ivBack.visibility = View.VISIBLE
-                }
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = youtubeSelectedItem?.snippet?.title?:"")
                 tvYoutubeVideoTitle.text = youtubeSelectedItem?.snippet?.title
                 lifecycle.addObserver(videoFullScreenPlayer)
                 //val customPlayerUi: View = videoFullScreenPlayer.inflateCustomPlayerUi(R.layout.custom_player_ui_youtube)
@@ -152,10 +150,6 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
         with(youtubeBinding) {
             with(youtubeViewModel) {
                 with(layoutHeader) {
-                    clBack.setOnClickListener {
-                        onBackPress()
-                    }
-
                     srlRefresh.setOnRefreshListener {
                         pageIndex = ""
                         getYoutubeVideos(pageIndex, false, isBottomProgress = false)
@@ -199,7 +193,7 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
                         activity,
                         youtubeSelectedItem!!.id!!.videoId!!,
                         object : NSPageChangeCallback {
-                            override fun onPageChange() {
+                            override fun onPageChange(pageNo: Int) {
                                 if (!youtubeResponse?.nextPageToken.isNullOrEmpty()) {
                                     val page: Int = youtubeList.size / NSConstants.PAGINATION + 1
                                     pageIndex = youtubeResponse?.nextPageToken!!

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
+import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.databinding.FragmentStockInfoBinding
@@ -44,14 +45,8 @@ class StockDetailFragment : NSFragment() {
 
     private fun setListener() {
         with(stockBinding) {
-            with(layoutHeader) {
-                clBack.setOnClickListener {
-                    onBackPress()
-                }
-
-				srlRefresh.setOnRefreshListener {
-					stockTreeViewModel.getStockInfo(false)
-				}
+            srlRefresh.setOnRefreshListener {
+                stockTreeViewModel.getStockInfo(false)
             }
         }
     }
@@ -59,15 +54,7 @@ class StockDetailFragment : NSFragment() {
     private fun viewCreated() {
         with(stockBinding) {
             with(stockTreeViewModel) {
-                with(layoutHeader) {
-                    clBack.visibility = View.VISIBLE
-                    if (isStock == true) {
-                        tvHeaderBack.text = requireActivity().resources.getString(R.string.stock_transfer)
-                    } else {
-                        tvHeaderBack.text = requireActivity().resources.getString(R.string.repurchase_info)
-                    }
-                    ivBack.visibility = View.VISIBLE
-                }
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(if (isStock) R.string.stock_transfer else R.string.repurchase_info))
             }
         }
 

@@ -42,7 +42,7 @@ class NSRePurchaseInfoRecycleAdapter(
 
         if (position == repurchaseData.size - 1) {
             if (((position + 1) % NSConstants.PAGINATION) == 0) {
-                onPageChangeCallback.onPageChange()
+                onPageChangeCallback.onPageChange(1)
             }
         }
     }

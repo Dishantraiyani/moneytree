@@ -49,14 +49,7 @@ class NSPurchaseFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		with(purchaseCompleteBinding) {
-			with(productModel) {
-				with(layoutHeader) {
-					clBack.visible()
-					tvHeaderBack.text = activity.resources.getString(R.string.repurchase)
-					/*val intent = Intent()
-					activity.setResult(NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE, intent)*/
-				}
-			}
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.repurchase))
 		}
 		observeViewModel()
 		setWalletTypes()
@@ -70,11 +63,6 @@ class NSPurchaseFragment : NSFragment() {
 		with(productModel) {
 			with(purchaseCompleteBinding) {
 				with(layoutHeader) {
-					ivBack.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onBackPress()
-						}
-					})
 
 					etMemberId.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
 						if (actionId == EditorInfo.IME_ACTION_SEARCH) {
