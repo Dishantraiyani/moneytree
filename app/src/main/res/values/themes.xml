@@ -109,6 +109,12 @@
         <item name="android:fontFamily">@font/inter_regular</item>
     </style>
 
+    <style name="LoginSubFontsZero" parent="LayoutWidthHeightZero">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+    </style>
+
     <style name="MapFontsWrap" parent="LayoutWidthHeightWrap">
         <item name="android:textColor">@color/orange</item>
         <item name="android:textSize">@dimen/_9sdp</item>
@@ -217,4 +223,12 @@
 		<item name="textAllCaps">false</item>
 		<item name="android:textColor">@color/white</item>
 	</style>
+
+    <style name="CustomDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:shadowColor">@android:color/transparent</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowRadius">0</item>
+    </style>
+
 </resources>

@@ -7,10 +7,11 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,10 +28,17 @@ import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.LayoutSearchableDialogFilterBinding
 import com.moneytree.app.databinding.NsFragmentProductsBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
+import com.moneytree.app.repository.network.responses.NSDiseasesData
+import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
+import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
+import com.moneytree.app.repository.network.responses.SearchData
+import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
+import com.moneytree.app.ui.mycart.products.diseases.NSMyDiseasesFilterRecycleAdapter
+import com.rajat.pdfviewer.util.hide
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +50,10 @@ import java.util.*
 
 class NSProductFragment : NSFragment(), NSSearchCallback {
     private val productModel: NSProductViewModel by lazy {
-        ViewModelProvider(this).get(NSProductViewModel::class.java)
+		ViewModelProvider(this)[NSProductViewModel::class.java]
+    }
+	private val productCategoryModel: ProductCategoryViewModel by lazy {
+		ViewModelProvider(this)[ProductCategoryViewModel::class.java]
     }
     private var _binding: NsFragmentProductsBinding? = null
 
@@ -60,6 +71,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
         _binding = NsFragmentProductsBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
+		observeViewModel()
         return productBinding.root
     }
 
@@ -68,22 +80,23 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
      */
     private fun viewCreated() {
         with(productBinding) {
-            with(productModel) {
-				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.shop), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSProductFragment)
-				with(layoutHeader) {
-					NSConstants.tabName = this@NSProductFragment.javaClass
-					tvCategories.visible()
-					tvCartCount.visible()
-					cardCategoriesType.visible()
-					setCartCount()
-					setTotalAmount()
-					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
-				}
-                setProductStockAdapter()
-				getProductCategory(true)
-            }
-        }
-        observeViewModel()
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.shop), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSProductFragment)
+			with(layoutHeader) {
+				NSConstants.tabName = this@NSProductFragment.javaClass
+				tvCategories.visible()
+				tvDiseases.visible()
+				tvCartCount.visible()
+				cardCategoriesType.visible()
+				cardDiseasesType.visible()
+				setCartCount()
+				setTotalAmount()
+				ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
+			}
+			setProductStockAdapter()
+
+			//Spinner Product Category
+			productCategoryModel.getProductCategory(false, isDiseases = true)
+		}
     }
 
     /**
@@ -94,7 +107,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
             with(productBinding) {
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
-                    getProductStockListData(pageIndex, "", false, isBottomProgress = false)
+                    getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), false, isBottomProgress = false)
                 }
 
 				layoutHeader.ivHistory.setOnClickListener {
@@ -164,15 +177,36 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 						}
 					}
 
+					etSearch.addTextChangedListener(object : TextWatcher {
+						override fun beforeTextChanged(
+							s: CharSequence?,
+							start: Int,
+							count: Int,
+							after: Int
+						) {
+
+						}
+
+						override fun onTextChanged(
+							s: CharSequence?,
+							start: Int,
+							before: Int,
+							count: Int
+						) {
+
+						}
+
+						override fun afterTextChanged(s: Editable?) {
+							searchAll(s.toString())
+						}
+
+					})
+
 					ivCart.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							switchResultActivity(dataResult, NSCartActivity::class.java)
 						}
 					})
-
-					categoriesTypeSpinner.setOnClickListener {
-						showFilterDialog(activity, categoryList)
-					}
 				}
             }
         }
@@ -186,7 +220,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 					setTotalAmount()
 					if (NSConstants.STOCK_UPDATE == NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL) {
 						pageIndex = "1"
-						getProductStockListData(pageIndex, "", true, isBottomProgress = false)
+						getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), true, isBottomProgress = false)
 					} else {
 						updateProducts()
 					}
@@ -214,7 +248,6 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 				}
 			}
 		}
-
 	}
 
 	private fun setCartCount() {
@@ -226,7 +259,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 	}
 
     /**
-     * To add data of vouchers in list
+     * To add data of product in list
      */
     private fun setProductStockAdapter() {
         with(productBinding) {
@@ -242,12 +275,14 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
-                                getProductStockListData(pageIndex, "", false, isBottomProgress = true)
+                                getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), false, isBottomProgress = true)
                             }
                         }
                     }, object : NSProductDetailCallback {
 						override fun onResponse(productDetail: ProductDataDTO) {
-							switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
+							switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail), NSConstants.KEY_PRODUCT_FULL_LIST to Gson().toJson(
+								NSProductListResponse(data = productList)
+							)))
 						}
 					}, object : NSCartTotalAmountCallback {
 						override fun onResponse() {
@@ -262,22 +297,20 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 
 	private fun setTotalAmount() {
 		with(productBinding) {
-			with(productModel) {
-				CoroutineScope(Dispatchers.IO).launch {
-					var totalAmountValue = 0
-					for (data in NSApplication.getInstance().getProductList()) {
-						val amount1 : Int = data.sdPrice?.toInt() ?: 0
-						val finalAmount1 = data.itemQty * amount1
-						totalAmountValue += finalAmount1
-					}
-					withContext(Dispatchers.Main) {
-						totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
-						llItem.setVisibility(totalAmountValue > 0)
-					}
+			CoroutineScope(Dispatchers.IO).launch {
+				var totalAmountValue = 0
+				for (data in NSApplication.getInstance().getProductList()) {
+					val amount1 : Int = data.sdPrice?.toInt() ?: 0
+					val finalAmount1 = data.itemQty * amount1
+					totalAmountValue += finalAmount1
 				}
-
-				setCartCount()
+				withContext(Dispatchers.Main) {
+					totalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+					llItem.setVisibility(totalAmountValue > 0)
+				}
 			}
+
+			setCartCount()
 		}
 	}
 
@@ -295,7 +328,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 							if (productResponse!!.nextPage) {
 								val page: Int = productList.size/NSConstants.PAGINATION + 1
 								pageIndex = page.toString()
-								getProductStockListData(pageIndex, "", false, isBottomProgress = true)
+								getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), false, isBottomProgress = true)
 							}
 						}
 					}, object : NSProductDetailCallback {
@@ -308,12 +341,11 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 						}
 					})
 				rvProductList.adapter = productListAdapter
-				productListAdapter!!.clearData()
-				productListAdapter!!.updateData(productList)
+				productListAdapter?.clearData()
+				productListAdapter?.updateData(productList)
 			}
 		}
 	}
-
 
     private fun bottomProgress(isShowProgress: Boolean) {
         with(productBinding) {
@@ -330,50 +362,11 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
         with(productModel) {
             voucherDataManage(isVoucher)
             if (isVoucher) {
-                productListAdapter!!.clearData()
-                productListAdapter!!.updateData(productList)
+                productListAdapter?.clearData()
+                productListAdapter?.updateData(productList)
             }
         }
     }
-
-	/**
-	 * Set voucher data
-	 *
-	 * @param isVoucher when data available it's true
-	 */
-	private fun setCategoriesData(isVoucher: Boolean) {
-		with(productBinding) {
-			with(productModel) {
-				if (isVoucher) {
-					val catList : ArrayList<String> = arrayListOf()
-					val catIdList : ArrayList<String> = arrayListOf()
-					catList.add("All")
-					for (data in categoryList) {
-						data.categoryName?.let { catList.add(it) }
-						data.categoryId?.let { catIdList.add(it) }
-					}
-
-					/*categoryId = "0"
-					categoryName = "All"*/
-					//adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-					/*categoriesTypeSpinner.onItemSelectedListener =
-						object : AdapterView.OnItemSelectedListener {
-							override fun onItemSelected(
-								p0: AdapterView<*>?, view: View?, position: Int, id: Long
-							) {
-								pageIndex = "1"
-								categoryId = catIdList[position]
-								categoryName = catList[position]
-								getProductListData(pageIndex, "", true, isBottomProgress = false)
-							}
-
-							override fun onNothingSelected(p0: AdapterView<*>?) {
-							}
-						}*/
-				}
-			}
-		}
-	}
 
     /**
      * Voucher data manage
@@ -386,6 +379,18 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
             clProductNotFound.visibility = if (isVoucherVisible) View.GONE else View.VISIBLE
         }
     }
+
+	private fun setCategoryData(categoryResponse: NSJointCategoryDiseasesResponse) {
+		productBinding.apply {
+			categoriesTypeSpinner.setOnClickListener {
+				showFilterDialog(activity, categoryResponse.categoryList)
+			}
+
+			diseasesTypeSpinner.setOnClickListener {
+				showDiseasesFilterDialog(activity, categoryResponse.diseasesList)
+			}
+		}
+	}
 
     /**
      * To observe the view model for data changes
@@ -405,6 +410,12 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
                     bottomProgress(isBottomProgressShowing)
                 }
 
+				productCategoryModel.isCategoryDataAvailable.observe(
+					viewLifecycleOwner
+				) { categoryData ->
+					setCategoryData(categoryData)
+				}
+
                 isProductsDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isProduct ->
@@ -412,11 +423,10 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
                     setVoucherData(isProduct)
                 }
 
-				isCategoryDataAvailable.observe(
+				isSearchDataAvailable.observe(
 					viewLifecycleOwner
-				) { isCategory ->
-					srlRefresh.isRefreshing = false
-					setCategoriesData(isCategory)
+				) { searchList ->
+					showSuggestions(searchList)
 				}
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
@@ -443,6 +453,35 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
             }
         }
     }
+
+	private fun showSuggestions(suggestions: MutableList<SearchData>) {
+		val suggestionsStr = suggestions.map { it.searchName }
+		productBinding.apply {
+			productModel.apply {
+				layoutHeader.apply {
+					val adapter = ArrayAdapter(
+						requireActivity(),
+						R.layout.layout_spinner_item,
+						suggestionsStr
+					)
+					etSearch.setAdapter(adapter)
+					//etSearch.showDropDown()
+					etSearch.onItemClickListener =
+						AdapterView.OnItemClickListener { _, _, position, _ ->
+							val selectedItem = adapter.getItem(position)
+							etSearch.dismissDropDown()
+							pageIndex = "1"
+							getProductStockListData(
+								pageIndex,
+								selectedItem?:"",
+								true,
+								isBottomProgress = false
+							)
+						}
+				}
+			}
+		}
+	}
 
 	private fun showFilterDialog(activity: Activity, categoryData: MutableList<NSCategoryData>) {
 		val builder = AlertDialog.Builder(activity)
@@ -500,31 +539,106 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 		dialog.show()
 	}
 
-	private fun setCategory() {
-		with(productBinding) {
-			with(productModel) {
-				val data = NSApplication.getInstance().getFilterList()
-				if (data.isEmpty()) {
-					productBinding.categoriesTypeSpinner.text = "All"
-					categoryName = "All"
-					categoryId = ""
-				} else {
-					val itemSelected = "${data.size} Item Selected"
-					productBinding.categoriesTypeSpinner.text = itemSelected
-				}
-				pageIndex = "1"
-				categoryId = ""
-				for (dat in data) {
-					if (categoryId?.isNotEmpty() == true) {
-						categoryId += ",$dat"
-					} else {
-						categoryId = dat
-					}
-				}
-				getProductStockListData(pageIndex, "", true, isBottomProgress = false)
+	private fun showDiseasesFilterDialog(activity: Activity, diseasesData: MutableList<NSDiseasesData>) {
+		val builder = AlertDialog.Builder(activity)
+		val view: View = activity.layoutInflater.inflate(R.layout.layout_searchable_dialog_filter, null)
+		builder.setView(view)
+		val bind: LayoutSearchableDialogFilterBinding = LayoutSearchableDialogFilterBinding.bind(view)
+		val dialog = builder.create()
+		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+		with(bind) {
+			listItems.layoutManager = LinearLayoutManager(activity)
+			val listAdapter = NSMyDiseasesFilterRecycleAdapter(activity)
+			listItems.adapter = listAdapter
+			listAdapter.clearData()
+			listAdapter.updateData(diseasesData)
+
+			tvApply.setOnClickListener {
+				dialog.dismiss()
+				setCategory()
 			}
+
+			etSearch.addTextChangedListener(object : TextWatcher {
+				override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+				}
+
+				override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+					val tempData = ArrayList<NSDiseasesData>()
+					for (nsCategoryData in diseasesData) {
+						if (nsCategoryData.diseasesName != null) {
+							if (nsCategoryData.diseasesName!!.lowercase(Locale.getDefault())
+									.contains(
+										charSequence.toString().lowercase(
+											Locale.getDefault()
+										)
+									)
+							) {
+								tempData.add(nsCategoryData)
+							}
+						}
+					}
+					if (charSequence.toString().isEmpty()) {
+						tempData.clear()
+						tempData.addAll(diseasesData)
+					}
+					listAdapter.clearData()
+					listAdapter.updateData(tempData)
+				}
+
+				override fun afterTextChanged(p0: Editable?) {
+
+				}
+			})
+		}
+
+		dialog.show()
+	}
+
+	private fun setCategory() {
+		with(productModel) {
+			val data = NSApplication.getInstance().getFilterList()
+			if (data.isEmpty()) {
+				productBinding.categoriesTypeSpinner.text = "All"
+			} else {
+				val itemSelected = "${data.size} Item Selected"
+				productBinding.categoriesTypeSpinner.text = itemSelected
+			}
+
+			val diseases = NSApplication.getInstance().getDiseasesFilterList()
+			if (diseases.isEmpty()) {
+				productBinding.diseasesTypeSpinner.text = "All"
+			} else {
+				val itemSelected = "${diseases.size} Item Selected"
+				productBinding.diseasesTypeSpinner.text = itemSelected
+			}
+
+			pageIndex = "1"
+			categoryId = ""
+			diseasesId = ""
+			//var tempCategoryId = ""
+			for (dat in data) {
+				if (categoryId?.isNotEmpty() == true) {
+					categoryId += ",$dat"
+				} else {
+					categoryId = dat
+				}
+			}
+
+			for (dat in diseases) {
+				if (diseasesId?.isNotEmpty() == true) {
+					diseasesId += ",$dat"
+				} else {
+					diseasesId = dat
+				}
+			}
+
+			//categoryId = tempCategoryId + diseasesId
+			getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), true, isBottomProgress = false)
 		}
 	}
+
+
 
 	override fun onSearch(search: String) {
 		with(productModel) {

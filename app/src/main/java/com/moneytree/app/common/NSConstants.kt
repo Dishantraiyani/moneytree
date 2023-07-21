@@ -27,6 +27,7 @@ class NSConstants {
 		const val KEY_PRODUCT_CATEGORY = "key_product_category"
 		const val KEY_PRODUCT_CATEGORY_NAME = "key_product_category_name"
 		const val KEY_PRODUCT_DETAIL = "key_product_detail"
+		const val KEY_PRODUCT_FULL_LIST = "key_product_full_list"
 		const val KEY_NOTIFICATION_DETAIL = "key_notification_detail"
 		const val KEY_MEMBER_ACTIVATION_FORM = "key_member_activation_form"
 		const val KEY_MEMBER_FORM_ACTIVATION_FORM = "key_member_form_activation_form"

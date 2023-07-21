@@ -10,15 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
+import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductCategoryBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
+import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
+import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.products.MTProductsActivity
 
 class MTProductCategoryFragment : NSFragment() {
-    private val productCategoryModel: MTProductCategoryViewModel by lazy {
-        ViewModelProvider(this).get(MTProductCategoryViewModel::class.java)
+    private val productCategoryModel: ProductCategoryViewModel by lazy {
+        ViewModelProvider(this)[ProductCategoryViewModel::class.java]
     }
     private var _binding: NsFragmentProductCategoryBinding? = null
 
@@ -66,7 +68,7 @@ class MTProductCategoryFragment : NSFragment() {
     }
 
     /**
-     * To add data of vouchers in list
+     * To add data of category in list
      */
     private fun setProductCategoryAdapter() {
         with(productCategoryBinding) {
@@ -84,26 +86,22 @@ class MTProductCategoryFragment : NSFragment() {
     }
 
     /**
-     * Set voucher data
+     * Set category data
      *
-     * @param isVoucher when data available it's true
+     * @param categoryResponse when data available it's true
      */
-    private fun setVoucherData(isVoucher: Boolean) {
-        with(productCategoryModel) {
-            voucherDataManage(isVoucher)
-            if (isVoucher) {
-                categoryListAdapter!!.clearData()
-                categoryListAdapter!!.updateData(categoryList)
-            }
-        }
+    private fun setCategory(categoryResponse: NSJointCategoryDiseasesResponse) {
+        categoryDataManage(categoryResponse.categoryList.isValidList())
+        categoryListAdapter?.clearData()
+        categoryListAdapter?.updateData(categoryResponse.categoryList)
     }
 
     /**
-     * Voucher data manage
+     * category data manage
      *
-     * @param isCategoryVisible when voucher available it's visible
+     * @param isCategoryVisible when category available it's visible
      */
-    private fun voucherDataManage(isCategoryVisible: Boolean) {
+    private fun categoryDataManage(isCategoryVisible: Boolean) {
         with(productCategoryBinding) {
             rvCategoryList.visibility = if (isCategoryVisible) View.VISIBLE else View.GONE
             clCategoryNotFound.visibility = if (isCategoryVisible) View.GONE else View.VISIBLE
@@ -124,9 +122,9 @@ class MTProductCategoryFragment : NSFragment() {
 
                 isCategoryDataAvailable.observe(
                     viewLifecycleOwner
-                ) { isCategory ->
+                ) { categoryList ->
                     srlRefresh.isRefreshing = false
-                    setVoucherData(isCategory)
+                    setCategory(categoryList)
                 }
 
                 failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->

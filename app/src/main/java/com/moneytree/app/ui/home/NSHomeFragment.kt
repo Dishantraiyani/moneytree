@@ -18,24 +18,42 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.NSActivityPermissionEvent
+import com.moneytree.app.common.NSAlertButtonClickEvent
+import com.moneytree.app.common.NSApplication
+import com.moneytree.app.common.NSChangeNavigationMenuNameEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSLog
+import com.moneytree.app.common.NSTabChange
+import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
 import com.moneytree.app.common.callbacks.NSRechargeSelectCallback
-import com.moneytree.app.common.utils.*
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.NSUtilities.showPopUpHome
 import com.moneytree.app.common.utils.NSUtilities.showUpdateDialog
+import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.invisible
+import com.moneytree.app.common.utils.isInteger
+import com.moneytree.app.common.utils.setEmail
+import com.moneytree.app.common.utils.setUserName
+import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.switchResultActivity
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutHeaderNavBinding
 import com.moneytree.app.databinding.NsFragmentHomeBinding
 import com.moneytree.app.repository.network.responses.GridModel
 import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.repository.network.responses.NSDataUser
+import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
+import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
-import com.moneytree.app.ui.productCategory.MTProductCategoryViewModel
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.products.MTProductsActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
@@ -57,8 +75,8 @@ class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
         ViewModelProvider(this)[NSHomeViewModel::class.java]
     }
-	private val productCategoryModel: MTProductCategoryViewModel by lazy {
-		ViewModelProvider(this)[MTProductCategoryViewModel::class.java]
+	private val productCategoryModel: ProductCategoryViewModel by lazy {
+		ViewModelProvider(this)[ProductCategoryViewModel::class.java]
 	}
     private var _binding: NsFragmentHomeBinding? = null
     private val homeBinding get() = _binding!!
@@ -414,22 +432,20 @@ class NSHomeFragment : NSFragment() {
 		}
 	}
 
-	private fun setCategoryData() {
+	private fun setCategoryData(categoryResponse: NSJointCategoryDiseasesResponse) {
 		homeBinding.apply {
-			with(productCategoryModel) {
-				val layoutManager = GridLayoutManager(activity, 4)
-				rvProducts.layoutManager = layoutManager
-				rvProducts.itemAnimator = DefaultItemAnimator()
+			val layoutManager = GridLayoutManager(activity, 4)
+			rvProducts.layoutManager = layoutManager
+			rvProducts.itemAnimator = DefaultItemAnimator()
 
-				val categoryListAdapter = MTCategoryHomeRecycleAdapter(requireContext(), object : NSProductCategoryCallback {
-					override fun onResponse(categoryData: NSCategoryData) {
-						switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
-					}
-				})
-				rvProducts.adapter = categoryListAdapter
-				categoryListAdapter.clearData()
-				categoryListAdapter.updateData(categoryList)
-			}
+			val categoryListAdapter = MTCategoryHomeRecycleAdapter(requireContext(), object : NSProductCategoryCallback {
+				override fun onResponse(categoryData: NSCategoryData) {
+					switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
+				}
+			})
+			rvProducts.adapter = categoryListAdapter
+			categoryListAdapter.clearData()
+			categoryListAdapter.updateData(categoryResponse.categoryList)
 		}
 	}
 
@@ -445,7 +461,7 @@ class NSHomeFragment : NSFragment() {
             }
 
 			productCategoryModel.isCategoryDataAvailable.observe(viewLifecycleOwner) {
-				setCategoryData()
+				setCategoryData(it)
 			}
 
             isUserDataAvailable.observe(

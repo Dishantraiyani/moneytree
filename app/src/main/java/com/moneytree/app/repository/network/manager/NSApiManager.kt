@@ -776,14 +776,16 @@ class NSApiManager {
 		pageIndex: String,
 		search: String,
 		categoryId: String,
+		diseasesId: String,
 		callback: NSRetrofitCallback<NSProductListResponse>
 	) {
 		request(
 			unAuthorised3020Client.productStockList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search,
-				categoryId
+				categoryId,
+				diseasesId
 			), callback
 		)
 	}
@@ -1086,6 +1088,24 @@ class NSApiManager {
 	fun sendMessage(userId: String, callback: NSRetrofitCallback<NSSendMessageResponse>) {
 		request(unAuthorised3020Client.sendMessage(NSUserManager.getAuthToken(), userId), callback)
 	}
+
+	/**
+	 * To call the set default register data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getDiseasesMasterList(callback: NSRetrofitCallback<NSDiseasesResponse>) {
+		request(unAuthorised3020Client.diseasesMasterApi(NSUserManager.getAuthToken()), callback)
+	}
+
+	/**
+	 * To call the set default register data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun searchList(search: String, callback: NSRetrofitCallback<NSSearchListResponse>) {
+		request(unAuthorised3020Client.searchList(NSUserManager.getAuthToken(), search), callback)
+	}
 }
 
 /**
@@ -1354,7 +1374,8 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
 		@Field("search") search: String,
-		@Field("category_id") categoryId: String
+		@Field("category_id") categoryId: String,
+		@Field("diseases_id") diseasesId: String,
 	): Call<NSProductListResponse>
 
 	@FormUrlEncoded
@@ -1529,4 +1550,17 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("user_id") userId: String
 	): Call<NSSendMessageResponse>
+
+	@FormUrlEncoded
+	@POST("diseases-master-api")
+	fun diseasesMasterApi(
+		@Field("token_id") token: String,
+	): Call<NSDiseasesResponse>
+
+	@FormUrlEncoded
+	@POST("search-list-api")
+	fun searchList(
+		@Field("token_id") token: String,
+		@Field("search") search: String
+	): Call<NSSearchListResponse>
 }

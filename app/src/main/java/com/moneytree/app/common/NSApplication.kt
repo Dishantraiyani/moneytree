@@ -6,11 +6,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.ViewModelProvider.NewInstanceFactory.Companion.instance
 import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
 import com.moneytree.app.repository.network.responses.NSCategoryData
+import com.moneytree.app.repository.network.responses.NSDiseasesData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.onesignal.OneSignal
 
@@ -26,6 +26,7 @@ class NSApplication : Application() {
 	private val ONESIGNAL_APP_ID = "a31a4b92-4cf4-4768-ba20-904945d2159e"
 	private var productList: HashMap<String, ProductDataDTO> = hashMapOf()
 	private var filterProduct: HashMap<String, String> = hashMapOf()
+	private var diseasesProduct: HashMap<String, String> = hashMapOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -130,14 +131,35 @@ class NSApplication : Application() {
 		return getFilterList()
 	}
 
-	fun clearAllFilterList() {
-		filterProduct.clear()
-	}
-
 	fun isFilterAvailable(model: NSCategoryData) : Boolean {
 		val key = model.categoryId
 		return filterProduct.contains(key)
 	}
+
+	fun getDiseasesFilterList(): ArrayList<String> {
+		val list: ArrayList<String> = arrayListOf()
+		for ((key, value) in diseasesProduct.entries) {
+			list.add(key)
+		}
+		return list
+	}
+
+	fun setDiseasesFilterList(diseasesData: NSDiseasesData) {
+		val key = diseasesData.diseasesId!!
+		diseasesProduct[key] = diseasesData.diseasesName!!
+	}
+
+	fun removeDiseasesFilter(model: NSDiseasesData): ArrayList<String> {
+		val key = model.diseasesId
+		diseasesProduct.remove(key)
+		return getDiseasesFilterList()
+	}
+
+	fun isDiseasesFilterAvailable(model: NSDiseasesData) : Boolean {
+		val key = model.diseasesId
+		return diseasesProduct.contains(key)
+	}
+
 
     companion object {
         private lateinit var instance: NSApplication

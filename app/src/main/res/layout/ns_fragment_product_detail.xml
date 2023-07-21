@@ -122,6 +122,7 @@
 				android:textColor="@color/gray_text"
 				android:paddingStart="@dimen/_15sdp"
 				android:lines="1"
+				android:visibility="gone"
 				android:layout_marginTop="@dimen/_6sdp"
 				android:fontFamily="@font/inter_medium"
 				android:paddingEnd="@dimen/_5sdp"
@@ -137,6 +138,7 @@
 				app:guidelineUseRtl="true"
 				android:textColor="@color/black"
 				android:lines="1"
+				android:visibility="gone"
 				android:layout_marginTop="@dimen/_6sdp"
 				android:fontFamily="@font/inter_medium"
 				app:layout_constraintStart_toEndOf="@id/tv_stock_qty_title"
@@ -157,6 +159,35 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toBottomOf="@+id/tv_description_title" />
+
+
+			<TextView
+				android:id="@+id/tv_similar_products"
+				style="@style/LoginSubFontsZeroWrap"
+				android:textSize="@dimen/_13sdp"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:text="@string/similar_products"
+				android:textColor="@color/black"
+				android:paddingStart="@dimen/_15sdp"
+				android:lineSpacingExtra="2dp"
+				android:layout_marginTop="@dimen/_1sdp"
+				android:fontFamily="@font/inter_semi_bold"
+				android:paddingEnd="@dimen/_5sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/rv_product_list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingBottom="@dimen/_10sdp"
+				android:paddingHorizontal="@dimen/_10sdp"
+				android:clipToPadding="false"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/tv_similar_products"/>
 
 		</androidx.constraintlayout.widget.ConstraintLayout>
 

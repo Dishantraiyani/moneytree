@@ -178,22 +178,24 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:contentDescription="@string/username_title" />
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/et_search"
                     style="@style/LoginSubFontsZeroWrap"
                     android:minHeight="@dimen/_38sdp"
                     android:textColor="@color/black"
-                    android:background="@drawable/phone_white_background"
-                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:background="@null"
+					android:paddingStart="@dimen/_40sdp"
+					android:paddingEnd="@dimen/_10sdp"
                     android:hint="@string/search_hint"
+					android:gravity="center_vertical"
                     android:focusableInTouchMode="true"
                     android:textColorHint="@color/hint_color"
                     android:imeOptions="actionSearch"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/iv_search_icon"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:autofillHints="phone"
+					android:dropDownListViewStyle="@style/CustomDropDownItemStyle"
                     android:inputType="textPersonName"/>
 
                 <ImageView

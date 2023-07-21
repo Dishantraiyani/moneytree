@@ -63,6 +63,8 @@ class NSApiErrorHandler {
 		const val ERROR_DOWNLOAD_LIST = "error_download_list"
 		const val ERROR_SET_DEFAULT = "error_set_default"
 		const val ERROR_SEND_MESSAGE = "error_send_message"
+        const val ERROR_DISEASES_LIST_DATA = "error_diseases_list_data"
+        const val ERROR_SEARCH_LIST_DATA = "error_search_list_data"
 
         /**
          * To get the error messages from API endpoints
