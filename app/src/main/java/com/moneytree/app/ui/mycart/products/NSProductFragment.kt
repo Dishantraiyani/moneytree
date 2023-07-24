@@ -107,7 +107,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
             with(productBinding) {
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
-                    getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), false, isBottomProgress = false)
+					getProductStocks(isShowProgress = false, isBottomProgress = false)
                 }
 
 				layoutHeader.ivHistory.setOnClickListener {
@@ -220,12 +220,18 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 					setTotalAmount()
 					if (NSConstants.STOCK_UPDATE == NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL) {
 						pageIndex = "1"
-						getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), true, isBottomProgress = false)
+						getProductStocks(isShowProgress = true, isBottomProgress = false)
 					} else {
 						updateProducts()
 					}
 				}
 			}
+		}
+	}
+
+	private fun getProductStocks(search: String = productBinding.layoutHeader.etSearch.text.toString().trim(), isShowProgress: Boolean = false, isBottomProgress: Boolean) {
+		productModel.apply {
+			getProductStockListData(pageIndex, search, isShowProgress, isBottomProgress = isBottomProgress)
 		}
 	}
 
@@ -275,7 +281,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
-                                getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), false, isBottomProgress = true)
+								getProductStocks(isShowProgress = false, isBottomProgress = true)
                             }
                         }
                     }, object : NSProductDetailCallback {
@@ -328,7 +334,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 							if (productResponse!!.nextPage) {
 								val page: Int = productList.size/NSConstants.PAGINATION + 1
 								pageIndex = page.toString()
-								getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), false, isBottomProgress = true)
+								getProductStocks(isShowProgress = false, isBottomProgress = true)
 							}
 						}
 					}, object : NSProductDetailCallback {
@@ -471,12 +477,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 							val selectedItem = adapter.getItem(position)
 							etSearch.dismissDropDown()
 							pageIndex = "1"
-							getProductStockListData(
-								pageIndex,
-								selectedItem?:"",
-								true,
-								isBottomProgress = false
-							)
+							getProductStocks(isShowProgress = true, isBottomProgress = false)
 						}
 				}
 			}
@@ -634,7 +635,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 			}
 
 			//categoryId = tempCategoryId + diseasesId
-			getProductStockListData(pageIndex, productBinding.layoutHeader.etSearch.toString().trim(), true, isBottomProgress = false)
+			getProductStocks(isShowProgress = true, isBottomProgress = false)
 		}
 	}
 
@@ -643,12 +644,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 	override fun onSearch(search: String) {
 		with(productModel) {
 			tempProductList.addAll(productList)
-			getProductStockListData(
-				pageIndex,
-				search,
-				true,
-				isBottomProgress = false
-			)
+			getProductStocks(search, isShowProgress = true, isBottomProgress = false)
 		}
 	}
 }
