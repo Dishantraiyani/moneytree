@@ -136,6 +136,14 @@ class NSApplication : Application() {
 		return filterProduct.contains(key)
 	}
 
+	fun clearFilter(){
+		filterProduct.clear()
+	}
+
+	fun clearDiseasesFilter(){
+		diseasesProduct.clear()
+	}
+
 	fun getDiseasesFilterList(): ArrayList<String> {
 		val list: ArrayList<String> = arrayListOf()
 		for ((key, value) in diseasesProduct.entries) {

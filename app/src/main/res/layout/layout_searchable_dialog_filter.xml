@@ -30,6 +30,18 @@
 			app:layout_constraintTop_toTopOf="parent"/>
 
 		<TextView
+			android:id="@+id/tv_clear"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/clear"
+			android:textColor="@color/red"
+			android:layout_marginEnd="@dimen/_5sdp"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:fontFamily="@font/inter_medium"
+			android:textSize="@dimen/_12sdp"
+			app:layout_constraintEnd_toStartOf="@+id/tv_apply"
+			app:layout_constraintTop_toTopOf="parent"/>
+
+		<TextView
 			android:id="@+id/tv_apply"
 			style="@style/LoginSubFontsWrap"
 			android:text="@string/apply"

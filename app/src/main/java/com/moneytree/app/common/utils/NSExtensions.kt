@@ -4,13 +4,25 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.moneytree.app.R
+import com.moneytree.app.base.adapter.ViewBindingAdapter
+import com.moneytree.app.base.clicks.DelayedClickListener
+import com.moneytree.app.base.clicks.SafeClickListener
+import com.moneytree.app.base.clicks.SingleClickListener
 import com.moneytree.app.common.NSLog
 import java.text.DecimalFormat
 
@@ -326,3 +338,65 @@ fun String.isInteger(): Boolean {
     return true
 }
 
+fun <T : ViewBinding, D> RecyclerView.setupViewBindingAdapter(
+    bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T,
+    onBind: (T, D) -> Unit,
+    layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context),
+    onLoadMore: (() -> Unit)? = null
+): ViewBindingAdapter<T, D> {
+    val adapter = ViewBindingAdapter(bindingInflater, onBind)
+    this.adapter = adapter
+    this.layoutManager = layoutManager
+
+    // If pagination is enabled, add a scroll listener to load more data
+    if (onLoadMore != null) {
+        adapter.setOnLoadMoreListener(onLoadMore)
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) { // Scrolling downwards
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val firstVisibleItemPosition = (layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition() ?: 0
+
+                    if (!adapter.isLoading && !adapter.isLastPage && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+                        adapter.setLoadingState(true)
+                        onLoadMore.invoke()
+                    }
+                }
+            }
+        })
+    }
+
+    return adapter
+}
+
+fun View.setSafeOnClickListener(onClickAction: () -> Unit) {
+    setOnClickListener(SafeClickListener {
+        onClickAction.invoke()
+    })
+}
+
+fun View.setSingleClickListener(onClickAction: () -> Unit) {
+    setOnClickListener(SingleClickListener {
+        onClickAction.invoke()
+    })
+}
+
+fun View.setDelayedOnClickListener(delay: Long, onClickAction: () -> Unit) {
+    setOnClickListener(DelayedClickListener(delay) {
+        onClickAction.invoke()
+    })
+}
+
+fun EditText.addTextChangeListener(onTextChanged: (String) -> Unit) {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            onTextChanged(s.toString())
+        }
+
+        override fun afterTextChanged(s: Editable?) {}
+    })
+}

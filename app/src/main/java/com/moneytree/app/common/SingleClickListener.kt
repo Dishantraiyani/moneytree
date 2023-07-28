@@ -17,3 +17,4 @@ public abstract class SingleClickListener @JvmOverloads constructor(protected va
 
     abstract fun performClick(v: View?)
 }
+

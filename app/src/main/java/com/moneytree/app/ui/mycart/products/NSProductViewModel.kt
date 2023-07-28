@@ -3,6 +3,7 @@ package com.moneytree.app.ui.mycart.products
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.callbacks.NSSearchResponseCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDiseasesRepository
 import com.moneytree.app.repository.NSProductRepository
@@ -24,22 +25,21 @@ import com.moneytree.app.repository.network.responses.SearchData
 class NSProductViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var productList: MutableList<ProductDataDTO> = arrayListOf()
-    var tempProductList: MutableList<ProductDataDTO> = arrayListOf()
-    var isProductsDataAvailable = MutableLiveData<Boolean>()
-    var isSearchDataAvailable = MutableLiveData<MutableList<SearchData>>()
+    var isProductsDataAvailable = MutableLiveData<MutableList<ProductDataDTO>>()
     var pageIndex: String = "1"
-    var productResponse: NSProductListResponse? = null
+    var pageList: MutableList<String> = arrayListOf()
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
 	var categoryId: String? = ""
     var diseasesId: String? = ""
 
-    fun searchAll(search: String) {
+    fun searchAll(search: String, callback: NSSearchResponseCallback) {
         if (search.length > 2) {
             NSSearchRepository.searchList(search, object : NSGenericViewModelCallback {
                 override fun <T> onSuccess(data: T) {
                     if (data is NSSearchListResponse) {
-                        isSearchDataAvailable.postValue(data.data)
+                        callback.onSearch(data.data)
+                        //isSearchDataAvailable.postValue(data.data)
                     }
                 }
 
@@ -86,13 +86,9 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
             isBottomProgressShowing.value = false
         }
         val productListData = data as NSProductListResponse
-        productResponse = productListData
-        if (productListData.data.isValidList()) {
-            productList.addAll(productListData.data)
-            isProductsDataAvailable.value = productList.isValidList()
-        } else if (pageIndex == "1" || searchData.isNotEmpty()){
-            isProductsDataAvailable.value = false
-        }
+       // productList.clear()
+        productList.addAll(productListData.data)
+        isProductsDataAvailable.value = productList
     }
 
     override fun onError(errors: List<Any>) {
