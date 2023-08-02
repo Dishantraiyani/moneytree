@@ -115,6 +115,23 @@ class NSProductDetailFragment : NSFragment() {
 						}
 						tvQtyGrid.text = itemQty.toString()
 						tvStockQty.text = stockQty
+
+						if (brandName?.isNotEmpty() == true) {
+							llBrandName.visible()
+							tvBrandName.text = brandName
+						}
+
+						if (diseasesName?.isNotEmpty() == true) {
+							llDiseasesName.visible()
+							tvDiseasesName.text = diseasesName
+						}
+
+						if (categoryTagName?.isNotEmpty() == true) {
+							llTagsName.visible()
+							tvTagsName.text = categoryTagName.replace(",", "\n")
+						}
+
+
 						setCartCount()
 						setTotalAmount()
 					}

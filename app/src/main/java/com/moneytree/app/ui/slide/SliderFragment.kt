@@ -17,7 +17,7 @@ class SliderFragment : Fragment() {
 	private var url: String? = null
 
 	companion object {
-		fun newInstance(bundle: Bundle?) = MTProductDetailFragment().apply {
+		fun newInstance(bundle: Bundle?) = SliderFragment().apply {
 			arguments = bundle
 		}
 	}

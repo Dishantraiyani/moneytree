@@ -312,13 +312,31 @@ class NSMobileRechargeFragment : NSFragment() {
 										cardMobileNumber.setVisibility(position != 0)
 									}
 									if (ad1 != null && ad1 != "NA" && ad1.isNotEmpty()) {
+										ivAd1.text = ad1.first().uppercase()
+										tvAd1.visible()
+										cardAd1.visible()
 										setHintData(tvAd1, etAd1, ad1 ?: "")
+									} else {
+										tvAd1.gone()
+										cardAd1.gone()
 									}
 									if (ad2 != null && ad2 != "NA" && ad2.isNotEmpty()) {
+										ivAd2.text = ad2.first().uppercase()
+										tvAd2.visible()
+										cardAd2.visible()
 										setHintData(tvAd2, etAd2, ad2 ?: "")
+									} else {
+										tvAd2.gone()
+										cardAd2.gone()
 									}
 									if (ad3 != null && ad3 != "NA" && ad3.isNotEmpty()) {
+										ivAd3.text = ad3.first().uppercase()
+										tvAd3.visible()
+										cardAd3.visible()
 										setHintData(tvAd3, etAd3, ad3 ?: "")
+									} else {
+										tvAd3.gone()
+										cardAd3.gone()
 									}
 								} else {
 									tvMobileNumberTitle.setVisibility(false)

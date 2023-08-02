@@ -24,5 +24,8 @@ data class NSCategoryData(
     var categoryId: String? = null,
     @SerializedName("category_name")
     @Expose
-    var categoryName: String? = null
+    var categoryName: String? = null,
+    @SerializedName("category_img")
+    @Expose
+    var categoryImg: String? = null
 )

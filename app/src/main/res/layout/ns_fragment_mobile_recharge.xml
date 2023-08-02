@@ -324,11 +324,16 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
 
-				<ImageView
+				<TextView
 					android:id="@+id/iv_ad1"
 					android:layout_width="@dimen/_15sdp"
 					android:layout_height="@dimen/_15sdp"
 					android:layout_marginStart="@dimen/_10sdp"
+					android:textColor="@color/white"
+					android:gravity="center"
+					android:includeFontPadding="false"
+					android:textSize="@dimen/_9sdp"
+					android:background="@drawable/icon_gray_bg"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"
@@ -387,11 +392,16 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
 
-				<ImageView
+				<TextView
 					android:id="@+id/iv_ad2"
 					android:layout_width="@dimen/_15sdp"
 					android:layout_height="@dimen/_15sdp"
 					android:layout_marginStart="@dimen/_10sdp"
+					android:textColor="@color/white"
+					android:gravity="center"
+					android:includeFontPadding="false"
+					android:textSize="@dimen/_9sdp"
+					android:background="@drawable/icon_gray_bg"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"
@@ -450,11 +460,16 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
 
-				<ImageView
+				<TextView
 					android:id="@+id/iv_ad3"
 					android:layout_width="@dimen/_15sdp"
 					android:layout_height="@dimen/_15sdp"
 					android:layout_marginStart="@dimen/_10sdp"
+					android:textColor="@color/white"
+					android:gravity="center"
+					android:includeFontPadding="false"
+					android:textSize="@dimen/_9sdp"
+					android:background="@drawable/icon_gray_bg"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toTopOf="parent"
 					app:layout_constraintBottom_toBottomOf="parent"

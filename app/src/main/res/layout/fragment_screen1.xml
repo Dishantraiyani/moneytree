@@ -18,12 +18,10 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_250sdp"
+            android:layout_height="@dimen/_250sdp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_phone"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:src="@drawable/ic_first_scr"
             android:layout_gravity="center"/>
 
     </FrameLayout>
@@ -35,8 +33,9 @@
         android:layout_weight="1"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:textSize="24sp"
-        android:textColor="#ffffff"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_semi_bold"
         android:gravity="bottom|center_horizontal"
         android:text="@string/screen1_title" />
 
@@ -48,8 +47,9 @@
         android:layout_weight="1"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:textSize="16sp"
-        android:textColor="#ffffff"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/inter_regular"
         android:gravity="top|center_horizontal" />
 
     <View

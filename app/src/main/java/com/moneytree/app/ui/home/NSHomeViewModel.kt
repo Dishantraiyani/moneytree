@@ -17,7 +17,6 @@ import com.moneytree.app.repository.NSDashboardRepository
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
-import com.moneytree.app.ui.slide.SliderFragment
 
 
 /**

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
 import com.moneytree.app.common.utils.isValidList
@@ -64,12 +65,16 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
             with(voucherBinding) {
                 with(response) {
 
-					try {
-						val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
-						ivFieldImage.setImageDrawable(drawable)
-					} catch (e: Exception) {
-						e.printStackTrace()
-					}
+                    if (response.categoryImg?.isNotEmpty() == true) {
+                        Glide.with(context).load(response.categoryImg).into(ivFieldImage)
+                    } else {
+                        try {
+                            val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
+                            ivFieldImage.setImageDrawable(drawable)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
 
                     tvFieldName.text = categoryName
 					llRecharge.setOnClickListener(object : SingleClickListener() {

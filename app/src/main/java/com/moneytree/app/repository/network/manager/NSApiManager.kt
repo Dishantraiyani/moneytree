@@ -1,6 +1,5 @@
 package com.moneytree.app.repository.network.manager
 
-import android.os.Build
 import com.google.gson.GsonBuilder
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication

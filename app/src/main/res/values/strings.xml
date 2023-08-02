@@ -614,11 +614,20 @@
 	<string name="send_sms">Send SMS</string>
     <string name="please_enter_transaction_password">Please Enter Transaction Password.</string>
     <string name="enter_transaction_password">Enter Transaction Password.</string>
-    <string name="screen1_title">Unlimited Calls For You</string>
-    <string name="screen1_desc">Call your friends, family, Relatives free of cost anytime anywhere.</string>
+    <string name="screen1_title">Your best supplement app</string>
+    <string name="screen1_desc">Get High Quality Supplement</string>
+    <string name="screen2_title">Know Your best supplement</string>
+    <string name="screen2_desc">Get best supplement by simple search</string>
+    <string name="screen3_title">Fast Door Step Delivery</string>
+    <string name="screen3_desc">Deliver your supplement at door-step</string>
+    <string name="screen4_title">Free rewards on every transaction</string>
+    <string name="screen4_desc">Get free reward coins on every transaction done</string>
     <string name="no_youtube_video_available">No Youtube Video Available</string>
     <string name="diseases">Diseases</string>
     <string name="similar_products">Similar Products</string>
     <string name="product_detail">Product Detail</string>
     <string name="clear">Clear</string>
+    <string name="brand">Brand: </string>
+    <string name="diseases_">Diseases:</string>
+    <string name="tags">Tags:</string>
 </resources>

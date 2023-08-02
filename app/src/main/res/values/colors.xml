@@ -45,5 +45,6 @@
 
 
 	<color name="holo_red_dark">#ff0000</color>
+	<color name="icon_gray_color">#C5C5C7</color>
 
 </resources>
