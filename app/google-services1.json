@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "998443940813",
+    "project_id": "moneytree-1aeea",
+    "storage_bucket": "moneytree-1aeea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998443940813:android:dae16008e859db5bc62284",
+        "android_client_info": {
+          "package_name": "com.money.tree.app.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998443940813-fao91rf2j8v7of0hnmfria6en7sv34nc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.money.tree.app.dev",
+            "certificate_hash": "562ca14913e291b326c2dd7ce5c197961f1712e6"
+          }
+        },
+        {
+          "client_id": "998443940813-sol61s297cmlto2kjauk8ehp1d305h0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIV7L7Ksj14cxeh_gwePXt2UsgrzNTYCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998443940813-sol61s297cmlto2kjauk8ehp1d305h0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

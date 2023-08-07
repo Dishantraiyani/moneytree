@@ -263,7 +263,9 @@ object NSUtilities {
 		context.startActivity(intent)
 	}
 
-	public fun setDateRange(layoutDateRange: LayoutDateRangeSelectBinding, activity: Activity, isFilterVisible: Boolean = false, callback: NSDateRangeCallback) {
+	public fun setDateRange(
+		layoutDateRange: LayoutDateRangeSelectBinding, list: Array<String>,
+		activity: Activity, isFilterVisible: Boolean = false, callback: NSDateRangeCallback) {
 		layoutDateRange.clFilterType.setVisibility(isFilterVisible)
 		var startingDate = NSDateTimeHelper.getCurrentDate()
 		var endingDate = NSDateTimeHelper.getCurrentDate()
@@ -274,7 +276,7 @@ object NSUtilities {
 		var startDateList = if (layoutDateRange.tvStartDate.text.isNotEmpty())  layoutDateRange.tvStartDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 		var endDateList = if (layoutDateRange.tvEndDate.text.isNotEmpty())  layoutDateRange.tvEndDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 		val filterListType: MutableList<String> = arrayListOf()
-		filterListType.addAll(activity.resources.getStringArray(R.array.transaction_filter))
+		filterListType.addAll(list)
 		var selectedFilterType = filterListType[0]
 
 		layoutDateRange.tvStartDate.setOnClickListener {

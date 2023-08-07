@@ -50,6 +50,7 @@ import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.common.ProductCategoryViewModel
+import com.moneytree.app.ui.doctor.NSDoctorActivity
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
@@ -325,6 +326,13 @@ class NSHomeFragment : NSFragment() {
                         llRegister.setOnClickListener {
                             EventBus.getDefault().post(NSTabChange(R.id.tb_register))
                         }
+
+						llDoctor.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(
+								NSDoctorActivity::class.java
+							)
+						}
 
 						llRegisterSeller.setOnClickListener {
 							NSUtilities.openBrowser(activity, "https://moneytree.biz/Seller/Login")

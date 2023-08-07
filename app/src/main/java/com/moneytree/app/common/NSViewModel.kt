@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.ui.login.NSLoginActivity
 
 /**
@@ -53,5 +54,47 @@ open class NSViewModel(mApplication: Application) : AndroidViewModel(mApplicatio
         isProgressShowing.value = false
         isBottomProgressShowing.value = false
         noNetworkAlert.value = true
+    }
+
+    fun callCommonApi(
+        callback: ((NSGenericViewModelCallback) -> Unit),
+        response: ((Any?, Boolean) -> Unit),
+        isShowError: Boolean = true
+    ) {
+        val obj = object : NSGenericViewModelCallback {
+            override fun <T> onSuccess(data: T) {
+                response.invoke(data, data != null)
+            }
+
+            override fun onError(errors: List<Any>) {
+                response.invoke(null, false)
+                if (isShowError) {
+                    handleError(errors)
+                }
+            }
+
+            override fun onFailure(failureMessage: String?) {
+                response.invoke(null, false)
+                if (isShowError) {
+                    handleFailure(failureMessage)
+                }
+            }
+
+            override fun <T> onNoNetwork(localData: T) {
+                response.invoke(null, false)
+                if (isShowError) {
+                    handleNoNetwork()
+                }
+            }
+        }
+        callback.invoke(obj)
+    }
+
+    fun showProgress() {
+        isProgressShowing.value = true
+    }
+
+    fun hideProgress() {
+        isProgressShowing.value = false
     }
 }

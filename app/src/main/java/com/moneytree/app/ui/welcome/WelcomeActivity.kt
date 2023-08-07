@@ -1,10 +1,13 @@
 package com.moneytree.app.ui.welcome
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -37,6 +40,7 @@ class WelcomeActivity : NSActivity() {
 	private fun loadInitialFragment() {
 		//buildCircles()
 		setFragmentData()
+		getNotificationPermission()
 	}
 
 	private fun setListener() {
@@ -86,6 +90,12 @@ class WelcomeActivity : NSActivity() {
 			TabLayoutMediator(tabLayout, pager) { tab, position ->
 				//Some implementation
 			}.attach()
+		}
+	}
+
+	private fun getNotificationPermission() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+			ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
 		}
 	}
 }

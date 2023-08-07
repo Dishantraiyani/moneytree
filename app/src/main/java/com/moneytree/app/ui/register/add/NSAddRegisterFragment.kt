@@ -3,6 +3,7 @@ package com.moneytree.app.ui.register.add
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
+import com.moneytree.app.common.EmailValidator
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSAlertButtonClickEvent
 import com.moneytree.app.common.NSConstants
@@ -73,7 +75,8 @@ class NSAddRegisterFragment : NSFragment() {
 	private fun setListener() {
 		with(registerAddBinding) {
 			with(registerListModel) {
-
+				etPassword.transformationMethod = PasswordTransformationMethod()
+				etConfirmPassword.transformationMethod = PasswordTransformationMethod()
 				btnSubmit.setOnClickListener(object : OnSingleClickListener() {
 					override fun onSingleClick(v: View?) {
 						with(activity.resources) {
@@ -91,6 +94,9 @@ class NSAddRegisterFragment : NSFragment() {
 								return
 							} else if (email.isEmpty()) {
 								etEmail.error = getString(R.string.please_enter_email)
+								return
+							}else if (!EmailValidator.isValidEmail(email)) {
+								etEmail.error = getString(R.string.please_enter_vaild_email)
 								return
 							} else if (password.isEmpty()) {
 								etPassword.error = getString(R.string.please_enter_password)

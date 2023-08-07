@@ -1,12 +1,9 @@
 package com.moneytree.app.ui.register
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +16,11 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.NSFragmentChange
 import com.moneytree.app.common.NSRequestCodes
+import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSRegisterActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
@@ -65,7 +64,6 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.register), isSearch = true, isAddNew = pref.isActive, searchCallback = this@NSRegisterFragment)
                 NSConstants.tabName = this@NSRegisterFragment.javaClass
             }
-            setFilter()
             setRegisterAdapter()
         }
         observeViewModel()
@@ -78,9 +76,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
         with(registerBinding) {
             with(registerListModel) {
                 srlRefresh.setOnRefreshListener {
-                    pageIndex = "1"
-                    getRegisterListData(pageIndex, "",
-                        statusListType[filterSpinner.selectedItemPosition],false, isBottomProgress = false)
+                    callRegisterFirstPage(false)
                 }
 
                 with(layoutHeader) {
@@ -112,31 +108,6 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
         }
     }
 
-    private fun setFilter() {
-        with(registerBinding) {
-            with(registerListModel) {
-                val adapter = ArrayAdapter(activity, R.layout.layout_spinner, statusListType)
-                filterSpinner.adapter = adapter
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                var statusFilter: String = statusListType[0].lowercase()
-                filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        p0: AdapterView<*>?, view: View?, position: Int, id: Long
-                    ) {
-                        if (statusFilter != statusListType[position]) {
-                            statusFilter = statusListType[position]
-                            pageIndex = "1"
-                            getRegisterListData(pageIndex, "", statusListType[filterSpinner.selectedItemPosition],false, isBottomProgress = false)
-                        }
-                    }
-
-                    override fun onNothingSelected(p0: AdapterView<*>?) {
-                    }
-                }
-            }
-        }
-    }
-
     /**
      * To add data of register in list
      */
@@ -153,7 +124,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
 
                     override fun onDefault(data: NSRegisterListData) {
                         if (data.userId != null) {
-                            setDefault(data.userId!!, statusListType[filterSpinner.selectedItemPosition], true)
+                            setDefault(data.userId!!, true)
                         }
                     }
 
@@ -167,15 +138,33 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
                         if (registerResponse!!.nextPage) {
                             val page: Int = registerList.size/NSConstants.PAGINATION + 1
                             pageIndex = page.toString()
-                            getRegisterListData(pageIndex, "", statusListType[filterSpinner.selectedItemPosition], false, isBottomProgress = true)
+                            getRegisterListData(pageIndex, "", false, isBottomProgress = true)
                         }
                     }
                 })
 
                 rvRegisterList.adapter = registerListAdapter
-                pageIndex = "1"
-                getRegisterListData(pageIndex, "", statusListType[filterSpinner.selectedItemPosition], true, isBottomProgress = false)
+
+                NSUtilities.setDateRange(registerBinding.layoutDateRange, activity.resources.getStringArray(R.array.register_filter), activity, true, object :
+                    NSDateRangeCallback {
+                    override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
+                        registerListModel.apply {
+                            startingDate = startDate
+                            endingDate = endDate
+                            selectedType = type
+                        }
+                        callRegisterFirstPage(true)
+                    }
+
+                })
             }
+        }
+    }
+
+    private fun callRegisterFirstPage(isShowProgress: Boolean) {
+        registerListModel.apply {
+            pageIndex = "1"
+            getRegisterListData(pageIndex, registerBinding.layoutHeader.etSearch.text.toString(), isShowProgress, isBottomProgress = false)
         }
     }
 
@@ -286,17 +275,14 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onResultEvent(event: NSActivityEvent) {
         if (event.resultCode == NSRequestCodes.REQUEST_MEMBER_ACTIVATION_FORM) {
-            with(registerListModel) {
-                pageIndex = "1"
-                getRegisterListData(pageIndex, "", statusListType[registerBinding.filterSpinner.selectedItemPosition], true, isBottomProgress = false)
-            }
+            callRegisterFirstPage(true)
         }
     }
 
     override fun onSearch(search: String) {
         registerListModel.apply {
             tempRegisterList.addAll(registerList)
-            getRegisterListData(pageIndex, search, statusListType[registerBinding.filterSpinner.selectedItemPosition], true,
+            getRegisterListData(pageIndex, search, true,
                 isBottomProgress = false
             )
         }

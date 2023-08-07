@@ -1,8 +1,6 @@
 package com.moneytree.app.ui.wallets.transaction
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSLog
 import com.moneytree.app.common.NSRedeemWalletUpdateTransferEvent
 import com.moneytree.app.common.NSWalletAmount
-import com.moneytree.app.common.SearchCloseEvent
-import com.moneytree.app.common.SearchStringEvent
 import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.common.callbacks.NSHeaderMainSearchCallback
 import com.moneytree.app.common.callbacks.NSHeaderSearchCallback
@@ -23,7 +18,6 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentTransactionBinding
-import com.moneytree.app.ui.mycart.history.RSHistoryFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -138,7 +132,7 @@ class NSTransactionFragment : NSFragment() {
                     })
                 rvTransactions.adapter = transactionListAdapter
                 pageIndex = "1"
-				NSUtilities.setDateRange(transactionBinding.layoutDateRange, activity, true, object : NSDateRangeCallback {
+				NSUtilities.setDateRange(transactionBinding.layoutDateRange, activity.resources.getStringArray(R.array.transaction_filter), activity, true, object : NSDateRangeCallback {
 					override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
 						transactionListModel.apply {
 							startingDate = startDate

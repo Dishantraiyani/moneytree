@@ -9,18 +9,19 @@
 
     <ImageView
         android:id="@+id/iv_fieldImage"
-        android:layout_width="@dimen/_22sdp"
-        android:layout_height="@dimen/_22sdp"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
         android:layout_gravity="center_horizontal"
         android:contentDescription="@string/mobile_title"
-        android:src="@drawable/mobile" />
+        android:src="@drawable/mobile"
+        />
 
     <TextView
         android:id="@+id/tv_fieldName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:fontFamily="@font/inter_regular"
         android:gravity="center_horizontal"
         android:textColor="@color/dark_black_sec"

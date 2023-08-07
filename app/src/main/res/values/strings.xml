@@ -97,6 +97,7 @@
     <string name="no_voucher_available">No Voucher Available</string>
     <string name="no_downline_re_offer_available">No Downline ReOffer Available</string>
     <string name="no_register_available">No Register Available</string>
+    <string name="no_doctor_available">No Doctor\'s Available</string>
     <string name="no_slot_available">No Slots Available</string>
     <string name="no_notification_available">No Notification Available</string>
     <string name="no_member_tree_available">No Member Tree Available</string>
@@ -302,7 +303,7 @@
     </string-array>
 
     <string-array name="register_filter">
-        <item>Date</item>
+        <item>All</item>
         <item>Activation</item>
         <item>Upgradation</item>
     </string-array>
@@ -501,6 +502,7 @@
     <string name="please_enter_name">Please Enter Name</string>
     <string name="please_enter_valid_phone">Please Enter Valid Phone Number</string>
     <string name="please_enter_email">Please enter Email</string>
+    <string name="please_enter_vaild_email">Please enter Valid Email</string>
     <string name="password_not_match">Please Enter Same Password</string>
     <string name="please_accept_terms"><![CDATA[Please Accept Terms & Conditions]]></string>
     <string name="products">Products</string>
@@ -636,4 +638,7 @@
     <string name="brand">Brand: </string>
     <string name="diseases_">Diseases:</string>
     <string name="tags">Tags:</string>
+    <string name="charges">Charges:</string>
+    <string name="experience">Experience:</string>
+    <string name="doctors">Doctors</string>
 </resources>

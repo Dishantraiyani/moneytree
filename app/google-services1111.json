@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1019654724126:android:c36dd6713ecc4e8f766c0f",
         "android_client_info": {
-          "package_name": "com.dev.customer.demo"
+          "package_name": "com.money.tree.app.dev"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1019654724126-v6tu8c7v1c8mqd4l0471q1vtcdcihi20.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dev.customer.demo",
+            "package_name": "com.money.tree.app.dev",
             "certificate_hash": "493b11888e248af4d688db4a96347ba921c64b0e"
           }
         },

@@ -31,6 +31,10 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 	var dataMember: NSRegisterListData? = null
 	var successResponse: NSSuccessResponse? = null
 
+	var startingDate: String = ""
+	var endingDate: String = ""
+	var selectedType: String = ""
+
 	//Spinner value for registration form
 	var registrationType: MutableList<String> = arrayListOf()
 
@@ -68,7 +72,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 	 * Get register list data
 	 *
 	 */
-	fun getRegisterListData(pageIndex: String, search: String, type: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
+	fun getRegisterListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
 		if (pageIndex == "1") {
 			registerList.clear()
 		}
@@ -80,7 +84,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 		}
 		isBottomProgressShow = isBottomProgress
 		searchData = search
-		NSRegisterRepository.getRegisterListData(pageIndex, search, type, this)
+		NSRegisterRepository.getRegisterListData(pageIndex, search, selectedType, startingDate, endingDate, this)
 	}
 
 	override fun <T> onSuccess(data: T) {
@@ -158,7 +162,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 		})
 	}
 
-	fun setDefault(userId: String, type: String, isShowProgress: Boolean) {
+	fun setDefault(userId: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
@@ -167,7 +171,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 				isProgressShowing.value = false
 
 				pageIndex = "1"
-				getRegisterListData(pageIndex, "", type, false, isBottomProgress = false)
+				getRegisterListData(pageIndex, "", false, isBottomProgress = false)
 			}
 
 			override fun onError(errors: List<Any>) {

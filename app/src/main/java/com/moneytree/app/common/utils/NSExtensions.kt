@@ -1,5 +1,6 @@
 package com.moneytree.app.common.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -399,4 +400,19 @@ fun EditText.addTextChangeListener(onTextChanged: (String) -> Unit) {
 
         override fun afterTextChanged(s: Editable?) {}
     })
+}
+
+@SuppressLint("NotifyDataSetChanged")
+fun notifyAdapter(adapter: RecyclerView.Adapter<*>) {
+    adapter.notifyDataSetChanged()
+}
+
+fun RecyclerView.setupWithAdapter(adapter: RecyclerView.Adapter<*>) {
+    this.adapter = adapter
+    layoutManager = LinearLayoutManager(context)
+}
+
+fun RecyclerView.setupWithAdapterAndCustomLayoutManager(adapter: RecyclerView.Adapter<*>, layoutManager: RecyclerView.LayoutManager) {
+    this.adapter = adapter
+    this.layoutManager = layoutManager
 }

@@ -17,7 +17,6 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentRedeemBinding
-import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -136,7 +135,7 @@ class NSRedeemFragment : NSFragment() {
                         }
                     })
                 rvRedeemList.adapter = redeemListAdapter
-				NSUtilities.setDateRange(redeemBinding.layoutDateRange, activity, false, object : NSDateRangeCallback {
+				NSUtilities.setDateRange(redeemBinding.layoutDateRange, activity.resources.getStringArray(R.array.transaction_filter), activity, false, object : NSDateRangeCallback {
 					override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
 						redeemListModel.apply {
 							startingDate = startDate

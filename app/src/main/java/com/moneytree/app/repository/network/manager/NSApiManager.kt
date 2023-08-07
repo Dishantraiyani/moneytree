@@ -203,7 +203,7 @@ class NSApiManager {
 			unAuthorised3020Client.login(
 				loginRequest.userName!!,
 				loginRequest.password!!,
-				NSApplication.getInstance().getLoginPrefs().notificationToken!!,
+				NSApplication.getInstance().getLoginPrefs().notificationToken?:"",
 				NSUtilities.getDeviceInfo(NSApplication.getInstance().applicationContext)
 			), callback
 		)
@@ -262,6 +262,8 @@ class NSApiManager {
 		pageIndex: String,
 		search: String,
 		type: String,
+		startDate: String,
+		endDate: String,
 		callback: NSRetrofitCallback<NSRegisterListResponse>
 	) {
 		request(
@@ -269,7 +271,8 @@ class NSApiManager {
 				NSUserManager.getAuthToken()!!,
 				pageIndex,
 				search,
-				type
+				type,
+				startDate, endDate
 			), callback
 		)
 	}
@@ -1107,6 +1110,15 @@ class NSApiManager {
 	fun searchList(search: String, callback: NSRetrofitCallback<NSSearchListResponse>) {
 		request(unAuthorised3020Client.searchList(NSUserManager.getAuthToken(), search), callback)
 	}
+
+	/**
+	 * To call the set default register data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getDoctorList(pageIndex: String, search: String, callback: NSRetrofitCallback<DoctorResponse>) {
+		request(unAuthorised3020Client.doctorMasterList(NSUserManager.getAuthToken(), pageIndex, search), callback)
+	}
 }
 
 /**
@@ -1137,7 +1149,9 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
 		@Field("search") search: String,
-		@Field("type") type: String
+		@Field("type") type: String,
+		@Field("start_date") startDate: String,
+		@Field("end_date") endDate: String
 	): Call<NSRegisterListResponse>
 
 	@FormUrlEncoded
@@ -1565,4 +1579,12 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("search") search: String
 	): Call<NSSearchListResponse>
+
+	@FormUrlEncoded
+	@POST("doctor-master-list-api")
+	fun doctorMasterList(
+		@Field("token_id") token: String,
+		@Field("page_index") page: String,
+		@Field("search") search: String
+	): Call<DoctorResponse>
 }
