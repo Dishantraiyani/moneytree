@@ -22,10 +22,10 @@ object NSRegisterRepository {
      *
      * @param viewModelCallback The callback to communicate back to the view model
      */
-    fun getRegisterListData(pageIndex: String, search: String,
+    fun getRegisterListData(pageIndex: String, search: String, type: String,
         viewModelCallback: NSGenericViewModelCallback
     ) {
-        apiManager.getRegisterListData(pageIndex, search, object :
+        apiManager.getRegisterListData(pageIndex, search, type, object :
             NSRetrofitCallback<NSRegisterListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REGISTER_LIST_DATA) {
             override fun <T> onResponse(response: Response<T>) {
                 val data = response.body() as NSRegisterListResponse

@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSProductCategoryCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutItemRechargesBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
-
+import com.moneytree.app.BuildConfig
 
 class MTCategoryHomeRecycleAdapter(private val context: Context, private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private val categoryData: MutableList<NSCategoryData> = arrayListOf()
@@ -66,7 +67,8 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
                 with(response) {
 
                     if (response.categoryImg?.isNotEmpty() == true) {
-                        Glide.with(context).load(response.categoryImg).into(ivFieldImage)
+                        val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE_CATEGORY) + response.categoryImg
+                        Glide.with(context).load(url).into(ivFieldImage)
                     } else {
                         try {
                             val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)

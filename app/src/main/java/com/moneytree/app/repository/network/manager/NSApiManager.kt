@@ -261,13 +261,15 @@ class NSApiManager {
 	fun getRegisterListData(
 		pageIndex: String,
 		search: String,
+		type: String,
 		callback: NSRetrofitCallback<NSRegisterListResponse>
 	) {
 		request(
 			unAuthorised3020Client.getRegisterList(
 				NSUserManager.getAuthToken()!!,
 				pageIndex,
-				search
+				search,
+				type
 			), callback
 		)
 	}
@@ -1134,7 +1136,8 @@ interface RTApiInterface {
 	fun getRegisterList(
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
-		@Field("search") search: String
+		@Field("search") search: String,
+		@Field("type") type: String
 	): Call<NSRegisterListResponse>
 
 	@FormUrlEncoded

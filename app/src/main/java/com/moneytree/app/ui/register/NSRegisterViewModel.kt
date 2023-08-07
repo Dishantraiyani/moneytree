@@ -68,7 +68,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 	 * Get register list data
 	 *
 	 */
-	fun getRegisterListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
+	fun getRegisterListData(pageIndex: String, search: String, type: String, isShowProgress: Boolean, isBottomProgress: Boolean) {
 		if (pageIndex == "1") {
 			registerList.clear()
 		}
@@ -80,7 +80,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 		}
 		isBottomProgressShow = isBottomProgress
 		searchData = search
-		NSRegisterRepository.getRegisterListData(pageIndex, search, this)
+		NSRegisterRepository.getRegisterListData(pageIndex, search, type, this)
 	}
 
 	override fun <T> onSuccess(data: T) {
@@ -158,7 +158,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 		})
 	}
 
-	fun setDefault(userId: String, isShowProgress: Boolean) {
+	fun setDefault(userId: String, type: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
@@ -167,7 +167,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 				isProgressShowing.value = false
 
 				pageIndex = "1"
-				getRegisterListData(pageIndex, "", false, isBottomProgress = false)
+				getRegisterListData(pageIndex, "", type, false, isBottomProgress = false)
 			}
 
 			override fun onError(errors: List<Any>) {

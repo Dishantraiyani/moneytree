@@ -5,6 +5,8 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +37,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
         ViewModelProvider(this).get(NSRegisterViewModel::class.java)
     }
     private var _binding: NsFragmentRegisterBinding? = null
+    val statusListType: MutableList<String> = arrayListOf()
 
     private val registerBinding get() = _binding!!
     private var registerListAdapter: NSRegisterListRecycleAdapter? = null
@@ -47,6 +50,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRegisterBinding.inflate(inflater, container, false)
+        statusListType.addAll(resources.getStringArray(R.array.register_filter))
         viewCreated()
         setListener()
         return registerBinding.root
@@ -61,6 +65,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.register), isSearch = true, isAddNew = pref.isActive, searchCallback = this@NSRegisterFragment)
                 NSConstants.tabName = this@NSRegisterFragment.javaClass
             }
+            setFilter()
             setRegisterAdapter()
         }
         observeViewModel()
@@ -74,7 +79,8 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
             with(registerListModel) {
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
-                    getRegisterListData(pageIndex, "", false, isBottomProgress = false)
+                    getRegisterListData(pageIndex, "",
+                        statusListType[filterSpinner.selectedItemPosition],false, isBottomProgress = false)
                 }
 
                 with(layoutHeader) {
@@ -99,6 +105,33 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
                             setRegisterData(registerList.isValidList())
                         }
                     }
+
+
+                }
+            }
+        }
+    }
+
+    private fun setFilter() {
+        with(registerBinding) {
+            with(registerListModel) {
+                val adapter = ArrayAdapter(activity, R.layout.layout_spinner, statusListType)
+                filterSpinner.adapter = adapter
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                var statusFilter: String = statusListType[0].lowercase()
+                filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        p0: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        if (statusFilter != statusListType[position]) {
+                            statusFilter = statusListType[position]
+                            pageIndex = "1"
+                            getRegisterListData(pageIndex, "", statusListType[filterSpinner.selectedItemPosition],false, isBottomProgress = false)
+                        }
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                    }
                 }
             }
         }
@@ -120,7 +153,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
 
                     override fun onDefault(data: NSRegisterListData) {
                         if (data.userId != null) {
-                            setDefault(data.userId!!, true)
+                            setDefault(data.userId!!, statusListType[filterSpinner.selectedItemPosition], true)
                         }
                     }
 
@@ -134,14 +167,14 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
                         if (registerResponse!!.nextPage) {
                             val page: Int = registerList.size/NSConstants.PAGINATION + 1
                             pageIndex = page.toString()
-                            getRegisterListData(pageIndex, "", false, isBottomProgress = true)
+                            getRegisterListData(pageIndex, "", statusListType[filterSpinner.selectedItemPosition], false, isBottomProgress = true)
                         }
                     }
                 })
 
                 rvRegisterList.adapter = registerListAdapter
                 pageIndex = "1"
-                getRegisterListData(pageIndex, "", true, isBottomProgress = false)
+                getRegisterListData(pageIndex, "", statusListType[filterSpinner.selectedItemPosition], true, isBottomProgress = false)
             }
         }
     }
@@ -255,7 +288,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
         if (event.resultCode == NSRequestCodes.REQUEST_MEMBER_ACTIVATION_FORM) {
             with(registerListModel) {
                 pageIndex = "1"
-                getRegisterListData(pageIndex, "", true, isBottomProgress = false)
+                getRegisterListData(pageIndex, "", statusListType[registerBinding.filterSpinner.selectedItemPosition], true, isBottomProgress = false)
             }
         }
     }
@@ -263,7 +296,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
     override fun onSearch(search: String) {
         registerListModel.apply {
             tempRegisterList.addAll(registerList)
-            getRegisterListData(pageIndex, search, true,
+            getRegisterListData(pageIndex, search, statusListType[registerBinding.filterSpinner.selectedItemPosition], true,
                 isBottomProgress = false
             )
         }

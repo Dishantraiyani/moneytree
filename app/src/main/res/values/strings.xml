@@ -301,6 +301,12 @@
         <item>Failed</item>
     </string-array>
 
+    <string-array name="register_filter">
+        <item>Date</item>
+        <item>Activation</item>
+        <item>Upgradation</item>
+    </string-array>
+
     <string-array name="registration_type">
         <item>Select Register Type</item>
         <item>Wallet Register</item>
