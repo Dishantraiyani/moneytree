@@ -638,7 +638,7 @@
     <string name="brand">Brand: </string>
     <string name="diseases_">Diseases:</string>
     <string name="tags">Tags:</string>
-    <string name="charges">Charges:</string>
+    <string name="charges">Charges</string>
     <string name="experience">Experience:</string>
     <string name="doctors">Doctors</string>
 </resources>

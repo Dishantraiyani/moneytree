@@ -53,5 +53,8 @@ data class DoctorDataItem(
 	val memberid: String? = null,
 
 	@field:SerializedName("is_delete")
-	val isDelete: String? = null
+	val isDelete: String? = null,
+
+	@field:SerializedName("image")
+	val image: String? = null
 )

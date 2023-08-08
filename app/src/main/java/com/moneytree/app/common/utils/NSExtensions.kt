@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
@@ -19,11 +20,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.bumptech.glide.Glide
 import com.moneytree.app.R
 import com.moneytree.app.base.adapter.ViewBindingAdapter
 import com.moneytree.app.base.clicks.DelayedClickListener
 import com.moneytree.app.base.clicks.SafeClickListener
 import com.moneytree.app.base.clicks.SingleClickListener
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSLog
 import java.text.DecimalFormat
 
@@ -415,4 +418,8 @@ fun RecyclerView.setupWithAdapter(adapter: RecyclerView.Adapter<*>) {
 fun RecyclerView.setupWithAdapterAndCustomLayoutManager(adapter: RecyclerView.Adapter<*>, layoutManager: RecyclerView.LayoutManager) {
     this.adapter = adapter
     this.layoutManager = layoutManager
+}
+
+fun ImageView.setCircleImage(resource: Int = 0, url: String? = null) {
+    Glide.with(NSApplication.getInstance().applicationContext).load(url?:resource).circleCrop().into(this)
 }

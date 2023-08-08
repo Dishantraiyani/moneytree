@@ -5,6 +5,7 @@ import com.moneytree.app.R
 import com.moneytree.app.base.adapter.BaseViewBindingAdapter
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.setCircleImage
 import com.moneytree.app.databinding.LayoutDoctorItemBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 
@@ -21,9 +22,10 @@ class NSDoctorRecycleAdapter(
     onBind = { binding, response, position, size ->
         binding.apply {
             response.apply {
-
+                ivDoctorImg.setCircleImage(R.drawable.placeholder, image)
                 tvDoctorName.text = doctorName
-                tvPrice.text = addText(activity, R.string.price_value, charges.toString())
+                tvMobileNo.text = mobile
+                tvCharges.text = addText(activity, R.string.price_value, charges.toString())
                 tvExperience.text = experience
                 tvEducation.text = education
 

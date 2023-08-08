@@ -7,12 +7,16 @@ import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.callbacks.NSSearchCallback
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.setupWithAdapter
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentDoctorBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 
 
-class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoctorBinding>() {
+class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoctorBinding>(),
+	NSSearchCallback {
 
 	private var dcAdapter: NSDoctorRecycleAdapter? = null
 	private var pageList: MutableList<Int> = arrayListOf()
@@ -34,14 +38,35 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 
 	override fun setupViews() {
 		super.setupViews()
+		baseObserveViewModel(viewModel)
 		HeaderUtils(binding.layoutHeader, requireActivity(), headerTitle = activity.resources.getString(
-			R.string.doctors), clBackView = true)
-		getDoctorList()
+			R.string.doctors), clBackView = true, isSearch = true, searchCallback = this)
+		setListener()
+		getDoctorList(true)
 	}
 
-	private fun getDoctorList(page: Int = 1, search: String = binding.layoutHeader.etSearch.text.toString()) {
+	private fun setListener() {
+		binding.apply {
+			srlRefresh.setOnRefreshListener {
+				getDoctorList(false)
+			}
+
+			layoutHeader.ivClose.setOnClickListener {
+				if (layoutHeader.etSearch.text.isNotEmpty()) {
+					layoutHeader.etSearch.setText("")
+				} else {
+					layoutHeader.cardSearch.gone()
+					dcAdapter?.setData(viewModel.tempDoctorList)
+				}
+			}
+		}
+	}
+
+	private fun getDoctorList(isShowProgress: Boolean, page: Int = 1, search: String = binding.layoutHeader.etSearch.text.toString()) {
 		viewModel.apply {
-			getDoctorListApi(page, search) { page, list ->
+			getDoctorListApi(isShowProgress, page, search) { page, list ->
+				binding.cvProgress.gone()
+				binding.srlRefresh.isRefreshing = false
 				if (list.isEmpty()) {
 					pageList.remove(page)
 				}
@@ -61,7 +86,8 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 
 							val pageIndex: Int = list.size/NSConstants.PAGINATION + 1
 							if (!pageList.contains(pageIndex)) {
-								getDoctorList(pageIndex)
+								binding.cvProgress.visible()
+								getDoctorList(false,pageIndex)
 							}
 						})
 
@@ -76,5 +102,14 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 				}
 			}
 		}
+	}
+
+	override fun onSearch(search: String) {
+		viewModel.apply {
+			if (tempDoctorList.isEmpty()) {
+				tempDoctorList.addAll(dcAdapter?.getData()?: arrayListOf())
+			}
+		}
+		getDoctorList(true, search = search)
 	}
 }

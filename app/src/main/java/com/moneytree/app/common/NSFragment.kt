@@ -166,6 +166,41 @@ open class NSFragment : Fragment() {
         }
     }
 
+    /**
+     * To observe the view model for data changes
+     */
+    fun baseObserveViewModel(mainViewModel: NSViewModel) {
+        with(mainViewModel) {
+            isProgressShowing.observe(
+                viewLifecycleOwner
+            ) { shouldShowProgress ->
+                updateProgress(shouldShowProgress)
+            }
+
+            failureErrorMessage.observe(viewLifecycleOwner) { errorMessage ->
+                showAlertDialog(errorMessage)
+            }
+
+            apiErrors.observe(viewLifecycleOwner) { apiErrors ->
+                parseAndShowApiError(apiErrors)
+            }
+
+            noNetworkAlert.observe(viewLifecycleOwner) {
+                val title = resources.getString(R.string.no_network_available)
+                val detail = resources.getString(R.string.network_unreachable)
+
+                showNoNetworkAlertDialog(
+                    title,
+                    detail
+                )
+            }
+
+            validationErrorId.observe(viewLifecycleOwner) { errorId ->
+                showAlertDialog(getString(errorId))
+            }
+        }
+    }
+
 	val dataResult =
 		registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 			val resultCode = result.resultCode
