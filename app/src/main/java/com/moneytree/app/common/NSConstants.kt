@@ -79,5 +79,6 @@ class NSConstants {
 		const val KEY_LOCK_SCREEN = "key_lock_screen"
 		var WALLET_BALANCE = "0"
 		const val CUSTOMER_CARE = "+918735985994"
+		const val DOCTOR_DETAIL = "doctor_detail"
 	}
 }

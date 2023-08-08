@@ -569,6 +569,7 @@
     <string name="invoice">Invoice</string>
     <string name="default_notification_channel_id">money_tree_notification</string>
     <string name="details">Recharge Details</string>
+    <string name="doctor_details">Doctor Detail</string>
     <string name="rs">₹</string>
     <string name="add_a_note">Add a note</string>
     <string name="scan_qr_code">Scan Any QR</string>
@@ -639,6 +640,16 @@
     <string name="diseases_">Diseases:</string>
     <string name="tags">Tags:</string>
     <string name="charges">Charges</string>
+    <string name="charges_">Charges:</string>
     <string name="experience">Experience:</string>
     <string name="doctors">Doctors</string>
+    <string name="education">Education:</string>
+    <string name="information">Information</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="for_whom">For Whom?</string>
+    <string name="my_self">My Self</string>
+    <string name="some_one_else">Some One Else</string>
+    <string name="send">Send</string>
 </resources>

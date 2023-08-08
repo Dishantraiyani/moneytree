@@ -2,17 +2,22 @@ package com.moneytree.app.ui.doctor
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.setupWithAdapter
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentDoctorBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
+import com.moneytree.app.ui.doctor.detail.NSDoctorDetailActivity
 
 
 class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoctorBinding>(),
@@ -65,6 +70,7 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 	private fun getDoctorList(isShowProgress: Boolean, page: Int = 1, search: String = binding.layoutHeader.etSearch.text.toString()) {
 		viewModel.apply {
 			getDoctorListApi(isShowProgress, page, search) { page, list ->
+				binding.clDoctorNotFound.setVisibility(page == 1 && list.isEmpty())
 				binding.cvProgress.gone()
 				binding.srlRefresh.isRefreshing = false
 				if (list.isEmpty()) {
@@ -80,8 +86,8 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 			with(binding) {
 				with(rvDoctorList) {
 					if (dcAdapter == null) {
-						dcAdapter = NSDoctorRecycleAdapter(activity, { model, isDelete ->
-
+						dcAdapter = NSDoctorRecycleAdapter(activity, { model ->
+							switchActivity(NSDoctorDetailActivity::class.java, bundleOf(NSConstants.DOCTOR_DETAIL to Gson().toJson(model)))
 						}, {
 
 							val pageIndex: Int = list.size/NSConstants.PAGINATION + 1

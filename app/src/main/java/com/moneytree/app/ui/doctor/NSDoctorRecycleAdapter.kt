@@ -6,12 +6,13 @@ import com.moneytree.app.base.adapter.BaseViewBindingAdapter
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.setCircleImage
+import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.databinding.LayoutDoctorItemBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 
 class NSDoctorRecycleAdapter(
     private val activity: Activity,
-    private val callback: ((DoctorDataItem, Boolean) -> Unit),
+    private val callback: ((DoctorDataItem) -> Unit),
     private val pageChange: (() -> Unit),
 ) : BaseViewBindingAdapter<LayoutDoctorItemBinding, DoctorDataItem>(
 
@@ -28,6 +29,10 @@ class NSDoctorRecycleAdapter(
                 tvCharges.text = addText(activity, R.string.price_value, charges.toString())
                 tvExperience.text = experience
                 tvEducation.text = education
+
+                clDoctorLayout.setSafeOnClickListener {
+                    callback.invoke(response)
+                }
 
                 if (position == size - 1) {
                     if (((position + 1) % NSConstants.PAGINATION) == 0) {
