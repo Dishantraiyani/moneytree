@@ -14,6 +14,7 @@
         android:padding="0dp"
         android:scaleType="fitCenter" />
 
-    <include layout="@layout/pdf_view_page_loading_layout" />
+    <include android:id="@+id/pdfView"
+        layout="@layout/pdf_view_page_loading_layout" />
 
 </FrameLayout>

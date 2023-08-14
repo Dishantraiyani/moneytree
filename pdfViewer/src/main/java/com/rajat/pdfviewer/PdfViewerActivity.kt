@@ -24,9 +24,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.rajat.pdfviewer.databinding.ActivityPdfViewerBinding
 import com.rajat.pdfviewer.util.NSPdfPath
-import kotlinx.android.synthetic.main.activity_pdf_viewer.*
-import kotlinx.android.synthetic.main.pdf_view_tool_bar.*
 import java.io.File
 
 /**
@@ -35,6 +34,8 @@ import java.io.File
 
 class PdfViewerActivity : AppCompatActivity() {
 
+    private var _binding: ActivityPdfViewerBinding? = null
+    private val binding get() = _binding!!
     private var permissionGranted: Boolean? = false
     private var menuItem: MenuItem? = null
     private var shareItem: MenuItem? = null
@@ -91,7 +92,8 @@ class PdfViewerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pdf_viewer)
+        _binding = ActivityPdfViewerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setUpToolbar(
             intent.extras!!.getString(
@@ -174,12 +176,12 @@ class PdfViewerActivity : AppCompatActivity() {
     }
 
     private fun setUpToolbar(toolbarTitle: String) {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.pdfTool.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            if(tvAppBarTitle!=null) {
-                tvAppBarTitle?.text = toolbarTitle
+            if(binding.pdfTool.tvAppBarTitle!=null) {
+                binding.pdfTool.tvAppBarTitle.text = toolbarTitle
                 setDisplayShowTitleEnabled(false)
             }else{
                 setDisplayShowTitleEnabled(true)
@@ -224,7 +226,7 @@ class PdfViewerActivity : AppCompatActivity() {
 
         //Initiating PDf Viewer with URL
         try {
-            pdfView.initWithUrl(
+            binding.pdfView.initWithUrl(
                 fileUrl!!,
                 PdfQuality.NORMAL,
                 engine
@@ -247,7 +249,7 @@ class PdfViewerActivity : AppCompatActivity() {
                 com.rajat.pdfviewer.util.FileUtils.fileFromAsset(this, filePath!!)
             else File(filePath!!)
 
-            pdfView.initWithFile(
+            binding.pdfView.initWithFile(
                 file,
                 PdfQuality.NORMAL
             )
@@ -263,7 +265,7 @@ class PdfViewerActivity : AppCompatActivity() {
 
         checkPermissionOnInit()
 
-        pdfView.statusListener = object : PdfRendererView.StatusCallBack {
+        binding.pdfView.statusListener = object : PdfRendererView.StatusCallBack {
             override fun onDownloadStart() {
                 true.showProgressBar()
             }
@@ -308,7 +310,7 @@ class PdfViewerActivity : AppCompatActivity() {
     }
 
     private fun Boolean.showProgressBar() {
-        progressBar.visibility = if (this) View.VISIBLE else GONE
+        binding.progressBar.visibility = if (this) View.VISIBLE else GONE
     }
 
     private var onComplete: BroadcastReceiver = object : BroadcastReceiver() {
@@ -343,7 +345,7 @@ class PdfViewerActivity : AppCompatActivity() {
                         val downloadUrl = Uri.parse(fileUrl)
                         val downloadManger =
                             getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
-                        val cookie = CookieManager.getInstance().getCookie(fileUrl);
+                        val cookie = CookieManager.getInstance().getCookie(fileUrl)
                         val request = DownloadManager.Request(downloadUrl)
                         request.setAllowedNetworkTypes(
                             DownloadManager.Request.NETWORK_WIFI or
@@ -413,7 +415,7 @@ class PdfViewerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        pdfView.closePdfRender()
+        binding.pdfView.closePdfRender()
     }
 
 }

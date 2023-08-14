@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.RemoteException
 import android.text.method.LinkMovementMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -78,6 +79,8 @@ class NSSignUpFragment : NSFragment() {
 	 */
 	private fun setListener() {
 		with(signUpBinding) {
+			etPassword.transformationMethod = PasswordTransformationMethod()
+			etConfirmPassword.transformationMethod = PasswordTransformationMethod()
 			btnSubmit.setOnClickListener(object : OnSingleClickListener() {
 				override fun onSingleClick(v: View?) {
 					with(activity.resources) {

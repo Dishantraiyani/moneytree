@@ -22,9 +22,12 @@ import com.moneytree.app.common.callbacks.NSRegisterActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setSafeOnClickListener
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
 import com.moneytree.app.repository.network.responses.NSRegisterListData
+import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
 import com.moneytree.app.ui.register.add.NSAddRegisterFragment
 import org.greenrobot.eventbus.EventBus
@@ -77,6 +80,10 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
             with(registerListModel) {
                 srlRefresh.setOnRefreshListener {
                     callRegisterFirstPage(false)
+                }
+
+                btnSelfActivate.setSafeOnClickListener {
+                    switchActivity(NSActivateActivity::class.java)
                 }
 
                 with(layoutHeader) {

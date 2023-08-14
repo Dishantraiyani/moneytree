@@ -199,6 +199,15 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 							switchResultActivity(dataResult, NSCartActivity::class.java)
 						}
 					})
+
+
+					statusTypeSpinner.setPlaceholderAdapter(resources.getStringArray(R.array.in_stock_filter), requireContext()) {
+						if (selectedStock != it) {
+							selectedStock = it!!
+							setFirstPage()
+							getProductStocks(isShowProgress = true, isBottomProgress = false)
+						}
+					}
 				}
             }
         }

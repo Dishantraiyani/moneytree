@@ -2,6 +2,8 @@ package com.moneytree.app.common
 
 import android.app.Application
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -96,5 +98,13 @@ open class NSViewModel(mApplication: Application) : AndroidViewModel(mApplicatio
 
     fun hideProgress() {
         isProgressShowing.value = false
+    }
+
+    fun showError(message: String) {
+        Handler(Looper.getMainLooper()).post {
+            val listError: MutableList<String> = arrayListOf()
+            listError.add(message)
+            handleError(listError)
+        }
     }
 }

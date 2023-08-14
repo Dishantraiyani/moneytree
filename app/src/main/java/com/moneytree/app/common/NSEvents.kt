@@ -61,7 +61,7 @@ class BackPressFragmentHomeEvent
  */
 class SearchCloseEvent(val position: Int)
 
-class MainSearchCloseEvent()
+class MainSearchCloseEvent
 
 /**
  * Search string event
@@ -73,15 +73,15 @@ class SearchStringEvent(val search: String, val position: Int)
 
 class MainSearchStringEvent(val search: String)
 
-class NSRepurchaseEventTab()
+class NSRepurchaseEventTab
 
 class NSRechargeAllEventTab(val rechargeType: String)
 
-class NSRetailInfoEventTab()
+class NSRetailInfoEventTab
 
-class NSRoyaltyEventTab()
+class NSRoyaltyEventTab
 
-class NSDownlineEventTab()
+class NSDownlineEventTab
 
 class NSPendingEventTab(val isAdded: Boolean)
 
@@ -89,23 +89,23 @@ class NSReceiveEventTab(val isAdded: Boolean)
 
 class NSTransferEventTab(val isAdded: Boolean)
 
-class NSRedemptionEventTab()
+class NSRedemptionEventTab
 
-class NSTransactionsEventTab()
+class NSTransactionsEventTab
 
 class NSWalletAmount(val amount: String)
 
-class NSJoiningVoucherEventTab()
+class NSJoiningVoucherEventTab
 
-class NSProductVoucherEventTab()
+class NSProductVoucherEventTab
 
-class NSSearchClearEvent()
+class NSSearchClearEvent
 
-class NSRedeemWalletUpdateEvent()
+class NSRedeemWalletUpdateEvent
 
-class NSRedeemWalletUpdateTransferEvent()
+class NSRedeemWalletUpdateTransferEvent
 
-class NSChangeNavigationMenuNameEvent()
+class NSChangeNavigationMenuNameEvent
 
 /**
  * Event that triggered when the permission check

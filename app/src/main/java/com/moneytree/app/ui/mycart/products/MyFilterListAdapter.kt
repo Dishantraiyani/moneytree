@@ -56,7 +56,7 @@ class MyFilterListAdapter(
         return cView!!
     }
 
-	public fun updateData(list: MutableList<NSCategoryData>) {
+	fun updateData(list: MutableList<NSCategoryData>) {
 		listState.clear()
 		listState = list
 		notifyDataSetChanged()

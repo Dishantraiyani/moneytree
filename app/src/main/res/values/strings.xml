@@ -308,6 +308,18 @@
         <item>Upgradation</item>
     </string-array>
 
+    <string-array name="in_stock_filter">
+        <item>All</item>
+        <item>In Stock</item>
+        <item>Out Of Stock</item>
+    </string-array>
+
+    <string-array name="age_filter">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
     <string-array name="registration_type">
         <item>Select Register Type</item>
         <item>Wallet Register</item>
@@ -478,6 +490,7 @@
     <string name="email_">Email:</string>
     <string name="name_">Name:</string>
     <string name="mobile_">Mobile:</string>
+    <string name="gender">Gender:</string>
     <string name="transaction_id_">Transaction Id:</string>
     <string name="amount_">Amount:</string>
     <string name="remark_">Remark:</string>
@@ -642,6 +655,7 @@
     <string name="charges">Charges</string>
     <string name="charges_">Charges:</string>
     <string name="experience">Experience:</string>
+    <string name="patient_name">Patient Name:</string>
     <string name="doctors">Doctors</string>
     <string name="education">Education:</string>
     <string name="information">Information</string>
@@ -652,4 +666,12 @@
     <string name="my_self">My Self</string>
     <string name="some_one_else">Some One Else</string>
     <string name="send">Send</string>
+    <string name="please_enter_mobile_no">Please Enter Mobile No</string>
+    <string name="please_enter_valid_mobile_no">Please Enter Valid Mobile No</string>
+    <string name="please_enter_dob">Please Enter Date Of Birth</string>
+    <string name="add_image">Add Image</string>
+    <string name="age">Age</string>
+    <string name="please_enter_age">Please Enter Age</string>
+    <string name="doctors_appointments">Doctors Appointments</string>
+    <string name="please_wait">Please Wait</string>
 </resources>

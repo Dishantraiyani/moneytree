@@ -38,7 +38,7 @@ class MemberTreeViewModel(application: Application) : NSViewModel(application),
         memberResponse = memberMainListData
         if (memberMainListData.data != null) {
             if (memberMainListData.data.isValidList()) {
-                memberList.addAll(memberMainListData.data!!)
+                memberList.addAll(memberMainListData.data)
             }
             isMemberDataAvailable.value = memberList.isValidList()
         }

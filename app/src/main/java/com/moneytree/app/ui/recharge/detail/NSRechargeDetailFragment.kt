@@ -1,6 +1,8 @@
 package com.moneytree.app.ui.recharge.detail
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +12,9 @@ import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.utils.buildAlertDialog
 import com.moneytree.app.common.utils.visible
+import com.moneytree.app.databinding.LayoutWaitBinding
 import com.moneytree.app.databinding.NsFragmentRechargeDetailBinding
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
 
@@ -71,7 +75,14 @@ class NSRechargeDetailFragment : NSFragment() {
         with(rgBinding) {
             btnSubmit.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
-					viewModel.saveRecharge(activity)
+					buildAlertDialog(requireContext(), LayoutWaitBinding::inflate) { dialog, binding ->
+						viewModel.saveRecharge {
+							Handler(Looper.getMainLooper()).postDelayed({
+								dialog.dismiss()
+								viewModel.openSuccessFail(activity)
+							}, 20000)
+						}
+					}
 				}
 			})
 		}

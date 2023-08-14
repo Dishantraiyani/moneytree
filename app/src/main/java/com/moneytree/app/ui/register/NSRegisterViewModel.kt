@@ -96,7 +96,7 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 		registerResponse = registerMainListData
 		if (registerMainListData.data != null) {
 			if (registerMainListData.data.isValidList()) {
-				registerList.addAll(registerMainListData.data!!)
+				registerList.addAll(registerMainListData.data)
 				isRegisterDataAvailable.value = registerList.isValidList()
 			} else if (pageIndex == "1" || searchData.isNotEmpty()){
 				isRegisterDataAvailable.value = false

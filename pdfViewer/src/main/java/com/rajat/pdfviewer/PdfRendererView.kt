@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
+import com.rajat.pdfviewer.databinding.PdfRendererviewBinding
 import com.rajat.pdfviewer.util.NSPdfPath
-import kotlinx.android.synthetic.main.pdf_rendererview.view.*
 import java.io.File
 import java.net.URLEncoder
 
@@ -180,12 +180,13 @@ class PdfRendererView @JvmOverloads constructor(
     private fun initUnderKitkat(url: String) {
         val v = LayoutInflater.from(context).inflate(R.layout.pdf_rendererview, this, false)
         addView(v)
+        val bind: PdfRendererviewBinding = PdfRendererviewBinding.bind(v)
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.visibility = View.GONE
-        webView.visibility = View.VISIBLE
-        webView.settings.javaScriptEnabled = true
-        webView.webViewClient = PdfWebViewClient(statusListener)
-        webView.loadUrl(
+        bind.webView.visibility = View.VISIBLE
+        bind.webView.settings.javaScriptEnabled = true
+        bind.webView.webViewClient = PdfWebViewClient(statusListener)
+        bind.webView.loadUrl(
             "https://drive.google.com/viewer/viewer?hl=en&embedded=true&url=${URLEncoder.encode(
                 url,
                 "UTF-8"

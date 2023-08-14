@@ -32,6 +32,11 @@
         tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
         <activity
+            android:name=".ui.doctor.history.NSDoctorHistoryActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".ui.doctor.detail.NSDoctorDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"

@@ -44,7 +44,7 @@ class NSRePurchaseInfoViewModel(application: Application) : NSViewModel(applicat
                 rePurchaseResponse = rePurchaseMainListData
                 if (rePurchaseMainListData.data != null) {
                     if (rePurchaseMainListData.data.isValidList()) {
-                        rePurchaseInfoList.addAll(rePurchaseMainListData.data!!)
+                        rePurchaseInfoList.addAll(rePurchaseMainListData.data)
                         isRePurchaseDataAvailable.value = rePurchaseInfoList.isValidList()
                     } else if (pageIndex == "1" || repurchaseId.isNotEmpty()){
                         isRePurchaseDataAvailable.value = false

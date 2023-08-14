@@ -136,9 +136,9 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
         // Checks the orientation of the screen
         with(youtubeBinding) {
             if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                videoFullScreenPlayer.enterFullScreen();
+                videoFullScreenPlayer.enterFullScreen()
             } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                videoFullScreenPlayer.exitFullScreen();
+                videoFullScreenPlayer.exitFullScreen()
             }
         }
     }
@@ -293,8 +293,8 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
                 noNetworkAlert.observe(viewLifecycleOwner) {
                     srlRefresh.isRefreshing = false
                     showNoNetworkAlertDialog(
-                        getString(com.moneytree.app.R.string.no_network_available),
-                        getString(com.moneytree.app.R.string.network_unreachable)
+                        getString(R.string.no_network_available),
+                        getString(R.string.network_unreachable)
                     )
                 }
 

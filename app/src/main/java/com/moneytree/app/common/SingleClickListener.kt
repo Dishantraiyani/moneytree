@@ -4,7 +4,7 @@ import android.os.SystemClock
 import android.view.View
 import kotlin.jvm.JvmOverloads
 
-public abstract class SingleClickListener @JvmOverloads constructor(protected var defaultInterval: Int = 1000) :
+abstract class SingleClickListener @JvmOverloads constructor(protected var defaultInterval: Int = 1000) :
     View.OnClickListener {
     private var lastTimeClicked: Long = 0
     override fun onClick(v: View) {

@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.profile.password
 
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,8 @@ class NSChangePasswordFragment : NSFragment() {
         with(cpBinding) {
             with(changePasswordModel) {
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = activity.resources.getString(if (isChangePassword) R.string.change_password else R.string.change_tran_password))
+                etPassword.transformationMethod = PasswordTransformationMethod()
+                etNewPassword.transformationMethod = PasswordTransformationMethod()
             }
         }
         observeViewModel()

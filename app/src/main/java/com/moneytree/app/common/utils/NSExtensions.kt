@@ -2,8 +2,11 @@ package com.moneytree.app.common.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,8 +14,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.constraintlayout.widget.Group
@@ -422,4 +428,52 @@ fun RecyclerView.setupWithAdapterAndCustomLayoutManager(adapter: RecyclerView.Ad
 
 fun ImageView.setCircleImage(resource: Int = 0, url: String? = null) {
     Glide.with(NSApplication.getInstance().applicationContext).load(url?:resource).circleCrop().into(this)
+}
+fun ImageView.setImage(resource: Int = 0, url: String? = null) {
+    Glide.with(NSApplication.getInstance().applicationContext).load(url?:resource).error(resource).into(this)
+}
+
+
+fun Spinner.setPlaceholderAdapter(
+    items: Array<String>,
+    context: Context,
+    onItemSelectedListener: ((String?) -> Unit)?
+) {
+
+    // Create a custom adapter with the items
+    val adapter = ArrayAdapter(context, R.layout.layout_spinner_item, android.R.id.text1, items)
+
+    // Set the adapter to the Spinner
+    this.adapter = adapter
+
+    // Set the OnItemSelectedListener to handle item selection
+    this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val selectedItem = if (position >= 0) items[position] else null
+            onItemSelectedListener?.invoke(selectedItem)
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            onItemSelectedListener?.invoke(null)
+        }
+    }
+}
+
+fun <T : ViewBinding> buildAlertDialog(
+    context: Context,
+    viewBindingInflater: (LayoutInflater) -> T,
+    dialogSetup: (AlertDialog, T) -> Unit
+) {
+    val inflater = LayoutInflater.from(context)
+    val binding = viewBindingInflater.invoke(inflater)
+
+    val builder = AlertDialog.Builder(context)
+    builder.setView(binding.root)
+    builder.setCancelable(false)
+    val dialog = builder.create()
+    dialogSetup.invoke(dialog, binding)
+    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    if (!dialog.isShowing) {
+        dialog.show()
+    }
 }

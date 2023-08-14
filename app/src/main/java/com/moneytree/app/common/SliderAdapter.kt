@@ -30,7 +30,7 @@ class SliderAdapter(private val context: Context, private val mItems: List<Strin
 	 * @property productBinding The voucher list view binding
 	 */
 	inner class SliderAdapterVH(private val productBinding: RowSliderBinding) :
-		SliderViewAdapter.ViewHolder(productBinding.root) {
+		ViewHolder(productBinding.root) {
 
 		/**
 		 * To bind the voucher details view into Recycler view with given data

@@ -41,8 +41,8 @@ class LockActivity : NSActivity() {
 	}
 
 	private fun mainLockScreen() {
-		showLockScreenFragment();
-	}
+		showLockScreenFragment()
+    }
 
 	private fun setListener() {
 		activityLockBinding.apply {

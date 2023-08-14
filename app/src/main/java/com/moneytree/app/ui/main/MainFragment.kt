@@ -45,9 +45,9 @@ class MainFragment : NSFragment() {
 	fun getUserDetail() {
 		MainDatabase.getUserData(object : NSUserDataCallback {
 			override fun onResponse(userDetail: NSDataUser) {
-				OneSignal.sendTag("user_id_sponsor", userDetail.sponsorId);
-				OneSignal.sendTag("user_id", userDetail.userName);
-			}
+				OneSignal.sendTag("user_id_sponsor", userDetail.sponsorId)
+                OneSignal.sendTag("user_id", userDetail.userName)
+            }
 		})
 	}
 

@@ -156,7 +156,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_gravity="center_vertical"
-				android:layout_marginTop="@dimen/_15sdp"
+				android:layout_marginTop="@dimen/_10sdp"
 				android:text="@string/note_5_admin"
 				android:textSize="@dimen/_10sdp"
 				android:paddingStart="@dimen/_5sdp"
@@ -167,11 +167,25 @@
 				android:fontFamily="@font/inter_regular"/>
 
 			<TextView
+				android:id="@+id/tv_receive_amount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_vertical"
+				android:layout_marginTop="@dimen/_1sdp"
+				android:textSize="@dimen/_10sdp"
+				android:paddingStart="@dimen/_5sdp"
+				android:textColorLink="@color/red"
+				android:paddingEnd="@dimen/_15sdp"
+				android:lineSpacingExtra="@dimen/_2sdp"
+				android:textColor="@color/red"
+				android:fontFamily="@font/inter_regular"/>
+
+			<TextView
 				style="@style/LoginSubFontsWrap"
 				android:text="@string/transaction_password"
 				android:textColor="@color/black"
 				android:layout_marginStart="@dimen/_5sdp"
-				android:layout_marginTop="@dimen/_15sdp"
+				android:layout_marginTop="@dimen/_10sdp"
 				android:textSize="@dimen/_10sdp"/>
 
 			<androidx.cardview.widget.CardView

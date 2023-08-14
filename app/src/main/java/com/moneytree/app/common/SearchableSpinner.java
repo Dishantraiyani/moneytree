@@ -22,7 +22,7 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
         SearchableListDialog.SearchableItem {
 
     public static final int NO_ITEM_SELECTED = -1;
-    private Context _context;
+    private final Context _context;
     private List<String> _items = new ArrayList<>();
     private SearchableListDialog _searchableListDialog;
 

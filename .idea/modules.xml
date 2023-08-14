@@ -7,6 +7,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MoneyTree.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.iml" filepath="$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.main.iml" filepath="$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/imagepicker/MoneyTree.imagepicker.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfViewer/MoneyTree.pdfViewer.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfViewer/MoneyTree.pdfViewer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfViewer/MoneyTree.pdfViewer.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfViewer/MoneyTree.pdfViewer.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/pdfViewer/MoneyTree.pdfViewer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/pdfViewer/MoneyTree.pdfViewer.main.iml" />
@@ -15,6 +19,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.main.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/scanner/MoneyTree.scanner.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.iml" filepath="$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/ucrop/MoneyTree.ucrop.unitTest.iml" />
     </modules>
   </component>
 </project>

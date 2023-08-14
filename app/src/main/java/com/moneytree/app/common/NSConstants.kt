@@ -80,5 +80,12 @@ class NSConstants {
 		var WALLET_BALANCE = "0"
 		const val CUSTOMER_CARE = "+918735985994"
 		const val DOCTOR_DETAIL = "doctor_detail"
+		const val DOCTOR_ID = "doctor_id"
+		const val PATIENT_NAME = "name"
+		const val PATIENT_GENDER = "gender"
+		const val PATIENT_AGE = "age"
+		const val PATIENT_NUMBER = "mobile"
+		const val PATIENT_DOB = "dob"
+		const val PATIENT_REMARK = "remark"
 	}
 }

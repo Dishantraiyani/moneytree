@@ -84,7 +84,7 @@
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/btn_self_activate">
 
         <ProgressBar
             android:layout_width="@dimen/_22sdp"
@@ -92,5 +92,22 @@
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_self_activate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/login_button_border"
+        android:fontFamily="@font/inter_semi_bold"
+        android:text="@string/self_activation"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

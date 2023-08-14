@@ -9,9 +9,14 @@ import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.requests.*
 import com.moneytree.app.repository.network.responses.*
 import okhttp3.Interceptor
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
 import okhttp3.Response
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -41,6 +46,12 @@ class NSApiManager {
 			)
 		}
 
+		val multiPartClient: RTApiInterface by lazy {
+			buildRetrofit(authorizedOkHttpMultiPartClient, "").create(
+				RTApiInterface::class.java
+			)
+		}
+
 		val youtubeClient: RTApiInterface by lazy {
 			buildRetrofitYoutube(unAuthorisedOkHttpClient, "").create(
 				RTApiInterface::class.java
@@ -51,6 +62,13 @@ class NSApiManager {
 		 * OkHttpClient for the Authorised user
 		 */
 		private val authorizedOkHttpClient by lazy {
+			generateOkHttpClient(
+				isAuthorizedClient = true,
+				isMultiPart = false
+			)
+		}
+
+		private val authorizedOkHttpMultiPartClient by lazy {
 			generateOkHttpClient(
 				isAuthorizedClient = true,
 				isMultiPart = false
@@ -222,7 +240,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.updateProfile(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				updateRequest.fullName!!,
 				updateRequest.address!!,
 				updateRequest.email!!,
@@ -241,7 +259,7 @@ class NSApiManager {
 	 * @param callback     The callback for the result
 	 */
 	fun logout(callback: NSRetrofitCallback<NSLogoutResponse>) {
-		request(unAuthorised3020Client.logout(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.logout(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -250,7 +268,7 @@ class NSApiManager {
 	 * @param callback     The callback for the result
 	 */
 	fun getDashboard(callback: NSRetrofitCallback<NSDashboardResponse>) {
-		request(unAuthorised3020Client.dashboard(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.dashboard(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -268,7 +286,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRegisterList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search,
 				type,
@@ -289,7 +307,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getJoiningVoucherPending(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -308,7 +326,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getJoiningVoucherReceive(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -327,7 +345,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getJoiningVoucherTransfer(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -346,7 +364,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRePurchaseList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -365,7 +383,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRePurchaseInfo(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				rePurchaseId,
 				pageIndex
 			), callback
@@ -384,7 +402,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRetailList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -404,7 +422,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRetailInfo(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				retailId,
 				pageIndex
 			), callback
@@ -423,7 +441,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRoyaltyInfo(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				royalMainId,
 				pageIndex
 			), callback
@@ -442,7 +460,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRoyaltyList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -456,7 +474,7 @@ class NSApiManager {
 	 */
 	fun getDownlineMemberDirectReOffer(callback: NSRetrofitCallback<NSDownlineMemberDirectReOfferResponse>) {
 		request(
-			unAuthorised3020Client.getDownLineMemberDirectReOffer(NSUserManager.getAuthToken()!!),
+			unAuthorised3020Client.getDownLineMemberDirectReOffer(NSUserManager.getAuthToken()),
 			callback
 		)
 	}
@@ -467,7 +485,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun getMemberTreeData(callback: NSRetrofitCallback<NSMemberTreeResponse>) {
-		request(unAuthorised3020Client.getMemberTree(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.getMemberTree(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -477,7 +495,7 @@ class NSApiManager {
 	 */
 	fun getLevelWiseTree(callback: NSRetrofitCallback<NSLevelMemberTreeResponse>) {
 		request(
-			unAuthorised3020Client.getLevelWiseMemberReportList(NSUserManager.getAuthToken()!!),
+			unAuthorised3020Client.getLevelWiseMemberReportList(NSUserManager.getAuthToken()),
 			callback
 		)
 	}
@@ -493,7 +511,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getLevelWiseMemberReportListDetail(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				levelNo
 			), callback
 		)
@@ -513,7 +531,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.saveRegistrationApi(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				fullName,
 				email,
 				mobile,
@@ -559,7 +577,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.changePassword(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				changePasswordRequest.currentPassword!!,
 				changePasswordRequest.newPassword!!
 			), callback
@@ -578,7 +596,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.changeTransPassword(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				changePasswordRequest.currentPassword!!,
 				changePasswordRequest.newPassword!!
 			), callback
@@ -621,7 +639,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.walletRedemptionList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search, startDate, endDate
 			), callback
@@ -640,7 +658,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.walletRedeemMoney(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				amount,
 				password
 			), callback
@@ -661,7 +679,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.transferWalletMoney(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				transactionId,
 				amount,
 				remark,
@@ -677,7 +695,7 @@ class NSApiManager {
 	 */
 	fun getMemberDetail(memberId: String, callback: NSRetrofitCallback<NSMemberDetailResponse>) {
 		request(
-			unAuthorised3020Client.verifyWalletMember(NSUserManager.getAuthToken()!!, memberId),
+			unAuthorised3020Client.verifyWalletMember(NSUserManager.getAuthToken(), memberId),
 			callback
 		)
 	}
@@ -689,7 +707,7 @@ class NSApiManager {
 	 */
 	fun checkStockList(stockType: String, stockId: String, callback: NSRetrofitCallback<NSMemberDetailResponse>) {
 		request(
-			unAuthorised3020Client.checkStockList(NSUserManager.getAuthToken()!!, stockType, stockId),
+			unAuthorised3020Client.checkStockList(NSUserManager.getAuthToken(), stockType, stockId),
 			callback
 		)
 	}
@@ -700,7 +718,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun getPackageMasterList(callback: NSRetrofitCallback<NSPackageResponse>) {
-		request(unAuthorised3020Client.packageMaster(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.packageMaster(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -714,7 +732,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.packageViseVoucherQuantity(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				packageId
 			), callback
 		)
@@ -733,7 +751,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.joiningVoucherTransferSave(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				transferId,
 				packageId,
 				voucherQty
@@ -747,7 +765,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun getProductCategory(callback: NSRetrofitCallback<NSCategoryListResponse>) {
-		request(unAuthorised3020Client.productCategory(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.productCategory(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -763,7 +781,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.productList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search,
 				categoryId
@@ -781,6 +799,7 @@ class NSApiManager {
 		search: String,
 		categoryId: String,
 		diseasesId: String,
+		inStock: String,
 		callback: NSRetrofitCallback<NSProductListResponse>
 	) {
 		request(
@@ -789,7 +808,8 @@ class NSApiManager {
 				pageIndex,
 				search,
 				categoryId,
-				diseasesId
+				diseasesId,
+				inStock
 			), callback
 		)
 	}
@@ -806,7 +826,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.activateList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
 			), callback
@@ -819,7 +839,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun getActivationPackageList(callback: NSRetrofitCallback<NSActivationPackageResponse>) {
-		request(unAuthorised3020Client.activationPackage(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.activationPackage(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -833,7 +853,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.memberActivationPackage(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				memberId
 			), callback
 		)
@@ -851,7 +871,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.activationSave(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				registrationType,
 				packageId
 			), callback
@@ -871,7 +891,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.activationDirectSave(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				memberId,
 				registrationType,
 				packageId
@@ -885,7 +905,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun getUpLineMembers(callback: NSRetrofitCallback<NSUpLineListResponse>) {
-		request(unAuthorised3020Client.upLineMemberList(NSUserManager.getAuthToken()!!), callback)
+		request(unAuthorised3020Client.upLineMemberList(NSUserManager.getAuthToken()), callback)
 	}
 
 	fun checkVersion(callback: NSRetrofitCallback<NSCheckVersionResponse>) {
@@ -903,7 +923,7 @@ class NSApiManager {
 	fun rechargeSave(rsR: NSRechargeSaveRequest, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(
 			unAuthorised3020Client.rechargeSave(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				rsR.rechargeType!!,
 				rsR.serviceProvider!!,
 				rsR.accountDisplay!!,
@@ -922,7 +942,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.rechargeFetchData(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				rsR.serviceProvider!!,
 				rsR.accountDisplay!!,
 				rsR.ad1!!,
@@ -966,7 +986,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.getRechargeList(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				pageIndex,
 				search,
 				rechargeType,
@@ -986,7 +1006,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.saveMyCart(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				memberId, walletType, remark, productList
 			), callback
 		)
@@ -1003,7 +1023,7 @@ class NSApiManager {
 	) {
 		request(
 			unAuthorised3020Client.saveSocketStockTransferMyCart(
-				NSUserManager.getAuthToken()!!,
+				NSUserManager.getAuthToken(),
 				memberId, walletType, remark, productList
 			), callback
 		)
@@ -1016,7 +1036,7 @@ class NSApiManager {
 	 */
 	fun getRepurchaseHistory(pageIndex: String, search: String, callback: NSRetrofitCallback<NSRepurchaseStockModel>) {
 		request(
-			unAuthorised3020Client.getStockRepurchaseHistoryList(NSUserManager.getAuthToken()!!, pageIndex, search),
+			unAuthorised3020Client.getStockRepurchaseHistoryList(NSUserManager.getAuthToken(), pageIndex, search),
 			callback
 		)
 	}
@@ -1028,7 +1048,7 @@ class NSApiManager {
 	 */
 	fun getStockTransferList(pageIndex: String, search: String, callback: NSRetrofitCallback<NSRepurchaseStockModel>) {
 		request(
-			unAuthorised3020Client.getStockTransferHistoryList(NSUserManager.getAuthToken()!!, pageIndex, search),
+			unAuthorised3020Client.getStockTransferHistoryList(NSUserManager.getAuthToken(), pageIndex, search),
 			callback
 		)
 	}
@@ -1040,7 +1060,7 @@ class NSApiManager {
 	 */
 	fun getStockTransferInfo(stockId: String, callback: NSRetrofitCallback<NSRePurchaseInfoResponse>) {
 		request(
-			unAuthorised3020Client.getStockTransferInfo(NSUserManager.getAuthToken()!!, stockId),
+			unAuthorised3020Client.getStockTransferInfo(NSUserManager.getAuthToken(), stockId),
 			callback
 		)
 	}
@@ -1063,7 +1083,7 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun getNotifications(pageIndex: String, callback: NSRetrofitCallback<NSNotificationListResponse>) {
-		request(unAuthorised3020Client.getNotifications(NSUserManager.getAuthToken()!!, pageIndex), callback)
+		request(unAuthorised3020Client.getNotifications(NSUserManager.getAuthToken(), pageIndex), callback)
 	}
 
 	/**
@@ -1119,6 +1139,35 @@ class NSApiManager {
 	fun getDoctorList(pageIndex: String, search: String, callback: NSRetrofitCallback<DoctorResponse>) {
 		request(unAuthorised3020Client.doctorMasterList(NSUserManager.getAuthToken(), pageIndex, search), callback)
 	}
+
+	/**
+	 * To call the set default doctor send data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun doctorRequestSend(request: NSDoctorSendRequest, image: List<MultipartBody.Part>, callback: NSRetrofitCallback<DoctorResponse>) {
+		request(multiPartClient.sendDoctorRequest(requestBody(NSUserManager.getAuthToken()),
+			requestBody(request.doctorId),
+			requestBody(request.name),
+			requestBody(request.mobile),
+		requestBody(request.dob),
+		requestBody(request.gender),
+		requestBody(request.age),
+		requestBody(request.remark), image[0]), callback)
+	}
+
+	/**
+	 * To call the set default doctory history data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun getDoctorHistoryList(pageIndex: String, search: String, callback: NSRetrofitCallback<DoctorHistoryResponse>) {
+		request(unAuthorised3020Client.doctorHistoryList(NSUserManager.getAuthToken(), pageIndex, search), callback)
+	}
+}
+
+private fun requestBody(text: String): RequestBody {
+	return RequestBody.create("text/plain".toMediaTypeOrNull(), text)
 }
 
 /**
@@ -1392,6 +1441,7 @@ interface RTApiInterface {
 		@Field("search") search: String,
 		@Field("category_id") categoryId: String,
 		@Field("diseases_id") diseasesId: String,
+		@Field("in_stock") inStock: String
 	): Call<NSProductListResponse>
 
 	@FormUrlEncoded
@@ -1587,4 +1637,26 @@ interface RTApiInterface {
 		@Field("page_index") page: String,
 		@Field("search") search: String
 	): Call<DoctorResponse>
+
+	@Multipart
+	@POST("doctor-request-send")
+	fun sendDoctorRequest(
+		@Part("token_id") token: RequestBody,
+		@Part("doctor_id") doctorId: RequestBody,
+		@Part("name") name: RequestBody,
+		@Part("mobile") mobile: RequestBody,
+		@Part("dob") dob: RequestBody,
+		@Part("gender") gender: RequestBody,
+		@Part("age") age: RequestBody,
+		@Part("remark") remark: RequestBody,
+		@Part image: MultipartBody.Part,
+	): Call<DoctorResponse>
+
+	@FormUrlEncoded
+	@POST("doctor-appointment-list")
+	fun doctorHistoryList(
+		@Field("token_id") token: String,
+		@Field("page_index") page: String,
+		@Field("search") search: String
+	): Call<DoctorHistoryResponse>
 }

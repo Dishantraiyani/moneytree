@@ -42,10 +42,10 @@ object NSProductRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun getProductStockList(pageIndex: String, search: String, categoryId: String = "", diseasesId: String = "",
+	fun getProductStockList(pageIndex: String, search: String, categoryId: String = "", diseasesId: String = "", inStock: String,
 					   viewModelCallback: NSGenericViewModelCallback
 	) {
-		apiManager.getProductStockList(pageIndex, search, categoryId, diseasesId, object :
+		apiManager.getProductStockList(pageIndex, search, categoryId, diseasesId, inStock, object :
 			NSRetrofitCallback<NSProductListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_LIST) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSProductListResponse

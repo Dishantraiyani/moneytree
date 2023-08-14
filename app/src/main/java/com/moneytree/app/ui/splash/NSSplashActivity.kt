@@ -91,8 +91,8 @@ class NSSplashActivity : NSActivity() {
 
 
 	private fun mainLockScreen() {
-		showLockScreenFragment();
-	}
+		showLockScreenFragment()
+    }
 
 	private val mCodeCreateListener: OnPFLockScreenCodeCreateListener =
 		object : OnPFLockScreenCodeCreateListener {

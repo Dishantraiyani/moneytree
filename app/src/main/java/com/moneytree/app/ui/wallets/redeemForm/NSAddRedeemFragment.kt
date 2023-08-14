@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.addTextChangeListener
 import com.moneytree.app.databinding.NsFragmentAddRedeemBinding
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -64,6 +65,11 @@ class NSAddRedeemFragment : NSFragment() {
 	private fun setListener() {
 		with(adBinding) {
 			with(layoutHeader) {
+				etAmount.addTextChangeListener { searchText ->
+					calculateCutAmount(searchText)
+				}
+
+
 				btnSubmit.setOnClickListener (
 					object : OnSingleClickListener() {
 						override fun onSingleClick(v: View?) {
@@ -104,6 +110,17 @@ class NSAddRedeemFragment : NSFragment() {
 					})
 
 			}
+		}
+	}
+
+	private fun calculateCutAmount(amountStr: String) {
+		if (amountStr.isNotEmpty()) {
+			val amount = amountStr.toDouble()
+			val cutAmount = amount * 0.95 // 5% cut
+			val received = "You Will $cutAmount Amount Received"
+			adBinding.tvReceiveAmount.text = received
+		} else {
+			adBinding.tvReceiveAmount.text = ""
 		}
 	}
 

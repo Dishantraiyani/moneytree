@@ -37,10 +37,10 @@ class NSOffersViewModel(application: Application) : NSViewModel(application) {
     fun setFragmentData(activity: Activity) {
         with(activity.resources) {
             mFragmentTitleList.clear()
-            mFragmentTitleList.add(getString(com.moneytree.app.R.string.repurchase))
-            mFragmentTitleList.add(getString(com.moneytree.app.R.string.retail_info))
-            mFragmentTitleList.add(getString(com.moneytree.app.R.string.royalty_offer))
-            mFragmentTitleList.add(getString(com.moneytree.app.R.string.downline_member))
+            mFragmentTitleList.add(getString(R.string.repurchase))
+            mFragmentTitleList.add(getString(R.string.retail_info))
+            mFragmentTitleList.add(getString(R.string.royalty_offer))
+            mFragmentTitleList.add(getString(R.string.downline_member))
         }
         mFragmentList.clear()
         mFragmentList.add(NSRePurchaseListFragment())

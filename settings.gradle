@@ -11,3 +11,5 @@ rootProject.name = "MoneyTree"
 include ':app'
 include ':scanner'
 include ':pdfViewer'
+include ':ucrop'
+include ':imagepicker'

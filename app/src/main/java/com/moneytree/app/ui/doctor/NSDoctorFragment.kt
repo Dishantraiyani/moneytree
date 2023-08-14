@@ -11,6 +11,7 @@ import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.setupWithAdapter
 import com.moneytree.app.common.utils.switchActivity
@@ -18,6 +19,7 @@ import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentDoctorBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 import com.moneytree.app.ui.doctor.detail.NSDoctorDetailActivity
+import com.moneytree.app.ui.doctor.history.NSDoctorHistoryActivity
 
 
 class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoctorBinding>(),
@@ -45,7 +47,8 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 		super.setupViews()
 		baseObserveViewModel(viewModel)
 		HeaderUtils(binding.layoutHeader, requireActivity(), headerTitle = activity.resources.getString(
-			R.string.doctors), clBackView = true, isSearch = true, searchCallback = this)
+			R.string.doctors), clBackView = true, isSearch = true, searchCallback = this, isAddNew = true)
+		binding.layoutHeader.ivAddNew.setImageResource(R.drawable.ic_history_recharge)
 		setListener()
 		getDoctorList(true)
 	}
@@ -63,6 +66,10 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 					layoutHeader.cardSearch.gone()
 					dcAdapter?.setData(viewModel.tempDoctorList)
 				}
+			}
+
+			layoutHeader.ivAddNew.setSafeOnClickListener {
+				switchActivity(NSDoctorHistoryActivity::class.java)
 			}
 		}
 	}

@@ -152,7 +152,7 @@ class NSProductDetailFragment : NSFragment() {
 					override fun onResponse(productDetail: ProductDataDTO) {
 						switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(
 							NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail), NSConstants.KEY_PRODUCT_FULL_LIST to Gson().toJson(
-								NSProductListResponse(data = productModel.productList?: arrayListOf())
+								NSProductListResponse(data = productModel.productList)
 							))
 						)
 						finish()

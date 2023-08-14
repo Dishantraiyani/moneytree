@@ -274,24 +274,53 @@
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
-						android:contentDescription="@string/username_title" />
+						android:contentDescription="@string/password_title" />
 
-					<EditText
-						android:id="@+id/et_password"
+					<com.google.android.material.textfield.TextInputLayout
+						android:id="@+id/etPasswordLayout"
 						style="@style/LoginSubFontsZeroWrap"
+						android:background="@drawable/phone_white_background"
+						app:passwordToggleEnabled="true"
 						android:minHeight="@dimen/_38sdp"
 						android:textColor="@color/black"
-						android:background="@drawable/phone_white_background"
-						android:paddingHorizontal="@dimen/_10sdp"
-						android:hint="@string/password_title"
-						android:gravity="center_vertical"
-						android:inputType="textPassword"
-						android:imeOptions="actionNext"
+						app:hintEnabled="false"
 						android:textColorHint="@color/hint_color"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
 						app:layout_constraintStart_toEndOf="@id/iv_password"
-						app:layout_constraintEnd_toEndOf="parent" />
+						app:layout_constraintEnd_toEndOf="parent">
+
+						<com.google.android.material.textfield.TextInputEditText
+							android:id="@+id/et_password"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:hint="@string/password_title"
+							android:inputType="textPassword"
+							android:paddingHorizontal="@dimen/_10sdp"
+							android:textSize="@dimen/_12sdp"
+							android:fontFamily="@font/inter_regular"
+							android:background="@drawable/phone_white_background"
+							android:textColor="@color/black"
+							android:textColorHint="@color/hint_color"/>
+					</com.google.android.material.textfield.TextInputLayout>
+
+					<!--<EditText
+                        android:id="@+id/et_password"
+                        style="@style/LoginSubFontsZeroWrap"
+                        android:minHeight="@dimen/_38sdp"
+                        android:textColor="@color/black"
+                        android:background="@drawable/phone_white_background"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:hint="@string/password_title"
+                        android:visibility="gone"
+                        android:textColorHint="@color/hint_color"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_password"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:autofillHints="phone"
+                        android:inputType="textPassword"
+                        />-->
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -328,24 +357,35 @@
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
-						android:contentDescription="@string/username_title" />
+						android:contentDescription="@string/password_title" />
 
-					<EditText
-						android:id="@+id/et_confirm_password"
+					<com.google.android.material.textfield.TextInputLayout
+						android:id="@+id/etConfirmPasswordLayout"
 						style="@style/LoginSubFontsZeroWrap"
+						android:background="@drawable/phone_white_background"
+						app:passwordToggleEnabled="true"
 						android:minHeight="@dimen/_38sdp"
 						android:textColor="@color/black"
-						android:background="@drawable/phone_white_background"
-						android:paddingHorizontal="@dimen/_10sdp"
-						android:hint="@string/confirm_password_title"
-						android:inputType="textPassword"
-						android:imeOptions="actionDone"
-						android:gravity="center_vertical"
+						app:hintEnabled="false"
 						android:textColorHint="@color/hint_color"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
 						app:layout_constraintStart_toEndOf="@id/iv_confirm_password"
-						app:layout_constraintEnd_toEndOf="parent" />
+						app:layout_constraintEnd_toEndOf="parent">
+
+						<com.google.android.material.textfield.TextInputEditText
+							android:id="@+id/et_confirm_password"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:hint="@string/confirm_password_title"
+							android:inputType="textPassword"
+							android:paddingHorizontal="@dimen/_10sdp"
+							android:textSize="@dimen/_12sdp"
+							android:fontFamily="@font/inter_regular"
+							android:background="@drawable/phone_white_background"
+							android:textColor="@color/black"
+							android:textColorHint="@color/hint_color"/>
+					</com.google.android.material.textfield.TextInputLayout>
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 

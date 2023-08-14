@@ -263,7 +263,7 @@ object NSUtilities {
 		context.startActivity(intent)
 	}
 
-	public fun setDateRange(
+	fun setDateRange(
 		layoutDateRange: LayoutDateRangeSelectBinding, list: Array<String>,
 		activity: Activity, isFilterVisible: Boolean = false, callback: NSDateRangeCallback) {
 		layoutDateRange.clFilterType.setVisibility(isFilterVisible)
@@ -353,5 +353,15 @@ object NSUtilities {
 			val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
 			imm?.hideSoftInputFromWindow(view.windowToken, 0)
 		}
+	}
+
+	fun selectDateOfBirth(activity: Activity, callback: ((String) -> Unit)) {
+		var startingDate: String
+		val startDateList = NSDateTimeHelper.getCurrentDate().split("-")
+		val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
+			startingDate = "${getDateZero(dayOfMonth)}/${getDateZero(monthOfYear)}/$year"
+			callback.invoke(startingDate)
+		}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
+		dpd.show()
 	}
 }

@@ -20,7 +20,7 @@ data class DoctorResponse(
 data class DoctorDataItem(
 
 	@field:SerializedName("doctor_id")
-	val doctorId: String? = null,
+    var doctorId: String? = null,
 
 	@field:SerializedName("charges")
 	val charges: String? = null,

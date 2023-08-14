@@ -21,7 +21,7 @@ class ScannerResultDialog(private val listener: DialogDismissListener) : BottomS
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentScannerResultDialogListDialogBinding.inflate(
             inflater, container, false
         )

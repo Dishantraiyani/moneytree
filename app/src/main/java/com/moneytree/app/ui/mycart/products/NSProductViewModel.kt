@@ -32,6 +32,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
     private var searchData: String = ""
 	var categoryId: String? = ""
     var diseasesId: String? = ""
+    var selectedStock: String = "All"
 
     fun searchAll(search: String, callback: NSSearchResponseCallback) {
         if (search.length > 2) {
@@ -77,7 +78,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-		categoryId?.let { NSProductRepository.getProductStockList(pageIndex, search, it, diseasesId?:"", this) }
+		categoryId?.let { NSProductRepository.getProductStockList(pageIndex, search, it, diseasesId?:"", selectedStock, this) }
     }
 
     override fun <T> onSuccess(data: T) {

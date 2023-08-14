@@ -72,10 +72,6 @@ class NSProductVoucherFragment : NSFragment() {
                         tab.text = mProductFragmentTitleList[position]
                     }.attach()
                     viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                        override fun onPageSelected(position: Int) {
-                            super.onPageSelected(position)
-
-                        }
                     })
                     viewPager.offscreenPageLimit = 3
                 } catch (e: Exception) {

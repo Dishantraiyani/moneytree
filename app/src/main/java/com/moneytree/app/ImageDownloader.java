@@ -38,7 +38,7 @@ public class ImageDownloader extends AsyncTask<String,Void, Bitmap> {
 					+ "DownloadedFile" + ts + ".jpg");
 
 
-			byte data[] = new byte[1024];
+			byte[] data = new byte[1024];
 
 			long total = 0;
 

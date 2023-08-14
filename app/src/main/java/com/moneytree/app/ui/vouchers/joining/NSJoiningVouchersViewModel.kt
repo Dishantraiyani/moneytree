@@ -54,7 +54,7 @@ class NSJoiningVouchersViewModel(application: Application) : NSViewModel(applica
      *
      */
     fun getVoucherListData(pageIndex: String, search: String, isShowProgress: Boolean, isBottomProgress: Boolean, joiningVoucherCallBack: NSJoiningVoucherCallback) {
-        nsJoiningVoucherCallBack = joiningVoucherCallBack;
+        nsJoiningVoucherCallBack = joiningVoucherCallBack
         if (pageIndex == "1") {
             voucherList.clear()
         }

@@ -98,29 +98,28 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 		isServiceProviderDataAvailable.value = serviceProvidersList.isValidList()
 	}
 
-	fun saveRecharge(activity: Activity) {
+	fun saveRecharge(callback: (Boolean) -> Unit) {
 		if (rechargeRequest != null) {
-			isProgressShowing.value = true
+			//isProgressShowing.value = true
 			NSRechargeRepository.saveRecharge(rechargeRequest!!,
 				object : NSGenericViewModelCallback {
 					override fun <T> onSuccess(data: T) {
-						isProgressShowing.value = false
+						//isProgressShowing.value = false
 						successResponse = data as NSSuccessResponse
-						openSuccessFail(activity)
+						callback.invoke(true)
 					}
 
 					override fun onError(errors: List<Any>) {
-						openSuccessFail(activity)
+						callback.invoke(true)
 					}
 
 					override fun onFailure(failureMessage: String?) {
-						openSuccessFail(activity)
+						callback.invoke(true)
 					}
 
 					override fun <T> onNoNetwork(localData: T) {
 						handleNoNetwork()
 					}
-
 				})
 		}
 	}
@@ -173,7 +172,7 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 		}
 	}
 
-	private fun openSuccessFail(activity: Activity) {
+	fun openSuccessFail(activity: Activity) {
 		activity.switchActivity(
 			SuccessActivity::class.java,
 			flags = intArrayOf(Intent.FLAG_ACTIVITY_CLEAR_TOP), bundle = bundleOf(NSConstants.KEY_SUCCESS_FAIL to if (successResponse == null) "" else Gson().toJson(successResponse))

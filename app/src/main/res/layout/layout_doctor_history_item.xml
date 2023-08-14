@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/cl_shop_item" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardCornerRadius="@dimen/_2sdp"
+	app:cardUseCompatPadding="true"
+	android:layout_marginBottom="@dimen/_5sdp"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_doctor_layout"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/_70sdp"
+		android:paddingHorizontal="@dimen/_5sdp">
+
+		<ImageView
+			android:id="@+id/iv_doctor_img"
+			android:layout_width="@dimen/_55sdp"
+			android:layout_height="@dimen/_55sdp"
+			android:src="@drawable/placeholder"
+			android:scaleType="centerCrop"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"/>
+
+		<TextView
+			android:id="@+id/tv_doctor_name"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Product Name"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:textStyle="bold"
+			android:textSize="@dimen/_12sdp"
+			android:fontFamily="@font/inter_semi_bold"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintVertical_chainStyle="packed"
+			app:layout_constraintEnd_toStartOf="@id/cl_charges"
+			app:layout_constraintStart_toEndOf="@id/iv_doctor_img"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toTopOf="@id/tv_patient_title"/>
+
+		<TextView
+			android:id="@+id/tv_patient_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/patient_name"
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toEndOf="@id/iv_doctor_img"
+			app:layout_constraintTop_toBottomOf="@+id/tv_doctor_name"
+			app:layout_constraintBottom_toTopOf="@id/tv_age"/>
+
+		<TextView
+			android:id="@+id/tv_patient_name"
+			style="@style/LoginSubFontsWrap"
+			tools:text="1"
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:lines="1"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toEndOf="@id/tv_patient_title"
+			app:layout_constraintTop_toTopOf="@+id/tv_patient_title"
+			app:layout_constraintBottom_toBottomOf="@id/tv_patient_title" />
+
+		<TextView
+			android:id="@+id/tv_age"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Rate : 1"
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/orange"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_3sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/iv_doctor_img"
+			app:layout_constraintTop_toBottomOf="@+id/tv_patient_title"
+			/>
+
+		<TextView
+			android:id="@+id/tv_gender_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/gender"
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toEndOf="@id/tv_age"
+			app:layout_constraintTop_toTopOf="@+id/tv_age"
+			app:layout_constraintBottom_toBottomOf="@+id/tv_age"/>
+
+		<TextView
+			android:id="@+id/tv_gender"
+			style="@style/LoginSubFontsWrap"
+			tools:text="1Rs"
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:lines="1"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toEndOf="@id/tv_gender_title"
+			app:layout_constraintTop_toTopOf="@id/tv_gender_title"
+			app:layout_constraintBottom_toBottomOf="@id/tv_gender_title"/>
+
+		<TextView
+			android:id="@+id/tv_charge_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/charges"
+			android:textSize="@dimen/_7sdp"
+			android:gravity="center"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:lines="1"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_3sdp"
+			android:includeFontPadding="false"
+			app:layout_constraintStart_toStartOf="@id/cl_charges"
+			app:layout_constraintEnd_toEndOf="@id/cl_charges"
+			app:layout_constraintBottom_toTopOf="@id/cl_charges"/>
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_charges"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:minHeight="@dimen/_22sdp"
+			android:layout_marginEnd="@dimen/_10sdp"
+			android:background="@drawable/login_button_border"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent">
+
+			<TextView
+				android:id="@+id/tv_charges"
+				style="@style/LoginSubFontsWrap"
+				tools:text="1Rs"
+				android:textSize="@dimen/_12sdp"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/white"
+				android:lines="1"
+				android:textAllCaps="true"
+				android:paddingStart="@dimen/_10sdp"
+				android:paddingEnd="@dimen/_10sdp"
+				android:includeFontPadding="false"
+				android:fontFamily="@font/inter_medium"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/iv_detail"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+			<ImageView
+				android:id="@+id/iv_detail"
+				android:layout_width="@dimen/_14sdp"
+				android:layout_height="@dimen/_14sdp"
+				android:padding="@dimen/_3sdp"
+				android:visibility="gone"
+				android:src="@drawable/arrow_right"
+				android:tint="@color/white"
+				android:layout_marginEnd="@dimen/_2sdp"
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"/>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
