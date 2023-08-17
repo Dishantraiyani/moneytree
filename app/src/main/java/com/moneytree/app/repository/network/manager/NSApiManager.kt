@@ -1153,7 +1153,7 @@ class NSApiManager {
 		requestBody(request.dob),
 		requestBody(request.gender),
 		requestBody(request.age),
-		requestBody(request.remark), image[0]), callback)
+		requestBody(request.remark), image), callback)
 	}
 
 	/**
@@ -1649,7 +1649,7 @@ interface RTApiInterface {
 		@Part("gender") gender: RequestBody,
 		@Part("age") age: RequestBody,
 		@Part("remark") remark: RequestBody,
-		@Part image: MultipartBody.Part,
+		@Part image: List<MultipartBody.Part>,
 	): Call<DoctorResponse>
 
 	@FormUrlEncoded

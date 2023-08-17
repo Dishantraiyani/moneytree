@@ -9,6 +9,8 @@
 	<uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove"/>
 	<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <queries>
         <intent>
@@ -31,6 +33,11 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
+        <activity
+            android:name=".ui.assessment.NSAssessmentActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.doctor.history.NSDoctorHistoryActivity"
             android:exported="false"

@@ -143,6 +143,14 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 					}
 				})
 
+				clFilterChangeBtn.setOnClickListener {
+					rlFilter.visible()
+				}
+
+				viewFilter.setOnClickListener {
+					rlFilter.gone()
+				}
+
 				with(layoutHeader) {
 					ivBack.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {

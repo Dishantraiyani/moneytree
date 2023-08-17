@@ -129,8 +129,9 @@
 						app:layout_constraintStart_toEndOf="@id/iv_mobile"
 						app:layout_constraintEnd_toEndOf="parent"
 						android:autofillHints="phone"
-						android:inputType="phone"
-						android:imeOptions="actionNext"/>
+						android:inputType="phone|number"
+						android:imeOptions="actionNext"
+						android:digits="0123456789"/>
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -160,7 +160,8 @@ class NSDoctorDetailFragment : BaseViewModelFragment<NSDoctorDetailViewModel, Ns
 						edtRemark.setText("")
 						edtNumber.setText("")
 						edtAge.setText("")
-						imageAdapter?.setData(arrayListOf())
+						onBackPress()
+						//imageAdapter?.setData(arrayListOf())
 						//ivPatientImg.setImageResource(0)
 					}
 				}

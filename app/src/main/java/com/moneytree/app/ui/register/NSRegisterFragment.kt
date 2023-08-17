@@ -21,8 +21,10 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSRegisterActiveSelectCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setSafeOnClickListener
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
@@ -70,6 +72,16 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
             setRegisterAdapter()
         }
         observeViewModel()
+        getSelfActivation()
+    }
+
+    private fun getSelfActivation() {
+        registerBinding.btnSelfActivate.gone()
+        registerListModel.apply {
+            getUserDetail {
+                registerBinding.btnSelfActivate.setVisibility(!it.isActive.equals("Y"))
+            }
+        }
     }
 
     /**

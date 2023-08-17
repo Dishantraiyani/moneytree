@@ -49,6 +49,7 @@ import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
 import com.moneytree.app.ui.activate.NSActivateActivity
+import com.moneytree.app.ui.assessment.NSAssessmentActivity
 import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.doctor.NSDoctorActivity
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
@@ -378,6 +379,11 @@ class NSHomeFragment : NSFragment() {
                         llActivate.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)
                             switchActivity(NSActivateActivity::class.java)
+                        }
+
+						llAssessment.setOnClickListener {
+                            drawer.closeDrawer(GravityCompat.START)
+                            switchActivity(NSAssessmentActivity::class.java)
                         }
 
 						llDownload.setOnClickListener {

@@ -5,7 +5,9 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.R
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.NSRegisterRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -37,6 +39,14 @@ class NSRegisterViewModel(application: Application) : NSViewModel(application),
 
 	//Spinner value for registration form
 	var registrationType: MutableList<String> = arrayListOf()
+
+	fun getUserDetail(callback: (NSDataUser) -> Unit) {
+		MainDatabase.getUserData(object : NSUserDataCallback {
+			override fun onResponse(userDetail: NSDataUser) {
+				callback.invoke(userDetail)
+			}
+		})
+	}
 
 	/**
 	 * Get register list data

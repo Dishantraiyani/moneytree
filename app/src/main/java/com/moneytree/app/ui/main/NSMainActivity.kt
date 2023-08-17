@@ -3,6 +3,7 @@ package com.moneytree.app.ui.main
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -13,6 +14,8 @@ import com.moneytree.app.common.BackPressFragmentHomeEvent
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSTabChange
+import com.moneytree.app.common.utils.isLocationPermissionGranted
+import com.moneytree.app.common.utils.requestLocationPermissions
 import com.moneytree.app.databinding.DialogCloseBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
 import com.moneytree.app.databinding.NsActivityMainBinding
@@ -21,12 +24,14 @@ import org.greenrobot.eventbus.EventBus
 
 class NSMainActivity : NSActivity() {
     private lateinit var mainBinding: NsActivityMainBinding
+	private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = NsActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
         loadInitialFragment()
+		locationPermission()
     }
 
     /**
@@ -62,5 +67,29 @@ class NSMainActivity : NSActivity() {
 			super.onBackPressed()
 		}
 		dialog.show()
+	}
+
+	private fun locationPermission() {
+		if (isLocationPermissionGranted()) {
+			// Permissions are granted, proceed with location-related tasks
+		} else {
+			// Request permissions using the extension function
+			requestLocationPermissions(LOCATION_PERMISSION_REQUEST_CODE)
+		}
+	}
+
+	override fun onRequestPermissionsResult(
+		requestCode: Int,
+		permissions: Array<out String>,
+		grantResults: IntArray
+	) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+			if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				// Permission granted, proceed with location-related tasks
+			} else {
+				// Permission denied, handle accordingly
+			}
+		}
 	}
 }

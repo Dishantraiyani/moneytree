@@ -56,6 +56,7 @@ class NSAddRedeemFragment : NSFragment() {
 			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.redeem))
 			tvWalletAmount.text =
 				if (redeemModel.availableBalance.isNullOrEmpty()) "0" else redeemModel.availableBalance
+			adBinding.tvReceivableAmount.text = "0"
 		}
 	}
 
@@ -117,10 +118,10 @@ class NSAddRedeemFragment : NSFragment() {
 		if (amountStr.isNotEmpty()) {
 			val amount = amountStr.toDouble()
 			val cutAmount = amount * 0.95 // 5% cut
-			val received = "You Will $cutAmount Amount Received"
-			adBinding.tvReceiveAmount.text = received
+			val received = "$cutAmount"
+			adBinding.tvReceivableAmount.text = received
 		} else {
-			adBinding.tvReceiveAmount.text = ""
+			adBinding.tvReceivableAmount.text = "0"
 		}
 	}
 

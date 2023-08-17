@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDoctorRepository
 import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
 import com.moneytree.app.repository.network.responses.DoctorDataItem
@@ -36,10 +37,13 @@ class NSDoctorDetailViewModel(application: Application) : NSViewModel(applicatio
 
 		if (isShowProgress) showProgress()
 
-		val imageParts: List<MultipartBody.Part> = list.mapIndexed { index, uri ->
-			val file = File(uri)
-			val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
-			MultipartBody.Part.createFormData("image", file.name, requestBody)
+		var imageParts: List<MultipartBody.Part> = arrayListOf()
+		if (list.isValidList()) {
+			imageParts = list.mapIndexed { index, uri ->
+				val file = File(uri)
+				val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+				MultipartBody.Part.createFormData("image", file.name, requestBody)
+			}
 		}
 
 		val request = NSDoctorSendRequest(map[NSConstants.DOCTOR_ID]?:"",
