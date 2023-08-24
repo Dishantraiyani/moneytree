@@ -26,6 +26,7 @@ class SuccessFragment : NSFragment() {
 
 	private val successBinding get() = _binding!!
 	private var successFailData: String? = null
+	private var successResponse: NSSuccessResponse? = null
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = SuccessFragment().apply {
@@ -53,16 +54,16 @@ class SuccessFragment : NSFragment() {
 	private fun setSuccessFailMessage() {
 		with(successBinding) {
 			if (!successFailData.isNullOrEmpty()) {
-				val successFail = Gson().fromJson(successFailData, NSSuccessResponse::class.java)
+				successResponse = Gson().fromJson(successFailData, NSSuccessResponse::class.java)
 
-				if (successFail.status) {
+				if (successResponse?.status == true) {
 					ivSuccessFail.setImageResource(R.drawable.ic_success)
 					tvSuccessFailTitle.text = resources.getString(R.string.success)
-					tvMessage.text = successFail.message
+					tvMessage.text = successResponse?.message
 				} else {
 					ivSuccessFail.setImageResource(R.drawable.ic_failed)
 					tvSuccessFailTitle.text = resources.getString(R.string.failed)
-					tvMessage.text = successFail.message
+					tvMessage.text = successResponse?.message
 				}
 			} else {
 				ivSuccessFail.setImageResource(R.drawable.ic_failed)
@@ -76,7 +77,14 @@ class SuccessFragment : NSFragment() {
 		with(successBinding) {
 			tvContinueButton.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
-					switchActivity(NSRechargeHistoryActivity::class.java, flags = intArrayOf(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+					if (successResponse?.isPaymentMode == true) {
+
+					} else {
+						switchActivity(
+							NSRechargeHistoryActivity::class.java,
+							flags = intArrayOf(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+						)
+					}
 					finish()
 				}
 			})

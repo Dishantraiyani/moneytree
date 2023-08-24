@@ -125,4 +125,27 @@ object NSRechargeRepository {
 			}
 		})
 	}
+
+	/**
+	 * To set recharge using payment gateWay API
+	 *
+	 * @param viewModelCallback The callback to communicate back to the view model
+	 */
+	fun rechargePaymentMode(orderId: String,paymentData: String, amount: String, note: String = "",
+					   viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.rechargePaymentMode(orderId, paymentData, amount, note, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PAYMENT_MODE) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

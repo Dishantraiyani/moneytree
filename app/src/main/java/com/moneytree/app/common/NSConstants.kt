@@ -9,6 +9,7 @@ class NSConstants {
         const val KEY_LOGIN_DATA = "key_login_data"
         const val UNKNOWN_HOST_EXCEPTION = "Unable to reach server"
         const val KEY_ALERT_BUTTON_POSITIVE = "alertButtonPositive"
+        const val KEY_ALERT_DOCTOR_SEND = "alertButtonDoctorSend"
         const val KEY_ALERT_BUTTON_NEGATIVE = "alertButtonNegative"
         const val KEY_REPURCHASE_INFO = "key_repurchase_info"
         const val KEY_ROYALTY_INFO = "key_royalty_info"
@@ -87,5 +88,6 @@ class NSConstants {
 		const val PATIENT_NUMBER = "mobile"
 		const val PATIENT_DOB = "dob"
 		const val PATIENT_REMARK = "remark"
+		var RECHARGE_USING_PAYMENT_GATEWAY: Boolean = false
 	}
 }

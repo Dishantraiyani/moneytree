@@ -60,6 +60,7 @@ import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.products.MTProductsActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
+import com.moneytree.app.ui.recharge.rechargePayment.RozerActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
@@ -208,8 +209,8 @@ class NSHomeFragment : NSFragment() {
 			tvFieldName.text = activity.resources.getString(R.string.recharge)
 			llRecharge.setOnClickListener {
 				switchActivity(
-					NSRechargeActivity::class.java,
-					bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to homeModel.fieldName[0])
+					RozerActivity::class.java,
+					bundle = bundleOf(NSConstants.KEY_WALLET_AMOUNT to  homeModel.dashboardData?.data?.wltAmt?.get(0)?.amount)
 				)
 			}
 		}
@@ -549,7 +550,12 @@ class NSHomeFragment : NSFragment() {
 
     override fun onResume() {
         super.onResume()
-        checkUpdateDialog(homeModel.chekVersionResponse)
+		if (NSConstants.RECHARGE_USING_PAYMENT_GATEWAY) {
+			NSConstants.RECHARGE_USING_PAYMENT_GATEWAY = false
+			EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
+		} else {
+			checkUpdateDialog(homeModel.chekVersionResponse)
+		}
     }
 
 	private fun openCameraWithScanner() {

@@ -30,7 +30,7 @@ class NSDoctorDetailViewModel(application: Application) : NSViewModel(applicatio
 		}
 	}
 
-	fun sendDoctorRequest(isShowProgress: Boolean, imageFile: List<String>, map: HashMap<String, String>, callback: ((Boolean) -> Unit)) {
+	fun sendDoctorRequest(isShowProgress: Boolean, imageFile: List<String>, map: HashMap<String, String>, callback: ((String) -> Unit)) {
 		val list: MutableList<String> = arrayListOf()
 		list.addAll(imageFile)
 		list.remove("ADD_IMAGE")
@@ -42,7 +42,7 @@ class NSDoctorDetailViewModel(application: Application) : NSViewModel(applicatio
 			imageParts = list.mapIndexed { index, uri ->
 				val file = File(uri)
 				val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
-				MultipartBody.Part.createFormData("image", file.name, requestBody)
+				MultipartBody.Part.createFormData("image[$index]", file.name, requestBody)
 			}
 		}
 
@@ -59,7 +59,9 @@ class NSDoctorDetailViewModel(application: Application) : NSViewModel(applicatio
 		}, { data, isSuccess ->
 			hideProgress()
 			if (isSuccess) {
-				callback.invoke(true)
+				if (data is DoctorResponse) {
+					callback.invoke(data.message?:"")
+				}
 			}
 		})
 	}

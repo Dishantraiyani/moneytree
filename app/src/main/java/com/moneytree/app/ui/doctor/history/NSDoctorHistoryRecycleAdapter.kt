@@ -36,6 +36,10 @@ class NSDoctorHistoryRecycleAdapter(
                 /*tvExperience.text = experience
                 tvEducation.text = education*/
 
+                clDoctorLayout.setSafeOnClickListener {
+                    callback.invoke(response)
+                }
+
                 if (position == size - 1) {
                     if (((position + 1) % NSConstants.PAGINATION) == 0) {
                         pageChange.invoke()

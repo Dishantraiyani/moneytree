@@ -34,6 +34,16 @@
         tools:replace="android:allowBackup,android:theme"
         tools:targetApi="n">
         <activity
+            android:name=".ui.doctor.historyDetail.NSDoctorHistoryDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.recharge.rechargePayment.RozerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
             android:name=".ui.assessment.NSAssessmentActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -299,8 +309,7 @@
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
-            android:exported="false"
-            android:permission="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

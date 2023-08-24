@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.doctor.detail
 
 import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -16,7 +17,10 @@ import com.github.drjacky.imagepicker1.constant.ImageProvider
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSAlertButtonClickEvent
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.SelectImageFiles
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
@@ -24,8 +28,12 @@ import com.moneytree.app.common.utils.setCircleImage
 import com.moneytree.app.common.utils.setPlaceholderAdapter
 import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.common.utils.setupWithAdapterAndCustomLayoutManager
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentDoctorDetailBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
+import com.moneytree.app.ui.doctor.history.NSDoctorHistoryActivity
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.io.File
 
 
@@ -36,6 +44,7 @@ class NSDoctorDetailFragment : BaseViewModelFragment<NSDoctorDetailViewModel, Ns
 	private var imageList: MutableList<String> = arrayListOf()
 	private var selectedGender: String? = null
 	private var selectedDoctorId: String? = null
+	private var selectedCharges: String? = null
 
 	private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 		if (result.resultCode == RESULT_OK) {
@@ -83,6 +92,7 @@ class NSDoctorDetailFragment : BaseViewModelFragment<NSDoctorDetailViewModel, Ns
 	private fun setDoctorDetail(model: DoctorDataItem) {
 		binding.apply {
 			model.apply {
+				selectedCharges = charges
 				selectedDoctorId = model.doctorId
 				ivDoctorImg.setCircleImage(R.drawable.placeholder, image)
 				tvDoctorName.text = doctorName
@@ -142,6 +152,9 @@ class NSDoctorDetailFragment : BaseViewModelFragment<NSDoctorDetailViewModel, Ns
 				} else if (age.isEmpty()) {
 					edtAge.error = resource.getString(R.string.please_enter_age)
 					return@setSafeOnClickListener
+				} else if ((selectedCharges?:"0.0").toDouble() > NSApplication.getInstance().getWalletBalance().toDouble()) {
+					viewModel.showError("You don't have enough balance to get this service kindly recharge your wallet.")
+					return@setSafeOnClickListener
 				}
 
 				if (selectedDoctorId != null) {
@@ -155,12 +168,8 @@ class NSDoctorDetailFragment : BaseViewModelFragment<NSDoctorDetailViewModel, Ns
 					map[NSConstants.PATIENT_AGE] = age
 
 					viewModel.sendDoctorRequest(true, imageList, map) {
-						edtName.setText("")
-						edtDob.text = ""
-						edtRemark.setText("")
-						edtNumber.setText("")
-						edtAge.setText("")
-						onBackPress()
+						showSuccessDialog(title = activity.resources.getString(R.string.app_name), message = it, alertKey = NSConstants.KEY_ALERT_DOCTOR_SEND)
+
 						//imageAdapter?.setData(arrayListOf())
 						//ivPatientImg.setImageResource(0)
 					}
@@ -206,4 +215,22 @@ class NSDoctorDetailFragment : BaseViewModelFragment<NSDoctorDetailViewModel, Ns
 			tvSomeoneElse.setBackgroundResource(if (position == 0) R.drawable.gray_border else R.drawable.login_button_border)
 		}
 	}
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
+		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_POSITIVE && event.alertKey == NSConstants.KEY_ALERT_DOCTOR_SEND) {
+			binding.apply {
+				viewModel.apply {
+					edtName.setText("")
+					edtDob.text = ""
+					edtRemark.setText("")
+					edtNumber.setText("")
+					edtAge.setText("")
+					switchActivity(NSDoctorHistoryActivity::class.java)
+					finish()
+				}
+			}
+		}
+	}
+
 }

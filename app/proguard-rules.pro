@@ -88,3 +88,15 @@
 
 # Accessed via reflection, avoid renaming or removal
 -keep class org.greenrobot.eventbus.android.AndroidComponentsImpl
+
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+-keepattributes JavascriptInterface
+-keepattributes *Annotation*
+
+-dontwarn com.razorpay.**
+-keep class com.razorpay.** {*;}
+
+-optimizations !method/inlining/*

@@ -54,6 +54,7 @@ class NSApiErrorHandler {
 		const val ERROR_UP_LINE_MEMBER_TREE = "error_up_line_member_tree"
         const val ERROR_CHECK_VERSION = "error_check_version"
         const val ERROR_QR_SCAN = "error_qr_scan"
+        const val ERROR_PAYMENT_MODE = "error_payment_mode"
 		const val ERROR_PRODUCT_SEND_DATA = "error_product_send_data"
 		const val ERROR_REPURCHASE_STOCK_DATA = "error_repurchase_stock_data"
 		const val ERROR_STOCK_TRANSFER_DATA = "error_stock_transfer_data"

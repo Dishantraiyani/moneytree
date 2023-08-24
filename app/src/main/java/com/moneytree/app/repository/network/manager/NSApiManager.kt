@@ -1164,6 +1164,24 @@ class NSApiManager {
 	fun getDoctorHistoryList(pageIndex: String, search: String, callback: NSRetrofitCallback<DoctorHistoryResponse>) {
 		request(unAuthorised3020Client.doctorHistoryList(NSUserManager.getAuthToken(), pageIndex, search), callback)
 	}
+
+	fun rechargePaymentMode(
+		orderId: String,
+		paymentData: String,
+		amount: String,
+		note: String = "",
+		callback: NSRetrofitCallback<NSSuccessResponse>
+	) {
+		request(
+			unAuthorised3020Client.rechargeUsingPaymentGateWay(
+				NSUserManager.getAuthToken(),
+				orderId,
+				paymentData,
+				amount,
+				note,
+			), callback
+		)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1659,4 +1677,14 @@ interface RTApiInterface {
 		@Field("page_index") page: String,
 		@Field("search") search: String
 	): Call<DoctorHistoryResponse>
+
+	@FormUrlEncoded
+	@POST("recharge-payment-mode")
+	fun rechargeUsingPaymentGateWay(
+		@Field("token_id") token: String,
+		@Field("order_id") orderId: String,
+		@Field("payment_data") paymentData: String,
+		@Field("amount") amount: String,
+		@Field("note") note: String
+	): Call<NSSuccessResponse>
 }

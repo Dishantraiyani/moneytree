@@ -78,7 +78,7 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
                         }
                     }
 
-                    tvFieldName.text = categoryName
+                    tvFieldName.text = categoryName?.replace(" ", "\n")
 					llRecharge.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onClickResponse.onResponse(response)

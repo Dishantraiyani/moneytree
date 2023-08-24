@@ -21,6 +21,7 @@ import com.moneytree.app.databinding.NsFragmentDoctorHistoryBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 import com.moneytree.app.repository.network.responses.DoctorHistoryDataItem
 import com.moneytree.app.ui.doctor.detail.NSDoctorDetailActivity
+import com.moneytree.app.ui.doctor.historyDetail.NSDoctorHistoryDetailActivity
 
 
 class NSDoctorHistoryFragment : BaseViewModelFragment<NSDoctorHistoryViewModel, NsFragmentDoctorHistoryBinding>(),
@@ -90,7 +91,7 @@ class NSDoctorHistoryFragment : BaseViewModelFragment<NSDoctorHistoryViewModel, 
 				with(rvDoctorList) {
 					if (dcAdapter == null) {
 						dcAdapter = NSDoctorHistoryRecycleAdapter(activity, { model ->
-							switchActivity(NSDoctorDetailActivity::class.java, bundleOf(NSConstants.DOCTOR_DETAIL to Gson().toJson(model)))
+							switchActivity(NSDoctorHistoryDetailActivity::class.java, bundleOf(NSConstants.DOCTOR_DETAIL to Gson().toJson(model)))
 						}, {
 
 							val pageIndex: Int = list.size/NSConstants.PAGINATION + 1

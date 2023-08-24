@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<include android:id="@+id/layout_header"
+		layout="@layout/layout_header"/>
+
+	<TextView
+		android:id="@+id/tv_wallet_amount_title"
+		style="@style/LoginSubFontsWrap"
+		android:text="@string/available_wallet_amount"
+		android:textColor="@color/black"
+		android:layout_marginStart="@dimen/_15sdp"
+		android:layout_marginTop="@dimen/_15sdp"
+		android:textSize="@dimen/_10sdp"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintStart_toStartOf="parent"
+		/>
+
+	<androidx.cardview.widget.CardView
+		android:id="@+id/card_wallet_amount"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/_6sdp"
+		app:cardCornerRadius="@dimen/_5sdp"
+		app:cardBackgroundColor="@color/gray_background"
+		android:layout_marginHorizontal="@dimen/_15sdp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tv_wallet_amount_title">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_wallet_amount"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/_1sdp"
+			app:guidelineUseRtl="true"
+			app:chainUseRtl="true"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+
+			<ImageView
+				android:id="@+id/iv_wallet_amount"
+				android:layout_width="@dimen/_15sdp"
+				android:layout_height="@dimen/_15sdp"
+				android:src="@drawable/ic_wallet_coin"
+				android:layout_marginStart="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				android:contentDescription="@string/username_title" />
+
+			<TextView
+				android:id="@+id/tv_wallet_amount"
+				style="@style/LoginSubFontsZeroWrap"
+				android:minHeight="@dimen/_38sdp"
+				android:textColor="@color/black"
+				android:background="@drawable/phone_gray_background"
+				android:paddingHorizontal="@dimen/_10sdp"
+				android:hint="@string/amount_title"
+				android:gravity="center_vertical"
+				android:textColorHint="@color/hint_color"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toEndOf="@id/iv_wallet_amount"
+				app:layout_constraintEnd_toEndOf="parent" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.cardview.widget.CardView>
+
+	<TextView
+		android:id="@+id/tv_name"
+		style="@style/LoginSubFontsWrap"
+		android:textColor="@color/black"
+		android:textSize="@dimen/_14sdp"
+		android:layout_marginTop="@dimen/_20sdp"
+		android:fontFamily="@font/inter_medium"
+		app:layout_constraintBottom_toTopOf="@id/tv_sub_upi"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"/>
+
+	<TextView
+		android:id="@+id/tv_sub_upi"
+		style="@style/LoginSubFontsWrap"
+		android:textColor="@color/black"
+		android:textSize="@dimen/_12sdp"
+		android:fontFamily="@font/inter_regular"
+		android:layout_marginBottom="@dimen/_20sdp"
+		app:layout_constraintBottom_toTopOf="@id/ll_amount_detail"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"/>
+
+	<LinearLayout
+		android:id="@+id/ll_amount_detail"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingHorizontal="@dimen/_20sdp"
+		app:layout_constraintVertical_chainStyle="packed"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintBottom_toTopOf="@id/et_note">
+
+		<TextView
+			style="@style/LoginSubFontsWrap"
+			android:textColor="@color/black"
+			android:text="@string/rs"
+			android:textSize="@dimen/_35sdp"
+			android:fontFamily="@font/inter_regular"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/iv_amount"
+			app:layout_constraintEnd_toEndOf="parent" />
+
+		<EditText
+			android:id="@+id/et_amount"
+			style="@style/LoginSubFontsWrap"
+			android:textColor="@color/black"
+			android:paddingHorizontal="@dimen/_5sdp"
+			android:hint="@string/zero"
+			android:background="@null"
+			android:focusable="true"
+			android:fontFamily="@font/inter_regular"
+			android:textColorHint="@color/hint_color"
+			android:textSize="@dimen/_35sdp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@id/iv_amount"
+			app:layout_constraintEnd_toEndOf="parent"
+			android:inputType="number"
+			android:imeOptions="actionDone">
+			<requestFocus/>
+		</EditText>
+
+	</LinearLayout>
+
+	<EditText
+		android:id="@+id/et_note"
+		style="@style/LoginSubFontsWrap"
+		android:minHeight="@dimen/_38sdp"
+		android:textColor="@color/black"
+		android:background="@drawable/gray_round_border_background"
+		android:paddingHorizontal="@dimen/_25sdp"
+		android:layout_marginHorizontal="@dimen/_40sdp"
+		android:hint="@string/add_a_note"
+		android:textColorHint="@color/gray_text"
+		android:layout_marginTop="@dimen/_10sdp"
+		app:layout_constrainedWidth="true"
+		app:layout_constraintWidth="wrap_content"
+		app:layout_constraintTop_toBottomOf="@id/ll_amount_detail"
+		app:layout_constraintBottom_toTopOf="@id/btn_submit"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		android:inputType="text"
+		android:imeOptions="actionDone"/>
+
+	<Button
+		android:id="@+id/btn_submit"
+		style="@style/LayoutWidthHeightWrap"
+		android:background="@drawable/login_button_border"
+		android:text="@string/submit"
+		android:textColor="@color/white"
+		android:textAllCaps="true"
+		android:textSize="@dimen/_12sdp"
+		android:paddingHorizontal="@dimen/_50sdp"
+		android:fontFamily="@font/inter_regular"
+		android:layout_marginHorizontal="@dimen/_5sdp"
+		android:layout_marginTop="@dimen/_20sdp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/et_note"
+		app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
