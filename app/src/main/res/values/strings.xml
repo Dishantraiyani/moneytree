@@ -673,7 +673,8 @@
     <string name="age">Age</string>
     <string name="please_enter_age">Please Enter Age</string>
     <string name="doctors_appointments">Doctors Appointments</string>
-    <string name="please_wait">Please Wait</string>
+    <string name="please_wait">Please Wait…</string>
+    <string name="your_request_under">Your request is under process.</string>
     <string name="select_filter">Select Filter</string>
     <string name="assessment">Assessment</string>
     <string name="receivable_amount">Receivable Amount</string>

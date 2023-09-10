@@ -79,7 +79,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
         registerBinding.btnSelfActivate.gone()
         registerListModel.apply {
             getUserDetail {
-                registerBinding.btnSelfActivate.setVisibility(!it.isActive.equals("Y"))
+                registerBinding.btnSelfActivate.setVisibility(!it.isActiveValue.equals("Y"))
             }
         }
     }

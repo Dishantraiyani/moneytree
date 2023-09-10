@@ -1,6 +1,7 @@
 package com.moneytree.app.repository.network.responses
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -60,13 +61,14 @@ data class NSDataUser(
     @SerializedName("ac_no")
     @Expose
     var acNo: String? = null,
-	@SerializedName("is_active")
+    @SerializedName("is_active")
 	@Expose
-	var isActive: String? = null,
-	@SerializedName("referral_code")
+    @Ignore
+	var isActiveValue: String? = "",
+    @SerializedName("referral_code")
 	@Expose
 	var referCode: String? = null,
-	@SerializedName("package_name")
+    @SerializedName("package_name")
 	@Expose
 	var packageName: String? = null
 )

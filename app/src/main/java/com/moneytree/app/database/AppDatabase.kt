@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.moneytree.app.database.dao.NSUserDao
 import com.moneytree.app.repository.network.responses.NSDataUser
 
-@Database(entities = [ NSDataUser::class], version = 4, exportSchema = false)
+@Database(entities = [ NSDataUser::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): NSUserDao?
 }

@@ -1,9 +1,13 @@
 package com.moneytree.app.ui.mycart.products
 
+import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.SliderDoctorAdapter
 import com.moneytree.app.common.callbacks.NSSearchResponseCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDiseasesRepository
 import com.moneytree.app.repository.NSProductRepository
@@ -17,6 +21,9 @@ import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.NSSearchListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.repository.network.responses.SearchData
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 
 
 /**
@@ -33,6 +40,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
 	var categoryId: String? = ""
     var diseasesId: String? = ""
     var selectedStock: String = "All"
+    val mFragmentList: MutableList<String> = ArrayList()
 
     fun searchAll(search: String, callback: NSSearchResponseCallback) {
         if (search.length > 2) {
@@ -90,6 +98,23 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
        // productList.clear()
         productList.addAll(productListData.data)
         isProductsDataAvailable.value = productList
+    }
+
+    fun setupViewPager(activity: Activity, viewPager: SliderView, response: ProductDataDTO) {
+        val list = response.multiImageList
+        val imageList = list?.split(",")
+
+        for (image in imageList?: arrayListOf()) {
+            val base = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE)
+            mFragmentList.add(base + image)
+        }
+
+        val pagerAdapter = SliderDoctorAdapter(activity, mFragmentList)
+        viewPager.setSliderAdapter(pagerAdapter)
+        pagerAdapter.notifyDataSetChanged()
+        viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE)
+        viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        // viewPager.startAutoCycle()
     }
 
     override fun onError(errors: List<Any>) {

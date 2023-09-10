@@ -99,10 +99,12 @@ class NSProductDetailFragment : NSFragment() {
 						)
 						NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL
 						tvHeaderBack.text = productName
-						Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
+						productModel.setupViewPager(activity, viewPager, productDetail!!)
+
+						/*Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
 							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
-							.error(R.drawable.placeholder).into(ivProductImg)
+							.error(R.drawable.placeholder).into(ivProductImg)*/
 						tvProductName.text = productName
 						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
 						tvRate.text = addText(activity, R.string.rate_title, rate!!)

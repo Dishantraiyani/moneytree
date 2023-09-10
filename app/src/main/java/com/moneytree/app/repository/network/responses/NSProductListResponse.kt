@@ -88,6 +88,9 @@ data class ProductDataDTO(
 	@field:SerializedName("diseases_name")
 	val diseasesName: String? = null,
 
+	@field:SerializedName("multi_image_list")
+	val multiImageList: String? = null,
+
 	@field:SerializedName("category_tag_name")
 	val categoryTagName: String? = null
 )

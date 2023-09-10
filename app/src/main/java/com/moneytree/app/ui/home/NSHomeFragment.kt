@@ -256,7 +256,7 @@ class NSHomeFragment : NSFragment() {
 					setAccountNumber(true, userDetail)
 					tvActive.visible()
 
-					if (isActive.equals("Y")) {
+					if (isActiveValue.equals("Y")) {
 						pref.isActive = true
 						tvActive.text = "${packageName?.uppercase()} (${activity.resources.getString(R.string.active)})"
 					} else {
