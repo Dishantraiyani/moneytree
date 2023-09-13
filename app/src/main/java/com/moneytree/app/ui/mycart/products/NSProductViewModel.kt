@@ -103,7 +103,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
     fun setupViewPager(activity: Activity, viewPager: SliderView, response: ProductDataDTO) {
         val list = response.multiImageList
         val imageList = list?.split(",")
-
+        mFragmentList.clear()
         for (image in imageList?: arrayListOf()) {
             val base = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE)
             mFragmentList.add(base + image)
