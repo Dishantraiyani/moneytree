@@ -157,7 +157,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 				with(layoutHeader) {
 					ivBack.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
-							EventBus.getDefault().post(BackPressEvent())
+							onBackPress()
 						}
 					})
 
