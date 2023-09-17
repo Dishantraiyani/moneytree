@@ -1,28 +1,26 @@
 package com.moneytree.app.ui.mycart.cart
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMyCartBinding
-import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
+import com.moneytree.app.ui.mycart.address.NSAddressActivity
+import com.moneytree.app.ui.mycart.placeOrder.NSPlaceOrderActivity
 import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
 import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import org.greenrobot.eventbus.EventBus
 
 class NSCartFragment : NSFragment() {
     private val productModel: NSCartViewModel by lazy {
@@ -32,10 +30,28 @@ class NSCartFragment : NSFragment() {
 
     private val productBinding get() = _binding!!
     private var productListAdapter: NSCartListRecycleAdapter? = null
+    private val cartAddressResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            if (resultCode == RESULT_OK) {
+                switchResultActivity(
+                    dataResult,
+                    NSPlaceOrderActivity::class.java,
+                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to productModel.isFromOrder)
+                )
+            }
+        }
 
 	companion object {
-		fun newInstance() = NSCartFragment()
+		fun newInstance(bundle: Bundle?) = NSCartFragment().apply {
+            arguments = bundle
+        }
 	}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        productModel.isFromOrder = arguments?.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
+    }
 
 	override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,24 +86,39 @@ class NSCartFragment : NSFragment() {
 				with(layoutHeader) {
 
 					proceed.setOnClickListener {
-						if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
-							switchResultActivity(
-								dataResult,
-								PurchaseCompleteActivity::class.java
-							)
-							finish()
-						} else {
-							if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
-								clBottomSheet.visible()
-							} else {
-								switchResultActivity(
-									dataResult,
-									PurchaseCompleteActivity::class.java
-								)
-								finish()
-							}
-						}
-
+                        if (isFromOrder) {
+                            if (pref.selectedAddress != null) {
+                                switchResultActivity(
+                                    dataResult,
+                                    NSPlaceOrderActivity::class.java,
+                                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
+                                )
+                            } else {
+                                switchResultActivity(
+                                    cartAddressResult,
+                                    NSAddressActivity::class.java,
+                                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder, NSConstants.KEY_IS_ADD_ADDRESS to true)
+                                )
+                            }
+                        } else {
+                            if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
+                                switchResultActivity(
+                                    dataResult,
+                                    PurchaseCompleteActivity::class.java
+                                )
+                                finish()
+                            } else {
+                                if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
+                                    clBottomSheet.visible()
+                                } else {
+                                    switchResultActivity(
+                                        dataResult,
+                                        PurchaseCompleteActivity::class.java
+                                    )
+                                    finish()
+                                }
+                            }
+                        }
 					}
 
 					clBottomSheet.setOnClickListener {
@@ -120,7 +151,7 @@ class NSCartFragment : NSFragment() {
             with(productModel) {
 				rvCartItem.layoutManager = LinearLayoutManager(activity)
                 productListAdapter =
-					NSCartListRecycleAdapter(activity, false, object : NSCartTotalAmountCallback {
+					NSCartListRecycleAdapter(activity, isFromOrder, false, object : NSCartTotalAmountCallback {
 						override fun onResponse() {
 							setTotalAmount()
 						}
@@ -136,7 +167,8 @@ class NSCartFragment : NSFragment() {
 		with(productBinding) {
 			with(productModel) {
 				var totalAmountValue = 0
-				for (data in NSApplication.getInstance().getProductList()) {
+                val instance = NSApplication.getInstance()
+				for (data in if (isFromOrder) instance.getOrderList() else instance.getProductList()) {
 					val amount1 : Int = data.sdPrice?.toInt() ?: 0
 					val finalAmount1 = data.itemQty * amount1
 					totalAmountValue += finalAmount1

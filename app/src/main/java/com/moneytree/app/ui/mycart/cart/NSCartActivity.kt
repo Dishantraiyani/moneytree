@@ -13,14 +13,14 @@ class NSCartActivity : NSActivity() {
         super.onCreate(savedInstanceState)
         productsBinding = NsActivityCartBinding.inflate(layoutInflater)
         setContentView(productsBinding.root)
-        loadInitialFragment()
+        loadInitialFragment(intent.extras)
     }
 
     /**
      * To initialize product fragment
      *
      */
-    private fun loadInitialFragment() {
-        replaceCurrentFragment(NSCartFragment.newInstance(), false, productsBinding.cartContainer.id)
+    private fun loadInitialFragment(bundle: Bundle?) {
+        replaceCurrentFragment(NSCartFragment.newInstance(bundle), false, productsBinding.cartContainer.id)
     }
 }

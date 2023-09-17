@@ -30,6 +30,12 @@ class RozerModel {
     @SerializedName("product_name")
     var productName: String? = null
 
+    @SerializedName("address")
+    var address: String? = null
+
+    @SerializedName("product_list")
+    var productDetail: String? = null
+
     @SerializedName("is_featured")
     var isFeatured: String? = null
     var isNativeAds = false
@@ -38,6 +44,8 @@ class RozerModel {
     inner class RozerDetails(
         val name: String = "name",
         val description: String = "description",
+        val productDetail: String = "product_list",
+        val address: String = "address",
         val sendSmsHash: String = "send_sms_hash",
         val allowRotation: String = "allow_rotation",
         val image: String = "image",

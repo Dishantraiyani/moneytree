@@ -46,6 +46,7 @@ class NSProductDetailFragment : NSFragment() {
 	private var productResponse: NSProductListResponse? = null
 	private var strProductDetail: String? = null
 	private var strProductFullList: String? = null
+	private var isFromOrder: Boolean = false
 	private var productListAdapter: NSProductDetailListRecycleAdapter? = null
 
 	companion object {
@@ -59,6 +60,7 @@ class NSProductDetailFragment : NSFragment() {
 		arguments?.let {
 			strProductDetail = it.getString(NSConstants.KEY_PRODUCT_DETAIL)
 			strProductFullList = it.getString(NSConstants.KEY_PRODUCT_FULL_LIST)
+			isFromOrder = it.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
 			getProductDetail()
 		}
 	}
@@ -111,7 +113,8 @@ class NSProductDetailFragment : NSFragment() {
 						val spannedText: CharSequence = Html.fromHtml(description!!)
 
 						tvDescription.text = spannedText
-						val selectedItem = NSApplication.getInstance().getProduct(productDetail!!)
+						val instance = NSApplication.getInstance()
+						val selectedItem = if (isFromOrder) instance.getOrder(productDetail!!) else instance.getProduct(productDetail!!)
 						if (selectedItem != null) {
 							itemQty = selectedItem.itemQty
 						}
@@ -155,7 +158,7 @@ class NSProductDetailFragment : NSFragment() {
 						switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(
 							NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail), NSConstants.KEY_PRODUCT_FULL_LIST to Gson().toJson(
 								NSProductListResponse(data = productModel.productList)
-							))
+							), NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
 						)
 						finish()
 					}
@@ -182,7 +185,8 @@ class NSProductDetailFragment : NSFragment() {
 		with(productBinding) {
 			CoroutineScope(Dispatchers.IO).launch {
 				var totalAmountValue = 0
-				for (data in NSApplication.getInstance().getProductList()) {
+				val instance = NSApplication.getInstance()
+				for (data in if (isFromOrder) instance.getOrderList() else instance.getProductList()) {
 					val amount1: Int = data.sdPrice?.toInt() ?: 0
 					val finalAmount1 = data.itemQty * amount1
 					totalAmountValue += finalAmount1
@@ -200,7 +204,7 @@ class NSProductDetailFragment : NSFragment() {
 	private fun updateProducts() {
 		CoroutineScope(Dispatchers.IO).launch {
 			val instance = NSApplication.getInstance()
-			val selectedItem = instance.getProduct(productDetail!!)
+			val selectedItem = if (isFromOrder) instance.getOrder(productDetail!!) else instance.getProduct(productDetail!!)
 			if (selectedItem == null) {
 				productDetail!!.itemQty = 0
 			}
@@ -215,7 +219,8 @@ class NSProductDetailFragment : NSFragment() {
 
 	private fun setCartCount() {
 		with(productBinding.layoutHeader) {
-			with(NSApplication.getInstance().getProductList()) {
+			val instance = NSApplication.getInstance()
+			with(if (isFromOrder) instance.getOrderList() else instance.getProductList()) {
 				tvCartCount.text = size.toString()
 			}
 		}
@@ -240,7 +245,7 @@ class NSProductDetailFragment : NSFragment() {
 			with(layoutHeader) {
 				ivCart.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						switchResultActivity(dataResult, NSCartActivity::class.java)
+						switchResultActivity(dataResult, NSCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder))
 					}
 				})
 
@@ -266,7 +271,7 @@ class NSProductDetailFragment : NSFragment() {
 
 				proceed.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						switchResultActivity(dataResult, NSCartActivity::class.java)
+						switchResultActivity(dataResult, NSCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder))
 					}
 				})
 
@@ -307,7 +312,13 @@ class NSProductDetailFragment : NSFragment() {
 					val finalAmount1 = itemQty * amount1
 					isProductValid = finalAmount > 0
 
-					NSApplication.getInstance().setProductList(response)
+					val instance = NSApplication.getInstance()
+					if (isFromOrder) {
+						instance.setOrderList(response)
+					} else {
+						instance.setProductList(response)
+					}
+
 					tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
 					setTotalAmount()
 				} else {
@@ -328,10 +339,19 @@ class NSProductDetailFragment : NSFragment() {
 					val finalAmount1 = itemQty * amount1
 					isProductValid = finalAmount > 0
 
+					val instance = NSApplication.getInstance()
 					if (itemQty == 0) {
-						NSApplication.getInstance().removeProduct(response)
+						if (isFromOrder) {
+							instance.removeOrder(response)
+						} else {
+							instance.removeProduct(response)
+						}
 					} else {
-						NSApplication.getInstance().setProductList(response)
+						if (isFromOrder) {
+							instance.setOrderList(response)
+						} else {
+							instance.setProductList(response)
+						}
 					}
 
 					setTotalAmount()

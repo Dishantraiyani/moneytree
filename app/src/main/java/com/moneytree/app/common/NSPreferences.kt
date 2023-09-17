@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
+import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
 
 /**
@@ -21,6 +22,7 @@ class NSPreferences(context: Context) {
         private const val KEY_OFFER_TAB_POSITION = "key_offer_tab_position"
         private const val KEY_IS_ACTIVE_USER = "key_is_active_user"
         private const val KEY_DISPLAY_POPUP = "key_is_display_popup"
+        private const val KEY_SELECTED_ADDRESS = "key_is_selected_address"
     }
 
     /**
@@ -49,6 +51,16 @@ class NSPreferences(context: Context) {
         set(loginResponse) {
             val json: String = Gson().toJson(loginResponse)
             prefEdit.putString(KEY_USER_DATA, json).apply()
+        }
+
+    var selectedAddress: NSAddressCreateResponse?
+        get() {
+            val json: String? = preference.getString(KEY_SELECTED_ADDRESS, null)
+            return Gson().fromJson(json, NSAddressCreateResponse::class.java)
+        }
+        set(loginResponse) {
+            val json: String = Gson().toJson(loginResponse)
+            prefEdit.putString(KEY_SELECTED_ADDRESS, json).apply()
         }
 
     /**

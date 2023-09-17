@@ -678,4 +678,16 @@
     <string name="select_filter">Select Filter</string>
     <string name="assessment">Assessment</string>
     <string name="receivable_amount">Receivable Amount</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="country">Country</string>
+    <string name="flat_house">Flat, House no.,Building, Company, Apartment</string>
+    <string name="area">Area, Street, Sector, Village</string>
+    <string name="landmark">Landmark</string>
+    <string name="landmark_hint">Enter Landmark</string>
+    <string name="pin_code">Pincode</string>
+    <string name="town">Town/City</string>
+    <string name="state">State</string>
+    <string name="make_this_my_default_address">Make this my default address</string>
+    <string name="add_address">Add Address</string>
 </resources>

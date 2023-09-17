@@ -92,5 +92,8 @@ data class ProductDataDTO(
 	val multiImageList: String? = null,
 
 	@field:SerializedName("category_tag_name")
-	val categoryTagName: String? = null
+	val categoryTagName: String? = null,
+
+	@field:SerializedName("is_from_order")
+	var isFromOrder: Boolean = false
 )

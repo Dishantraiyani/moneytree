@@ -18,9 +18,9 @@ class NSCartViewModel(application: Application) : NSViewModel(application) {
     var productList: MutableList<ProductDataDTO> = arrayListOf()
     var isProductsDataAvailable = MutableLiveData<Boolean>()
     var pageIndex: String = "1"
-    var productResponse: NSProductListResponse? = null
 	var categoryId: String? = null
 	var categoryName: String? = null
+    var isFromOrder: Boolean = false
 
 
     /**
@@ -29,7 +29,8 @@ class NSCartViewModel(application: Application) : NSViewModel(application) {
      */
     fun getProductListData() {
         productList.clear()
-		productList.addAll(NSApplication.getInstance().getProductList())
+        val instance = NSApplication.getInstance()
+		productList.addAll(if (isFromOrder) instance.getOrderList() else instance.getProductList())
 		isProductsDataAvailable.value = productList.isValidList()
     }
 }

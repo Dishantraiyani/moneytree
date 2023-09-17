@@ -125,6 +125,13 @@ fun <T : Activity> Fragment.switchResultActivity(
     launcher.launch(getIntent(destination, bundle, flags))
 }
 
+fun <T : Activity> Activity.switchResultActivity(
+    launcher: ActivityResultLauncher<Intent?>,
+    destination: Class<T>, bundle: Bundle? = null, flags: IntArray? = null
+) {
+    launcher.launch(getIntent(destination, bundle, flags))
+}
+
 /**
  * To get the intent with the below parameter details attached to the intent
  *
@@ -500,3 +507,4 @@ fun AppCompatActivity.requestLocationPermissions(requestCode: Int) {
         requestCode
     )
 }
+

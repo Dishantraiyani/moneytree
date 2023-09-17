@@ -54,6 +54,7 @@ import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.doctor.NSDoctorActivity
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.mycart.orders.NSOrderActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
@@ -333,6 +334,13 @@ class NSHomeFragment : NSFragment() {
 							drawer.closeDrawer(GravityCompat.START)
 							switchActivity(
 								NSDoctorActivity::class.java
+							)
+						}
+
+						llOrders.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(
+								NSOrderActivity::class.java
 							)
 						}
 

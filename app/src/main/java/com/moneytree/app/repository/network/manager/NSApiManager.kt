@@ -1182,6 +1182,25 @@ class NSApiManager {
 			), callback
 		)
 	}
+
+	/**
+	 * To call the user detail data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun placeOrder(
+		orderId: String,
+		paymentData: String,
+		address: String, productList: String, amount: String,
+		callback: NSRetrofitCallback<NSSuccessResponse>
+	) {
+		request(
+			unAuthorised3020Client.placeMyOrder(
+				NSUserManager.getAuthToken(),
+				orderId, paymentData, address, productList, amount
+			), callback
+		)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1686,5 +1705,12 @@ interface RTApiInterface {
 		@Field("payment_data") paymentData: String,
 		@Field("amount") amount: String,
 		@Field("note") note: String
+	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("place-my-order")
+	fun placeMyOrder(
+		@Field("token_id") token: String,@Field("order_id") orderId: String,@Field("payment_data") paymentData: String,
+		@Field("address") address: String, @Field("product_list") productList: String, @Field("amount") amount: String
 	): Call<NSSuccessResponse>
 }

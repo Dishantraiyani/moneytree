@@ -18,6 +18,8 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutCartItemBinding
@@ -27,6 +29,7 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 
 class NSCartListRecycleAdapter(
 	activityNS: Activity,
+	val isFromOrder: Boolean,
 	val isGrid: Boolean,
 	val onProductClick: NSCartTotalAmountCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -80,6 +83,11 @@ class NSCartListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
+					if (isFromOrder) {
+						tvQtyTitle.invisible()
+						tvStockQty.invisible()
+					}
+
 					clProductLayout.setVisibility(!isGrid)
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder)
@@ -103,7 +111,7 @@ class NSCartListRecycleAdapter(
 						} catch (e: Exception) {
 							0
 						}
-						if (itemQty < stock && stock != 0) {
+						if ((itemQty < stock && stock != 0) || isFromOrder) {
 							itemQty += 1
 							tvQty.text = itemQty.toString()
 
@@ -133,7 +141,12 @@ class NSCartListRecycleAdapter(
 								addText(activity, R.string.price_value, finalAmount1.toString())
 
 							if (itemQty == 0) {
-								NSApplication.getInstance().removeProduct(response)
+								val instance = NSApplication.getInstance()
+								if (isFromOrder) {
+									instance.removeOrder(response)
+								} else {
+									instance.removeProduct(response)
+								}
 								productData.remove(response)
 								notifyItemRemoved(absoluteAdapterPosition)
 							}
@@ -144,7 +157,12 @@ class NSCartListRecycleAdapter(
 
 					productDel.setOnClickListener {
 						itemQty = 0
-						NSApplication.getInstance().removeProduct(response)
+						val instance = NSApplication.getInstance()
+						if (isFromOrder) {
+							instance.removeOrder(response)
+						} else {
+							instance.removeProduct(response)
+						}
 						productData.remove(response)
 						notifyItemRemoved(absoluteAdapterPosition)
 						onProductClick.onResponse()

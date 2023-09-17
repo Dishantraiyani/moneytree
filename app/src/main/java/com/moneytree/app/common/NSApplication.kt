@@ -25,6 +25,7 @@ class NSApplication : Application() {
     private lateinit var walletBalance: String
 	private val ONESIGNAL_APP_ID = "a31a4b92-4cf4-4768-ba20-904945d2159e"
 	private var productList: HashMap<String, ProductDataDTO> = hashMapOf()
+	private var orderList: HashMap<String, ProductDataDTO> = hashMapOf()
 	private var filterProduct: HashMap<String, String> = hashMapOf()
 	private var diseasesProduct: HashMap<String, String> = hashMapOf()
 
@@ -88,12 +89,58 @@ class NSApplication : Application() {
 		productList.clear()
 	}
 
+	fun clearOrderList() {
+		orderList.clear()
+	}
+
+	fun setOrderList(model: ProductDataDTO) {
+		val key = model.productId + "_" + model.categoryId
+		orderList[key] = model
+	}
+
+	fun clearSelectedOrderProductList(isFromOrder: Boolean) {
+		val orderList: HashMap<String, ProductDataDTO> = hashMapOf()
+		for ((key, value) in productList.entries) {
+			if (isFromOrder && value.isFromOrder) {
+				orderList[key] = value
+			} else if (!isFromOrder && !value.isFromOrder) {
+				orderList[key] = value
+			}
+		}
+		productList.clear()
+		productList.putAll(orderList)
+	}
+
 	fun getProductList(): MutableList<ProductDataDTO> {
 		val list: MutableList<ProductDataDTO> = arrayListOf()
 		for ((key, value) in productList.entries) {
 			list.add(value)
 		}
 		return list
+	}
+
+	fun getOrderList(): MutableList<ProductDataDTO> {
+		val list: MutableList<ProductDataDTO> = arrayListOf()
+		for ((key, value) in orderList.entries) {
+			list.add(value)
+		}
+		return list
+	}
+
+	fun getOrder(model: ProductDataDTO): ProductDataDTO? {
+		val key = model.productId + "_" + model.categoryId
+		return orderList[key]
+	}
+
+	fun removeOrder(model: ProductDataDTO): MutableList<ProductDataDTO> {
+		val key = model.productId + "_" + model.categoryId
+		orderList.remove(key)
+		return getOrderList()
+	}
+
+	fun isOrderAdded(model: ProductDataDTO) : Boolean {
+		val key = model.productId + "_" + model.categoryId
+		return orderList.contains(key)
 	}
 
 	fun getProduct(model: ProductDataDTO): ProductDataDTO? {

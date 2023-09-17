@@ -148,4 +148,22 @@ object NSRechargeRepository {
 			}
 		})
 	}
+
+	fun placeOrder(orderId: String,paymentData: String, amount: String, address: String = "", productList: String,
+							viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.placeOrder(orderId, paymentData, address, productList, amount, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PAYMENT_MODE) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }
