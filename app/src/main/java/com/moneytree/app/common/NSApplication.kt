@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
+import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.NSDiseasesData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -28,6 +29,7 @@ class NSApplication : Application() {
 	private var orderList: HashMap<String, ProductDataDTO> = hashMapOf()
 	private var filterProduct: HashMap<String, String> = hashMapOf()
 	private var diseasesProduct: HashMap<String, String> = hashMapOf()
+	private var selectedAddress: NSAddressCreateResponse = NSAddressCreateResponse()
 
     override fun onCreate() {
         super.onCreate()
@@ -91,6 +93,14 @@ class NSApplication : Application() {
 
 	fun clearOrderList() {
 		orderList.clear()
+	}
+
+	fun addSelectedAddress(address: NSAddressCreateResponse) {
+		selectedAddress = address
+	}
+
+	fun getSelectedAddress(): NSAddressCreateResponse {
+		return selectedAddress
 	}
 
 	fun setOrderList(model: ProductDataDTO) {

@@ -50,6 +50,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val resultCode = result.resultCode
             if (resultCode == Activity.RESULT_OK) {
+                productModel.isDefaultAddress = false
                 setAddress()
             }
         }
@@ -67,6 +68,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
+        productModel.isDefaultAddress = bundle?.getBoolean(NSConstants.KEY_IS_DEFAULT_ADDRESS)?:false
         productModel.isFromOrder = bundle?.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
         viewCreated()
         setListener()
@@ -91,14 +93,6 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                     var userDetail: NSDataUser? = null
                     getUserDetail {
                         userDetail = it
-                    }
-
-                    btnEditAddress.setOnClickListener {
-                        switchResultActivity(
-                            cartAddressResult,
-                            NSAddressActivity::class.java,
-                            bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder, NSConstants.KEY_IS_ADD_ADDRESS to false)
-                        )
                     }
 
 
@@ -133,7 +127,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
 
     private fun setAddress() {
         binding.apply {
-            val model: NSAddressCreateResponse = pref.selectedAddress?: NSAddressCreateResponse()
+            val model: NSAddressCreateResponse = if (productModel.isDefaultAddress) pref.selectedAddress?: NSAddressCreateResponse() else NSApplication.getInstance().getSelectedAddress()
             etUserName.text = model.fullName
 
             val list: MutableList<String> = arrayListOf()
@@ -161,6 +155,14 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                 btnEditAddress.text = "Add Address"
             }
             btnEditAddress.visible()
+
+            btnEditAddress.setOnClickListener {
+                switchResultActivity(
+                    cartAddressResult,
+                    NSAddressActivity::class.java,
+                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to productModel.isFromOrder, NSConstants.KEY_IS_ADD_ADDRESS to false, NSConstants.KEY_IS_SELECTED_ADDRESS to Gson().toJson(model))
+                )
+            }
         }
     }
 

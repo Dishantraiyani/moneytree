@@ -91,7 +91,7 @@ class NSCartFragment : NSFragment() {
                                 switchResultActivity(
                                     dataResult,
                                     NSPlaceOrderActivity::class.java,
-                                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
+                                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder, NSConstants.KEY_IS_DEFAULT_ADDRESS to true)
                                 )
                             } else {
                                 switchResultActivity(

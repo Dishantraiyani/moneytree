@@ -29,6 +29,7 @@ class NSAddressFragment : NSFragment() {
 	private var _binding: NsFragmentAddressBinding? = null
 	private val binding get() = _binding!!
 	private var isAddAddress = false
+	private var selectedAddress: String? = null
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = NSAddressFragment().apply {
@@ -52,6 +53,7 @@ class NSAddressFragment : NSFragment() {
 	private fun viewCreated() {
 		with(binding) {
 			isAddAddress = arguments?.getBoolean(NSConstants.KEY_IS_ADD_ADDRESS)?:false
+			selectedAddress = arguments?.getString(NSConstants.KEY_IS_SELECTED_ADDRESS)
 			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(if (isAddAddress) R.string.add_address else R.string.edit_address))
 			if (!isAddAddress) {
 				setAddress()
@@ -105,6 +107,7 @@ class NSAddressFragment : NSFragment() {
 						if (cbChecked.isChecked || !isAddAddress) {
 							pref.selectedAddress = model
 						}
+						NSApplication.getInstance().addSelectedAddress(model)
 						requireActivity().setResult(RESULT_OK)
 						finish()
 					}
@@ -115,16 +118,18 @@ class NSAddressFragment : NSFragment() {
 
 	private fun setAddress() {
 		binding.apply {
-			val model: NSAddressCreateResponse = pref.selectedAddress?:NSAddressCreateResponse()
-			etFullName.setText(model.fullName)
-			etMobile.setText(model.mobile)
-			etCountryName.setText(model.country)
-			etArea.setText(model.area)
-			etCity.setText(model.city)
-			etFlatHouse.setText(model.flatHouse)
-			etLandMark.setText(model.landMark)
-			etPinCode.setText(model.pinCode)
-			etState.setText(model.state)
+			if (selectedAddress != null && selectedAddress?.isNotEmpty() == true) {
+				val model: NSAddressCreateResponse = Gson().fromJson(selectedAddress, NSAddressCreateResponse::class.java)
+				etFullName.setText(model.fullName)
+				etMobile.setText(model.mobile)
+				etCountryName.setText(model.country)
+				etArea.setText(model.area)
+				etCity.setText(model.city)
+				etFlatHouse.setText(model.flatHouse)
+				etLandMark.setText(model.landMark)
+				etPinCode.setText(model.pinCode)
+				etState.setText(model.state)
+			}
 		}
 	}
 }

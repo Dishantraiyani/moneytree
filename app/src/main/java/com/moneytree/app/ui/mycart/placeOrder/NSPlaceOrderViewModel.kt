@@ -20,6 +20,7 @@ class NSPlaceOrderViewModel(application: Application) : NSViewModel(application)
 	var successResponse: NSSuccessResponse? = null
 	var finalAmount: String = "0"
 	var isFromOrder: Boolean = false
+	var isDefaultAddress: Boolean = false
 
 	fun getUserDetail(callback: (NSDataUser) -> Unit) {
 		MainDatabase.getUserData(object : NSUserDataCallback {
