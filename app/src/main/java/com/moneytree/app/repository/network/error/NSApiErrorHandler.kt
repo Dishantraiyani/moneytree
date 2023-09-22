@@ -39,6 +39,7 @@ class NSApiErrorHandler {
         const val ERROR_WALLET_LIST_DATA = "error_wallet_list_data"
         const val ERROR_SERVICE_PROVIDER_DATA = "error_service_provider_data"
         const val ERROR_RECHARGE_SAVE_DATA = "error_recharge_save_data"
+        const val ERROR_RECHARGE_UPDATE_STATUS = "error_recharge_update_status"
         const val ERROR_RECHARGE_FETCH_DATA = "error_recharge_fetch_data"
 		const val ERROR_REDEEM_LIST_DATA = "error_redeem_list_data"
 		const val ERROR_REDEEM_SAVE_DATA = "error_redeem_save_data"

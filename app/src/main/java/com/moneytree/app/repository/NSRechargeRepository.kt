@@ -47,7 +47,25 @@ object NSRechargeRepository {
 					 viewModelCallback: NSGenericViewModelCallback
 	) {
 		apiManager.rechargeSave(rechargeSave, object :
-			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_SAVE_DATA) {
+			NSRetrofitCallback<NSRechargeSaveResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_SAVE_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSRechargeSaveResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	fun rechargeUpdateStatus(rechargeId: String,
+					 viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.rechargeUpdateStatus(rechargeId, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_RECHARGE_UPDATE_STATUS) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse
 				if (data.status) {

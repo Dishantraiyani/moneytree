@@ -11,6 +11,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.database.MainDatabase
@@ -49,10 +50,12 @@ class RozerViewModel(application: Application) : NSViewModel(application) {
 				}
 
 				override fun onError(errors: List<Any>) {
+					successResponse = NSSuccessResponse(false, NSUtilities.parseApiErrorList(activity, errors))
 					openSuccessFail(activity)
 				}
 
 				override fun onFailure(failureMessage: String?) {
+					successResponse = NSSuccessResponse(false, failureMessage)
 					openSuccessFail(activity)
 				}
 

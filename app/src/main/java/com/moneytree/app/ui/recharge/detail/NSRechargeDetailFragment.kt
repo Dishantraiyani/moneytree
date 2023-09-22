@@ -76,7 +76,7 @@ class NSRechargeDetailFragment : NSFragment() {
             btnSubmit.setOnClickListener(object : SingleClickListener() {
 				override fun performClick(v: View?) {
 					buildAlertDialog(requireContext(), LayoutWaitBinding::inflate) { dialog, binding ->
-						viewModel.saveRecharge {
+						viewModel.saveRecharge(requireContext()) {
 							Handler(Looper.getMainLooper()).postDelayed({
 								dialog.dismiss()
 								viewModel.openSuccessFail(activity)

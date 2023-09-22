@@ -2,6 +2,7 @@ package com.moneytree.app.ui.recharge
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.os.bundleOf
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.repository.NSRechargeRepository
@@ -98,23 +100,25 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 		isServiceProviderDataAvailable.value = serviceProvidersList.isValidList()
 	}
 
-	fun saveRecharge(callback: (Boolean) -> Unit) {
+	fun saveRecharge(context: Context, callback: (Boolean) -> Unit) {
 		if (rechargeRequest != null) {
 			//isProgressShowing.value = true
 			NSRechargeRepository.saveRecharge(rechargeRequest!!,
 				object : NSGenericViewModelCallback {
 					override fun <T> onSuccess(data: T) {
 						//isProgressShowing.value = false
-						successResponse = data as NSSuccessResponse
-						callback.invoke(true)
+						val response = data as NSRechargeSaveResponse
+						rechargeUpdateStatus(context, response.rechargeId?:"",callback)
 					}
 
 					override fun onError(errors: List<Any>) {
-						callback.invoke(true)
+						successResponse = NSSuccessResponse(false, NSUtilities.parseApiErrorList(context, errors))
+						callback.invoke(false)
 					}
 
 					override fun onFailure(failureMessage: String?) {
-						callback.invoke(true)
+						successResponse = NSSuccessResponse(false, failureMessage)
+						callback.invoke(false)
 					}
 
 					override fun <T> onNoNetwork(localData: T) {
@@ -122,6 +126,31 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 					}
 				})
 		}
+	}
+
+	fun rechargeUpdateStatus(context: Context, rechargeId: String, callback: (Boolean) -> Unit) {
+		NSRechargeRepository.rechargeUpdateStatus(rechargeId,
+			object : NSGenericViewModelCallback {
+				override fun <T> onSuccess(data: T) {
+					//isProgressShowing.value = false
+					successResponse = data as NSSuccessResponse
+					callback.invoke(true)
+				}
+
+				override fun onError(errors: List<Any>) {
+					successResponse = NSSuccessResponse(false, NSUtilities.parseApiErrorList(context, errors))
+					callback.invoke(false)
+				}
+
+				override fun onFailure(failureMessage: String?) {
+					successResponse = NSSuccessResponse(false, failureMessage)
+					callback.invoke(false)
+				}
+
+				override fun <T> onNoNetwork(localData: T) {
+					handleNoNetwork()
+				}
+			})
 	}
 
 	fun getRechargeFetchData() {

@@ -920,7 +920,7 @@ class NSApiManager {
 		request(unAuthorised3020Client.getServiceProvider(rechargeType, rechargeMemberId), callback)
 	}
 
-	fun rechargeSave(rsR: NSRechargeSaveRequest, callback: NSRetrofitCallback<NSSuccessResponse>) {
+	fun rechargeSave(rsR: NSRechargeSaveRequest, callback: NSRetrofitCallback<NSRechargeSaveResponse>) {
 		request(
 			unAuthorised3020Client.rechargeSave(
 				NSUserManager.getAuthToken(),
@@ -932,6 +932,15 @@ class NSApiManager {
 				rsR.ad1!!,
 				rsR.ad2!!,
 				rsR.ad3!!
+			), callback
+		)
+	}
+
+	fun rechargeUpdateStatus(rechargeId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(
+			unAuthorised3020Client.rechargeUpdateStatus(
+				NSUserManager.getAuthToken(),
+				rechargeId
 			), callback
 		)
 	}
@@ -1543,6 +1552,13 @@ interface RTApiInterface {
 		@Field("ad1") ad1: String,
 		@Field("ad2") ad2: String,
 		@Field("ad3") ad3: String
+	): Call<NSRechargeSaveResponse>
+
+	@FormUrlEncoded
+	@POST("recharge-update-status")
+	fun rechargeUpdateStatus(
+		@Field("token_id") token: String,
+		@Field("recharge_id") rechargeId: String
 	): Call<NSSuccessResponse>
 
 	@FormUrlEncoded
