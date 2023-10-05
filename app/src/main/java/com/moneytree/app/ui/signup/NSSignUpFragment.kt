@@ -104,7 +104,7 @@ class NSSignUpFragment : NSFragment() {
 				if (fullName.isEmpty()) {
 					etFullName.error = getString(R.string.please_enter_name)
 					return
-				} else if (phone.isEmpty() || phone.length < 10) {
+				} else if (phone.isEmpty() || phone.length < 10 || !NSUtilities.isValidMobile(phone)) {
 					etPhone.error = getString(R.string.please_enter_valid_phone)
 					return
 				} else if (email.isEmpty()) {

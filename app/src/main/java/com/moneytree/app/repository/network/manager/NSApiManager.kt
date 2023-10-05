@@ -46,6 +46,12 @@ class NSApiManager {
 			)
 		}
 
+		val kycClient: RTApiInterface by lazy {
+			buildRetrofitKyc(unAuthorisedOkHttpClient).create(
+				RTApiInterface::class.java
+			)
+		}
+
 		val multiPartClient: RTApiInterface by lazy {
 			buildRetrofit(authorizedOkHttpMultiPartClient, "").create(
 				RTApiInterface::class.java
@@ -136,10 +142,14 @@ class NSApiManager {
 					header(KEY_CONTENT_TYPE, APPLICATION_JSON)
 				}
 				header(KEY_ACCEPT, ACCEPT_VALUE)
-				if (isAuthorizedClient) {
-					header(
-						AUTHORISATION_KEY, BEARER + NSUserManager.getAuthToken()
-					)
+				if (request.url.toString().contains("kyc")) {
+					header("token", "cb7df89af6666694a72cb7e519d4a91f")
+				} else {
+					if (isAuthorizedClient) {
+						header(
+							AUTHORISATION_KEY, BEARER + NSUserManager.getAuthToken()
+						)
+					}
 				}
 			}.build()
 
@@ -152,6 +162,17 @@ class NSApiManager {
 		private fun buildRetrofit(okHttpClient: OkHttpClient, endpoint: String): Retrofit =
 			Retrofit.Builder().apply {
 				baseUrl(NSUtilities.decrypt(BuildConfig.BASE_URL) + endpoint)
+				client(okHttpClient)
+				addConverterFactory(
+					GsonConverterFactory.create(
+						GsonBuilder().setLenient().create()
+					)
+				)
+			}.build()
+
+		private fun buildRetrofitKyc(okHttpClient: OkHttpClient): Retrofit =
+			Retrofit.Builder().apply {
+				baseUrl("https://ping.arya.ai/api/v1/")
 				client(okHttpClient)
 				addConverterFactory(
 					GsonConverterFactory.create(
@@ -1210,6 +1231,15 @@ class NSApiManager {
 			), callback
 		)
 	}
+
+	fun kycVerification(
+		request: NSKycSendRequest,
+		callback: NSRetrofitCallback<KycResponse>
+	) {
+		request(
+			kycClient.kycVerification(request), callback
+		)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1729,4 +1759,9 @@ interface RTApiInterface {
 		@Field("token_id") token: String,@Field("order_id") orderId: String,@Field("payment_data") paymentData: String,
 		@Field("address") address: String, @Field("product_list") productList: String, @Field("amount") amount: String
 	): Call<NSSuccessResponse>
+
+	@POST("kyc")
+	fun kycVerification(
+		@Body request: NSKycSendRequest
+	): Call<KycResponse>
 }

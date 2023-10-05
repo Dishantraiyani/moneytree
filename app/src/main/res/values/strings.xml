@@ -690,4 +690,6 @@
     <string name="state">State</string>
     <string name="make_this_my_default_address">Make this my default address</string>
     <string name="add_address">Add Address</string>
+    <string name="verify">Verify</string>
+    <string name="kyc_verification">Kyc Verification</string>
 </resources>

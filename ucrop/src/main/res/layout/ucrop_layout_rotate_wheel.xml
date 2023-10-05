@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:visibility="gone"
     tools:showIn="@layout/ucrop_controls"
-    android:background="@color/ucrop_color_widget_background"
+    android:background="#000000"
     tools:visibility="visible">
 
     <TextView

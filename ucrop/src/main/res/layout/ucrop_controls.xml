@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/ucrop_color_widget_background"
+    android:background="#000000"
     android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/wrapper_controls"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ucrop_height_wrapper_controls"
+        android:background="#000000"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="0dp">
 
@@ -24,7 +25,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@color/ucrop_color_widget_background">
+            android:background="#000000">
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -56,6 +57,7 @@
         android:id="@+id/controls_shadow"
         android:layout_width="match_parent"
         android:layout_height="8dp"
+        android:background="#000000"
         android:layout_alignBottom="@+id/wrapper_controls"
         android:src="@drawable/ucrop_shadow_upside" />
 
@@ -64,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ucrop_height_wrapper_states"
         android:layout_below="@+id/controls_shadow"
-        android:background="@color/ucrop_color_widget_background"
+        android:background="#000000"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal">

@@ -36,6 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:visibility="gone"
-        android:background="@color/ucrop_color_widget_background"/>
+        android:background="#000000"/>
 
 </RelativeLayout>

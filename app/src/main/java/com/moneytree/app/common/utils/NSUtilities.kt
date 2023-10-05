@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Base64
+import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
@@ -36,6 +37,10 @@ import java.util.Locale
  * The utility class that handles tasks that are common throughout the application
  */
 object NSUtilities {
+
+	fun isValidMobile(phone: String): Boolean {
+		return Patterns.PHONE.matcher(phone).matches()
+	}
 
 	val statesEnableDisable = arrayOf(
 		intArrayOf(android.R.attr.state_enabled),

@@ -42,8 +42,8 @@ open class ImagePicker {
          * @param activity Activity Instance
          */
         @JvmStatic
-        fun with(activity: Activity): com.github.drjacky.imagepicker1.ImagePicker.Builder {
-            return com.github.drjacky.imagepicker1.ImagePicker.Builder(activity)
+        fun with(activity: Activity): Builder {
+            return Builder(activity)
         }
 
         /**
@@ -51,7 +51,7 @@ open class ImagePicker {
          */
         @JvmStatic
         fun getError(data: Intent?): String {
-            val error = data?.getStringExtra(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_ERROR)
+            val error = data?.getStringExtra(EXTRA_ERROR)
             if (error != null) {
                 return error
             } else {
@@ -64,7 +64,7 @@ open class ImagePicker {
          */
         @JvmStatic
         fun getFilePath(data: Intent?): String? {
-            return data?.getStringExtra(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_FILE_PATH)
+            return data?.getStringExtra(EXTRA_FILE_PATH)
         }
 
         /**
@@ -72,7 +72,7 @@ open class ImagePicker {
          */
         @JvmStatic
         fun getFile(data: Intent?): File? {
-            val path = com.github.drjacky.imagepicker1.ImagePicker.Companion.getFilePath(data)
+            val path = getFilePath(data)
             if (path != null) {
                 return File(path)
             }
@@ -109,7 +109,7 @@ open class ImagePicker {
         /**
          * Specify Image Provider (Camera, Gallery or Both)
          */
-        fun provider(imageProvider: ImageProvider): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun provider(imageProvider: ImageProvider): Builder {
             this.imageProvider = imageProvider
             return this
         }
@@ -118,7 +118,7 @@ open class ImagePicker {
          * Only Capture image using Camera.
          */
         // @Deprecated("Please use provider(ImageProvider.CAMERA) instead")
-        fun cameraOnly(): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun cameraOnly(): Builder {
             this.imageProvider = ImageProvider.CAMERA
             return this
         }
@@ -127,7 +127,7 @@ open class ImagePicker {
          * Only Pick image from gallery.
          */
         // @Deprecated("Please use provider(ImageProvider.GALLERY) instead")
-        fun galleryOnly(): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun galleryOnly(): Builder {
             this.imageProvider = ImageProvider.GALLERY
             return this
         }
@@ -138,7 +138,7 @@ open class ImagePicker {
          * by default array is empty, which indicates no additional restrictions, just images
          * @param mimeTypes
          */
-        fun galleryMimeTypes(mimeTypes: Array<String>): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun galleryMimeTypes(mimeTypes: Array<String>): Builder {
             this.mimeTypes = mimeTypes
             return this
         }
@@ -150,7 +150,7 @@ open class ImagePicker {
          * @param x aspect ratio X
          * @param y aspect ratio Y
          */
-        fun crop(x: Float, y: Float): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun crop(x: Float, y: Float): Builder {
             cropX = x
             cropY = y
             return crop()
@@ -159,7 +159,7 @@ open class ImagePicker {
         /**
          * Crop an image and let user set the aspect ratio.
          */
-        fun crop(): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun crop(): Builder {
             this.crop = true
             return this
         }
@@ -167,7 +167,7 @@ open class ImagePicker {
         /**
          * Allow dimmed layer to have a circle inside
          */
-        fun cropOval(): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun cropOval(): Builder {
             this.cropOval = true
             return this
         }
@@ -175,7 +175,7 @@ open class ImagePicker {
         /**
          * Let the user resize crop bounds
          */
-        fun cropFreeStyle(): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun cropFreeStyle(): Builder {
             this.cropFreeStyle = true
             return this
         }
@@ -184,14 +184,14 @@ open class ImagePicker {
          * Crop Square Image, Useful for Profile Image.
          *
          */
-        fun cropSquare(): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun cropSquare(): Builder {
             return crop(1f, 1f)
         }
 
         /**
          * Max Width and Height of final image
          */
-        fun maxResultSize(width: Int, height: Int, keepRatio: Boolean = false): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun maxResultSize(width: Int, height: Int, keepRatio: Boolean = false): Builder {
             this.maxWidth = width
             this.maxHeight = height
             this.keepRatio = keepRatio
@@ -203,13 +203,13 @@ open class ImagePicker {
          *
          * @param interceptor ImageProvider Interceptor
          */
-        fun setImageProviderInterceptor(interceptor: (ImageProvider) -> Unit): com.github.drjacky.imagepicker1.ImagePicker.Builder {
+        fun setImageProviderInterceptor(interceptor: (ImageProvider) -> Unit): Builder {
             this.imageProviderInterceptor = interceptor
             return this
         }
 
         fun createIntent(): Intent =
-            Intent(activity, com.github.drjacky.imagepicker1.ImagePickerActivity::class.java).apply { putExtras(getBundle()) }
+            Intent(activity, ImagePickerActivity::class.java).apply { putExtras(getBundle()) }
 
         fun createIntentFromDialog(onResult: (Intent, ImageProvider) -> Unit) {
             if (imageProvider == ImageProvider.BOTH) {
@@ -233,19 +233,19 @@ open class ImagePicker {
          */
         private fun getBundle(): Bundle {
             return Bundle().apply {
-                putSerializable(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_IMAGE_PROVIDER, imageProvider)
-                putStringArray(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_MIME_TYPES, mimeTypes)
+                putSerializable(EXTRA_IMAGE_PROVIDER, imageProvider)
+                putStringArray(EXTRA_MIME_TYPES, mimeTypes)
 
-                putBoolean(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_CROP_OVAL, cropOval)
-                putBoolean(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_CROP_FREE_STYLE, cropFreeStyle)
-                putBoolean(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_CROP, crop)
-                putFloat(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_CROP_X, cropX)
-                putFloat(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_CROP_Y, cropY)
+                putBoolean(Companion.EXTRA_CROP_OVAL, cropOval)
+                putBoolean(Companion.EXTRA_CROP_FREE_STYLE, cropFreeStyle)
+                putBoolean(EXTRA_CROP, crop)
+                putFloat(EXTRA_CROP_X, cropX)
+                putFloat(EXTRA_CROP_Y, cropY)
 
-                putInt(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_MAX_WIDTH, maxWidth)
-                putInt(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_MAX_HEIGHT, maxHeight)
+                putInt(EXTRA_MAX_WIDTH, maxWidth)
+                putInt(EXTRA_MAX_HEIGHT, maxHeight)
 
-                putBoolean(com.github.drjacky.imagepicker1.ImagePicker.Companion.EXTRA_KEEP_RATIO, keepRatio)
+                putBoolean(EXTRA_KEEP_RATIO, keepRatio)
             }
         }
     }

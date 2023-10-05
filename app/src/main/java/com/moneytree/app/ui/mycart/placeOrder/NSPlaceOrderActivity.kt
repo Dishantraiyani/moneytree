@@ -32,6 +32,7 @@ import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.RozerModel
 import com.moneytree.app.ui.mycart.address.NSAddressActivity
+import com.moneytree.app.ui.mycart.kyc.NSKycActivity
 import com.moneytree.app.ui.success.SuccessActivity
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
@@ -46,12 +47,42 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
     }
     private val model = RozerModel()
     var successResponse: NSSuccessResponse? = null
+    var userDetail: NSDataUser? = null
+
     private val cartAddressResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val resultCode = result.resultCode
             if (resultCode == Activity.RESULT_OK) {
                 productModel.isDefaultAddress = false
                 setAddress()
+            }
+        }
+
+    private val kycLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            if (resultCode == Activity.RESULT_OK) {
+                productModel.apply {
+                    val instance = NSApplication.getInstance()
+                    val productList = if (isFromOrder) instance.getOrderList() else instance.getProductList()
+                    if (productList.size > 0) {
+                        if (pref.selectedAddress == null) {
+                            Toast.makeText(activity, "Please Add Address Detail", Toast.LENGTH_SHORT).show()
+                        } else {
+                            val razorpayUtility = RazorpayUtility(activity)
+                            model.productName = "Orders"
+                            model.price = productModel.finalAmount
+                            model.email = userDetail?.email
+                            model.mobile = userDetail?.mobile
+                            model.address = Gson().toJson(pref.selectedAddress)
+                            model.productDetail = Gson().toJson(productList)
+                            razorpayUtility.startOrderPayment(model)
+                        }
+                        //saveMyCart(memberId, selectedWalletType, remark, Gson().toJson(productList), true)
+                    } else {
+                        Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
@@ -90,7 +121,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
             with(binding) {
                 with(layoutHeader) {
 
-                    var userDetail: NSDataUser? = null
+
                     getUserDetail {
                         userDetail = it
                     }
@@ -98,7 +129,8 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
 
                     btnSubmit.setOnClickListener(object : SingleClickListener() {
                         override fun performClick(v: View?) {
-                            val instance = NSApplication.getInstance()
+                            switchResultActivity(kycLauncher, NSKycActivity::class.java)
+                            /*val instance = NSApplication.getInstance()
                             val productList = if (isFromOrder) instance.getOrderList() else instance.getProductList()
                             if (productList.size > 0) {
                                 if (pref.selectedAddress == null) {
@@ -117,13 +149,15 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                                 //saveMyCart(memberId, selectedWalletType, remark, Gson().toJson(productList), true)
                             } else {
                                 Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
-                            }
+                            }*/
                         }
                     })
                 }
             }
         }
     }
+
+
 
     private fun setAddress() {
         binding.apply {

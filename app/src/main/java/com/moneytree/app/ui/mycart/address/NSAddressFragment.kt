@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.NsFragmentAddressBinding
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
@@ -85,6 +86,9 @@ class NSAddressFragment : NSFragment() {
 							return
 						} else if (mobile.isEmpty()) {
 							etMobile.error = "Enter Mobile No."
+							return
+						} else if (mobile.isEmpty() || mobile.length < 10 || !NSUtilities.isValidMobile(mobile)) {
+							etMobile.error = getString(R.string.please_enter_valid_mobile_no)
 							return
 						} else if (flatHouse.isEmpty()) {
 							etFlatHouse.error = "Enter Flat No."
