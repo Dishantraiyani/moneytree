@@ -2,6 +2,8 @@ package com.moneytree.app.common
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -9,6 +11,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.moneytree.app.R
 import com.moneytree.app.common.callbacks.NSProgressCallback
 import com.moneytree.app.common.callbacks.NSReplaceFragmentCallback
@@ -16,7 +19,7 @@ import com.moneytree.app.common.utils.NSAlertUtils
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.hideKeyboard
 import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.ui.home.NSHomeFragment
+import com.moneytree.app.databinding.LayoutPlaceOrderOptionsBinding
 import com.moneytree.app.ui.noNetwork.NoNetworkActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -218,5 +221,6 @@ open class NSFragment : Fragment() {
 				// Permission is denied
 			}
 		}
+
 
 }

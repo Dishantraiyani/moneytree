@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.HeaderUtils
@@ -25,6 +26,7 @@ import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
+import com.moneytree.app.databinding.LayoutPlaceOrderOptionsBinding
 import com.moneytree.app.databinding.NsActivityPlaceOrderBinding
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSDataUser
@@ -48,6 +50,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
     private val model = RozerModel()
     var successResponse: NSSuccessResponse? = null
     var userDetail: NSDataUser? = null
+    private var paymentOptionBottomSheet: BottomSheetDialog? = null
 
     private val cartAddressResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -129,7 +132,9 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
 
                     btnSubmit.setOnClickListener(object : SingleClickListener() {
                         override fun performClick(v: View?) {
-                            switchResultActivity(kycLauncher, NSKycActivity::class.java)
+                            placeOrder()
+
+                            //switchResultActivity(kycLauncher, NSKycActivity::class.java)
                             /*val instance = NSApplication.getInstance()
                             val productList = if (isFromOrder) instance.getOrderList() else instance.getProductList()
                             if (productList.size > 0) {
@@ -157,6 +162,54 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
         }
     }
 
+    private fun placeOrder() {
+        binding.apply {
+            productModel.apply {
+                val instance = NSApplication.getInstance()
+                val productList = if (isFromOrder) instance.getOrderList() else instance.getProductList()
+                if (productList.size > 0) {
+                    if (pref.selectedAddress == null) {
+                        Toast.makeText(activity, "Please Add Address Detail", Toast.LENGTH_SHORT).show()
+                        return
+                    } else {
+
+                        model.productName = "Orders"
+                        model.price = productModel.finalAmount
+                        model.email = userDetail?.email
+                        model.mobile = userDetail?.mobile
+                        model.address = Gson().toJson(pref.selectedAddress)
+                        model.productDetail = Gson().toJson(productList)
+
+                        showPaymentOption() {
+                            if (it == NSConstants.PAYMENT_WALLET) {
+                                if ((model.price?:"0.0").toDouble() > NSApplication.getInstance().getWalletBalance().toDouble()) {
+                                    productModel.showError("You don't have enough balance to get this service kindly recharge your wallet.")
+                                    return@showPaymentOption
+                                } else {
+                                    onPaymentSuccess("", PaymentData())
+                                }
+                            } else if (it == NSConstants.PAYMENT_GATEWAY) {
+                                Toast.makeText(activity, "Coming Soon", Toast.LENGTH_SHORT).show()
+
+                                //Uncomment when it's need
+                                /*val razorpayUtility = RazorpayUtility(activity)
+                                razorpayUtility.startOrderPayment(model)*/
+
+                            } else if (it == NSConstants.PAYMENT_MT_COIN) {
+                                Toast.makeText(activity, "Coming Soon", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+
+
+                    }
+                    //saveMyCart(memberId, selectedWalletType, remark, Gson().toJson(productList), true)
+                } else {
+                    Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
 
     private fun setAddress() {
@@ -273,6 +326,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                 tvCancel.text = activity.resources.getString(R.string.cancel)
 
                 tvOk.setOnClickListener {
+                    dialog.dismiss()
                     if (isSuccess) {
                         val intent = Intent()
                         activity.setResult(NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL, intent)
@@ -315,4 +369,38 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
         )
         activity.finish()
     }
+
+    private fun showPaymentOption(callback: (String) -> Unit) {
+        try {
+            val sheetView: View = activity.layoutInflater
+                .inflate(R.layout.layout_place_order_options, null)
+            paymentOptionBottomSheet = BottomSheetDialog(activity, R.style.MyBottomSheetDialogTheme)
+            paymentOptionBottomSheet!!.setContentView(sheetView)
+            paymentOptionBottomSheet!!.setCanceledOnTouchOutside(false)
+            paymentOptionBottomSheet!!.show()
+            val bind = LayoutPlaceOrderOptionsBinding.bind(sheetView)
+
+            bind.tvCancel.setOnClickListener {
+                paymentOptionBottomSheet!!.dismiss()
+            }
+
+            bind.btnWallet.setOnClickListener {
+                paymentOptionBottomSheet!!.dismiss()
+                callback.invoke(NSConstants.PAYMENT_WALLET)
+            }
+
+            bind.btnPaymentGateway.setOnClickListener {
+                paymentOptionBottomSheet!!.dismiss()
+                callback.invoke(NSConstants.PAYMENT_GATEWAY)
+            }
+
+            bind.btnMtCoin.setOnClickListener {
+                paymentOptionBottomSheet!!.dismiss()
+                callback.invoke(NSConstants.PAYMENT_MT_COIN)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }

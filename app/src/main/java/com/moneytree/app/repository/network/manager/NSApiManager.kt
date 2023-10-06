@@ -1764,4 +1764,9 @@ interface RTApiInterface {
 	fun kycVerification(
 		@Body request: NSKycSendRequest
 	): Call<KycResponse>
+
+	@POST("getMobileOperator.jsp")
+	fun getMobileOperator(
+		@Field("token_id") token: String,@Field("order_id") orderId: String,
+	): Call<ResponseBody>
 }

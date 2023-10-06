@@ -125,7 +125,8 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
             )
             paramsForProgressBar.addRule(RelativeLayout.CENTER_IN_PARENT)
             rlLayout.addView(progressBar, paramsForProgressBar)
-            rlLayout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+           // rlLayout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+            rlLayout.setBackgroundColor(Color.parseColor("#11000000"))
             val paramsForRelativeLayout = RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ).apply {

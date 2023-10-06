@@ -164,9 +164,9 @@ class NSMobileRechargeFragment : NSFragment() {
 												"",
 												"0",
 												"",
-												tvAd1.text.toString(),
-												tvAd2.text.toString(),
-												tvAd3.text.toString()
+												etAd1.text.toString(),
+												etAd2.text.toString(),
+												etAd3.text.toString()
 											)
 									}
 									getRechargeFetchData()

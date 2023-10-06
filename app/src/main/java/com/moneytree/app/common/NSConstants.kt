@@ -92,6 +92,10 @@ class NSConstants {
 		const val PATIENT_NUMBER = "mobile"
 		const val PATIENT_DOB = "dob"
 		const val PATIENT_REMARK = "remark"
+
+		const val PAYMENT_WALLET = "wallet"
+		const val PAYMENT_GATEWAY = "payment"
+		const val PAYMENT_MT_COIN = "mt_coin"
 		var RECHARGE_USING_PAYMENT_GATEWAY: Boolean = false
 	}
 }

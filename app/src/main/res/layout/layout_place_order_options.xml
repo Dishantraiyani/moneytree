@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/half_top_white">
+
+    <View
+        android:id="@+id/view_line_top"
+        android:layout_width="@dimen/_52sdp"
+        android:layout_height="@dimen/_3sdp"
+        android:background="@drawable/round_black"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_line_top">
+
+        <TextView
+            android:id="@+id/tv_contact_us_title"
+            style="@style/LayoutWidthHeightZeroWrap"
+            android:gravity="center"
+            android:textSize="@dimen/_13sdp"
+            android:text="@string/select_payment_option"
+            android:paddingHorizontal="@dimen/_19sdp"
+            android:paddingTop="@dimen/_19sdp"
+            android:paddingBottom="@dimen/_11sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/view_lineTop"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_contact_us_title"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_wallet"
+            style="@style/LayoutWidthHeightZeroWrap"
+            android:layout_height="@dimen/_46sdp"
+            android:background="@drawable/orange_alpha_border"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_lineTop">
+
+            <TextView
+                android:id="@+id/tv_wallet"
+                style="@style/LayoutWidthHeightWrap"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_13sdp"
+                android:text="@string/wallet"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/black"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_payment_gateway"
+            style="@style/LayoutWidthHeightZeroWrap"
+            android:layout_height="@dimen/_46sdp"
+            android:background="@drawable/orange_alpha_border"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_wallet">
+
+            <TextView
+                android:id="@+id/tv_call"
+                style="@style/LayoutWidthHeightWrap"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_13sdp"
+                android:text="@string/payment_gateway"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/inter_medium"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_mt_coin"
+            style="@style/LayoutWidthHeightZeroWrap"
+            android:layout_height="@dimen/_46sdp"
+            android:background="@drawable/orange_alpha_border"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_payment_gateway">
+
+            <TextView
+                android:id="@+id/tv_coin"
+                style="@style/LayoutWidthHeightWrap"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/black"
+                android:text="@string/mt_coin"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/inter_medium"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:gravity="center"
+        android:textSize="@dimen/_13sdp"
+        android:padding="@dimen/_19sdp"
+        android:text="@string/cancel"
+        android:textColor="@color/orange"
+        android:fontFamily="@font/inter_semi_bold"
+        app:layout_constraintTop_toBottomOf="@id/cl_top_contact"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
