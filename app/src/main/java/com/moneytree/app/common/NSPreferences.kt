@@ -23,6 +23,7 @@ class NSPreferences(context: Context) {
         private const val KEY_IS_ACTIVE_USER = "key_is_active_user"
         private const val KEY_DISPLAY_POPUP = "key_is_display_popup"
         private const val KEY_SELECTED_ADDRESS = "key_is_selected_address"
+        private const val KEY_KYC_VERIFIED = "key_is_kyc_verified"
     }
 
     /**
@@ -31,6 +32,10 @@ class NSPreferences(context: Context) {
     var authToken: String?
         get() = preference.getString(KEY_AUTH_TOKEN, null)
         set(token) = prefEdit.putString(KEY_AUTH_TOKEN, token).apply()
+
+    var isKycVerified: String?
+        get() = preference.getString(KEY_KYC_VERIFIED, null)
+        set(token) = prefEdit.putString(KEY_KYC_VERIFIED, token).apply()
 
 	var isActive: Boolean
         get() = preference.getBoolean(KEY_IS_ACTIVE_USER, false)

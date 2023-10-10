@@ -5,11 +5,9 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
-import com.moneytree.app.common.NSLoginPreferences
 import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
-import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -63,6 +61,7 @@ class NSLoginViewModel(application: Application) : NSViewModel(application) {
                     val isDataAvailable = userData.data != null
                     if (isDataAvailable) {
                         if (userData.status) {
+                            NSApplication.getInstance().getPrefs().isKycVerified = userData.kycStatus
                             MainDatabase.insertUserData(
                                 userData.data!!,
                                 object : NSUserDataCallback {

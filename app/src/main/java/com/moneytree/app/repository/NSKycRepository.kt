@@ -4,8 +4,12 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
+import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
 import com.moneytree.app.repository.network.requests.NSKycSendRequest
+import com.moneytree.app.repository.network.responses.DoctorResponse
 import com.moneytree.app.repository.network.responses.KycResponse
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
 
 /**
@@ -27,6 +31,40 @@ object NSKycRepository {
                 } else {
 					errorMessageList.clear()
                     errorMessageList.add(data.message?:"")
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+    fun sendKycRequest(kycDetail: String, image: MultipartBody.Part,
+                          viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.kycRequestSend(kycDetail, image, object :
+            NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_KYC_DATA_SEND) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as NSSuccessResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+    fun checkKycVerification(viewModelCallback: NSGenericViewModelCallback) {
+        apiManager.checkKycVerification(object :
+            NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_KYC_STATUS) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as NSSuccessResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
             }

@@ -14,7 +14,6 @@ import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.home.NSHomeFragment
 import com.moneytree.app.ui.mycart.products.NSProductFragment
 import com.moneytree.app.ui.productCategory.MTProductCategoryFragment
-import com.moneytree.app.ui.products.MTProductFragment
 import com.moneytree.app.ui.profile.NSProfileFragment
 import com.moneytree.app.ui.register.NSRegisterFragment
 import com.moneytree.app.ui.wallets.NSWalletFragment

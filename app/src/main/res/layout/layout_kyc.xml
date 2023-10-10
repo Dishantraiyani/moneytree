@@ -11,24 +11,24 @@
 	<TextView
 		android:id="@+id/tv_member_id"
 		style="@style/LayoutWidthHeightZeroWrap"
-		android:layout_width="@dimen/_150sdp"
 		android:clipToPadding="false"
 		android:text="@string/member_id_title_"
 		android:textColor="@color/black"
-		android:gravity="center"
+		android:gravity="start|center_vertical"
 		android:textSize="@dimen/_11sdp"
+		android:paddingEnd="@dimen/_2sdp"
+		android:paddingStart="0dp"
 		android:fontFamily="@font/inter_semi_bold"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toTopOf="@id/view_line3"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toStartOf="@id/view_line1"/>
+		app:layout_constraintStart_toStartOf="parent" />
 
 	<View
 		android:id="@+id/view_line1"
 		android:layout_width="1dp"
 		android:layout_height="0dp"
 		android:background="@color/line_color"
-		android:visibility="visible"
+		android:visibility="invisible"
 		app:layout_constraintStart_toEndOf="@id/tv_member_id"
 		app:layout_constraintEnd_toStartOf="@+id/tv_is_active"
 		app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
 		android:clipToPadding="false"
 		android:text="@string/is_active_"
 		android:textColor="@color/black"
-		android:gravity="center_vertical|end"
+		android:gravity="center_vertical|start"
 		android:textSize="@dimen/_11sdp"
 		android:paddingHorizontal="@dimen/_10sdp"
 		android:fontFamily="@font/inter_regular"

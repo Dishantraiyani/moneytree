@@ -1,15 +1,14 @@
 package com.moneytree.app.ui.home
 
+import android.app.Activity
 import android.app.Application
-import android.provider.SyncStateContract.Constants
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSCheckVersionRepository
@@ -203,6 +202,15 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
                 return royaltyName!!.ifEmpty {
                     "Not Available"
                 }
+            }
+        }
+    }
+
+    fun setKycStatus(activity: Activity) {
+        with(dashboardData) {
+            NSApplication.getInstance().getPrefs().isKycVerified = this?.data?.kycStatus
+            NSUtilities.checkUserVerified(activity) {
+
             }
         }
     }

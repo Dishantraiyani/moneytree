@@ -288,6 +288,7 @@ class NSHomeFragment : NSFragment() {
         with(homeBinding) {
             with(homeModel) {
                 if (isDashboardData) {
+					setKycStatus(activity)
                     tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
 					NSConstants.SOCKET_TYPE = getSocketType()
                     tvBalance.text = addText(activity, R.string.balance, setWallet())

@@ -3,21 +3,17 @@ package com.moneytree.app.ui.recharge.rechargePayment
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.core.os.bundleOf
-import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.NSUtilities
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSRechargeRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
 import com.moneytree.app.repository.network.responses.*
 import com.moneytree.app.ui.success.SuccessActivity
 

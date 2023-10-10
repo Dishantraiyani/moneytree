@@ -1,15 +1,11 @@
 package com.moneytree.app.ui.login
 
-import android.Manifest
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +14,7 @@ import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentLoginBinding
 import com.moneytree.app.repository.network.responses.NSDataUser
@@ -173,12 +170,14 @@ class NSLoginFragment : NSFragment() {
 	}
 
 	private fun openMainScreen(data: NSDataUser?) {
-		switchActivity(
-			NSMainActivity::class.java,
-			bundleOf(
-				NSConstants.KEY_LOGIN_DATA to Gson().toJson(data)
-			),
-			flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-		)
+		NSUtilities.checkUserVerified(activity) {
+			switchActivity(
+				NSMainActivity::class.java,
+				bundleOf(
+					NSConstants.KEY_LOGIN_DATA to Gson().toJson(data)
+				),
+				flags = intArrayOf(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+			)
+		}
 	}
 }

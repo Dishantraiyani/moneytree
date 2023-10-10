@@ -21,6 +21,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.NSWelcomePreferences
 import com.moneytree.app.common.PreferencesSettings
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsActivitySplashBinding
 import com.moneytree.app.ui.lock.LockActivity

@@ -34,7 +34,6 @@ import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.RozerModel
 import com.moneytree.app.ui.mycart.address.NSAddressActivity
-import com.moneytree.app.ui.mycart.kyc.NSKycActivity
 import com.moneytree.app.ui.success.SuccessActivity
 import com.razorpay.Checkout
 import com.razorpay.PaymentData

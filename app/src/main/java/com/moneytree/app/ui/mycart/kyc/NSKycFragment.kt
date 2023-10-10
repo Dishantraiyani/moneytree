@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker1.ImagePicker
 import com.github.drjacky.imagepicker1.constant.ImageProvider
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.HeaderUtils
@@ -26,6 +27,7 @@ import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.SelectImageFiles
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.buildAlertDialog
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setCircleImage
 import com.moneytree.app.common.utils.setPlaceholderAdapter
@@ -33,12 +35,16 @@ import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.common.utils.setupWithAdapterAndCustomLayoutManager
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
+import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
 import com.moneytree.app.databinding.NsFragmentDoctorDetailBinding
 import com.moneytree.app.databinding.NsFragmentKycDetailBinding
 import com.moneytree.app.repository.network.responses.DoctorDataItem
+import com.moneytree.app.repository.network.responses.ExtractedData
 import com.moneytree.app.repository.network.responses.KycListResponse
 import com.moneytree.app.ui.doctor.detail.NSDoctorImagesRecycleAdapter
 import com.moneytree.app.ui.doctor.history.NSDoctorHistoryActivity
+import com.moneytree.app.ui.main.NSMainActivity
+import com.moneytree.app.ui.verified.NSKycVerifiedActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.io.File
@@ -82,8 +88,7 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 	override fun setupViews() {
 		super.setupViews()
 		baseObserveViewModel(viewModel)
-		HeaderUtils(binding.layoutHeader, requireActivity(), headerTitle = activity.resources.getString(
-			R.string.kyc_verification), clBackView = true)
+		binding.tvHeaderBack.text = activity.resources.getString(R.string.kyc_verification)
 		setListener()
 	}
 
@@ -103,30 +108,71 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 					Toast.makeText(activity, "Please Upload Image", Toast.LENGTH_SHORT).show()
 				}
 			}
-
-			btnNext.setSafeOnClickListener {
-				requireActivity().setResult(RESULT_OK)
-				finish()
-			}
 		}
 	}
 
 	private fun setAdapter(map: HashMap<String, Any>) {
+		val model: ExtractedData = Gson().fromJson(Gson().toJson(map), ExtractedData::class.java)
 		val list: MutableList<KycListResponse> = arrayListOf()
-		for ((key, value) in map) {
+		list.add(KycListResponse("Aadhar Id", model.aadharId))
+		list.add(KycListResponse("Name", model.name))
+		list.add(KycListResponse("Dob", model.dob))
+		list.add(KycListResponse("Gender", model.gender))
+		list.add(KycListResponse("Address", model.address))
+
+		/*for ((key, value) in map) {
 			if (value is String) {
 				list.add(KycListResponse(key.replace("_", " "), value))
 			}
-		}
+		}*/
 
 		binding.rvImages.layoutManager = LinearLayoutManager(activity)
 		val adapter = NSKycRecycleAdapter()
 		adapter.setData(list)
 		binding.rvImages.adapter = adapter
-		binding.btnNext.visible()
-		binding.cardImg.visible()
 		if (list.isValidList()) {
+			binding.ivView.visible()
 			binding.tvInformation.visible()
+			binding.btnNext.visible()
+			binding.cardImg.visible()
+		} else {
+			Toast.makeText(activity, "Please Upload Valid Document", Toast.LENGTH_SHORT).show()
+		}
+
+		binding.btnNext.setSafeOnClickListener {
+			showAlertDialog(activity.resources.getString(R.string.kyc_verification), "To confirm, please verify that the following details belong to you and are accurate.", map = map, isDirectApi = true)
+		}
+	}
+
+	private fun showAlertDialog(title: String, message: String, isSuccess: Boolean = false, map: HashMap<String, Any>, isDirectApi: Boolean) {
+		buildAlertDialog(activity, LayoutCustomAlertDialogBinding::inflate) { dialog, binding ->
+			binding.apply {
+				tvTitle.visible()
+				tvTitle.text = title
+				tvSubTitle.text = message
+				tvOk.text = activity.resources.getString(R.string.ok)
+				tvCancel.text = activity.resources.getString(R.string.cancel)
+				if (isDirectApi) {
+					tvCancel.visible()
+					viewLine2.visible()
+				}
+//9e24f8c9a0316693a125b6b215d3ab16 
+				tvOk.setOnClickListener {
+					dialog.dismiss()
+					if (isDirectApi) {
+						viewModel.sendKycRequest(Gson().toJson(map), imageList) { str, isSuccess ->
+							showAlertDialog(activity.resources.getString(R.string.app_name), str, isSuccess, map, false)
+						}
+					} else if (isSuccess) {
+						activity.startActivity(Intent(activity, NSMainActivity::class.java))
+						activity.finish()
+					}
+				}
+
+				tvCancel.setOnClickListener {
+					dialog.dismiss()
+				}
+			}
 		}
 	}
 
@@ -134,8 +180,7 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 		imagePickerLauncher.launch(
 			ImagePicker.with(requireActivity())
 				.galleryOnly()
-				.crop()
-				.cropFreeStyle()
+				.crop(16f, 9f)
 				.createIntent())
 	}
 }

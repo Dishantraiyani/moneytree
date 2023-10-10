@@ -695,4 +695,9 @@
     <string name="select_payment_option">Select Payment Option</string>
     <string name="payment_gateway">Payment Gateway</string>
     <string name="mt_coin">MT Coin</string>
+    <string name="kyc_verification_pending">Kyc Verification</string>
+    <string name="your_kyc_verification_is">Your KYC verification is currently pending. Please check back in some time.</string>
+    <string name="check_verification">Check Verification</string>
+    <string name="confirm">Confirm</string>
+    <string name="kyc_status">KYC</string>
 </resources>

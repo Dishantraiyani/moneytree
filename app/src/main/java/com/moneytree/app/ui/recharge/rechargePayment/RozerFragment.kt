@@ -1,11 +1,9 @@
 package com.moneytree.app.ui.recharge.rechargePayment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
@@ -21,9 +19,6 @@ import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.RozerModel
-import com.razorpay.Checkout
-import com.razorpay.PaymentData
-import com.razorpay.PaymentResultWithDataListener
 
 
 class RozerFragment : NSFragment() {

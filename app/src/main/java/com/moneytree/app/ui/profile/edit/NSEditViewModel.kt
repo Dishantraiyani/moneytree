@@ -2,14 +2,13 @@ package com.moneytree.app.ui.profile.edit
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.moneytree.app.common.NSLoginRegisterEvent
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -55,6 +54,7 @@ class NSEditViewModel(application: Application) : NSViewModel(application) {
                 val isDataAvailable = userData.data != null
                 if (isDataAvailable) {
                     if (userData.status) {
+                        NSApplication.getInstance().getPrefs().isKycVerified = userData.kycStatus
                         MainDatabase.insertUserData(
                             userData.data!!,
                             object : NSUserDataCallback {

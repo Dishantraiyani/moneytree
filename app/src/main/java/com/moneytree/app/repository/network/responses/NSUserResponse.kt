@@ -18,6 +18,9 @@ data class NSUserResponse(
     @SerializedName("message")
     @Expose
     var message: String? = null,
+    @SerializedName("kyc_status")
+    @Expose
+    var kycStatus: String? = null,
     @SerializedName("data")
     @Expose
     var data: NSDataUser? = null

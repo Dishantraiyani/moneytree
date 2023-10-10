@@ -1,12 +1,17 @@
 package com.moneytree.app.ui.profile
 
+import android.graphics.Color
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
+import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutProfileItemBinding
 
 class ProfileRecycleAdapter(
@@ -52,6 +57,20 @@ class ProfileRecycleAdapter(
         fun bind(response: String) {
             with(profileBinding) {
                 tvProfileTitle.text = response
+                if (response.lowercase().contains("kyc")) {
+                    ivNext.gone()
+                    tvStatus.visible()
+                    val kyc = NSApplication.getInstance().getPrefs().isKycVerified
+                    tvStatus.text = NSUtilities.capitalizeEveryFirstLetter(kyc)
+                    if (kyc.equals("pending")) {
+                        tvStatus.setTextColor(Color.parseColor("#eba94a"))
+                    } else if (kyc.equals("verified")) {
+                        tvStatus.setTextColor(Color.GREEN)
+                    }
+                } else {
+                    ivNext.visible()
+                    tvStatus.gone()
+                }
                 ivIcon.setImageResource(profileIconListData[absoluteAdapterPosition])
                 if (absoluteAdapterPosition == itemCount - 1) {
                     viewLine.visibility = View.GONE

@@ -38,6 +38,17 @@
             app:layout_constraintStart_toEndOf="@id/iv_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_status"
+            style="@style/ProfileZeroWrap"
+            android:text="@string/password_title"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/iv_next"
             android:layout_width="@dimen/_12sdp"

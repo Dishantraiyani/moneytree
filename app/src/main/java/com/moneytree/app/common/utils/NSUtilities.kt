@@ -22,11 +22,15 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.moneytree.app.R
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSDateTimeHelper
+import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
 import com.moneytree.app.databinding.LayoutDateRangeSelectBinding
+import com.moneytree.app.ui.mycart.kyc.NSKycActivity
+import com.moneytree.app.ui.verified.NSKycVerifiedActivity
 import java.io.UnsupportedEncodingException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -368,5 +372,24 @@ object NSUtilities {
 			callback.invoke(startingDate)
 		}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
 		dpd.show()
+	}
+
+	fun checkUserVerified(activity: Activity, callback: (Boolean) -> Unit) {
+		val status = NSApplication.getInstance().getPrefs().isKycVerified
+		/*if (status.equals("pending")) {
+			activity.startActivity(Intent(activity, NSKycVerifiedActivity::class.java))
+			activity.finish()
+		} else*/
+		if (status.equals("verified") || status.equals("pending")) {
+			callback.invoke(true)
+		} else {
+			activity.startActivity(Intent(activity, NSKycActivity::class.java))
+			activity.finish()
+		}
+	}
+
+	fun capitalizeEveryFirstLetter(input: String?): String {
+		val regex = "\\b\\w".toRegex()
+		return regex.replace(input?:"") { it.value.uppercase() }
 	}
 }

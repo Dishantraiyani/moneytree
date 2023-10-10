@@ -142,8 +142,8 @@ class NSApiManager {
 					header(KEY_CONTENT_TYPE, APPLICATION_JSON)
 				}
 				header(KEY_ACCEPT, ACCEPT_VALUE)
-				if (request.url.toString().contains("kyc")) {
-					header("token", "cb7df89af6666694a72cb7e519d4a91f")
+				if (request.url.toString().contains("https://ping.arya.ai/api/v1/")) {
+					header("token", "9f73f99da0366d90a72bb6b71ed5ae4b")
 				} else {
 					if (isAuthorizedClient) {
 						header(
@@ -1240,6 +1240,25 @@ class NSApiManager {
 			kycClient.kycVerification(request), callback
 		)
 	}
+
+	/**
+	 * To call the set default doctor send data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun kycRequestSend(kycDetail: String, image: MultipartBody.Part, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(multiPartClient.sendKycVerificationRequest(requestBody(NSUserManager.getAuthToken()),
+			requestBody(kycDetail), image), callback)
+	}
+
+	/**
+	 * To call the set default doctor send data API
+	 *
+	 * @param callback  The callback for the result
+	 */
+	fun checkKycVerification(callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.checkKycVerification(NSUserManager.getAuthToken()), callback)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1769,4 +1788,18 @@ interface RTApiInterface {
 	fun getMobileOperator(
 		@Field("token_id") token: String,@Field("order_id") orderId: String,
 	): Call<ResponseBody>
+
+	@Multipart
+	@POST("kyc-request-send")
+	fun sendKycVerificationRequest(
+		@Part("token_id") token: RequestBody,
+		@Part("kyc_detail") kycDetail: RequestBody,
+		@Part image: MultipartBody.Part,
+	): Call<NSSuccessResponse>
+
+	@Multipart
+	@POST("check-kyc-verification")
+	fun checkKycVerification(
+		@Part("token_id") token: String
+	): Call<NSSuccessResponse>
 }

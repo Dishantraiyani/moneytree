@@ -7,12 +7,16 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDoctorRepository
 import com.moneytree.app.repository.NSKycRepository
+import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
 import com.moneytree.app.repository.network.requests.NSKycSendRequest
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 import com.moneytree.app.repository.network.responses.DoctorResponse
 import com.moneytree.app.repository.network.responses.KycResponse
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -75,5 +79,26 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 		}
 
 		return ""
+	}
+
+	fun sendKycRequest(kycDetail: String, imageFile: List<String>, callback: ((String, Boolean) -> Unit)) {
+		showProgress()
+
+		val file = File(imageFile[0])
+		val requestBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+		val part = MultipartBody.Part.createFormData("image", file.name, requestBody)
+
+		callCommonApi({ obj ->
+			NSKycRepository.sendKycRequest(kycDetail, part, obj)
+		}, { data, isSuccess ->
+			hideProgress()
+			if (isSuccess) {
+				if (data is NSSuccessResponse) {
+					callback.invoke(data.message?:"", true)
+				}
+			} else {
+				callback.invoke("", false)
+			}
+		})
 	}
 }

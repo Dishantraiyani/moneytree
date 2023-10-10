@@ -4,6 +4,7 @@ import android.app.Activity
 import com.moneytree.app.R
 import com.moneytree.app.base.adapter.BaseViewBindingAdapter
 import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.setCircleImage
 import com.moneytree.app.common.utils.setSafeOnClickListener
@@ -22,7 +23,7 @@ class NSKycRecycleAdapter(
     onBind = { binding, response, position, size ->
         binding.apply {
             response.apply {
-                tvMemberId.text = key
+                tvMemberId.text = NSUtilities.capitalizeEveryFirstLetter(key) + " :"
                 tvIsActive.text = value
             }
         }
