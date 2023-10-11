@@ -49,6 +49,7 @@
 			android:textSize="@dimen/_10sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
+			android:visibility="gone"
 			android:textColor="@color/gray_text"
 			android:paddingStart="@dimen/_10sdp"
 			android:lines="1"
@@ -93,7 +94,7 @@
 		<TextView
 			android:id="@+id/tv_price_title"
 			style="@style/LoginSubFontsWrap"
-			android:text="@string/amount"
+			android:text="@string/mrp_price"
 			android:textSize="@dimen/_10sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
@@ -104,7 +105,7 @@
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
 			app:layout_constraintStart_toEndOf="@id/iv_product_img"
-			app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
+			app:layout_constraintTop_toBottomOf="@+id/tv_qty_title" />
 
 		<TextView
 			android:id="@+id/tv_price"
@@ -169,6 +170,56 @@
 				tools:ignore="UseAppTint" />
 		</LinearLayout>
 
+		<LinearLayout
+			android:id="@+id/qut_order"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:background="@drawable/gray_round_second"
+			android:paddingVertical="@dimen/_1sdp"
+			android:visibility="gone"
+			android:layout_marginStart="@dimen/_10sdp"
+			app:layout_constraintStart_toEndOf="@id/iv_product_img"
+			app:layout_constraintBottom_toBottomOf="parent"
+			android:paddingHorizontal="@dimen/_5sdp"
+			android:layout_marginBottom="@dimen/_10sdp"
+			android:layout_marginEnd="@dimen/_5sdp">
+
+			<ImageView
+				android:id="@+id/add_order"
+				android:layout_width="@dimen/_18sdp"
+				android:layout_height="@dimen/_18sdp"
+				android:padding="@dimen/_3sdp"
+				android:src="@drawable/ic_add"
+				android:tint="@color/black"
+				android:layout_marginEnd="@dimen/_5sdp"
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint" />
+
+			<TextView
+				android:id="@+id/tv_qty_order"
+				style="@style/LoginSubFontsWrap"
+				tools:text="1"
+				android:textSize="@dimen/_11sdp"
+				android:gravity="center"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:layout_gravity="center"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium" />
+
+			<ImageView
+				android:id="@+id/remove_order"
+				android:layout_width="@dimen/_18sdp"
+				android:layout_height="@dimen/_18sdp"
+				android:padding="@dimen/_3sdp"
+				android:tint="@color/black"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:src="@drawable/ic_minus_black"
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint" />
+		</LinearLayout>
+
 		<ImageView
 			android:id="@+id/product_del"
 			android:layout_width="@dimen/_16sdp"
@@ -179,6 +230,21 @@
 			android:src="@drawable/ic_trash"
 			android:tint="@color/red"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			tools:ignore="UseAppTint" />
+
+		<ImageView
+			android:id="@+id/product_del_order"
+			android:layout_width="@dimen/_16sdp"
+			android:layout_height="@dimen/_16sdp"
+			android:layout_marginBottom="@dimen/_11sdp"
+			android:layout_marginEnd="@dimen/_10sdp"
+			android:gravity="center_vertical|center_horizontal"
+			android:src="@drawable/ic_trash"
+			android:tint="@color/red"
+			android:visibility="gone"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
 			tools:ignore="UseAppTint" />
 

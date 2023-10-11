@@ -6,6 +6,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
@@ -17,16 +18,27 @@ import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
+import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
+import com.moneytree.app.ui.mycart.productDetail.NSProductDetailListRecycleAdapter
+import com.moneytree.app.ui.mycart.products.NSProductViewModel
 
 class MTProductDetailFragment : NSFragment() {
+	private val productModel: NSProductViewModel by lazy {
+		ViewModelProvider(this)[NSProductViewModel::class.java]
+	}
+
     private var _binding: NsFragmentProductDetailBinding? = null
 
     private val productBinding get() = _binding!!
 	private var productDetail: ProductDataDTO? = null
 	private var strProductDetail: String? = null
+	private var strProductFullList: String? = null
+	private var isFromOrder: Boolean = false
+	private var productResponse: NSProductListResponse? = null
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = MTProductDetailFragment().apply {
@@ -38,12 +50,16 @@ class MTProductDetailFragment : NSFragment() {
 		super.onCreate(savedInstanceState)
 		arguments?.let {
 			strProductDetail = it.getString(NSConstants.KEY_PRODUCT_DETAIL)
+			strProductDetail = it.getString(NSConstants.KEY_PRODUCT_DETAIL)
+			strProductFullList = it.getString(NSConstants.KEY_PRODUCT_FULL_LIST)
+			isFromOrder = it.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
 			getProductDetail()
 		}
 	}
 
 	private fun getProductDetail() {
 		productDetail = Gson().fromJson(strProductDetail, ProductDataDTO::class.java)
+		productResponse = Gson().fromJson(strProductFullList, NSProductListResponse::class.java)
 	}
 
 	override fun onCreateView(
@@ -64,7 +80,12 @@ class MTProductDetailFragment : NSFragment() {
 			with(layoutHeader) {
 				if (productDetail != null) {
 					with(productDetail!!) {
+						tvHeaderBack.visible()
 						tvHeaderBack.text = productName
+						tvSimilarProducts.gone()
+						rvProductList.gone()
+						viewPager.gone()
+						ivProductImg.visible()
 						Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
 							.diskCacheStrategy(DiskCacheStrategy.NONE)
 							.skipMemoryCache(true).placeholder(R.drawable.placeholder)

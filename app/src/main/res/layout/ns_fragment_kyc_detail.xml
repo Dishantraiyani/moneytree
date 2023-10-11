@@ -27,6 +27,18 @@
             android:layout_gravity="center"
             android:visibility="visible"/>
 
+        <TextView
+            android:id="@+id/tv_skip"
+            style="@style/LayoutWidthHeightWrap"
+            android:textSize="@dimen/_14sdp"
+            android:text="@string/skip"
+            android:textColor="@color/white"
+            android:includeFontPadding="false"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_gravity="center_vertical|end"
+            android:visibility="visible"/>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.core.widget.NestedScrollView

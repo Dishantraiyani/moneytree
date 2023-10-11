@@ -1,5 +1,6 @@
 package com.moneytree.app.repository
 
+import android.util.Log
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
@@ -170,6 +171,7 @@ object NSRechargeRepository {
 	fun placeOrder(orderId: String,paymentData: String, amount: String, address: String = "", productList: String,
 							viewModelCallback: NSGenericViewModelCallback
 	) {
+
 		apiManager.placeOrder(orderId, paymentData, address, productList, amount, object :
 			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PAYMENT_MODE) {
 			override fun <T> onResponse(response: Response<T>) {

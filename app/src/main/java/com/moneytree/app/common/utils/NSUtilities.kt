@@ -375,12 +375,14 @@ object NSUtilities {
 	}
 
 	fun checkUserVerified(activity: Activity, callback: (Boolean) -> Unit) {
-		val status = NSApplication.getInstance().getPrefs().isKycVerified
+		val pref = NSApplication.getInstance().getPrefs()
+		val status = pref.isKycVerified
+		val skip = pref.isKycVerifiedSkip
 		/*if (status.equals("pending")) {
 			activity.startActivity(Intent(activity, NSKycVerifiedActivity::class.java))
 			activity.finish()
 		} else*/
-		if (status.equals("verified") || status.equals("pending")) {
+		if (status.equals("verified") || status.equals("pending") || skip) {
 			callback.invoke(true)
 		} else {
 			activity.startActivity(Intent(activity, NSKycActivity::class.java))

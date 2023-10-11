@@ -108,6 +108,12 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 					Toast.makeText(activity, "Please Upload Image", Toast.LENGTH_SHORT).show()
 				}
 			}
+
+			tvSkip.setSafeOnClickListener {
+				pref.isKycVerifiedSkip = true
+				activity.startActivity(Intent(activity, NSMainActivity::class.java))
+				activity.finish()
+			}
 		}
 	}
 

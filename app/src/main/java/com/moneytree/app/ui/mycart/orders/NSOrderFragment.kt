@@ -42,7 +42,6 @@ import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.mycart.products.NSMyFilterRecycleAdapter
-import com.moneytree.app.ui.mycart.products.ProductDataSet
 import com.moneytree.app.ui.mycart.products.diseases.NSMyDiseasesFilterRecycleAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

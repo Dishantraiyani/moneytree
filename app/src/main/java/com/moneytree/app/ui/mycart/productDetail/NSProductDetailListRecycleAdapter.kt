@@ -17,6 +17,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutShopProductDetailItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -24,6 +25,7 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 
 class NSProductDetailListRecycleAdapter(
 	activityNS: Activity,
+	val isFromOrderProduct: Boolean,
 	onPageChange: NSPageChangeCallback,
 	val onProductClick: NSProductDetailCallback,
 	val onCartTotalClick: NSCartTotalAmountCallback
@@ -85,10 +87,15 @@ class NSProductDetailListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
+					if (isFromOrderProduct) {
+						tvQtyTitleGrid.gone()
+						tvStockQtyGrid.gone()
+					}
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
 					tvStockQtyGrid.text = stockQty
 
-					val selectedItem = NSApplication.getInstance().getProduct(response)
+					val instance = NSApplication.getInstance()
+					val selectedItem = if (isFromOrderProduct) instance.getOrder(response) else instance.getProduct(response)
 					if (selectedItem != null) {
 						itemQty = selectedItem.itemQty
 					}
@@ -131,9 +138,10 @@ class NSProductDetailListRecycleAdapter(
 					} catch (e: Exception) {
 						0
 					}
-					if (itemQty < stock && stock != 0) {
+					if ((itemQty < stock && stock != 0) || isFromOrderProduct) {
 						if (itemQty == 0) {
-							NSApplication.getInstance().setProductList(response)
+							val instance = NSApplication.getInstance()
+							if (isFromOrderProduct) instance.setOrderList(response) else instance.setProductList(response)
 						}
 						itemQty += 1
 						tvQtyGrid.text = itemQty.toString()
@@ -142,8 +150,8 @@ class NSProductDetailListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPriceGrid.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
+						/*tvPriceGrid.text =
+							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					} else {
 						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
@@ -158,7 +166,8 @@ class NSProductDetailListRecycleAdapter(
 					if (itemQty > 0) {
 						itemQty -= 1
 						if (itemQty == 0) {
-							NSApplication.getInstance().removeProduct(response)
+							val instance = NSApplication.getInstance()
+							if (isFromOrderProduct) instance.removeOrder(response) else instance.removeProduct(response)
 						}
 						tvQtyGrid.text = itemQty.toString()
 
@@ -166,8 +175,8 @@ class NSProductDetailListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPriceGrid.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
+						/*tvPriceGrid.text =
+							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					}
 				}

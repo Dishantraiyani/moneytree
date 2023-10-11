@@ -22,6 +22,7 @@ import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.databinding.LayoutOrderProductItemBinding
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.databinding.LayoutShopProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -54,7 +55,7 @@ class NSOrderListRecycleAdapter(
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val voucherView =
-			LayoutShopProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+			LayoutOrderProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		return NSProductViewHolder(voucherView)
 	}
 
@@ -80,7 +81,7 @@ class NSOrderListRecycleAdapter(
 	 *
 	 * @property productBinding The voucher list view binding
 	 */
-	inner class NSProductViewHolder(private val productBinding: LayoutShopProductItemBinding) :
+	inner class NSProductViewHolder(private val productBinding: LayoutOrderProductItemBinding) :
 		RecyclerView.ViewHolder(productBinding.root) {
 
 		/**
@@ -91,8 +92,10 @@ class NSOrderListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
-					tvQtyTitle.invisible()
-					tvStockQty.invisible()
+					tvQtyTitleGrid.gone()
+					tvStockQtyGrid.gone()
+					tvQtyTitle.gone()
+					tvStockQty.gone()
 					clProductLayout.setVisibility(!isGrid)
 					clProductLayoutGrid.setVisibility(isGrid)
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
@@ -113,7 +116,8 @@ class NSOrderListRecycleAdapter(
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
 
-					tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
+					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
+					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
 
 					add.setOnClickListener {
 						addCart(response, finalAmount)
@@ -181,10 +185,10 @@ class NSOrderListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPrice.text =
+						/*tvPrice.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())
 						tvPriceGrid.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
+							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					/*} else {
 						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
@@ -208,10 +212,10 @@ class NSOrderListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPrice.text =
+						/*tvPrice.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())
 						tvPriceGrid.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
+							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					}
 				}

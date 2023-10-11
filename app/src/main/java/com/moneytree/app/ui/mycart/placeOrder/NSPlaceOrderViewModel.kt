@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.mycart.placeOrder
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
@@ -38,7 +39,7 @@ class NSPlaceOrderViewModel(application: Application) : NSViewModel(application)
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
-		NSRechargeRepository.placeOrder(orderId, paymentData, address, productList, amount, object: NSGenericViewModelCallback {
+		NSRechargeRepository.placeOrder(orderId, paymentData, amount, address, productList, object: NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				successResponse = data as NSSuccessResponse

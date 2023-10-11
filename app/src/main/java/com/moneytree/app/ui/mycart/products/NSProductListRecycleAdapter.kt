@@ -109,7 +109,8 @@ class NSProductListRecycleAdapter(
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
 
-					tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
+					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
+					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
 
 					add.setOnClickListener {
 						addCart(response, finalAmount)
@@ -176,10 +177,10 @@ class NSProductListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPrice.text =
+						/*tvPrice.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())
 						tvPriceGrid.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
+							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					} else {
 						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
@@ -203,10 +204,10 @@ class NSProductListRecycleAdapter(
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						tvPrice.text =
+						/*tvPrice.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())
 						tvPriceGrid.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
+							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					}
 				}

@@ -9,12 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
@@ -25,7 +21,6 @@ import com.moneytree.app.databinding.NsFragmentProductDetailBinding
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
-import com.moneytree.app.ui.mycart.products.NSProductListRecycleAdapter
 import com.moneytree.app.ui.mycart.products.NSProductViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,7 +41,7 @@ class NSProductDetailFragment : NSFragment() {
 	private var productResponse: NSProductListResponse? = null
 	private var strProductDetail: String? = null
 	private var strProductFullList: String? = null
-	private var isFromOrder: Boolean = false
+	private var isFromOrderValue: Boolean = false
 	private var productListAdapter: NSProductDetailListRecycleAdapter? = null
 
 	companion object {
@@ -60,7 +55,7 @@ class NSProductDetailFragment : NSFragment() {
 		arguments?.let {
 			strProductDetail = it.getString(NSConstants.KEY_PRODUCT_DETAIL)
 			strProductFullList = it.getString(NSConstants.KEY_PRODUCT_FULL_LIST)
-			isFromOrder = it.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
+			isFromOrderValue = it.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
 			getProductDetail()
 		}
 	}
@@ -114,7 +109,7 @@ class NSProductDetailFragment : NSFragment() {
 
 						tvDescription.text = spannedText
 						val instance = NSApplication.getInstance()
-						val selectedItem = if (isFromOrder) instance.getOrder(productDetail!!) else instance.getProduct(productDetail!!)
+						val selectedItem = if (isFromOrderValue) instance.getOrder(productDetail!!) else instance.getProduct(productDetail!!)
 						if (selectedItem != null) {
 							itemQty = selectedItem.itemQty
 						}
@@ -149,7 +144,7 @@ class NSProductDetailFragment : NSFragment() {
 		with(productBinding) {
 			rvProductList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 			productListAdapter =
-				NSProductDetailListRecycleAdapter(activity, object : NSPageChangeCallback {
+				NSProductDetailListRecycleAdapter(activity, isFromOrderValue, object : NSPageChangeCallback {
 					override fun onPageChange(pageNo: Int) {
 
 					}
@@ -158,7 +153,7 @@ class NSProductDetailFragment : NSFragment() {
 						switchResultActivity(dataResult, NSProductsDetailActivity::class.java, bundleOf(
 							NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail), NSConstants.KEY_PRODUCT_FULL_LIST to Gson().toJson(
 								NSProductListResponse(data = productModel.productList)
-							), NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
+							), NSConstants.KEY_IS_FROM_ORDER to isFromOrderValue)
 						)
 						finish()
 					}
@@ -186,7 +181,7 @@ class NSProductDetailFragment : NSFragment() {
 			CoroutineScope(Dispatchers.IO).launch {
 				var totalAmountValue = 0
 				val instance = NSApplication.getInstance()
-				for (data in if (isFromOrder) instance.getOrderList() else instance.getProductList()) {
+				for (data in if (isFromOrderValue) instance.getOrderList() else instance.getProductList()) {
 					val amount1: Int = data.sdPrice?.toInt() ?: 0
 					val finalAmount1 = data.itemQty * amount1
 					totalAmountValue += finalAmount1
@@ -204,7 +199,7 @@ class NSProductDetailFragment : NSFragment() {
 	private fun updateProducts() {
 		CoroutineScope(Dispatchers.IO).launch {
 			val instance = NSApplication.getInstance()
-			val selectedItem = if (isFromOrder) instance.getOrder(productDetail!!) else instance.getProduct(productDetail!!)
+			val selectedItem = if (isFromOrderValue) instance.getOrder(productDetail!!) else instance.getProduct(productDetail!!)
 			if (selectedItem == null) {
 				productDetail!!.itemQty = 0
 			}
@@ -220,7 +215,7 @@ class NSProductDetailFragment : NSFragment() {
 	private fun setCartCount() {
 		with(productBinding.layoutHeader) {
 			val instance = NSApplication.getInstance()
-			with(if (isFromOrder) instance.getOrderList() else instance.getProductList()) {
+			with(if (isFromOrderValue) instance.getOrderList() else instance.getProductList()) {
 				tvCartCount.text = size.toString()
 			}
 		}
@@ -245,7 +240,7 @@ class NSProductDetailFragment : NSFragment() {
 			with(layoutHeader) {
 				ivCart.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						switchResultActivity(dataResult, NSCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder))
+						switchResultActivity(dataResult, NSCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrderValue))
 					}
 				})
 
@@ -271,7 +266,7 @@ class NSProductDetailFragment : NSFragment() {
 
 				proceed.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						switchResultActivity(dataResult, NSCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder))
+						switchResultActivity(dataResult, NSCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrderValue))
 					}
 				})
 
@@ -304,7 +299,7 @@ class NSProductDetailFragment : NSFragment() {
 				} catch (e: Exception) {
 					0
 				}
-				if (itemQty < stock && stock != 0) {
+				if ((itemQty < stock && stock != 0) || isFromOrderValue) {
 					itemQty += 1
 					tvQtyGrid.text = itemQty.toString()
 
@@ -313,13 +308,14 @@ class NSProductDetailFragment : NSFragment() {
 					isProductValid = finalAmount > 0
 
 					val instance = NSApplication.getInstance()
-					if (isFromOrder) {
+					if (isFromOrderValue) {
 						instance.setOrderList(response)
 					} else {
 						instance.setProductList(response)
 					}
 
-					tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
+					//tvPrice.text = addText(activity, R.string.price_value, finalAmount1.toString())
+					tvPrice.text = addText(activity, R.string.price_value, amount1.toString())
 					setTotalAmount()
 				} else {
 					Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
@@ -341,13 +337,13 @@ class NSProductDetailFragment : NSFragment() {
 
 					val instance = NSApplication.getInstance()
 					if (itemQty == 0) {
-						if (isFromOrder) {
+						if (isFromOrderValue) {
 							instance.removeOrder(response)
 						} else {
 							instance.removeProduct(response)
 						}
 					} else {
-						if (isFromOrder) {
+						if (isFromOrderValue) {
 							instance.setOrderList(response)
 						} else {
 							instance.setProductList(response)

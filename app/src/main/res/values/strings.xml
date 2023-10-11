@@ -370,6 +370,7 @@
     <string name="amount">Amount: </string>
     <string name="_zero">₹0</string>
     <string name="price">Price:</string>
+    <string name="mrp_price">M.R.P:</string>
     <string name="price_value">₹%1$s</string>
     <string name="offers">Offers</string>
 

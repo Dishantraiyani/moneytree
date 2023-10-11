@@ -19,10 +19,12 @@ import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentProductsBinding
+import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.ui.productDetail.MTProductsDetailActivity
 
@@ -67,6 +69,7 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
     private fun viewCreated() {
         with(productBinding) {
             with(productModel) {
+                clFilterChangeBtn.gone()
 				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = categoryName?:"", isSearch = true, isAddNew = true, searchCallback = this@MTProductFragment)
 				with(layoutHeader) {
 					ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
@@ -168,7 +171,13 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
 						}
 					}, object : NSProductDetailCallback {
 						override fun onResponse(productDetail: ProductDataDTO) {
-							switchActivity(MTProductsDetailActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(productDetail)))
+							switchActivity(MTProductsDetailActivity::class.java,  bundleOf(
+                                NSConstants.KEY_PRODUCT_DETAIL to Gson().toJson(
+                                    productDetail
+                                ), NSConstants.KEY_PRODUCT_FULL_LIST to Gson().toJson(
+                                    NSProductListResponse(data = productList)
+                                )
+                            ))
 						}
 					})
 				rvProductList.adapter = productListAdapter
