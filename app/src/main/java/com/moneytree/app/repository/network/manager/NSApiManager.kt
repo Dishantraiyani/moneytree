@@ -411,6 +411,21 @@ class NSApiManager {
 		)
 	}
 
+	fun getPlaceOrderInfoData(
+		pageIndex: String,
+		rePurchaseId: String,
+		search: String,
+		callback: NSRetrofitCallback<OrderInfoResponse>
+	) {
+		request(
+			unAuthorised3020Client.placeMyOrderInfo(
+				NSUserManager.getAuthToken(),
+				rePurchaseId,
+				pageIndex, search
+			), callback
+		)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -1083,6 +1098,13 @@ class NSApiManager {
 		)
 	}
 
+	fun getPlaceMyOrderList(pageIndex: String, search: String, callback: NSRetrofitCallback<OrderHistoryResponse>) {
+		request(
+			unAuthorised3020Client.placeMyOrderList(NSUserManager.getAuthToken(), pageIndex, search),
+			callback
+		)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -1681,11 +1703,28 @@ interface RTApiInterface {
 	): Call<NSRepurchaseStockModel>
 
 	@FormUrlEncoded
+	@POST("place-my-order-list")
+	fun placeMyOrderList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String
+	): Call<OrderHistoryResponse>
+
+	@FormUrlEncoded
 	@POST("stockiest-stock-transfer-info")
 	fun getStockTransferInfo(
 		@Field("token_id") token: String,
 		@Field("stock_transfer_id") stockTransferId: String
 	): Call<NSRePurchaseInfoResponse>
+
+	@FormUrlEncoded
+	@POST("place-my-order-info")
+	fun placeMyOrderInfo(
+		@Field("token_id") token: String,
+		@Field("direct_order_id") repurchaseInfo: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String
+	): Call<OrderInfoResponse>
 
 	@GET("search")
 	fun getYoutubeVideos(

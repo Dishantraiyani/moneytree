@@ -309,6 +309,24 @@ object NSProductRepository {
 		})
 	}
 
+	fun getPlaceMyOrderHistoryList(pageIndex: String, search: String,
+									viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getPlaceMyOrderList(pageIndex, search, object :
+			NSRetrofitCallback<OrderHistoryResponse>(viewModelCallback, NSApiErrorHandler.ERROR_STOCK_TRANSFER_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as OrderHistoryResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
 	/**
 	 * To get joining voucher data API
 	 *

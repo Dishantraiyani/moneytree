@@ -31,9 +31,12 @@ import com.moneytree.app.databinding.NsActivityPlaceOrderBinding
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
+import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.RozerModel
 import com.moneytree.app.ui.mycart.address.NSAddressActivity
+import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
+import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.success.SuccessActivity
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
@@ -58,6 +61,11 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                 productModel.isDefaultAddress = false
                 setAddress()
             }
+        }
+
+    private val dataResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+
         }
 
     private val kycLauncher =
@@ -330,6 +338,8 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                         val intent = Intent()
                         activity.setResult(NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL, intent)
                         NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL
+                        NSApplication.getInstance().clearOrderList()
+                        switchResultActivity(dataResult, NSOrderHistoryActivity::class.java)
                         finish()
                     }
                 }

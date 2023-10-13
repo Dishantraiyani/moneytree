@@ -6,6 +6,7 @@ import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.responses.NSRePurchaseInfoResponse
 import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
+import com.moneytree.app.repository.network.responses.OrderInfoResponse
 import retrofit2.Response
 
 /**
@@ -54,6 +55,24 @@ object NSRePurchaseRepository {
                     viewModelCallback.onSuccess(response.body())
                 } else {
 					errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+    fun getPlaceOrderInfoData(pageIndex: String, repurchaseId: String, search: String,
+                              viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.getPlaceOrderInfoData(pageIndex, repurchaseId, search, object :
+            NSRetrofitCallback<OrderInfoResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REPURCHASE_INFO_DATA) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as OrderInfoResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }

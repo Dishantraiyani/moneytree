@@ -1,4 +1,4 @@
-package com.moneytree.app.ui.mycart.history
+package com.moneytree.app.ui.mycart.orders.history
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -25,21 +25,22 @@ import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentRsHistoryBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.repository.network.responses.RepurchaseDataItem
+import com.moneytree.app.ui.mycart.orders.detail.OrderDetailActivity
 import com.moneytree.app.ui.mycart.stockDetail.StockDetailActivity
 import com.moneytree.app.ui.productDetail.MTProductsDetailActivity
 
-class RSHistoryFragment : NSFragment(), NSSearchCallback {
-    private val historyModel: RSHistoryViewModel by lazy {
-		ViewModelProvider(this)[RSHistoryViewModel::class.java]
+class OrderHistoryFragment : NSFragment(), NSSearchCallback {
+    private val historyModel: OrderHistoryViewModel by lazy {
+		ViewModelProvider(this)[OrderHistoryViewModel::class.java]
     }
     private var _binding: NsFragmentRsHistoryBinding? = null
 
     private val stockBinding get() = _binding!!
-    private var stockListAdapter: RSHistoryRecycleAdapter? = null
+    private var stockListAdapter: OrderHistoryRecycleAdapter? = null
 
 
 	companion object {
-		fun newInstance(bundle: Bundle?) = RSHistoryFragment().apply {
+		fun newInstance(bundle: Bundle?) = OrderHistoryFragment().apply {
 			arguments = bundle
 		}
 	}
@@ -48,7 +49,7 @@ class RSHistoryFragment : NSFragment(), NSSearchCallback {
 		super.onCreate(savedInstanceState)
 		arguments?.let {
 			with(historyModel) {
-				stockType = it.getString(NSConstants.STOCK_HISTORY_LIST)
+				isFromOrderTab = it.getBoolean(NSConstants.KEY_IS_FROM_ORDER)
 			}
 		}
 	}
@@ -69,7 +70,7 @@ class RSHistoryFragment : NSFragment(), NSSearchCallback {
     private fun viewCreated() {
         with(stockBinding) {
             with(historyModel) {
-                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(if (stockType.equals(NSConstants.SOCKET_HISTORY)) R.string.stock_transfer else R.string.repurchase_history), isSearch = true, searchCallback = this@RSHistoryFragment)
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle =  resources.getString(R.string.order_history), isSearch = true, searchCallback = this@OrderHistoryFragment)
                 setVoucherAdapter()
             }
         }
@@ -115,7 +116,7 @@ class RSHistoryFragment : NSFragment(), NSSearchCallback {
             with(historyModel) {
 				rvHistoryList.layoutManager = LinearLayoutManager(activity)
                 stockListAdapter =
-					RSHistoryRecycleAdapter(activity, stockType.equals(NSConstants.SOCKET_HISTORY), object : NSPageChangeCallback{
+                    OrderHistoryRecycleAdapter(activity, object : NSPageChangeCallback{
                         override fun onPageChange(pageNo: Int) {
                             if (productResponse!!.nextPage) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
@@ -123,11 +124,14 @@ class RSHistoryFragment : NSFragment(), NSSearchCallback {
                                 getProductListData(pageIndex,  layoutHeader.etSearch.text.toString(), true, isBottomProgress = true)
                             }
                         }
-                    }, object : NSStockHistoryDetailCallback {
-						override fun onResponse(item: RepurchaseDataItem) {
-							switchActivity(StockDetailActivity::class.java, bundleOf(NSConstants.KEY_STOCK_TYPE to stockType.equals(NSConstants.SOCKET_HISTORY), NSConstants.STOCK_DETAIL_ID to if (stockType.equals(NSConstants.SOCKET_HISTORY)) item.stockTransferId else item.repurchaseId))
-						}
-					})
+                    }) {
+                        switchActivity(
+                            OrderDetailActivity::class.java,
+                            bundleOf(
+                                NSConstants.ORDER_DETAIL_ID to it.directOrderId
+                            )
+                        )
+                    }
                 rvHistoryList.adapter = stockListAdapter
                 pageIndex = "1"
                 getProductListData(pageIndex, layoutHeader.etSearch.text.toString(), true, isBottomProgress = false)

@@ -40,6 +40,7 @@ import com.moneytree.app.repository.network.responses.SearchData
 import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
+import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.mycart.products.NSMyFilterRecycleAdapter
 import com.moneytree.app.ui.mycart.products.diseases.NSMyDiseasesFilterRecycleAdapter
@@ -116,34 +117,8 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
                 }
 
 				layoutHeader.ivHistory.setOnClickListener {
-					if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
-						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
-					} else {
-						if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
-							clBottomSheet.visible()
-						} else {
-							switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
-						}
-					}
+					switchActivity(NSOrderHistoryActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to true))
 				}
-
-				clBottomSheet.setOnClickListener {
-					clBottomSheet.gone()
-				}
-
-				btnRepurchase.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						clBottomSheet.gone()
-						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.REPURCHASE_HISTORY))
-					}
-				})
-
-				btnStock.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						clBottomSheet.gone()
-						switchActivity(NSRepuhaseOrStockHistoryActivity::class.java, bundleOf(NSConstants.STOCK_HISTORY_LIST to NSConstants.SOCKET_HISTORY))
-					}
-				})
 
 				clFilterChangeBtn.setOnClickListener {
 					rlFilter.visible()

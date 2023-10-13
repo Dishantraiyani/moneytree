@@ -70,6 +70,7 @@ class NSConstants {
 		const val  RETAIL_LIST: String = "Retail"
 		const val  ROYALTY_LIST: String = "Royalty"
 		const val STOCK_DETAIL_ID = "stock_detail_id"
+		const val ORDER_DETAIL_ID = "order_detail_id"
 		const val KEY_STOCK_TYPE = "key_stock_type"
 
         //Pagination

@@ -21,6 +21,8 @@ import com.moneytree.app.ui.mycart.placeOrder.NSPlaceOrderActivity
 import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
 import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class NSCartFragment : NSFragment() {
     private val productModel: NSCartViewModel by lazy {
@@ -246,6 +248,18 @@ class NSCartFragment : NSFragment() {
 
                 validationErrorId.observe(viewLifecycleOwner) { errorId ->
                     showAlertDialog(getString(errorId))
+                }
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    fun onResultEvent(event: NSActivityEvent) {
+        if (event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL || event.resultCode == NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL) {
+            with(productModel) {
+                if (productListAdapter != null) {
+                    getProductListData()
+                    setTotalAmount()
                 }
             }
         }

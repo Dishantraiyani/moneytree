@@ -37,7 +37,7 @@
             android:id="@+id/tv_member_not_found_sub"
             style="@style/LayoutWidthHeightZero"
             android:clipToPadding="false"
-            android:text="@string/no_member_tree_available"
+            android:text="@string/no_item_available"
             android:textColor="@color/gray_text"
             android:gravity="center|top"
             android:textSize="@dimen/_14sdp"
