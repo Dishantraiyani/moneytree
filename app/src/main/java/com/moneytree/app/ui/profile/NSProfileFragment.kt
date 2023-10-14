@@ -103,6 +103,11 @@ class NSProfileFragment : NSFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        profileAdapter?.notifyDataSetChanged()
+    }
+
     /**
      * On click profile
      *
@@ -110,11 +115,9 @@ class NSProfileFragment : NSFragment() {
      */
     private fun onClickProfile(position: Int) {
         when (position) {
-            /*0 -> {
-                switchActivity(
-                    NSKycActivity::class.java
-                )
-            }*/
+            0 -> {
+                NSUtilities.isKycVerified(activity, true)
+            }
             1 -> {
                 switchActivity(
                     NSChangePasswordActivity::class.java,

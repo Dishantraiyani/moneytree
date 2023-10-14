@@ -95,6 +95,10 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 	private fun setListener() {
 		binding.apply {
 
+			ivBack.setOnClickListener {
+				onBackPress()
+			}
+
 			ivKycImg.setSafeOnClickListener {
 				imagePicker()
 			}

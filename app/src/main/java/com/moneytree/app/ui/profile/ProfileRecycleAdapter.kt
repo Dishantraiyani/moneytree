@@ -60,11 +60,11 @@ class ProfileRecycleAdapter(
                 if (response.lowercase().contains("kyc")) {
                     ivNext.gone()
                     tvStatus.visible()
-                    val kyc = NSApplication.getInstance().getPrefs().isKycVerified
+                    val kyc = NSApplication.getInstance().getPrefs().isKycVerified?.lowercase()
                     tvStatus.text = NSUtilities.capitalizeEveryFirstLetter(kyc)
-                    if (kyc.equals("pending")) {
+                    if (kyc == "pending") {
                         tvStatus.setTextColor(Color.parseColor("#eba94a"))
-                    } else if (kyc.equals("verified")) {
+                    } else if (kyc == "verified") {
                         tvStatus.setTextColor(Color.GREEN)
                     }
                 } else {

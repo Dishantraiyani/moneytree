@@ -7,14 +7,26 @@
     android:background="@color/background_gray"
     tools:context=".ui.doctor.NSDoctorFragment">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/card_header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_48sdp"
-        app:cardBackgroundColor="@color/orange"
+        android:background="@color/orange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:src="@drawable/ic_back"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/back"
+            tools:ignore="UseAppTint" />
 
         <TextView
             android:id="@+id/tv_header_back"
@@ -23,7 +35,11 @@
             android:text="@string/home"
             android:textColor="@color/white"
             android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/iv_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_gravity="center"
             android:visibility="visible"/>
 
@@ -37,9 +53,12 @@
             android:textStyle="bold"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_gravity="center_vertical|end"
-            android:visibility="visible"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"/>
 
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

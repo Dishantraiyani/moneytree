@@ -378,15 +378,27 @@ object NSUtilities {
 		val pref = NSApplication.getInstance().getPrefs()
 		val status = pref.isKycVerified
 		val skip = pref.isKycVerifiedSkip
+		callback.invoke(true)
 		/*if (status.equals("pending")) {
 			activity.startActivity(Intent(activity, NSKycVerifiedActivity::class.java))
 			activity.finish()
 		} else*/
-		if (status.equals("verified") || status.equals("pending") || skip) {
+		/*if (status.equals("verified") || status.equals("pending") || skip) {
 			callback.invoke(true)
 		} else {
 			activity.startActivity(Intent(activity, NSKycActivity::class.java))
 			activity.finish()
+		}*/
+	}
+
+	fun isKycVerified(activity: Activity, isPending: Boolean = false): Boolean {
+		val pref = NSApplication.getInstance().getPrefs()
+		val status = pref.isKycVerified
+		return if (status.equals("verified") || (status.equals("pending") && isPending)) {
+			true
+		} else {
+			activity.startActivity(Intent(activity, NSKycActivity::class.java))
+			false
 		}
 	}
 

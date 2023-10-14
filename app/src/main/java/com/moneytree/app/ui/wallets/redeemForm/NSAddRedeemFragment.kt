@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addTextChangeListener
 import com.moneytree.app.databinding.NsFragmentAddRedeemBinding
 import org.greenrobot.eventbus.Subscribe
@@ -83,28 +84,30 @@ class NSAddRedeemFragment : NSFragment() {
 									activity.resources.getString(R.string.please_enter_transaction_password)
 								return
 							} else {
-								val amount = etAmount.text.toString()
-								val availableBalance = (redeemModel.availableBalance?:"0.0").toDouble()
-								if (amount.toDouble() > 0 && availableBalance > 0) {
-									if (amount.toDouble() <= availableBalance) {
-										redeemModel.redeemAmountSave(
-											amount,
-											etTransactionPassword.text.toString(),
-											true
-										)
+								if (NSUtilities.isKycVerified(activity, false)) {
+									val amount = etAmount.text.toString()
+									val availableBalance = (redeemModel.availableBalance?:"0.0").toDouble()
+									if (amount.toDouble() > 0 && availableBalance > 0) {
+										if (amount.toDouble() <= availableBalance) {
+											redeemModel.redeemAmountSave(
+												amount,
+												etTransactionPassword.text.toString(),
+												true
+											)
+										} else {
+											Toast.makeText(
+												activity,
+												activity.resources.getString(R.string.not_enough_balance),
+												Toast.LENGTH_SHORT
+											).show()
+										}
 									} else {
 										Toast.makeText(
 											activity,
-											activity.resources.getString(R.string.not_enough_balance),
+											activity.resources.getString(R.string.please_enter_valid_amount),
 											Toast.LENGTH_SHORT
 										).show()
 									}
-								} else {
-									Toast.makeText(
-										activity,
-										activity.resources.getString(R.string.please_enter_valid_amount),
-										Toast.LENGTH_SHORT
-									).show()
 								}
 							}
 						}
