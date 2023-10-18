@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.mycart.products
 
 import android.app.Activity
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,6 +98,8 @@ class NSProductListRecycleAdapter(
 					tvStockQty.text = stockQty
 					tvStockQtyGrid.text = stockQty
 					tvRate.text = addText(activity, R.string.rate_title, rate!!)
+					tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 
 					val selectedItem = NSApplication.getInstance().getProduct(response)
 					if (selectedItem != null) {

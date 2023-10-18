@@ -64,15 +64,14 @@
 			android:textSize="@dimen/_9sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
-			android:visibility="gone"
 			android:textColor="@color/gray_text"
-			android:paddingStart="@dimen/_5sdp"
+			android:paddingStart="0dp"
 			android:lines="1"
-			android:layout_marginTop="@dimen/_3sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/tv_product_name_grid"
+			app:layout_constraintStart_toEndOf="@+id/tv_price_grid"
+			app:layout_constraintTop_toTopOf="@id/tv_price_grid"
+			app:layout_constraintBottom_toBottomOf="@id/tv_price_grid"
 			/>
 
 		<TextView
@@ -85,27 +84,28 @@
 			android:textColor="@color/gray_text"
 			android:paddingStart="@dimen/_5sdp"
 			android:lines="1"
+			android:visibility="gone"
 			android:layout_marginTop="@dimen/_3sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/tv_rate_grid" />
+			app:layout_constraintTop_toBottomOf="@+id/tv_product_name_grid" />
 
 		<TextView
 			android:id="@+id/tv_price_grid"
-			style="@style/LoginSubFontsZeroWrap"
+			style="@style/LoginSubFontsWrap"
 			tools:text="1Rs"
-			android:textSize="@dimen/_9sdp"
+			android:textSize="@dimen/_11sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
 			android:textColor="@color/black"
 			android:lines="1"
 			android:layout_marginTop="@dimen/_3sdp"
 			android:fontFamily="@font/inter_medium"
+			android:paddingStart="@dimen/_5sdp"
 			android:paddingEnd="@dimen/_5sdp"
-			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@id/tv_price_title_grid"
-			app:layout_constraintTop_toBottomOf="@+id/tv_rate_grid" />
+			app:layout_constraintTop_toBottomOf="@+id/tv_product_name_grid" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -115,7 +115,7 @@
 			android:layout_marginTop="@dimen/_5sdp"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/tv_price_title_grid">
+			app:layout_constraintTop_toBottomOf="@+id/tv_price_grid">
 
 			<TextView
 				android:id="@+id/tv_qty_title_grid"

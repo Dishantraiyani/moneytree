@@ -12,7 +12,8 @@
         android:id="@+id/cl_product_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_80sdp"
-        android:paddingHorizontal="@dimen/_5sdp">
+        android:paddingHorizontal="@dimen/_5sdp"
+		android:visibility="gone">
 
 		<ImageView
 			android:id="@+id/iv_product_img"
@@ -52,6 +53,7 @@
 			android:textColor="@color/gray_text"
 			android:paddingStart="@dimen/_10sdp"
 			android:lines="1"
+			android:visibility="gone"
 			android:layout_marginTop="@dimen/_3sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
@@ -62,12 +64,13 @@
 			android:id="@+id/tv_price"
 			style="@style/LoginSubFontsWrap"
 			tools:text="1Rs"
-			android:textSize="@dimen/_10sdp"
+			android:textSize="@dimen/_12sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
 			android:textColor="@color/black"
 			android:lines="1"
 			android:layout_marginTop="@dimen/_3sdp"
+			android:layout_marginStart="@dimen/_10sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
 			app:layout_constraintStart_toEndOf="@id/tv_price_title"
@@ -81,15 +84,13 @@
             android:gravity="start"
             app:guidelineUseRtl="true"
             android:textColor="@color/gray_text"
-            android:paddingStart="@dimen/_10sdp"
+            android:paddingStart="0dp"
             android:lines="1"
-			android:visibility="gone"
-			android:layout_marginTop="@dimen/_3sdp"
             android:fontFamily="@font/inter_medium"
             android:paddingEnd="@dimen/_5sdp"
-			app:layout_constraintEnd_toStartOf="@id/iv_next"
-            app:layout_constraintStart_toEndOf="@id/tv_price"
-            app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
+			app:layout_constraintStart_toEndOf="@id/tv_price"
+			app:layout_constraintTop_toTopOf="@id/tv_price"
+			app:layout_constraintBottom_toBottomOf="@id/tv_price" />
 
         <TextView
             android:id="@+id/tv_description"
@@ -123,8 +124,7 @@
 		android:id="@+id/cl_product_layout_grid"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/_5sdp"
-		android:visibility="gone">
+		android:padding="@dimen/_5sdp">
 
 		<ImageView
 			android:id="@+id/iv_product_img_grid"
@@ -177,6 +177,7 @@
 			android:textColor="@color/gray_text"
 			android:paddingStart="@dimen/_5sdp"
 			android:lines="1"
+			android:visibility="gone"
 			android:layout_marginTop="@dimen/_2sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
@@ -192,6 +193,7 @@
 			app:guidelineUseRtl="true"
 			android:textColor="@color/black"
 			android:lines="1"
+			android:layout_marginStart="@dimen/_5sdp"
 			android:layout_marginTop="@dimen/_2sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
@@ -206,16 +208,14 @@
 			android:textSize="@dimen/_9sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"
-			android:visibility="gone"
 			android:textColor="@color/gray_text"
-			android:paddingStart="@dimen/_5sdp"
+			android:paddingStart="0dp"
 			android:lines="1"
-			android:layout_marginTop="@dimen/_2sdp"
 			android:fontFamily="@font/inter_medium"
 			android:paddingEnd="@dimen/_5sdp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/tv_price_title_grid" />
+			app:layout_constraintStart_toEndOf="@+id/tv_price_grid"
+			app:layout_constraintTop_toTopOf="@id/tv_price_grid"
+			app:layout_constraintBottom_toBottomOf="@id/tv_price_grid" />
 
 
 	</androidx.constraintlayout.widget.ConstraintLayout>

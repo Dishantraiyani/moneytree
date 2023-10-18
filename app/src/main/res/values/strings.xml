@@ -359,7 +359,7 @@
     <string name="qty_title">Qty: %1$s</string>
     <string name="qty">Qty:</string>
     <string name="stock_qty">Stock Qty:</string>
-    <string name="rate_title">Rate: %1$s</string>
+    <string name="rate_title">₹%1$s</string>
     <string name="percentage_title">Percentage: %1$s</string>
     <string name="member_id">Member Id: %1$s</string>
     <string name="member_type">Member Type: %1$s</string>

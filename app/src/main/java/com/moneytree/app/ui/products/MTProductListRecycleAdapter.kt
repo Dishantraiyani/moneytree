@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.products
 
 import android.app.Activity
+import android.graphics.Paint
 import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
@@ -97,6 +98,8 @@ class MTProductListRecycleAdapter(
                     tvProductName.text = productName
                     tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
                     tvRate.text = addText(activity, R.string.rate_title, rate!!)
+                    tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 						Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
 					} else {

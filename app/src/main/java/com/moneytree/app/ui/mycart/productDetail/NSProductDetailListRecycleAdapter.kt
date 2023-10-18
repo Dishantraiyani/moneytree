@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.mycart.productDetail
 
 import android.app.Activity
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,6 +119,7 @@ class NSProductDetailListRecycleAdapter(
 						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
+					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvPriceGrid.text = sdPrice?.let { addText(activity, R.string.price_value, it) }
 					tvRateGrid.text = addText(activity, R.string.rate_title, rate?:"")
 					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {

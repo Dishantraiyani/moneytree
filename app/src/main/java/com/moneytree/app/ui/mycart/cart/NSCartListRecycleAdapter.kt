@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.mycart.cart
 
 import android.app.Activity
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -96,7 +97,7 @@ class NSCartListRecycleAdapter(
 					tvQty.text = itemQty.toString()
 					tvQtyOrder.text = itemQty.toString()
 					tvStockQty.text = stockQty
-
+					tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					val amount: Int = sdPrice?.toInt() ?: 0
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0

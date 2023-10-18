@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.mycart.productDetail
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -105,6 +106,7 @@ class NSProductDetailFragment : NSFragment() {
 						tvProductName.text = productName
 						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
 						tvRate.text = addText(activity, R.string.rate_title, rate!!)
+						tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 						val spannedText: CharSequence = Html.fromHtml(description!!)
 
 						tvDescription.text = spannedText
