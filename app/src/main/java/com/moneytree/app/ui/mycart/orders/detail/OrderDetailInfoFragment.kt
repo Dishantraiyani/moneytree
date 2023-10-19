@@ -23,6 +23,7 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentRsHistoryBinding
+import com.moneytree.app.databinding.NsFragmentRsOrderInfoBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 import com.moneytree.app.ui.mycart.orders.detail.OrderDetailActivity
@@ -33,7 +34,7 @@ class OrderDetailInfoFragment : NSFragment(), NSSearchCallback {
     private val historyModel: OrderInfoViewModel by lazy {
 		ViewModelProvider(this)[OrderInfoViewModel::class.java]
     }
-    private var _binding: NsFragmentRsHistoryBinding? = null
+    private var _binding: NsFragmentRsOrderInfoBinding? = null
 
     private val stockBinding get() = _binding!!
     private var stockListAdapter: OrderDetailRecycleAdapter? = null
@@ -50,6 +51,8 @@ class OrderDetailInfoFragment : NSFragment(), NSSearchCallback {
 		arguments?.let {
 			with(historyModel) {
                 orderDirectId = it.getString(NSConstants.ORDER_DETAIL_ID)
+                orderDirectDetail = it.getString(NSConstants.ORDER_DETAIL_ID_DETAIL)
+                getOrderHistoryDataItem(orderDirectDetail?:"")
 			}
 		}
 	}
@@ -58,7 +61,7 @@ class OrderDetailInfoFragment : NSFragment(), NSSearchCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentRsHistoryBinding.inflate(inflater, container, false)
+        _binding = NsFragmentRsOrderInfoBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
         return stockBinding.root
@@ -71,6 +74,7 @@ class OrderDetailInfoFragment : NSFragment(), NSSearchCallback {
         with(stockBinding) {
             with(historyModel) {
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle =  resources.getString(R.string.order_info), isSearch = true, searchCallback = this@OrderDetailInfoFragment)
+                tvAddress.text = historyModel.orderHistoryDataItem?.addressFinal
                 setVoucherAdapter()
             }
         }

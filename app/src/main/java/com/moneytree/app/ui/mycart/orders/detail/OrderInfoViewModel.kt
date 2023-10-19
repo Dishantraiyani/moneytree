@@ -2,6 +2,7 @@ package com.moneytree.app.ui.mycart.orders.detail
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSSearchCallback
@@ -32,6 +33,14 @@ class OrderInfoViewModel(application: Application) : NSViewModel(application),
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
     var orderDirectId: String? = null
+    var orderDirectDetail: String? = null
+    var orderHistoryDataItem: OrderHistoryDataItem? = null
+
+    fun getOrderHistoryDataItem(orderDirectDetail: String) {
+        if (orderDirectDetail.isNotEmpty()) {
+            orderHistoryDataItem = Gson().fromJson(orderDirectDetail, OrderHistoryDataItem::class.java)
+        }
+    }
 
     /**
      * Get voucher list data

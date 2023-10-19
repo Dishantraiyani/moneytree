@@ -128,7 +128,8 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
                         switchActivity(
                             OrderDetailActivity::class.java,
                             bundleOf(
-                                NSConstants.ORDER_DETAIL_ID to it.directOrderId
+                                NSConstants.ORDER_DETAIL_ID to it.directOrderId,
+                                NSConstants.ORDER_DETAIL_ID_DETAIL to Gson().toJson(it)
                             )
                         )
                     }

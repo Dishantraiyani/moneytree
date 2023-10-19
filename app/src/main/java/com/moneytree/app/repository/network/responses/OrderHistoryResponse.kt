@@ -68,5 +68,8 @@ data class OrderHistoryDataItem(
 	val landmark: String? = null,
 
 	@field:SerializedName("memberid")
-	val memberId: String? = null
+	val memberId: String? = null,
+
+	@field:SerializedName("address_final")
+	var addressFinal: String? = null
 )

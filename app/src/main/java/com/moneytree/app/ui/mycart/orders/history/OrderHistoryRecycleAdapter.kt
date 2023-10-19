@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
@@ -15,6 +16,7 @@ import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutOrderHistoryItemBinding
 import com.moneytree.app.databinding.LayoutRepurchaseStockItemBinding
+import com.moneytree.app.repository.network.responses.OrderAddressResponse
 import com.moneytree.app.repository.network.responses.OrderHistoryDataItem
 import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 
@@ -87,7 +89,14 @@ class OrderHistoryRecycleAdapter(
                     tvDate.text = createdAt
                     tvRemark.text = response.walletType
 					tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
+                    tvAddress.text = response.address1
 
+                    if (response.addressData?.isNotEmpty() == true) {
+                        val model: OrderAddressResponse = Gson().fromJson(response.addressData, OrderAddressResponse::class.java)
+                        val addressStr = model.flatHouse + ", " + model.area + ", " + model.landmark + ", " + model.city + ", " + model.state + ", " + model.county
+                        tvAddress.text = addressStr
+                        addressFinal = addressStr
+                    }
 
 					clProductLayout.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
