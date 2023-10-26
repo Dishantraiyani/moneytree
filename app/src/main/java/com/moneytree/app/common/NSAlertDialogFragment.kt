@@ -10,6 +10,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.moneytree.app.R
+import com.moneytree.app.common.callbacks.NSDialogClickCallback
 import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
 import org.greenrobot.eventbus.EventBus
 
@@ -26,6 +27,7 @@ class NSAlertDialogFragment : DialogFragment() {
         private const val BUNDLE_KEY_NEGATIVE_BUTTON_TEXT = "negativeButtonText"
         private const val BUNDLE_KEY_IS_CANCEL_NEEDED = "isCancelNeeded"
         private const val BUNDLE_KEY_ALERT_KEY = "alertKey"
+        private var callback: NSDialogClickCallback? = null
 
         fun newInstance(
             title: String?,
@@ -33,8 +35,10 @@ class NSAlertDialogFragment : DialogFragment() {
             isCancelNeeded: Boolean,
             negativeButtonText: String?,
             positiveButtonText: String?,
-            alertKey: String?
+            alertKey: String?,
+            clickCallback: NSDialogClickCallback? = null
         ) = NSAlertDialogFragment().apply {
+            callback = clickCallback
             arguments = bundleOf(
                 BUNDLE_KEY_TITLE to title,
                 BUNDLE_KEY_MESSAGE to message,
@@ -83,6 +87,7 @@ class NSAlertDialogFragment : DialogFragment() {
             bind.tvOk.text = positiveButtonText
             bind.tvOk.setOnClickListener {
                 dialog.dismiss()
+                callback?.onClick(true)
                 EventBus.getDefault().post(
                     NSAlertButtonClickEvent(
                         NSConstants.KEY_ALERT_BUTTON_POSITIVE,
@@ -104,6 +109,7 @@ class NSAlertDialogFragment : DialogFragment() {
                 bind.tvCancel.text = negativeButtonText
                 bind.tvCancel.setOnClickListener {
                     dialog.dismiss()
+                    callback?.onClick(false)
                     EventBus.getDefault().post(
                         NSAlertButtonClickEvent(
                             NSConstants.KEY_ALERT_BUTTON_NEGATIVE,

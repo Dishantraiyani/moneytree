@@ -69,7 +69,7 @@
                 style="@style/LayoutWidthHeightZeroWrap"
                 android:gravity="center"
                 android:text="@string/cancel"
-                android:textColor="@color/light_yellow"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_13sdp"
                 android:padding="@dimen/_12sdp"
                 android:visibility="gone"
@@ -88,7 +88,6 @@
                 app:layout_constraintEnd_toStartOf="@id/tv_ok"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
 
             <TextView
                 android:id="@+id/tv_ok"

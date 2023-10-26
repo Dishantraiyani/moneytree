@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.moneytree.app.R
+import com.moneytree.app.common.callbacks.NSDialogClickCallback
 import com.moneytree.app.common.callbacks.NSProgressCallback
 import com.moneytree.app.common.callbacks.NSReplaceFragmentCallback
 import com.moneytree.app.common.utils.NSAlertUtils
@@ -84,9 +85,9 @@ open class NSFragment : Fragment() {
      *
      * @param message The message to show as alert message
      */
-    protected fun showAlertDialog(message: String?) {
+    protected fun showAlertDialog(message: String?, callback: NSDialogClickCallback? = null) {
         val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage)
+        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, callback = callback)
     }
 
     /**
@@ -94,9 +95,9 @@ open class NSFragment : Fragment() {
      *
      * @param message The message to show as alert message
      */
-    protected fun showSuccessDialog(title: String?, message: String?, alertKey: String = NSConstants.POSITIVE_CLICK) {
+    protected fun showSuccessDialog(title: String?, message: String?, alertKey: String = NSConstants.POSITIVE_CLICK, callback: NSDialogClickCallback? = null) {
         val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey)
+        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey, callback = callback)
     }
 
     /**
@@ -104,14 +105,14 @@ open class NSFragment : Fragment() {
      *
      * @param message The message to show as alert message
      */
-    protected fun showLogoutDialog(title: String?, message: String?, positiveButton: String, negativeButton: String) {
+    protected fun showLogoutDialog(title: String?, message: String?, positiveButton: String, negativeButton: String, callback: NSDialogClickCallback? = null) {
         val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = NSConstants.LOGOUT_CLICK, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true)
+        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = NSConstants.LOGOUT_CLICK, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true, callback = callback)
     }
 
-	protected fun showCommonDialog(title: String?, message: String?, positiveButton: String, negativeButton: String, alertKey: String = NSConstants.COMMON_CLICK) {
+	protected fun showCommonDialog(title: String?, message: String?, positiveButton: String, negativeButton: String, alertKey: String = NSConstants.COMMON_CLICK, callback: NSDialogClickCallback? = null) {
 		val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-		NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true)
+		NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true, callback = callback)
 	}
 
     /**

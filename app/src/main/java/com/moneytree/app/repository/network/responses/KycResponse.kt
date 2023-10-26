@@ -49,6 +49,9 @@ data class ExtractedData(
 	@field:SerializedName("gender")
 	val gender: String? = null,
 
+	@field:SerializedName("father_name")
+	val fatherName: String? = null,
+
 	@field:SerializedName("aadhar_id")
 	val aadharId: String? = null,
 

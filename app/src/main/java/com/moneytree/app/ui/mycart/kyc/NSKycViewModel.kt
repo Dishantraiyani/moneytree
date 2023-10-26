@@ -30,7 +30,7 @@ import kotlin.random.Random
  */
 class NSKycViewModel(application: Application) : NSViewModel(application) {
 
-	fun kycVerification(isShowProgress: Boolean, imageList: MutableList<String>, callback: (KycResponse) -> Unit) {
+	fun kycVerification(isShowProgress: Boolean, imageList: MutableList<String>, callback: (KycResponse, Boolean) -> Unit) {
 
 		if (imageList.isValidList()) {
 			val url = imageList[0]
@@ -46,9 +46,9 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 				}, { data, isSuccess ->
 					hideProgress()
 					if (!isSuccess) {
-						callback.invoke(KycResponse())
+						callback.invoke(KycResponse(), false)
 					} else if (data is KycResponse) {
-						callback.invoke(data)
+						callback.invoke(data, true)
 					}
 				})
 			}

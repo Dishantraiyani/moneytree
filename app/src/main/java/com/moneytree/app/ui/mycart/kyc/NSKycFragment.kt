@@ -28,6 +28,7 @@ import com.moneytree.app.common.SelectImageFiles
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.buildAlertDialog
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setCircleImage
 import com.moneytree.app.common.utils.setPlaceholderAdapter
@@ -62,6 +63,11 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 				// Display the selected image using the obtained Uri
 				//imageView.setImageURI(uri)
 				//imageFile = File(uri.path!!)
+				binding.ivView.gone()
+				binding.tvInformation.gone()
+				binding.btnNext.gone()
+				binding.cardImg.gone()
+				imageList.clear()
 				imageList.add(uri.path!!)
 				if (imageList.isValidList()) {
 					Glide.with(requireActivity()).load(imageList[0]).into(binding.ivKycImg)
@@ -105,8 +111,10 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 
 			btnSend.setSafeOnClickListener {
 				if (imageList.isValidList()) {
-					viewModel.kycVerification(true, imageList) {
-						setAdapter(it.extractedData)
+					viewModel.kycVerification(true, imageList) { data, isSuccess ->
+						if (isSuccess) {
+							setAdapter(data.extractedData)
+						}
 					}
 				} else {
 					Toast.makeText(activity, "Please Upload Image", Toast.LENGTH_SHORT).show()
@@ -122,19 +130,27 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 	}
 
 	private fun setAdapter(map: HashMap<String, Any>) {
-		val model: ExtractedData = Gson().fromJson(Gson().toJson(map), ExtractedData::class.java)
+		val keyOrder = listOf("pan_no","aadhar_id", "name", "father_name", "dob", "gender", "address")
 		val list: MutableList<KycListResponse> = arrayListOf()
-		list.add(KycListResponse("Aadhar Id", model.aadharId))
+
+		/*val model: ExtractedData = Gson().fromJson(Gson().toJson(map), ExtractedData::class.java)
+
+		list.add(KycListResponse("Your Id", model.aadharId))
 		list.add(KycListResponse("Name", model.name))
+		list.add(KycListResponse("Father Name", model.fatherName))
 		list.add(KycListResponse("Dob", model.dob))
 		list.add(KycListResponse("Gender", model.gender))
-		list.add(KycListResponse("Address", model.address))
+		list.add(KycListResponse("Address", model.address))*/
 
-		/*for ((key, value) in map) {
-			if (value is String) {
-				list.add(KycListResponse(key.replace("_", " "), value))
+		//{"father_name":"VISHWNATH MISHRA","dob":"03/06/1980","name":"DINESH KUMAR MISHRA","pan_no":"AWJPM4059J"}
+		for (key in keyOrder) {
+			val value = map[key]
+			if (value != null) {
+				if (value is String) {
+					list.add(KycListResponse(key.replace("_", " "), value))
+				}
 			}
-		}*/
+		}
 
 		binding.rvImages.layoutManager = LinearLayoutManager(activity)
 		val adapter = NSKycRecycleAdapter()
@@ -187,10 +203,15 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 	}
 
 	private fun imagePicker() {
-		imagePickerLauncher.launch(
+		ImagePicker.with(requireActivity())
+			.crop(16f, 9f)
+			.createIntentFromDialog { intent, provider ->
+				imagePickerLauncher.launch(intent)
+			}
+		/*imagePickerLauncher.launch(
 			ImagePicker.with(requireActivity())
-				.galleryOnly()
+				.cameraOnly()
 				.crop(16f, 9f)
-				.createIntent())
+				.createIntent())*/
 	}
 }

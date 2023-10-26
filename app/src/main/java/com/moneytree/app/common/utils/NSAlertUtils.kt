@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.moneytree.app.common.NSAlertDialogFragment
 import com.moneytree.app.common.NSLog
+import com.moneytree.app.common.callbacks.NSDialogClickCallback
 
 /**
  * The class which performs all alert related operations
@@ -34,13 +35,14 @@ class NSAlertUtils {
             alertKey: String? = null,
             shouldRemoveExistingDialog: Boolean = true,
             alertTag: String = ALERT_DIALOG_TAG,
+            callback: NSDialogClickCallback? = null
         ) {
             try {
                 if (shouldRemoveExistingDialog) {
                     removeExistingDialog(fragmentActivity)
                 }
                 val alertDialogFragment: NSAlertDialogFragment = NSAlertDialogFragment.newInstance(
-                    title, message, isCancelNeeded, negativeButtonText, positiveButtonText, alertKey
+                    title, message, isCancelNeeded, negativeButtonText, positiveButtonText, alertKey, callback
                 )
                 alertDialogFragment.show(fragmentActivity.supportFragmentManager, alertTag)
             } catch (exception: Exception) {

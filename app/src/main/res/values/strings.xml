@@ -698,6 +698,7 @@
     <string name="mt_coin">MT Coin</string>
     <string name="kyc_verification_pending">Kyc Verification</string>
     <string name="your_kyc_verification_is">Your KYC verification is currently pending. Please check back in some time.</string>
+    <string name="your_kyc_verification_ask">Your KYC verification is currently pending. Would you like to proceed with the verification?</string>
     <string name="check_verification">Check Verification</string>
     <string name="confirm">Confirm</string>
     <string name="kyc_status">KYC</string>

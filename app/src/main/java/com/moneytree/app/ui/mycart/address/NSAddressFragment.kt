@@ -75,7 +75,7 @@ class NSAddressFragment : NSFragment() {
 						val mobile = etMobile.text.toString()
 						val flatHouse = etFlatHouse.text.toString()
 						val area = etArea.text.toString()
-						val landMark = etLandMark.text.toString()
+						//val landMark = etLandMark.text.toString()
 						val pinCode = etPinCode.text.toString()
 						val city = etCity.text.toString()
 						val state = etState.text.toString()
@@ -107,7 +107,7 @@ class NSAddressFragment : NSFragment() {
 							return
 						}
 
-						val model = NSAddressCreateResponse(fullName, mobile, flatHouse, area, landMark, pinCode, city, state, country)
+						val model = NSAddressCreateResponse(fullName, mobile, flatHouse, area, "", pinCode, city, state, country)
 						if (cbChecked.isChecked || !isAddAddress) {
 							pref.selectedAddress = model
 						}

@@ -106,7 +106,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/login_button_border"
                     android:fontFamily="@font/inter_semi_bold"
-                    android:text="@string/verify"
+                    android:text="@string/submit"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"

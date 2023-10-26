@@ -402,6 +402,12 @@ object NSUtilities {
 		}
 	}
 
+	fun checkKycVerified(): Boolean {
+		val pref = NSApplication.getInstance().getPrefs()
+		val status = pref.isKycVerified
+		return status.equals("verified") || (status.equals("pending"))
+	}
+
 	fun capitalizeEveryFirstLetter(input: String?): String {
 		val regex = "\\b\\w".toRegex()
 		return regex.replace(input?:"") { it.value.uppercase() }
