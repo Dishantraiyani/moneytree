@@ -13,6 +13,8 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSCheckVersionRepository
 import com.moneytree.app.repository.NSDashboardRepository
+import com.moneytree.app.repository.NSDoctorRepository
+import com.moneytree.app.repository.NSKycRepository
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
@@ -106,6 +108,13 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
 			}
 		}
 		isDashboardDataAvailable.value = true
+    }
+
+    fun getKycKey() {
+        callCommonApi({ obj ->
+            NSKycRepository.getKycKey(obj)
+        }, { data, isSuccess ->
+        })
     }
 
     fun setDownLine(): String {

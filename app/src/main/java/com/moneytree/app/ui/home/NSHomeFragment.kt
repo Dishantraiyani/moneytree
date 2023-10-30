@@ -113,6 +113,7 @@ class NSHomeFragment : NSFragment() {
 			getDashboardData(true)
 			addRechargeItems()
 			setRechargeLayout()
+			getKycKey()
 		}
         observeViewModel()
     }

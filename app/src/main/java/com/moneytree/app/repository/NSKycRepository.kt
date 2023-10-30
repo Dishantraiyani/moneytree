@@ -8,6 +8,7 @@ import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
 import com.moneytree.app.repository.network.requests.NSKycSendRequest
 import com.moneytree.app.repository.network.responses.DoctorResponse
 import com.moneytree.app.repository.network.responses.KycResponse
+import com.moneytree.app.repository.network.responses.NSKycKeyResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -69,5 +70,30 @@ object NSKycRepository {
                 }
             }
         })
+    }
+
+    private val kycKey: String? = null
+    fun getKycKey(viewModelCallback: NSGenericViewModelCallback) {
+        if (kycKey?.isNotEmpty() == true) {
+            NSApplication.getInstance().setKycKey(kycKey)
+        } else {
+            apiManager.getKycKey(object :
+                NSRetrofitCallback<NSKycKeyResponse>(
+                    viewModelCallback,
+                    NSApiErrorHandler.ERROR_KYC_STATUS
+                ) {
+                override fun <T> onResponse(response: Response<T>) {
+                    val data = response.body() as NSKycKeyResponse
+                    if (data.status) {
+                        NSApplication.getInstance().setKycKey(data.kycApiKey)
+                        viewModelCallback.onSuccess(response.body())
+                    } else {
+                        errorMessageList.clear()
+                        errorMessageList.add(data.message!!)
+                        viewModelCallback.onError(errorMessageList)
+                    }
+                }
+            })
+        }
     }
 }

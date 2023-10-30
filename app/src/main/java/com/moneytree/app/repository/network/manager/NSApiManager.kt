@@ -143,7 +143,7 @@ class NSApiManager {
 				}
 				header(KEY_ACCEPT, ACCEPT_VALUE)
 				if (request.url.toString().contains("https://ping.arya.ai/api/v1/")) {
-					header("token", "9f73f99da0366d90a72bb6b71ed5ae4b")
+					header("token", NSApplication.getInstance().getKycKey())
 				} else {
 					if (isAuthorizedClient) {
 						header(
@@ -1281,6 +1281,10 @@ class NSApiManager {
 	fun checkKycVerification(callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(unAuthorised3020Client.checkKycVerification(NSUserManager.getAuthToken()), callback)
 	}
+
+	fun getKycKey(callback: NSRetrofitCallback<NSKycKeyResponse>) {
+		request(unAuthorised3020Client.getKycKey(NSUserManager.getAuthToken()), callback)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1823,6 +1827,7 @@ interface RTApiInterface {
 		@Body request: NSKycSendRequest
 	): Call<KycResponse>
 
+	@FormUrlEncoded
 	@POST("getMobileOperator.jsp")
 	fun getMobileOperator(
 		@Field("token_id") token: String,@Field("order_id") orderId: String,
@@ -1841,4 +1846,10 @@ interface RTApiInterface {
 	fun checkKycVerification(
 		@Part("token_id") token: String
 	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("kyc-key")
+	fun getKycKey(
+		@Field("token_id") token: String
+	): Call<NSKycKeyResponse>
 }

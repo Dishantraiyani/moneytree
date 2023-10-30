@@ -30,6 +30,7 @@ class NSApplication : Application() {
 	private var filterProduct: HashMap<String, String> = hashMapOf()
 	private var diseasesProduct: HashMap<String, String> = hashMapOf()
 	private var selectedAddress: NSAddressCreateResponse = NSAddressCreateResponse()
+	private var kycKey: String = ""
 
     override fun onCreate() {
         super.onCreate()
@@ -85,6 +86,14 @@ class NSApplication : Application() {
 	fun setProductList(model: ProductDataDTO) {
 		val key = model.productId + "_" + model.categoryId
 		productList[key] = model
+	}
+
+	fun setKycKey(key: String) {
+		kycKey = key
+	}
+
+	fun getKycKey(): String {
+		return kycKey
 	}
 
 	fun clearProductList() {
