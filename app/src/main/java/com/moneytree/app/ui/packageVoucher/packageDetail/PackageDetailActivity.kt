@@ -2,15 +2,14 @@ package com.moneytree.app.ui.packageVoucher.packageDetail
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityPackageDetailBinding
-import com.moneytree.app.ui.wallets.verifyMember.VerifyMemberFragment
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class PackageDetailActivity : NSActivity() {
-	private lateinit var packageDetailBinding: ActivityPackageDetailBinding
+	private lateinit var packageDetailBinding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		packageDetailBinding = ActivityPackageDetailBinding.inflate(layoutInflater)
+		packageDetailBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(packageDetailBinding.root)
 		loadInitialFragment(intent.extras)
 	}
@@ -20,6 +19,6 @@ class PackageDetailActivity : NSActivity() {
 	 *
 	 */
 	private fun loadInitialFragment(bundle: Bundle?) {
-		replaceCurrentFragment(NSPackageDetailFragment.newInstance(bundle), false, packageDetailBinding.packageDetailContainer.id)
+		replaceCurrentFragment(NSPackageDetailFragment.newInstance(bundle), false, packageDetailBinding.commonContainer.id)
 	}
 }

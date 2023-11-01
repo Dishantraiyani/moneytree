@@ -92,7 +92,12 @@ class MTProductDetailFragment : NSFragment() {
 							.error(R.drawable.placeholder).into(ivProductImg)
 						tvProductName.text = productName
 						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
-						tvRate.text = addText(activity, R.string.rate_title, rate!!)
+						tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
+
+						if (sdPrice == rate) {
+							tvRate.gone()
+						}
+
 						tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 							Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
 						} else {

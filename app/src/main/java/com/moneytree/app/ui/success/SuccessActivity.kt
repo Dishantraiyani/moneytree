@@ -2,16 +2,16 @@ package com.moneytree.app.ui.success
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivitySuccessBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 
 class SuccessActivity : NSActivity() {
-	private lateinit var successBinding: ActivitySuccessBinding
+	private lateinit var binding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		successBinding = ActivitySuccessBinding.inflate(layoutInflater)
-		setContentView(successBinding.root)
+		binding = ActivityCommonBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 		loadInitialFragment(intent.extras)
 	}
 
@@ -20,6 +20,6 @@ class SuccessActivity : NSActivity() {
 	 *
 	 */
 	private fun loadInitialFragment(bundle: Bundle?) {
-		replaceCurrentFragment(SuccessFragment.newInstance(bundle), false, successBinding.successContainer.id)
+		replaceCurrentFragment(SuccessFragment.newInstance(bundle), false, binding.commonContainer.id)
 	}
 }

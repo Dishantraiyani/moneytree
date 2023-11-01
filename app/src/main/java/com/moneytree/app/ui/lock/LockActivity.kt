@@ -2,7 +2,6 @@ package com.moneytree.app.ui.lock
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,13 +11,14 @@ import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment
 import com.beautycoder.pflockscreen.security.PFResult
 import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.NSActivity
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.PreferencesSettings
+import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.ActivityLockBinding
-import com.moneytree.app.databinding.NsActivitySplashBinding
-import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.main.NSMainActivity
 
 class LockActivity : NSActivity() {

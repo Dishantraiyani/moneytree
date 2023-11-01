@@ -88,12 +88,8 @@ class NSProductDetailListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
-					if (isFromOrderProduct) {
-						tvQtyTitleGrid.gone()
-						tvStockQtyGrid.gone()
-					}
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
-					tvStockQtyGrid.text = stockQty
+					tvStockQtyGrid.text = if (isFromOrderProduct) maxOrderQty else stockQty
 
 					val instance = NSApplication.getInstance()
 					val selectedItem = if (isFromOrderProduct) instance.getOrder(response) else instance.getProduct(response)
@@ -102,9 +98,13 @@ class NSProductDetailListRecycleAdapter(
 					}
 
 					tvQtyGrid.text = itemQty.toString()
-					val amount: Int = sdPrice?.toInt() ?: 0
+					val amount: Int = rate?.toInt() ?: 0
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
+
+					if (sdPrice == rate) {
+						tvRateGrid.gone()
+					}
 
 					addGrid.setOnClickListener {
 						addCart(response, finalAmount)
@@ -120,8 +120,8 @@ class NSProductDetailListRecycleAdapter(
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
 					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-					tvPriceGrid.text = sdPrice?.let { addText(activity, R.string.price_value, it) }
-					tvRateGrid.text = addText(activity, R.string.rate_title, rate?:"")
+					tvPriceGrid.text = rate?.let { addText(activity, R.string.price_value, it) }
+					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice?:"")
 					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
@@ -136,11 +136,11 @@ class NSProductDetailListRecycleAdapter(
 				with(response) {
 					var stock = 0
 					stock = try {
-						stockQty?.toInt() ?: 0
+						if (isFromOrderProduct) maxOrderQty?.toInt() ?: 0 else stockQty?.toInt() ?: 0
 					} catch (e: Exception) {
 						0
 					}
-					if ((itemQty < stock && stock != 0) || isFromOrderProduct) {
+					if ((itemQty < stock && stock != 0)) {
 						if (itemQty == 0) {
 							val instance = NSApplication.getInstance()
 							if (isFromOrderProduct) instance.setOrderList(response) else instance.setProductList(response)
@@ -148,7 +148,7 @@ class NSProductDetailListRecycleAdapter(
 						itemQty += 1
 						tvQtyGrid.text = itemQty.toString()
 
-						val amount1: Int = sdPrice?.toInt() ?: 0
+						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
@@ -173,7 +173,7 @@ class NSProductDetailListRecycleAdapter(
 						}
 						tvQtyGrid.text = itemQty.toString()
 
-						val amount1: Int = sdPrice?.toInt() ?: 0
+						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 

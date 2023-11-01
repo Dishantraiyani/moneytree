@@ -313,7 +313,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 				var totalAmountValue = 0
 				for (data in NSApplication.getInstance().getOrderList()) {
 					if (data.isFromOrder) {
-						val amount1: Int = data.sdPrice?.toInt() ?: 0
+						val amount1: Int = data.rate?.toInt() ?: 0
 						val finalAmount1 = data.itemQty * amount1
 						totalAmountValue += finalAmount1
 					}

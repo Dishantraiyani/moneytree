@@ -2,14 +2,14 @@ package com.moneytree.app.ui.register.add
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityAddRegisterBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSAddRegisterActivity : NSActivity() {
-    private lateinit var binding: NsActivityAddRegisterBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = NsActivityAddRegisterBinding.inflate(layoutInflater)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadInitialFragment()
     }
@@ -19,6 +19,6 @@ class NSAddRegisterActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSAddRegisterFragment.newInstance(), false, binding.registerContainer.id)
+        replaceCurrentFragment(NSAddRegisterFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

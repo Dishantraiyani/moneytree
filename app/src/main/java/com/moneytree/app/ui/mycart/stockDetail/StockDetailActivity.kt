@@ -2,15 +2,14 @@ package com.moneytree.app.ui.mycart.stockDetail
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityStockDetailBinding
-import com.moneytree.app.ui.mycart.history.RSHistoryFragment
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class StockDetailActivity : NSActivity() {
-	private lateinit var stockBinding: NsActivityStockDetailBinding
+	private lateinit var stockBinding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		stockBinding = NsActivityStockDetailBinding.inflate(layoutInflater)
+		stockBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(stockBinding.root)
 		loadInitialFragment(intent.extras)
 	}
@@ -23,7 +22,7 @@ class StockDetailActivity : NSActivity() {
 		replaceCurrentFragment(
 			StockDetailFragment.newInstance(bundle),
 			false,
-			stockBinding.stockDetailContainer.id
+			stockBinding.commonContainer.id
 		)
 	}
 }

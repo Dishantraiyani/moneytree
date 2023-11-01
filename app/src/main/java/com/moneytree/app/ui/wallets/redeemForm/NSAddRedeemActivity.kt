@@ -2,15 +2,15 @@ package com.moneytree.app.ui.wallets.redeemForm
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityAddRedeemBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSAddRedeemActivity : NSActivity() {
-    private lateinit var addRedeemBinding: ActivityAddRedeemBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        addRedeemBinding = ActivityAddRedeemBinding.inflate(layoutInflater)
-        setContentView(addRedeemBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment(intent.extras)
     }
 
@@ -19,6 +19,6 @@ class NSAddRedeemActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSAddRedeemFragment.newInstance(bundle), false, addRedeemBinding.addRedeemContainer.id)
+        replaceCurrentFragment(NSAddRedeemFragment.newInstance(bundle), false, binding.commonContainer.id)
     }
 }

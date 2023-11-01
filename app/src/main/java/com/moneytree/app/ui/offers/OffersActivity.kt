@@ -2,14 +2,14 @@ package com.moneytree.app.ui.offers
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityOffersBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class OffersActivity : NSActivity() {
-	private lateinit var offerBinding: ActivityOffersBinding
+	private lateinit var offerBinding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		offerBinding = ActivityOffersBinding.inflate(layoutInflater)
+		offerBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(offerBinding.root)
 		loadInitialFragment()
 	}
@@ -19,6 +19,6 @@ class OffersActivity : NSActivity() {
 	 *
 	 */
 	private fun loadInitialFragment() {
-		replaceCurrentFragment(NSOfferFragment.newInstance(), false, offerBinding.offerContainer.id)
+		replaceCurrentFragment(NSOfferFragment.newInstance(), false, offerBinding.commonContainer.id)
 	}
 }

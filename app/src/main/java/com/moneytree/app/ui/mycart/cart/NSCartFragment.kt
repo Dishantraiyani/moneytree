@@ -171,7 +171,7 @@ class NSCartFragment : NSFragment() {
 				var totalAmountValue = 0
                 val instance = NSApplication.getInstance()
 				for (data in if (isFromOrder) instance.getOrderList() else instance.getProductList()) {
-					val amount1 : Int = data.sdPrice?.toInt() ?: 0
+					val amount1 : Int = data.rate?.toInt() ?: 0
 					val finalAmount1 = data.itemQty * amount1
 					totalAmountValue += finalAmount1
 				}

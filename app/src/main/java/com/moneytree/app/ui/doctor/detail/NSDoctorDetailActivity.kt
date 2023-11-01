@@ -2,14 +2,14 @@ package com.moneytree.app.ui.doctor.detail
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityDoctorBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSDoctorDetailActivity : NSActivity() {
-    private lateinit var binding: ActivityDoctorBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDoctorBinding.inflate(layoutInflater)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadInitialFragment(intent.extras)
     }
@@ -19,6 +19,6 @@ class NSDoctorDetailActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSDoctorDetailFragment.newInstance(bundle), false, binding.doctorContainer.id)
+        replaceCurrentFragment(NSDoctorDetailFragment.newInstance(bundle), false, binding.commonContainer.id)
     }
 }

@@ -2,15 +2,15 @@ package com.moneytree.app.ui.reports
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityReportsBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSReportsActivity : NSActivity() {
-    private lateinit var reportsBinding: NsActivityReportsBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        reportsBinding = NsActivityReportsBinding.inflate(layoutInflater)
-        setContentView(reportsBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment()
     }
 
@@ -19,6 +19,6 @@ class NSReportsActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSReportsFragment.newInstance(), false, reportsBinding.reportsContainer.id)
+        replaceCurrentFragment(NSReportsFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

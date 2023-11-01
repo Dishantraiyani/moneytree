@@ -1285,6 +1285,43 @@ class NSApiManager {
 	fun getKycKey(callback: NSRetrofitCallback<NSKycKeyResponse>) {
 		request(unAuthorised3020Client.getKycKey(NSUserManager.getAuthToken()), callback)
 	}
+
+	fun addOrUpdateAddress(rsR: NSAddressCreateResponse, setAsDefault: String = "N", addressId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(
+			unAuthorised3020Client.addOrUpdateAddress(
+				NSUserManager.getAuthToken(),
+				rsR.fullName,
+				rsR.mobile,
+				rsR.flatHouse,
+				rsR.area,
+				rsR.landMark,
+				rsR.pinCode,
+				rsR.country,
+				rsR.state,
+				rsR.city,
+				setAsDefault,
+				addressId,
+			), callback
+		)
+	}
+
+	fun getAddressList(callback: NSRetrofitCallback<NSKycKeyResponse>) {
+		request(
+			unAuthorised3020Client.getAddressList(
+				NSUserManager.getAuthToken()
+			), callback
+		)
+	}
+
+	fun addressDelete(addressId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(
+			unAuthorised3020Client.deleteAddress(
+				NSUserManager.getAuthToken(),
+				addressId
+			), callback
+		)
+	}
+
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1852,4 +1889,34 @@ interface RTApiInterface {
 	fun getKycKey(
 		@Field("token_id") token: String
 	): Call<NSKycKeyResponse>
+
+	@FormUrlEncoded
+	@POST("add-update-address")
+	fun addOrUpdateAddress(
+		@Field("token_id") token: String,
+		@Field("full_name") fullName: String,
+		@Field("mobile") mobile: String,
+		@Field("flat_house") flatHouse: String,
+		@Field("area") area: String,
+		@Field("landmark") landMark: String,
+		@Field("pin_code") pinCode: String,
+		@Field("country") country: String,
+		@Field("state") state: String,
+		@Field("city") city: String,
+		@Field("set_as_defualt") setAsDefault: String = "N",
+		@Field("address_id") addressId: String
+	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("view-address-list")
+	fun getAddressList(
+		@Field("token_id") token: String
+	): Call<NSKycKeyResponse>
+
+	@FormUrlEncoded
+	@POST("delete-address-list")
+	fun deleteAddress(
+		@Field("token_id") token: String,
+		@Field("address_id") addressId: String
+	): Call<NSSuccessResponse>
 }

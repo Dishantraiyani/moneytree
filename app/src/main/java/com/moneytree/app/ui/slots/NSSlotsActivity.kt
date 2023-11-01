@@ -2,16 +2,15 @@ package com.moneytree.app.ui.slots
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivitySlotsBinding
-import com.moneytree.app.databinding.NsActivityVouchersBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSSlotsActivity : NSActivity() {
-    private lateinit var slotsBinding: NsActivitySlotsBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        slotsBinding = NsActivitySlotsBinding.inflate(layoutInflater)
-        setContentView(slotsBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment(intent!!.extras!!)
     }
 
@@ -20,6 +19,6 @@ class NSSlotsActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle) {
-        replaceCurrentFragment(NSSlotFragment.newInstance(bundle), false, slotsBinding.slotsContainer.id)
+        replaceCurrentFragment(NSSlotFragment.newInstance(bundle), false, binding.commonContainer.id)
     }
 }

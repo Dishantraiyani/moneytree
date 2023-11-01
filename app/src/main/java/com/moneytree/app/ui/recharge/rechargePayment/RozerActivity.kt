@@ -6,19 +6,19 @@ import com.google.gson.Gson
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.callbacks.NSPaymentDetailCallback
 import com.moneytree.app.common.callbacks.NSPaymentFragmentCallback
-import com.moneytree.app.databinding.ActivityRozerBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 
 class RozerActivity : NSActivity(), PaymentResultWithDataListener {
-	private lateinit var qrBinding: ActivityRozerBinding
+	private lateinit var binding: ActivityCommonBinding
 	private var paymentCallback: NSPaymentDetailCallback? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		qrBinding = ActivityRozerBinding.inflate(layoutInflater)
-		setContentView(qrBinding.root)
+		binding = ActivityCommonBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 		Checkout.preload(this)
 		loadInitialFragment(intent.extras!!)
 	}
@@ -34,7 +34,7 @@ class RozerActivity : NSActivity(), PaymentResultWithDataListener {
 			}
 		})
 
-		replaceCurrentFragment(fragment, false, qrBinding.rozerContainer.id)
+		replaceCurrentFragment(fragment, false, binding.commonContainer.id)
 	}
 
 	override fun onPaymentSuccess(p0: String?, p1: PaymentData?) {

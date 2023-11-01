@@ -2,14 +2,14 @@ package com.moneytree.app.ui.doctor.history
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityDoctorBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSDoctorHistoryActivity : NSActivity() {
-    private lateinit var binding: ActivityDoctorBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDoctorBinding.inflate(layoutInflater)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadInitialFragment()
     }
@@ -19,6 +19,6 @@ class NSDoctorHistoryActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSDoctorHistoryFragment.newInstance(), false, binding.doctorContainer.id)
+        replaceCurrentFragment(NSDoctorHistoryFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

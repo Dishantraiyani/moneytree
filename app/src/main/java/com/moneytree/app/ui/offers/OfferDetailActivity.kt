@@ -3,17 +3,17 @@ package com.moneytree.app.ui.offers
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSConstants
-import com.moneytree.app.databinding.ActivityOfferDetailBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 import com.moneytree.app.ui.repurchaseInfo.NSRePurchaseInfoFragment
 import com.moneytree.app.ui.retailInfo.NSRetailInfoFragment
 import com.moneytree.app.ui.royaltyInfo.NSRoyaltyInfoFragment
 
 class OfferDetailActivity : NSActivity() {
-	private lateinit var offerBinding: ActivityOfferDetailBinding
+	private lateinit var offerBinding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		offerBinding = ActivityOfferDetailBinding.inflate(layoutInflater)
+		offerBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(offerBinding.root)
 		loadInitialFragment(intent.extras)
 	}
@@ -26,11 +26,11 @@ class OfferDetailActivity : NSActivity() {
 		if (bundle != null) {
 			val offerType = bundle.getString(NSConstants.KEY_OFFER_DETAIL_TYPE)
 			if (offerType.equals(NSConstants.REPURCHASE_HISTORY)) {
-				replaceCurrentFragment(NSRePurchaseInfoFragment.newInstance(bundle), false, offerBinding.offerContainer.id)
+				replaceCurrentFragment(NSRePurchaseInfoFragment.newInstance(bundle), false, offerBinding.commonContainer.id)
 			} else if (offerType.equals(NSConstants.RETAIL_LIST)) {
-				replaceCurrentFragment(NSRetailInfoFragment.newInstance(bundle), false, offerBinding.offerContainer.id)
+				replaceCurrentFragment(NSRetailInfoFragment.newInstance(bundle), false, offerBinding.commonContainer.id)
 			} else if (offerType.equals(NSConstants.ROYALTY_LIST)) {
-				replaceCurrentFragment(NSRoyaltyInfoFragment.newInstance(bundle), false, offerBinding.offerContainer.id)
+				replaceCurrentFragment(NSRoyaltyInfoFragment.newInstance(bundle), false, offerBinding.commonContainer.id)
 			}
 		}
 	}

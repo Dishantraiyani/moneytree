@@ -19,6 +19,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutProductItemBinding
@@ -96,8 +97,8 @@ class MTProductListRecycleAdapter(
 						.skipMemoryCache(true).into(ivProductImg)
 
                     tvProductName.text = productName
-                    tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
-                    tvRate.text = addText(activity, R.string.rate_title, rate!!)
+                    tvPrice.text = addText(activity, R.string.price_value, rate!!)
+                    tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
                     tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -105,6 +106,12 @@ class MTProductListRecycleAdapter(
 					} else {
 						Html.fromHtml(description)
 					}
+
+                    if (sdPrice == rate) {
+                        tvRate.gone()
+                        tvRateGrid.gone()
+                    }
+
                     //tvDescription.text = description!!
 					clProductLayout.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
@@ -117,8 +124,8 @@ class MTProductListRecycleAdapter(
 						.skipMemoryCache(true).into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
-					tvPriceGrid.text = addText(activity, R.string.price_value, sdPrice)
-					tvRateGrid.text = addText(activity, R.string.rate_title, rate)
+					tvPriceGrid.text = addText(activity, R.string.price_value, rate)
+					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
 					clProductLayoutGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)

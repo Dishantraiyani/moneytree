@@ -1,18 +1,15 @@
 package com.moneytree.app.ui.youtube
 
 import android.os.Bundle
-import com.moneytree.app.R
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityYoutubeBinding
-import com.moneytree.app.databinding.NsActivityVouchersBinding
-import com.moneytree.app.ui.vouchers.NSMainVoucherFragment
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class YoutubeActivity : NSActivity() {
-	private lateinit var binding: ActivityYoutubeBinding
+	private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-		binding = ActivityYoutubeBinding.inflate(layoutInflater)
+		binding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		loadInitialFragment()
     }
@@ -22,6 +19,6 @@ class YoutubeActivity : NSActivity() {
 	 *
 	 */
 	private fun loadInitialFragment() {
-		replaceCurrentFragment(NSYoutubeFragment.newInstance(), false, binding.youtubeContainer.id)
+		replaceCurrentFragment(NSYoutubeFragment.newInstance(), false, binding.commonContainer.id)
 	}
 }

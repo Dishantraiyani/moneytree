@@ -105,14 +105,14 @@
 				android:id="@+id/tv_price"
 				style="@style/LoginSubFontsWrap"
 				tools:text="1Rs"
-				android:textSize="@dimen/_13sdp"
+				android:textSize="@dimen/_16sdp"
 				android:gravity="start"
 				app:guidelineUseRtl="true"
 				android:textColor="@color/black"
 				android:lines="1"
 				android:layout_marginStart="@dimen/_15sdp"
 				android:layout_marginTop="@dimen/_6sdp"
-				android:fontFamily="@font/inter_medium"
+				android:fontFamily="@font/inter_semi_bold"
 				app:layout_constraintStart_toEndOf="@id/tv_price_title"
 				app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
@@ -139,6 +139,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical"
+				android:layout_marginTop="@dimen/_5sdp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toBottomOf="@id/tv_rate">
@@ -273,7 +274,7 @@
 				android:paddingEnd="@dimen/_5sdp"
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/ll_diseases_detail" />
+				app:layout_constraintTop_toBottomOf="@+id/tv_stock_qty_title" />
 
 			<TextView
 				android:id="@+id/tv_stock_qty_title"
@@ -285,12 +286,11 @@
 				android:textColor="@color/gray_text"
 				android:paddingStart="@dimen/_15sdp"
 				android:lines="1"
-				android:visibility="gone"
 				android:layout_marginTop="@dimen/_6sdp"
 				android:fontFamily="@font/inter_medium"
 				android:paddingEnd="@dimen/_5sdp"
 				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
+				app:layout_constraintTop_toBottomOf="@+id/ll_diseases_detail" />
 
 			<TextView
 				android:id="@+id/tv_stock_qty"
@@ -301,11 +301,10 @@
 				app:guidelineUseRtl="true"
 				android:textColor="@color/black"
 				android:lines="1"
-				android:visibility="gone"
 				android:layout_marginTop="@dimen/_6sdp"
 				android:fontFamily="@font/inter_medium"
 				app:layout_constraintStart_toEndOf="@id/tv_stock_qty_title"
-				app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
+				app:layout_constraintTop_toBottomOf="@+id/ll_diseases_detail" />
 
 			<TextView
 				android:id="@+id/tv_description"

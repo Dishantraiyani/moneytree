@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_80sdp"
         android:paddingHorizontal="@dimen/_5sdp"
-		android:visibility="gone">
+		android:visibility="visible">
 
 		<ImageView
 			android:id="@+id/iv_product_img"
@@ -124,7 +124,8 @@
 		android:id="@+id/cl_product_layout_grid"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/_5sdp">
+		android:padding="@dimen/_5sdp"
+		android:visibility="gone">
 
 		<ImageView
 			android:id="@+id/iv_product_img_grid"

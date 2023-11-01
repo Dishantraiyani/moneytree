@@ -2,14 +2,14 @@ package com.moneytree.app.ui.mycart.address
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityAddressBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSAddressActivity : NSActivity() {
-    private lateinit var productsBinding: NsActivityAddressBinding
+    private lateinit var productsBinding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productsBinding = NsActivityAddressBinding.inflate(layoutInflater)
+        productsBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(productsBinding.root)
         loadInitialFragment(intent.extras)
     }
@@ -19,6 +19,6 @@ class NSAddressActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSAddressFragment.newInstance(bundle), false, productsBinding.addressContainer.id)
+        replaceCurrentFragment(NSAddressFragment.newInstance(bundle), false, productsBinding.commonContainer.id)
     }
 }

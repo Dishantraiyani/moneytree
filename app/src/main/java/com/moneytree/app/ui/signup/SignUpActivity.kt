@@ -2,16 +2,15 @@ package com.moneytree.app.ui.signup
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivitySignUpBinding
-import com.moneytree.app.ui.memberTree.MemberTreeFragment
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class SignUpActivity : NSActivity() {
-    private lateinit var signUpBinding: ActivitySignUpBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        signUpBinding = ActivitySignUpBinding.inflate(layoutInflater)
-        setContentView(signUpBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment()
     }
 
@@ -20,6 +19,6 @@ class SignUpActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSSignUpFragment.newInstance(), false, signUpBinding.signupContainer.id)
+        replaceCurrentFragment(NSSignUpFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

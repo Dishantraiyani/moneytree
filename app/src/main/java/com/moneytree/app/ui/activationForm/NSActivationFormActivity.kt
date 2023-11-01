@@ -2,14 +2,14 @@ package com.moneytree.app.ui.activationForm
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityActivationFormBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSActivationFormActivity : NSActivity() {
-    private lateinit var activateBinding: NsActivityActivationFormBinding
+    private lateinit var activateBinding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activateBinding = NsActivityActivationFormBinding.inflate(layoutInflater)
+        activateBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(activateBinding.root)
         loadInitialFragment(intent.extras)
     }
@@ -19,6 +19,6 @@ class NSActivationFormActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSActivationFormFragment.newInstance(bundle), false, activateBinding.activateFormContainer.id)
+        replaceCurrentFragment(NSActivationFormFragment.newInstance(bundle), false, activateBinding.commonContainer.id)
     }
 }

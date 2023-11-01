@@ -2,14 +2,14 @@ package com.moneytree.app.ui.verified
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityKycVerifiedBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSKycVerifiedActivity : NSActivity() {
-    private lateinit var binding: NsActivityKycVerifiedBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = NsActivityKycVerifiedBinding.inflate(layoutInflater)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadInitialFragment()
     }
@@ -19,6 +19,6 @@ class NSKycVerifiedActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSKycVerifiedFragment.newInstance(), false, binding.vouchersContainer.id)
+        replaceCurrentFragment(NSKycVerifiedFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

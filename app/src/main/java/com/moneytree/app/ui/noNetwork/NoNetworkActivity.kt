@@ -2,17 +2,17 @@ package com.moneytree.app.ui.noNetwork
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityNoNetworkBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 import com.muddassir.connection_checker.ConnectionState
 import com.muddassir.connection_checker.ConnectivityListener
 
 class NoNetworkActivity : NSActivity(), ConnectivityListener{
-	private lateinit var noNetworkBinding: ActivityNoNetworkBinding
+	private lateinit var noNetworkBinding: ActivityCommonBinding
 	private var isConnectedNetwork = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		noNetworkBinding = ActivityNoNetworkBinding.inflate(layoutInflater)
+		noNetworkBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(noNetworkBinding.root)
 		isConnected = false
 		loadInitialFragment()
@@ -23,7 +23,7 @@ class NoNetworkActivity : NSActivity(), ConnectivityListener{
 	 *
 	 */
 	private fun loadInitialFragment() {
-		replaceCurrentFragment(NoNetworkFragment.newInstance(), false, noNetworkBinding.noNetworkContainer.id)
+		replaceCurrentFragment(NoNetworkFragment.newInstance(), false, noNetworkBinding.commonContainer.id)
 	}
 
 	override fun onDestroy() {

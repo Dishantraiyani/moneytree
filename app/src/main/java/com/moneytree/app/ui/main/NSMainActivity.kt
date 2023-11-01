@@ -2,33 +2,29 @@ package com.moneytree.app.ui.main
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.moneytree.app.R
-import com.moneytree.app.common.BackPressFragmentHomeEvent
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSTabChange
 import com.moneytree.app.common.utils.isLocationPermissionGranted
 import com.moneytree.app.common.utils.requestLocationPermissions
+import com.moneytree.app.databinding.ActivityCommonBinding
 import com.moneytree.app.databinding.DialogCloseBinding
-import com.moneytree.app.databinding.DialogUpdateBinding
-import com.moneytree.app.databinding.NsActivityMainBinding
 import com.moneytree.app.ui.home.NSHomeFragment
 import org.greenrobot.eventbus.EventBus
 
 class NSMainActivity : NSActivity() {
-    private lateinit var mainBinding: NsActivityMainBinding
+    private lateinit var mainBinding: ActivityCommonBinding
 	private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainBinding = NsActivityMainBinding.inflate(layoutInflater)
+        mainBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
         loadInitialFragment()
 		locationPermission()
@@ -39,7 +35,7 @@ class NSMainActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(MainFragment.newInstance(), false, mainBinding.mainContainer.id)
+        replaceCurrentFragment(MainFragment.newInstance(), false, mainBinding.commonContainer.id)
     }
 
 	override fun onBackPressed() {

@@ -2,14 +2,14 @@ package com.moneytree.app.ui.assessment
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityAssessmentBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSAssessmentActivity : NSActivity() {
-    private lateinit var binding: ActivityAssessmentBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAssessmentBinding.inflate(layoutInflater)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadInitialFragment()
     }
@@ -19,6 +19,6 @@ class NSAssessmentActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSAssessmentFragment.newInstance(), false, binding.assessmentContainer.id)
+        replaceCurrentFragment(NSAssessmentFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

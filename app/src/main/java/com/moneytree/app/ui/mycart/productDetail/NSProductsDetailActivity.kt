@@ -2,14 +2,14 @@ package com.moneytree.app.ui.mycart.productDetail
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityProductsDetailBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSProductsDetailActivity : NSActivity() {
-    private lateinit var productsBinding: NsActivityProductsDetailBinding
+    private lateinit var productsBinding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productsBinding = NsActivityProductsDetailBinding.inflate(layoutInflater)
+        productsBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(productsBinding.root)
         loadInitialFragment(intent.extras)
     }
@@ -19,6 +19,6 @@ class NSProductsDetailActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSProductDetailFragment.newInstance(bundle), false, productsBinding.productsContainer.id)
+        replaceCurrentFragment(NSProductDetailFragment.newInstance(bundle), false, productsBinding.commonContainer.id)
     }
 }

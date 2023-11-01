@@ -2,15 +2,14 @@ package com.moneytree.app.ui.mycart.purchaseComplete
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityPurchaseCompleteBinding
-import com.moneytree.app.ui.mycart.cart.NSCartFragment
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class PurchaseCompleteActivity : NSActivity() {
-	private lateinit var purchaseCompleteBinding: ActivityPurchaseCompleteBinding
+	private lateinit var purchaseCompleteBinding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		purchaseCompleteBinding = ActivityPurchaseCompleteBinding.inflate(layoutInflater)
+		purchaseCompleteBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(purchaseCompleteBinding.root)
 		loadInitialFragment()
 	}
@@ -20,6 +19,6 @@ class PurchaseCompleteActivity : NSActivity() {
 	 *
 	 */
 	private fun loadInitialFragment() {
-		replaceCurrentFragment(NSPurchaseFragment.newInstance(), false, purchaseCompleteBinding.purchaseCompleteContainer.id)
+		replaceCurrentFragment(NSPurchaseFragment.newInstance(), false, purchaseCompleteBinding.commonContainer.id)
 	}
 }

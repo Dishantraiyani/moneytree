@@ -19,6 +19,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutProductItemBinding
@@ -97,7 +98,7 @@ class NSProductListRecycleAdapter(
 					tvProductName.text = productName
 					tvStockQty.text = stockQty
 					tvStockQtyGrid.text = stockQty
-					tvRate.text = addText(activity, R.string.rate_title, rate!!)
+					tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
 					tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 
@@ -108,9 +109,14 @@ class NSProductListRecycleAdapter(
 
 					tvQty.text = itemQty.toString()
 					tvQtyGrid.text = itemQty.toString()
-					val amount: Int = sdPrice?.toInt() ?: 0
+					val amount: Int = rate?.toInt() ?: 0
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
+
+					if (sdPrice == rate) {
+						tvRate.gone()
+						tvRateGrid.gone()
+					}
 
 					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
 					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
@@ -148,8 +154,8 @@ class NSProductListRecycleAdapter(
 						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
-					tvPriceGrid.text = sdPrice?.let { addText(activity, R.string.price_value, it) }
-					tvRateGrid.text = addText(activity, R.string.rate_title, rate)
+					tvPriceGrid.text = rate?.let { addText(activity, R.string.price_value, it) }
+					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
 					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
@@ -176,7 +182,7 @@ class NSProductListRecycleAdapter(
 						tvQty.text = itemQty.toString()
 						tvQtyGrid.text = itemQty.toString()
 
-						val amount1: Int = sdPrice?.toInt() ?: 0
+						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
@@ -203,7 +209,7 @@ class NSProductListRecycleAdapter(
 						tvQty.text = itemQty.toString()
 						tvQtyGrid.text = itemQty.toString()
 
-						val amount1: Int = sdPrice?.toInt() ?: 0
+						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 

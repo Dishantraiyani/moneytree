@@ -2,15 +2,15 @@ package com.moneytree.app.ui.recharge
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityRechargeBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSRechargeActivity : NSActivity() {
-    private lateinit var rechargeBinding: ActivityRechargeBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rechargeBinding = ActivityRechargeBinding.inflate(layoutInflater)
-        setContentView(rechargeBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment(intent.extras!!)
     }
 
@@ -19,6 +19,6 @@ class NSRechargeActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle) {
-        replaceCurrentFragment(NSRechargeFragment.newInstance(bundle), false, rechargeBinding.rechargeContainer.id)
+        replaceCurrentFragment(NSRechargeFragment.newInstance(bundle), false, binding.commonContainer.id)
     }
 }

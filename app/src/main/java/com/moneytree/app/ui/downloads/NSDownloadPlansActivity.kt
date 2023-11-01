@@ -2,15 +2,15 @@ package com.moneytree.app.ui.downloads
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityDownloadPlansBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSDownloadPlansActivity : NSActivity() {
-    private lateinit var activateBinding: NsActivityDownloadPlansBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activateBinding = NsActivityDownloadPlansBinding.inflate(layoutInflater)
-        setContentView(activateBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment(intent.extras)
     }
 
@@ -19,6 +19,6 @@ class NSDownloadPlansActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSDownloadPlanFragment.newInstance(), false, activateBinding.downloadPlanContainer.id)
+        replaceCurrentFragment(NSDownloadPlanFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

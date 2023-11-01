@@ -2,14 +2,14 @@ package com.moneytree.app.ui.productCategory
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityProductsCategoryBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class MTProductsCategoryActivity : NSActivity() {
-    private lateinit var productsCategoryBinding: NsActivityProductsCategoryBinding
+    private lateinit var productsCategoryBinding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productsCategoryBinding = NsActivityProductsCategoryBinding.inflate(layoutInflater)
+        productsCategoryBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(productsCategoryBinding.root)
         loadInitialFragment()
     }
@@ -19,6 +19,6 @@ class MTProductsCategoryActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(MTProductCategoryFragment.newInstance(), false, productsCategoryBinding.productCategoryContainer.id)
+        replaceCurrentFragment(MTProductCategoryFragment.newInstance(), false, productsCategoryBinding.commonContainer.id)
     }
 }

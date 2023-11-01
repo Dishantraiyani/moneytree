@@ -56,7 +56,7 @@ class NSOrderListRecycleAdapter(
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val voucherView =
-			LayoutOrderProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+			LayoutShopProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		return NSProductViewHolder(voucherView)
 	}
 
@@ -82,7 +82,7 @@ class NSOrderListRecycleAdapter(
 	 *
 	 * @property productBinding The voucher list view binding
 	 */
-	inner class NSProductViewHolder(private val productBinding: LayoutOrderProductItemBinding) :
+	inner class NSProductViewHolder(private val productBinding: LayoutShopProductItemBinding) :
 		RecyclerView.ViewHolder(productBinding.root) {
 
 		/**
@@ -93,20 +93,21 @@ class NSOrderListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
-					tvQtyTitleGrid.gone()
-					tvStockQtyGrid.gone()
-					tvQtyTitle.gone()
-					tvStockQty.gone()
 					clProductLayout.setVisibility(!isGrid)
 					clProductLayoutGrid.setVisibility(isGrid)
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder).into(ivProductImg)
 					tvProductName.text = productName
-					tvStockQty.text = stockQty
-					tvStockQtyGrid.text = stockQty
-					tvRate.text = addText(activity, R.string.rate_title, rate!!)
+					tvStockQty.text = maxOrderQty
+					tvStockQtyGrid.text = maxOrderQty
+					tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
 					tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+
+					if (sdPrice == rate) {
+						tvRate.gone()
+						tvRateGrid.gone()
+					}
 
 					val selectedItem = NSApplication.getInstance().getOrder(response)
 					if (selectedItem != null && selectedItem.isFromOrder) {
@@ -115,12 +116,17 @@ class NSOrderListRecycleAdapter(
 
 					tvQty.text = itemQty.toString()
 					tvQtyGrid.text = itemQty.toString()
-					val amount: Int = sdPrice?.toInt() ?: 0
+					val amount: Int = rate?.toInt() ?: 0
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
 
 					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
 					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
+
+					if (sdPrice == rate) {
+						tvRate.gone()
+						tvRateGrid.gone()
+					}
 
 					add.setOnClickListener {
 						addCart(response, finalAmount)
@@ -155,8 +161,8 @@ class NSOrderListRecycleAdapter(
 						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
-					tvPriceGrid.text = sdPrice?.let { addText(activity, R.string.price_value, it) }
-					tvRateGrid.text = addText(activity, R.string.rate_title, rate)
+					tvPriceGrid.text = rate?.let { addText(activity, R.string.price_value, it) }
+					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
 					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
@@ -170,13 +176,13 @@ class NSOrderListRecycleAdapter(
 			with(productBinding) {
 				with(response) {
 					response.isFromOrder = true
-					/*var stock = 0
+					var stock = 0
 					stock = try {
-						stockQty?.toInt() ?: 0
+						maxOrderQty?.toInt() ?: 0
 					} catch (e: Exception) {
 						0
-					}*/
-					//if (itemQty < stock && stock != 0) {
+					}
+					if (itemQty < stock && stock != 0) {
 						if (itemQty == 0) {
 							NSApplication.getInstance().setOrderList(response)
 						}
@@ -184,7 +190,7 @@ class NSOrderListRecycleAdapter(
 						tvQty.text = itemQty.toString()
 						tvQtyGrid.text = itemQty.toString()
 
-						val amount1: Int = sdPrice?.toInt() ?: 0
+						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
@@ -193,9 +199,9 @@ class NSOrderListRecycleAdapter(
 						tvPriceGrid.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
-					/*} else {
+					} else {
 						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
-					}*/
+					}
 				}
 			}
 		}
@@ -211,7 +217,7 @@ class NSOrderListRecycleAdapter(
 						tvQty.text = itemQty.toString()
 						tvQtyGrid.text = itemQty.toString()
 
-						val amount1: Int = sdPrice?.toInt() ?: 0
+						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 

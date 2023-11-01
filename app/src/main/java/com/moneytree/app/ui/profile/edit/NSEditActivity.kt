@@ -2,15 +2,15 @@ package com.moneytree.app.ui.profile.edit
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityEditBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSEditActivity : NSActivity() {
-    private lateinit var editBinding: ActivityEditBinding
+    private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        editBinding = ActivityEditBinding.inflate(layoutInflater)
-        setContentView(editBinding.root)
+        binding = ActivityCommonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         loadInitialFragment()
     }
 
@@ -19,6 +19,6 @@ class NSEditActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSEditFragment.newInstance(), false, editBinding.editContainer.id)
+        replaceCurrentFragment(NSEditFragment.newInstance(), false, binding.commonContainer.id)
     }
 }

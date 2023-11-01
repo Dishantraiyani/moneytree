@@ -104,10 +104,14 @@ class NSProductDetailFragment : NSFragment() {
 							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
 							.error(R.drawable.placeholder).into(ivProductImg)*/
 						tvProductName.text = productName
-						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
-						tvRate.text = addText(activity, R.string.rate_title, rate!!)
+						tvPrice.text = addText(activity, R.string.price_value, rate!!)
+						tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
 						tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 						val spannedText: CharSequence = Html.fromHtml(description!!)
+
+						if (sdPrice == rate) {
+							tvRate.gone()
+						}
 
 						tvDescription.text = spannedText
 						val instance = NSApplication.getInstance()
@@ -116,7 +120,7 @@ class NSProductDetailFragment : NSFragment() {
 							itemQty = selectedItem.itemQty
 						}
 						tvQtyGrid.text = itemQty.toString()
-						tvStockQty.text = stockQty
+						tvStockQty.text = if (isFromOrderValue) maxOrderQty else stockQty
 
 						if (brandName?.isNotEmpty() == true) {
 							llBrandName.visible()
@@ -184,7 +188,7 @@ class NSProductDetailFragment : NSFragment() {
 				var totalAmountValue = 0
 				val instance = NSApplication.getInstance()
 				for (data in if (isFromOrderValue) instance.getOrderList() else instance.getProductList()) {
-					val amount1: Int = data.sdPrice?.toInt() ?: 0
+					val amount1: Int = data.rate?.toInt() ?: 0
 					val finalAmount1 = data.itemQty * amount1
 					totalAmountValue += finalAmount1
 				}
@@ -248,7 +252,7 @@ class NSProductDetailFragment : NSFragment() {
 
 				addGrid.setOnClickListener {
 					with(productDetail!!) {
-						val amount: Int = sdPrice?.toInt() ?: 0
+						val amount: Int = rate?.toInt() ?: 0
 						val finalAmount = itemQty * amount
 						isProductValid = finalAmount > 0
 
@@ -258,7 +262,7 @@ class NSProductDetailFragment : NSFragment() {
 
 				removeGrid.setOnClickListener {
 					with(productDetail!!) {
-						val amount: Int = sdPrice?.toInt() ?: 0
+						val amount: Int = rate?.toInt() ?: 0
 						val finalAmount = itemQty * amount
 						isProductValid = finalAmount > 0
 
@@ -297,15 +301,15 @@ class NSProductDetailFragment : NSFragment() {
 			with(response) {
 				var stock = 0
 				stock = try {
-					stockQty?.toInt() ?: 0
+					if (isFromOrderValue) maxOrderQty?.toInt() ?: 0 else stockQty?.toInt() ?: 0
 				} catch (e: Exception) {
 					0
 				}
-				if ((itemQty < stock && stock != 0) || isFromOrderValue) {
+				if ((itemQty < stock && stock != 0)) {
 					itemQty += 1
 					tvQtyGrid.text = itemQty.toString()
 
-					val amount1: Int = sdPrice?.toInt() ?: 0
+					val amount1: Int = rate?.toInt() ?: 0
 					val finalAmount1 = itemQty * amount1
 					isProductValid = finalAmount > 0
 
@@ -333,7 +337,7 @@ class NSProductDetailFragment : NSFragment() {
 					itemQty -= 1
 					tvQtyGrid.text = itemQty.toString()
 
-					val amount1: Int = sdPrice?.toInt() ?: 0
+					val amount1: Int = rate?.toInt() ?: 0
 					val finalAmount1 = itemQty * amount1
 					isProductValid = finalAmount > 0
 

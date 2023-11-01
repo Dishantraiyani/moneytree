@@ -78,14 +78,14 @@ class NSCartListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
-					if (isFromOrderProduct) {
+					/*if (isFromOrderProduct) {
 						tvQtyTitle.gone()
 						tvStockQty.gone()
 						qut.gone()
 						qutOrder.visible()
 						productDel.gone()
 						productDelOrder.visible()
-					}
+					}*/
 
 					clProductLayout.setVisibility(!isGrid)
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
@@ -93,30 +93,34 @@ class NSCartListRecycleAdapter(
 						.diskCacheStrategy(DiskCacheStrategy.NONE)
 						.skipMemoryCache(true).into(ivProductImg)
 					tvProductName.text = productName
-					tvRate.text = addText(activity, R.string.rate_title, rate!!)
+					tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
 					tvQty.text = itemQty.toString()
 					tvQtyOrder.text = itemQty.toString()
-					tvStockQty.text = stockQty
+					tvStockQty.text = if (isFromOrderProduct) maxOrderQty else stockQty
 					tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-					val amount: Int = sdPrice?.toInt() ?: 0
+					val amount: Int = rate?.toInt() ?: 0
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
 
 					tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
 
+					if (sdPrice == rate) {
+						tvRate.gone()
+					}
+
 					fun add() {
 						var stock = 0
 						stock = try {
-							stockQty?.toInt() ?: 0
+							if (isFromOrderProduct) maxOrderQty?.toInt() ?: 0 else stockQty?.toInt() ?: 0
 						} catch (e: Exception) {
 							0
 						}
-						if ((itemQty < stock && stock != 0) || isFromOrderProduct) {
+						if ((itemQty < stock && stock != 0)) {
 							itemQty += 1
 							tvQty.text = itemQty.toString()
 							tvQtyOrder.text = itemQty.toString()
 
-							val amount1: Int = sdPrice?.toInt() ?: 0
+							val amount1: Int = rate?.toInt() ?: 0
 							val finalAmount1 = itemQty * amount1
 							isProductValid = finalAmount > 0
 
@@ -143,7 +147,7 @@ class NSCartListRecycleAdapter(
 							tvQty.text = itemQty.toString()
 							tvQtyOrder.text = itemQty.toString()
 
-							val amount1: Int = sdPrice?.toInt() ?: 0
+							val amount1: Int = rate?.toInt() ?: 0
 							val finalAmount1 = itemQty * amount1
 							isProductValid = finalAmount > 0
 

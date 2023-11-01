@@ -2,15 +2,15 @@ package com.moneytree.app.ui.wallets.verifyMember
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.ActivityVerifyMemberBinding
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class VerifyMemberActivity : NSActivity() {
-	private lateinit var verifyMemberBinding: ActivityVerifyMemberBinding
+	private lateinit var binding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		verifyMemberBinding = ActivityVerifyMemberBinding.inflate(layoutInflater)
-		setContentView(verifyMemberBinding.root)
+		binding = ActivityCommonBinding.inflate(layoutInflater)
+		setContentView(binding.root)
 		loadInitialFragment(intent.extras)
 	}
 
@@ -19,6 +19,6 @@ class VerifyMemberActivity : NSActivity() {
 	 *
 	 */
 	private fun loadInitialFragment(bundle: Bundle?) {
-		replaceCurrentFragment(VerifyMemberFragment.newInstance(bundle), false, verifyMemberBinding.verifyMemberContainer.id)
+		replaceCurrentFragment(VerifyMemberFragment.newInstance(bundle), false, binding.commonContainer.id)
 	}
 }

@@ -31,12 +31,10 @@ import com.moneytree.app.databinding.NsActivityPlaceOrderBinding
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
-import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.RozerModel
 import com.moneytree.app.ui.mycart.address.NSAddressActivity
 import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
-import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.success.SuccessActivity
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
@@ -264,7 +262,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
         with(binding) {
             var totalAmountValue = 0
             for (data in NSApplication.getInstance().getOrderList()) {
-                val amount1: Int = data.sdPrice?.toInt() ?: 0
+                val amount1: Int = data.rate?.toInt() ?: 0
                 val finalAmount1 = data.itemQty * amount1
                 totalAmountValue += finalAmount1
             }

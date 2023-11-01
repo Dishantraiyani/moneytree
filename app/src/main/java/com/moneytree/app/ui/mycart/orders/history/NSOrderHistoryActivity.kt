@@ -2,18 +2,14 @@ package com.moneytree.app.ui.mycart.orders.history
 
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
-import com.moneytree.app.databinding.NsActivityCartBinding
-import com.moneytree.app.databinding.NsActivityProductsDetailBinding
-import com.moneytree.app.databinding.NsActivityRepurchaseStockBinding
-import com.moneytree.app.ui.mycart.cart.NSCartFragment
-import com.moneytree.app.ui.mycart.productDetail.NSProductDetailFragment
+import com.moneytree.app.databinding.ActivityCommonBinding
 
 class NSOrderHistoryActivity : NSActivity() {
-	private lateinit var productsBinding: NsActivityRepurchaseStockBinding
+	private lateinit var productsBinding: ActivityCommonBinding
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		productsBinding = NsActivityRepurchaseStockBinding.inflate(layoutInflater)
+		productsBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(productsBinding.root)
 		loadInitialFragment(intent.extras)
 	}
@@ -26,7 +22,7 @@ class NSOrderHistoryActivity : NSActivity() {
 		replaceCurrentFragment(
 			OrderHistoryFragment.newInstance(bundle),
 			false,
-			productsBinding.repurchaseStockContainer.id
+			productsBinding.commonContainer.id
 		)
 	}
 }
