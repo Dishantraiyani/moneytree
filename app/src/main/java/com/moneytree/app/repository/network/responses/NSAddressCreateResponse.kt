@@ -30,7 +30,25 @@ data class NSAddressCreateResponse(
     @SerializedName("state")
     @Expose
     var state: String = "",
-    @SerializedName("county")
+    @SerializedName("country")
     @Expose
-    var country: String = ""
+    var country: String = "",
+    @SerializedName("set_as_defualt")
+    @Expose
+    var setAsDefault: String = "N",
+    @SerializedName("address_id")
+    @Expose
+    var addressId: String = ""
+)
+
+data class NSAddressListResponse(
+    @SerializedName("status")
+    @Expose
+    var status: Boolean = false,
+    @SerializedName("message")
+    @Expose
+    var message: String? = null,
+    @SerializedName("data")
+    @Expose
+    var data: MutableList<NSAddressCreateResponse> = arrayListOf()
 )

@@ -14,6 +14,7 @@ import com.moneytree.app.common.callbacks.NSStockHistoryDetailCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutOrderHistoryItemBinding
 import com.moneytree.app.databinding.LayoutRepurchaseStockItemBinding
 import com.moneytree.app.repository.network.responses.OrderAddressResponse
@@ -90,6 +91,14 @@ class OrderHistoryRecycleAdapter(
                     tvRemark.text = response.walletType
 					tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
                     tvAddress.text = response.address1
+                    if (response.mtCoin?.isNotEmpty() == true) {
+                        llMtCoin.visible()
+                        tvMtCoin.text = response.mtCoin
+                    }
+                    if (response.mtCoinTotal?.isNotEmpty() == true) {
+                        llMtCoinTotal.visible()
+                        tvMtCoinTotal.text = mtCoinTotal?.let { addText(activity, R.string.price_value, it) }
+                    }
 
                     if (response.addressData?.isNotEmpty() == true) {
                         val model: OrderAddressResponse = Gson().fromJson(response.addressData, OrderAddressResponse::class.java)

@@ -71,5 +71,11 @@ data class OrderHistoryDataItem(
 	val memberId: String? = null,
 
 	@field:SerializedName("address_final")
-	var addressFinal: String? = null
+	var addressFinal: String? = null,
+
+	@field:SerializedName("mt_coin")
+	val mtCoin: String? = null,
+
+	@field:SerializedName("mt_coin_total")
+	var mtCoinTotal: String? = null
 )

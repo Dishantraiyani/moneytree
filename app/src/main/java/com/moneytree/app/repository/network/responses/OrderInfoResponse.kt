@@ -41,5 +41,11 @@ data class OrderInfoDataItem(
 	val createdAt: String? = null,
 
 	@field:SerializedName("product_name")
-	val productName: String? = null
+	val productName: String? = null,
+
+	@field:SerializedName("mt_coin")
+	val mtCoin: String? = null,
+
+	@field:SerializedName("mt_coin_total")
+	var mtCoinTotal: String? = null
 )

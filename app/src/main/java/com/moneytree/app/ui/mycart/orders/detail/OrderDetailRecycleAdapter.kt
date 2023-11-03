@@ -10,6 +10,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutOrderHistoryInfoItemBinding
 import com.moneytree.app.repository.network.responses.OrderInfoDataItem
 
@@ -92,6 +93,14 @@ class OrderDetailRecycleAdapter(
 
 					llRemark.gone()
 
+                    if (response.mtCoin?.isNotEmpty() == true) {
+                        llMtCoin.visible()
+                        tvMtCoin.text = response.mtCoin
+                    }
+                    if (response.mtCoinTotal?.isNotEmpty() == true) {
+                        llMtCoinTotal.visible()
+                        tvMtCoinTotal.text = mtCoin?.let { addText(activity, R.string.price_value, it) }
+                    }
 
 				}
             }

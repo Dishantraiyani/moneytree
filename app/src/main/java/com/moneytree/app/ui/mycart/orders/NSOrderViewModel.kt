@@ -86,7 +86,7 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-		categoryId?.let { NSProductRepository.getProductStockList(pageIndex, search, it, diseasesId?:"", selectedStock, this) }
+		categoryId?.let { NSProductRepository.getOnlineOrderList(pageIndex, search, it, diseasesId?:"", selectedStock, this) }
     }
 
     override fun <T> onSuccess(data: T) {

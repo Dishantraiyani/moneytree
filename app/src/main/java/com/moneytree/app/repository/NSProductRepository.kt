@@ -60,6 +60,24 @@ object NSProductRepository {
 		})
 	}
 
+	fun getOnlineOrderList(pageIndex: String, search: String, categoryId: String = "", diseasesId: String = "", inStock: String,
+							viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getOnlineOrderList(pageIndex, search, categoryId, diseasesId, inStock, object :
+			NSRetrofitCallback<NSProductListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_LIST) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSProductListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
     /**
      * To get joining voucher data API
      *

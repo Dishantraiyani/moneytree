@@ -1,16 +1,10 @@
 package com.moneytree.app.ui.mycart.address
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
-import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
-import com.moneytree.app.repository.NSProductRepository
-import com.moneytree.app.repository.NSUserRepository
-import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.MemberDetailModel
-import com.moneytree.app.repository.network.responses.NSMemberDetailResponse
+import com.moneytree.app.repository.NSAddressRepository
+import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
-import com.moneytree.app.repository.network.responses.ProductDataDTO
 
 
 /**
@@ -18,4 +12,16 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
  */
 class NSAddressViewModel(application: Application) : NSViewModel(application) {
 
+    var selectedAddressModel: NSAddressCreateResponse? = null
+    fun addOrUpdateAddress(request: NSAddressCreateResponse, callback: ((NSSuccessResponse) -> Unit)) {
+        showProgress()
+        callCommonApi({ obj ->
+            NSAddressRepository.addOrUpdateAddress(request, obj)
+        }, { data, isSuccess ->
+            hideProgress()
+            if (isSuccess && data is NSSuccessResponse) {
+                callback.invoke(data)
+            }
+        })
+    }
 }

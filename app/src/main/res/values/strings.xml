@@ -705,4 +705,7 @@
     <string name="order_history">Order History</string>
     <string name="no_item_available">No Item Available</string>
     <string name="order_info">Order Info</string>
+    <string name="are_you_sure_delete">Are you sure you want to delete?</string>
+    <string name="below_order">If your order is below 500 rupees, there will be an additional deduction of 50 rupees for delivery charges.</string>
+    <string name="mt_coin_total">MT Coin Total</string>
 </resources>

@@ -16,19 +16,25 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
+import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.NsFragmentAddressBinding
+import com.moneytree.app.databinding.NsFragmentAssessmentBinding
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
+import com.moneytree.app.ui.assessment.NSAssessmentViewModel
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class NSAddressFragment : NSFragment() {
-	private var _binding: NsFragmentAddressBinding? = null
-	private val binding get() = _binding!!
+class NSAddressFragment : BaseViewModelFragment<NSAddressViewModel, NsFragmentAddressBinding>() {
+
+	override val viewModel: NSAddressViewModel by lazy {
+		ViewModelProvider(this)[NSAddressViewModel::class.java]
+	}
+
 	private var isAddAddress = false
 	private var selectedAddress: String? = null
 
@@ -38,14 +44,18 @@ class NSAddressFragment : NSFragment() {
 		}
 	}
 
-	override fun onCreateView(
-		inflater: LayoutInflater, container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View {
-		_binding = NsFragmentAddressBinding.inflate(inflater, container, false)
+	override fun getFragmentBinding(
+		inflater: LayoutInflater,
+		container: ViewGroup?
+	): NsFragmentAddressBinding {
+		return NsFragmentAddressBinding.inflate(inflater, container, false)
+	}
+
+	override fun setupViews() {
+		super.setupViews()
+		baseObserveViewModel(viewModel)
 		viewCreated()
 		setListener()
-		return binding.root
 	}
 
 	/**
@@ -107,13 +117,16 @@ class NSAddressFragment : NSFragment() {
 							return
 						}
 
-						val model = NSAddressCreateResponse(fullName, mobile, flatHouse, area, "", pinCode, city, state, country)
-						if (cbChecked.isChecked || !isAddAddress) {
-							pref.selectedAddress = model
+						val model = NSAddressCreateResponse(fullName, mobile, flatHouse, area, "", pinCode, city, state, country, if (cbChecked.isChecked) "Y" else "N", viewModel.selectedAddressModel?.addressId?:"")
+
+						viewModel.addOrUpdateAddress(model) {
+							if (cbChecked.isChecked || !isAddAddress) {
+								pref.selectedAddress = model
+							}
+							NSApplication.getInstance().addSelectedAddress(model)
+							requireActivity().setResult(RESULT_OK)
+							finish()
 						}
-						NSApplication.getInstance().addSelectedAddress(model)
-						requireActivity().setResult(RESULT_OK)
-						finish()
 					}
 				})
 			}
@@ -124,6 +137,7 @@ class NSAddressFragment : NSFragment() {
 		binding.apply {
 			if (selectedAddress != null && selectedAddress?.isNotEmpty() == true) {
 				val model: NSAddressCreateResponse = Gson().fromJson(selectedAddress, NSAddressCreateResponse::class.java)
+				viewModel.selectedAddressModel = model
 				etFullName.setText(model.fullName)
 				etMobile.setText(model.mobile)
 				etCountryName.setText(model.country)

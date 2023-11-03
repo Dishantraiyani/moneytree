@@ -850,6 +850,26 @@ class NSApiManager {
 		)
 	}
 
+	fun getOnlineOrderList(
+		pageIndex: String,
+		search: String,
+		categoryId: String,
+		diseasesId: String,
+		inStock: String,
+		callback: NSRetrofitCallback<NSProductListResponse>
+	) {
+		request(
+			unAuthorised3020Client.getOnlineOrderList(
+				NSUserManager.getAuthToken(),
+				pageIndex,
+				search,
+				categoryId,
+				diseasesId,
+				inStock
+			), callback
+		)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -1286,7 +1306,7 @@ class NSApiManager {
 		request(unAuthorised3020Client.getKycKey(NSUserManager.getAuthToken()), callback)
 	}
 
-	fun addOrUpdateAddress(rsR: NSAddressCreateResponse, setAsDefault: String = "N", addressId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+	fun addOrUpdateAddress(rsR: NSAddressCreateResponse, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(
 			unAuthorised3020Client.addOrUpdateAddress(
 				NSUserManager.getAuthToken(),
@@ -1299,13 +1319,13 @@ class NSApiManager {
 				rsR.country,
 				rsR.state,
 				rsR.city,
-				setAsDefault,
-				addressId,
+				rsR.setAsDefault,
+				rsR.addressId,
 			), callback
 		)
 	}
 
-	fun getAddressList(callback: NSRetrofitCallback<NSKycKeyResponse>) {
+	fun getAddressList(callback: NSRetrofitCallback<NSAddressListResponse>) {
 		request(
 			unAuthorised3020Client.getAddressList(
 				NSUserManager.getAuthToken()
@@ -1594,6 +1614,17 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("product-master-stock-api")
 	fun productStockList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String,
+		@Field("category_id") categoryId: String,
+		@Field("diseases_id") diseasesId: String,
+		@Field("in_stock") inStock: String
+	): Call<NSProductListResponse>
+
+	@FormUrlEncoded
+	@POST("product-master-online-order")
+	fun getOnlineOrderList(
 		@Field("token_id") token: String,
 		@Field("page_index") pageIndex: String,
 		@Field("search") search: String,
@@ -1911,7 +1942,7 @@ interface RTApiInterface {
 	@POST("view-address-list")
 	fun getAddressList(
 		@Field("token_id") token: String
-	): Call<NSKycKeyResponse>
+	): Call<NSAddressListResponse>
 
 	@FormUrlEncoded
 	@POST("delete-address-list")

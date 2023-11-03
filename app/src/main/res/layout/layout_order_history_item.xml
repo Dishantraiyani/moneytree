@@ -12,7 +12,9 @@
         android:id="@+id/cl_product_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/_5sdp">
+        android:paddingHorizontal="@dimen/_5sdp"
+		android:paddingTop="0dp"
+		android:paddingBottom="@dimen/_10sdp">
 
         <TextView
             android:id="@+id/tv_repurchase_no"
@@ -308,8 +310,6 @@
 			android:layout_height="wrap_content"
 			android:orientation="horizontal"
 			android:layout_marginTop="@dimen/_5sdp"
-			android:layout_marginBottom="@dimen/_10sdp"
-			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/ll_remark">
@@ -331,6 +331,97 @@
 
 			<TextView
 				android:id="@+id/tv_total"
+				style="@style/LoginSubFontsWrap"
+				android:layout_width="0dp"
+				tools:text="@string/total_"
+				android:textSize="@dimen/_10sdp"
+				android:gravity="end"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:paddingStart="@dimen/_5sdp"
+				android:lines="1"
+				android:layout_weight="1"
+				android:fontFamily="@font/inter_medium"
+				android:paddingEnd="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/ll_mt_coin"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:visibility="gone"
+			android:layout_marginTop="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/ll_total">
+
+			<TextView
+				android:id="@+id/tv_mt_coin_title"
+				style="@style/LoginSubFontsWrap"
+				android:text="@string/mt_coin"
+				android:textSize="@dimen/_10sdp"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/gray_text"
+				android:paddingStart="@dimen/_10sdp"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium"
+				android:paddingEnd="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+			<TextView
+				android:id="@+id/tv_mt_coin"
+				style="@style/LoginSubFontsWrap"
+				android:layout_width="0dp"
+				tools:text="@string/total_"
+				android:textSize="@dimen/_10sdp"
+				android:gravity="end"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/black"
+				android:paddingStart="@dimen/_5sdp"
+				android:lines="1"
+				android:layout_weight="1"
+				android:fontFamily="@font/inter_medium"
+				android:paddingEnd="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:id="@+id/ll_mt_coin_total"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_marginTop="@dimen/_5sdp"
+			android:visibility="gone"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/ll_mt_coin">
+
+			<TextView
+				android:id="@+id/tv_mt_coin_total_title"
+				style="@style/LoginSubFontsWrap"
+				android:text="@string/mt_coin_total"
+				android:textSize="@dimen/_10sdp"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/gray_text"
+				android:paddingStart="@dimen/_10sdp"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium"
+				android:paddingEnd="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+			<TextView
+				android:id="@+id/tv_mt_coin_total"
 				style="@style/LoginSubFontsWrap"
 				android:layout_width="0dp"
 				tools:text="@string/total_"

@@ -172,6 +172,24 @@
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/line_color"
+                android:layout_marginHorizontal="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <TextView
+                style="@style/LoginSubFontsWrap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:text="@string/below_order"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_medium"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:textSize="@dimen/_9sdp" />
+
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
@@ -184,10 +202,12 @@
                 android:textSize="@dimen/_12sdp"
                 android:fontFamily="@font/inter_regular"
                 android:layout_marginHorizontal="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_new_password"/>
+
+
 
         </LinearLayout>
 

@@ -17,6 +17,7 @@ import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMyCartBinding
 import com.moneytree.app.ui.mycart.address.NSAddressActivity
+import com.moneytree.app.ui.mycart.address.selectAddress.NSSelectAddressActivity
 import com.moneytree.app.ui.mycart.placeOrder.NSPlaceOrderActivity
 import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
 import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
@@ -89,7 +90,12 @@ class NSCartFragment : NSFragment() {
 
 					proceed.setOnClickListener {
                         if (isFromOrder) {
-                            if (pref.selectedAddress != null) {
+                            switchResultActivity(
+                                dataResult,
+                                NSSelectAddressActivity::class.java,
+                                bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
+                            )
+                            /*if (pref.selectedAddress != null) {
                                 switchResultActivity(
                                     dataResult,
                                     NSPlaceOrderActivity::class.java,
@@ -101,7 +107,7 @@ class NSCartFragment : NSFragment() {
                                     NSAddressActivity::class.java,
                                     bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder, NSConstants.KEY_IS_ADD_ADDRESS to true)
                                 )
-                            }
+                            }*/
                         } else {
                             if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
                                 switchResultActivity(
