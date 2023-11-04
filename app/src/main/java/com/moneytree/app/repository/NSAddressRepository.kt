@@ -7,6 +7,7 @@ import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSAddressListResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 /**
@@ -64,6 +65,16 @@ object NSAddressRepository {
                     errorMessageList.add(data.message!!)
                     viewModelCallback.onError(errorMessageList)
                 }
+            }
+        })
+    }
+
+    fun paymentSummary(month: String, viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.paymentSummary(month, object :
+            NSRetrofitCallback<ResponseBody>(viewModelCallback, NSApiErrorHandler.ERROR_DOCTOR_LIST_DATA) {
+            override fun <T> onResponse(response: Response<T>) {
+                viewModelCallback.onSuccess(response.body())
             }
         })
     }

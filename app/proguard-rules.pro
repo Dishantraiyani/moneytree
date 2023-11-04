@@ -55,6 +55,8 @@
 
 }
 
+-keep class com.kal.** { *; }
+-dontwarn com.kal.**
 -dontwarn okhttp3.**
 -keep class okhttp3.** { *; }
 -keep class okio.** { *; }

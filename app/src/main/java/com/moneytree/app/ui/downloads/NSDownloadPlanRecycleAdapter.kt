@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.ContextCompat.registerReceiver
 import androidx.recyclerview.widget.RecyclerView
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutDownloadPlanItemBinding
@@ -78,7 +79,7 @@ class NSDownloadPlanRecycleAdapter(val activity: Activity) : RecyclerView.Adapte
 										activity,
 										pdf,
 										fileName,
-										Environment.DIRECTORY_DOCUMENTS,
+										NSConstants.DIRECTORY_PATH,
 										true
 									)
 								)

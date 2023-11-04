@@ -30,6 +30,7 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
             with(resources) {
                 profileItemList.clear()
                 profileItemList.add(getString(R.string.kyc_status))
+                profileItemList.add(getString(R.string.id_card))
                 profileItemList.add(getString(R.string.change_password))
                 profileItemList.add(getString(R.string.change_tran_password))
                 profileItemList.add(getString(R.string.contact_us_title))
@@ -50,6 +51,7 @@ class NSProfileViewModel(application: Application) : NSViewModel(application) {
             with(resources) {
                 profileIconList.clear()
                 profileIconList.add(R.drawable.kyc_status)
+                profileIconList.add(R.drawable.id_card)
                 profileIconList.add(R.drawable.ic_lock)
                 profileIconList.add(R.drawable.ic_lock)
                 profileIconList.add(R.drawable.ic_contact_us)

@@ -71,5 +71,8 @@ data class NSDataUser(
 	var referCode: String? = null,
     @SerializedName("package_name")
 	@Expose
-	var packageName: String? = null
+	var packageName: String? = null,
+    @SerializedName("created_at")
+    @Expose
+    var createdAt: String? = null
 )

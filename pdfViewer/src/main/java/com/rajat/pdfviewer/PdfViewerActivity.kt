@@ -338,7 +338,7 @@ class PdfViewerActivity : AppCompatActivity() {
                         com.rajat.pdfviewer.util.FileUtils.downloadFile(
                             this,
                             fileUrl!!,
-                            directoryName!!,
+                            Environment.DIRECTORY_DOWNLOADS + "/" +directoryName!!,
                             fileName
                         )
                     } else {

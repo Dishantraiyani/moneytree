@@ -708,4 +708,12 @@
     <string name="are_you_sure_delete">Are you sure you want to delete?</string>
     <string name="below_order">If your order is below 500 rupees, there will be an additional deduction of 50 rupees for delivery charges.</string>
     <string name="mt_coin_total">MT Coin Total</string>
+    <string name="payment_summary">Payment Summary</string>
+    <string name="please_specify_month">Please specify the month for the payment summary.</string>
+    <string name="select_month_year">Select Month &amp; Year</string>
+    <string name="view_summary">View Summary</string>
+    <string name="id_card">ID Card</string>
+    <string name="download">Download</string>
+    <string name="id">ID:</string>
+    <string name="joining_date">Joining Date:</string>
 </resources>

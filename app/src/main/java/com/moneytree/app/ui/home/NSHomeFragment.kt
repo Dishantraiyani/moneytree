@@ -36,6 +36,7 @@ import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isInteger
 import com.moneytree.app.common.utils.setEmail
+import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.common.utils.setUserName
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.switchActivity
@@ -57,6 +58,7 @@ import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.mycart.orders.NSOrderActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
+import com.moneytree.app.ui.paymentSummary.PaymentSummaryActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.products.MTProductsActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
@@ -336,6 +338,13 @@ class NSHomeFragment : NSFragment() {
 							drawer.closeDrawer(GravityCompat.START)
 							switchActivity(
 								NSDoctorActivity::class.java
+							)
+						}
+
+						llPaymentSummary.setSafeOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(
+								PaymentSummaryActivity::class.java
 							)
 						}
 

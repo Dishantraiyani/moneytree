@@ -30,7 +30,6 @@ import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
 import com.moneytree.app.databinding.LayoutDateRangeSelectBinding
 import com.moneytree.app.ui.mycart.kyc.NSKycActivity
-import com.moneytree.app.ui.verified.NSKycVerifiedActivity
 import java.io.UnsupportedEncodingException
 import java.text.SimpleDateFormat
 import java.util.Date

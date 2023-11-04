@@ -122,7 +122,7 @@ class NSRechargeListRecycleAdapter(
 										activity,
 										invoice,
 										fileName,
-										Environment.DIRECTORY_DOCUMENTS,
+										NSConstants.DIRECTORY_PATH,
 										true
 									)
 								)

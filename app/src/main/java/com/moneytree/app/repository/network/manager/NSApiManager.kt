@@ -1342,6 +1342,14 @@ class NSApiManager {
 		)
 	}
 
+	fun paymentSummary(month: String, callback: NSRetrofitCallback<ResponseBody>) {
+		request(
+			unAuthorised3020Client.paymentSummary(
+				NSUserManager.getAuthToken(),
+				month
+			), callback
+		)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -1950,4 +1958,11 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("address_id") addressId: String
 	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("payout-summary")
+	fun paymentSummary(
+		@Field("token_id") token: String,
+		@Field("month") month: String
+	): Call<ResponseBody>
 }

@@ -2,53 +2,27 @@ package com.moneytree.app.ui.mycart.kyc
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.drjacky.imagepicker1.ImagePicker
-import com.github.drjacky.imagepicker1.constant.ImageProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
-import com.moneytree.app.common.HeaderUtils
-import com.moneytree.app.common.NSAlertButtonClickEvent
-import com.moneytree.app.common.NSApplication
-import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSRequestCodes
-import com.moneytree.app.common.SelectImageFiles
-import com.moneytree.app.common.utils.NSUtilities
-import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.buildAlertDialog
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.setCircleImage
-import com.moneytree.app.common.utils.setPlaceholderAdapter
 import com.moneytree.app.common.utils.setSafeOnClickListener
-import com.moneytree.app.common.utils.setupWithAdapterAndCustomLayoutManager
-import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
-import com.moneytree.app.databinding.NsFragmentDoctorDetailBinding
 import com.moneytree.app.databinding.NsFragmentKycDetailBinding
-import com.moneytree.app.repository.network.responses.DoctorDataItem
-import com.moneytree.app.repository.network.responses.ExtractedData
 import com.moneytree.app.repository.network.responses.KycListResponse
-import com.moneytree.app.ui.doctor.detail.NSDoctorImagesRecycleAdapter
-import com.moneytree.app.ui.doctor.history.NSDoctorHistoryActivity
 import com.moneytree.app.ui.main.NSMainActivity
-import com.moneytree.app.ui.verified.NSKycVerifiedActivity
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import java.io.File
 
 
 class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailBinding>() {

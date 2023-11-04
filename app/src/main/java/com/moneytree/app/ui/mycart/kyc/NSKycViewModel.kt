@@ -33,10 +33,11 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 	fun kycVerification(isShowProgress: Boolean, imageList: MutableList<String>, callback: (KycResponse, Boolean) -> Unit) {
 
 		if (imageList.isValidList()) {
+			if (isShowProgress) showProgress()
+
 			val url = imageList[0]
 			val file: File = File(url)
 			if (file.exists()) {
-				if (isShowProgress) showProgress()
 
 				val base64Str = convertImageToBase64(url)
 				val kycSendRequest = NSKycSendRequest("image", base64Str, java.util.UUID.randomUUID().toString())
@@ -51,6 +52,8 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 						callback.invoke(data, true)
 					}
 				})
+			} else {
+				hideProgress()
 			}
 		}
 

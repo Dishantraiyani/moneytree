@@ -16,9 +16,9 @@ import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentProfileBinding
 import com.moneytree.app.repository.network.responses.NSDataUser
+import com.moneytree.app.ui.idCard.NSIdCardActivity
 import com.moneytree.app.ui.invite.NSInviteActivity
 import com.moneytree.app.ui.login.NSLoginActivity
-import com.moneytree.app.ui.mycart.kyc.NSKycActivity
 import com.moneytree.app.ui.profile.edit.NSEditActivity
 import com.moneytree.app.ui.profile.password.NSChangePasswordActivity
 import org.greenrobot.eventbus.EventBus
@@ -120,13 +120,18 @@ class NSProfileFragment : NSFragment() {
             }
             1 -> {
                 switchActivity(
+                    NSIdCardActivity::class.java
+                )
+            }
+            2 -> {
+                switchActivity(
                     NSChangePasswordActivity::class.java,
                     bundleOf(
                         NSConstants.KEY_CHANGE_PASSWORD to true
                     )
                 )
             }
-            2 -> {
+            3 -> {
                 switchActivity(
                     NSChangePasswordActivity::class.java,
                     bundleOf(
@@ -134,26 +139,26 @@ class NSProfileFragment : NSFragment() {
                     )
                 )
             }
-			3 -> {
+			4 -> {
 				NSUtilities.callCustomerCare(requireContext(), NSConstants.CUSTOMER_CARE)
 			}
-            4 -> {
+            5 -> {
 				switchActivity(NSInviteActivity::class.java)
             }
-            5, 6 -> {
+            6, 7 -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + activity.packageName))
                 activity.startActivity(intent)
             }
-            7 -> {
+            8 -> {
                 NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.TERMS))
             }
-            8 -> {
+            9 -> {
                 NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.PRIVACY))
             }
-			9 -> {
+			10 -> {
 				NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.REFUND))
 			}
-            10 -> {
+            11 -> {
                 with(activity.resources) {
                     showLogoutDialog(getString(R.string.logout), getString(R.string.logout_message), getString(R.string.no_title), getString(R.string.yes_title))
                 }

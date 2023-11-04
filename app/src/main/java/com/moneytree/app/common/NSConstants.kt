@@ -86,6 +86,8 @@ class NSConstants {
 		const val KEY_LOCK_SCREEN = "key_lock_screen"
 		var WALLET_BALANCE = "0"
 		const val CUSTOMER_CARE = "+918735985994"
+		const val CUSTOMER_CARE_EMAIL = "support@moneytree.biz"
+		const val CUSTOMER_CARE_WEB = "www.moneytree.biz"
 		const val DOCTOR_DETAIL = "doctor_detail"
 		const val DOCTOR_ID = "doctor_id"
 		const val PATIENT_NAME = "name"
@@ -98,6 +100,7 @@ class NSConstants {
 		const val PAYMENT_WALLET = "wallet"
 		const val PAYMENT_GATEWAY = "payment"
 		const val PAYMENT_MT_COIN = "mt_coin"
+		const val DIRECTORY_PATH = "/moneyTree/"
 		var RECHARGE_USING_PAYMENT_GATEWAY: Boolean = false
 	}
 }
