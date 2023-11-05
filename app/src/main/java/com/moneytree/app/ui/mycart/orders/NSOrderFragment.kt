@@ -77,7 +77,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
      */
     private fun viewCreated() {
         with(productBinding) {
-            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.orders), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSOrderFragment)
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.orders), isCart = true, isSearch = false, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSOrderFragment)
 			with(layoutHeader) {
 				NSConstants.tabName = this@NSOrderFragment.javaClass
 				tvCategories.visible()
@@ -138,7 +138,6 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 							productListAdapter = null
 							setProductStockAdapter(productList)
 						}
-
 					})
 
 					proceed.setOnClickListener(object : SingleClickListener() {
