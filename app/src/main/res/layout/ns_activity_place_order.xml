@@ -179,6 +179,114 @@
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_15sdp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/total_"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_total_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semi_bold"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/delivery_charges"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_delivery_charge"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/reward_point"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_reward_point"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semi_bold"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="@string/grand_total"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/tv_grand_total"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_medium"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
             <TextView
                 style="@style/LoginSubFontsWrap"
                 android:layout_width="match_parent"
@@ -188,7 +296,8 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/inter_medium"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:textSize="@dimen/_9sdp" />
+                android:textSize="@dimen/_9sdp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_submit"

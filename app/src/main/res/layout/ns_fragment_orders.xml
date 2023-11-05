@@ -258,7 +258,7 @@
 			<TextView
 				android:id="@+id/tv_diseases"
 				style="@style/LoginSubFontsZeroWrap"
-				android:text="@string/diseases"
+				android:text="@string/brands"
 				android:textColor="@color/black"
 				android:textSize="@dimen/_10sdp"
 				android:visibility="gone"
@@ -360,7 +360,7 @@
 						android:contentDescription="@string/username_title" />
 
 					<TextView
-						android:id="@+id/diseases_type_spinner"
+						android:id="@+id/brands_type_spinner"
 						style="@style/LoginSubFontsZeroWrap"
 						android:paddingHorizontal="@dimen/_10sdp"
 						android:minHeight="@dimen/_38sdp"

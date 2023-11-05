@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
@@ -78,14 +79,14 @@ class NSCartListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
-					/*if (isFromOrderProduct) {
+					if (isFromOrderProduct) {
 						tvQtyTitle.gone()
 						tvStockQty.gone()
 						qut.gone()
 						qutOrder.visible()
 						productDel.gone()
 						productDelOrder.visible()
-					}*/
+					}
 
 					clProductLayout.setVisibility(!isGrid)
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
@@ -128,7 +129,7 @@ class NSCartListRecycleAdapter(
 								addText(activity, R.string.price_value, finalAmount1.toString())
 							onProductClick.onResponse()
 						} else {
-							Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT)
+							Toast.makeText(activity, if (isFromOrderProduct) NSConstants.MAX_TITLE + maxOrderQty?.toInt() + NSConstants.MAX_TITLE_SECOND else NSConstants.STOCK_NOT_AVAILABLE, Toast.LENGTH_SHORT)
 								.show()
 						}
 					}

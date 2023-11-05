@@ -804,6 +804,10 @@ class NSApiManager {
 		request(unAuthorised3020Client.productCategory(NSUserManager.getAuthToken()), callback)
 	}
 
+	fun getOnlineOrderCategory(callback: NSRetrofitCallback<NSCategoryListResponse>) {
+		request(unAuthorised3020Client.productCategoryOnlineOrder(NSUserManager.getAuthToken()), callback)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -1192,6 +1196,10 @@ class NSApiManager {
 	 */
 	fun getDiseasesMasterList(callback: NSRetrofitCallback<NSDiseasesResponse>) {
 		request(unAuthorised3020Client.diseasesMasterApi(NSUserManager.getAuthToken()), callback)
+	}
+
+	fun getBrandMasterList(callback: NSRetrofitCallback<NSBrandResponse>) {
+		request(unAuthorised3020Client.brandMasterApi(NSUserManager.getAuthToken()), callback)
 	}
 
 	/**
@@ -1611,6 +1619,10 @@ interface RTApiInterface {
 	fun productCategory(@Field("token_id") token: String): Call<NSCategoryListResponse>
 
 	@FormUrlEncoded
+	@POST("category-master-online-order-api")
+	fun productCategoryOnlineOrder(@Field("token_id") token: String): Call<NSCategoryListResponse>
+
+	@FormUrlEncoded
 	@POST("product-master-api")
 	fun productList(
 		@Field("token_id") token: String,
@@ -1637,7 +1649,7 @@ interface RTApiInterface {
 		@Field("page_index") pageIndex: String,
 		@Field("search") search: String,
 		@Field("category_id") categoryId: String,
-		@Field("diseases_id") diseasesId: String,
+		@Field("brand_id") diseasesId: String,
 		@Field("in_stock") inStock: String
 	): Call<NSProductListResponse>
 
@@ -1843,6 +1855,12 @@ interface RTApiInterface {
 	fun diseasesMasterApi(
 		@Field("token_id") token: String,
 	): Call<NSDiseasesResponse>
+
+	@FormUrlEncoded
+	@POST("brand-master-online-order-api")
+	fun brandMasterApi(
+		@Field("token_id") token: String,
+	): Call<NSBrandResponse>
 
 	@FormUrlEncoded
 	@POST("search-list-api")

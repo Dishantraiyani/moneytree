@@ -716,4 +716,11 @@
     <string name="download">Download</string>
     <string name="id">ID:</string>
     <string name="joining_date">Joining Date:</string>
+    <string name="select_categroies">Select Categories</string>
+    <string name="select_brands">Select Brands</string>
+    <string name="select_diseases">Select Diseases</string>
+    <string name="brands">Brands</string>
+    <string name="delivery_charges">Delivery Charges</string>
+    <string name="reward_point">Reward Point</string>
+    <string name="grand_total">Grand Total</string>
 </resources>

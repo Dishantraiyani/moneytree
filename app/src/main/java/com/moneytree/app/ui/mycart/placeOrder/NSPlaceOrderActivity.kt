@@ -261,14 +261,25 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
     private fun setTotalAmount() {
         with(binding) {
             var totalAmountValue = 0
+            var rewardCoinsValue = 0
             for (data in NSApplication.getInstance().getOrderList()) {
                 val amount1: Int = data.rate?.toInt() ?: 0
+                val coins: Int = data.rewardCoin?.toInt() ?: 0
                 val finalAmount1 = data.itemQty * amount1
+                val rewardCoins = data.itemQty * coins
                 totalAmountValue += finalAmount1
+                rewardCoinsValue += rewardCoins
             }
             tvProductTitle.text = "${NSApplication.getInstance().getOrderList().size} Item Selected"
             tvAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
             productModel.finalAmount = totalAmountValue.toString()
+
+            tvTotalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+            val deliveryCharge = if (totalAmountValue <= 0) 0 else 50
+            tvDeliveryCharge.text = if (totalAmountValue <= 0) "0" else addText(activity, R.string.price_value, deliveryCharge.toString())
+            tvRewardPoint.text = addText(activity, R.string.price_value, rewardCoinsValue.toString())
+            val grandTotal = totalAmountValue + deliveryCharge + rewardCoinsValue
+            tvGrandTotal.text = addText(activity, R.string.price_value, grandTotal.toString())
         }
     }
 

@@ -11,7 +11,10 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.gson.Gson
+import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
@@ -97,12 +100,19 @@ class NSProductDetailFragment : NSFragment() {
 						)
 						NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL
 						tvHeaderBack.text = productName
-						productModel.setupViewPager(activity, viewPager, productDetail!!)
-
-						/*Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
-							.diskCacheStrategy(DiskCacheStrategy.NONE)
-							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
-							.error(R.drawable.placeholder).into(ivProductImg)*/
+						if (productDetail?.multiImageList?.isNotEmpty() == true) {
+							ivProductImg.gone()
+							viewPager.visible()
+							productModel.setupViewPager(activity, viewPager, productDetail!!)
+						} else {
+							ivProductImg.visible()
+							viewPager.gone()
+							Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
+								.diskCacheStrategy(DiskCacheStrategy.NONE)
+								.skipMemoryCache(true).placeholder(R.drawable.placeholder)
+								.error(R.drawable.placeholder).into(ivProductImg)
+						}
+						/**/
 						tvProductName.text = productName
 						tvPrice.text = addText(activity, R.string.price_value, rate!!)
 						tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
@@ -121,6 +131,11 @@ class NSProductDetailFragment : NSFragment() {
 						}
 						tvQtyGrid.text = itemQty.toString()
 						tvStockQty.text = if (isFromOrderValue) maxOrderQty else stockQty
+
+						if (!isFromOrderValue) {
+							tvStockQty.visible()
+							tvStockQtyTitle.visible()
+						}
 
 						if (brandName?.isNotEmpty() == true) {
 							llBrandName.visible()
@@ -324,7 +339,7 @@ class NSProductDetailFragment : NSFragment() {
 					tvPrice.text = addText(activity, R.string.price_value, amount1.toString())
 					setTotalAmount()
 				} else {
-					Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
+					Toast.makeText(activity, if (isFromOrderValue) NSConstants.MAX_TITLE + maxOrderQty?.toInt() + NSConstants.MAX_TITLE_SECOND else NSConstants.STOCK_NOT_AVAILABLE, Toast.LENGTH_SHORT).show()
 				}
 			}
 		}

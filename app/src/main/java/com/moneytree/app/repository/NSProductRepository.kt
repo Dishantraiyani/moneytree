@@ -99,6 +99,22 @@ object NSProductRepository {
         })
     }
 
+	fun getOnlineOrderCategory(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getOnlineOrderCategory(object :
+			NSRetrofitCallback<NSCategoryListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_CATEGORY_PRODUCT) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSCategoryListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
 	/**
 	 * To get joining voucher data API
 	 *

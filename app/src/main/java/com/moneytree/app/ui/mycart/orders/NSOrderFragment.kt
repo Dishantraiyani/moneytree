@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.base.adapter.ViewBindingAdapter
 import com.moneytree.app.common.*
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
@@ -27,28 +26,23 @@ import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.callbacks.NSSearchResponseCallback
 import com.moneytree.app.common.utils.*
-import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
 import com.moneytree.app.databinding.LayoutSearchableDialogFilterBinding
-import com.moneytree.app.databinding.LayoutShopProductItemBinding
 import com.moneytree.app.databinding.NsFragmentOrdersBinding
+import com.moneytree.app.repository.network.responses.NSBrandData
 import com.moneytree.app.repository.network.responses.NSCategoryData
-import com.moneytree.app.repository.network.responses.NSDiseasesData
 import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.repository.network.responses.SearchData
-import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
-import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
+import com.moneytree.app.ui.mycart.orders.brands.NSBrandFilterRecycleAdapter
 import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.mycart.products.NSMyFilterRecycleAdapter
-import com.moneytree.app.ui.mycart.products.diseases.NSMyDiseasesFilterRecycleAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
@@ -56,9 +50,6 @@ import java.util.*
 class NSOrderFragment : NSFragment(), NSSearchCallback {
     private val productModel: NSOrderViewModel by lazy {
 		ViewModelProvider(this)[NSOrderViewModel::class.java]
-    }
-	private val productCategoryModel: ProductCategoryViewModel by lazy {
-		ViewModelProvider(this)[ProductCategoryViewModel::class.java]
     }
     private var _binding: NsFragmentOrdersBinding? = null
 
@@ -101,7 +92,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 			//setProductStockAdapter()
 			setCategory()
 			//Spinner Product Category
-			productCategoryModel.getProductCategory(false, isDiseases = true)
+			productModel.getOnlineOrderCategory(false, isDiseases = true)
 		}
     }
 
@@ -358,8 +349,8 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 				showFilterDialog(activity, categoryResponse.categoryList)
 			}
 
-			diseasesTypeSpinner.setOnClickListener {
-				showDiseasesFilterDialog(activity, categoryResponse.diseasesList)
+			brandsTypeSpinner.setOnClickListener {
+				showBrandFilterDialog(activity, categoryResponse.brandList)
 			}
 		}
 	}
@@ -382,7 +373,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 					cvProgress.setVisibility(isBottomProgressShowing)
                 }
 
-				productCategoryModel.isCategoryDataAvailable.observe(
+				isCategoryDataAvailable.observe(
 					viewLifecycleOwner
 				) { categoryData ->
 					setCategoryData(categoryData)
@@ -458,6 +449,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 		val dialog = builder.create()
 		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 		with(bind) {
+			tvTop.text = activity.resources.getString(R.string.select_categroies)
 			listItems.layoutManager = LinearLayoutManager(activity)
 			val listAdapter = NSMyFilterRecycleAdapter(activity)
 			listItems.adapter = listAdapter
@@ -512,7 +504,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 		dialog.show()
 	}
 
-	private fun showDiseasesFilterDialog(activity: Activity, diseasesData: MutableList<NSDiseasesData>) {
+	private fun showBrandFilterDialog(activity: Activity, diseasesData: MutableList<NSBrandData>) {
 		val builder = AlertDialog.Builder(activity)
 		val view: View = activity.layoutInflater.inflate(R.layout.layout_searchable_dialog_filter, null)
 		builder.setView(view)
@@ -520,8 +512,9 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 		val dialog = builder.create()
 		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 		with(bind) {
+			tvTop.text = activity.resources.getString(R.string.select_brands)
 			listItems.layoutManager = LinearLayoutManager(activity)
-			val listAdapter = NSMyDiseasesFilterRecycleAdapter(activity)
+			val listAdapter = NSBrandFilterRecycleAdapter(activity)
 			listItems.adapter = listAdapter
 			listAdapter.clearData()
 			listAdapter.updateData(diseasesData)
@@ -533,7 +526,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 
 			tvClear.setSafeOnClickListener {
 				dialog.dismiss()
-				NSApplication.getInstance().clearDiseasesFilter()
+				NSApplication.getInstance().clearBrandFilter()
 				setCategory()
 			}
 
@@ -543,10 +536,10 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 				}
 
 				override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-					val tempData = ArrayList<NSDiseasesData>()
+					val tempData = ArrayList<NSBrandData>()
 					for (nsCategoryData in diseasesData) {
-						if (nsCategoryData.diseasesName != null) {
-							if (nsCategoryData.diseasesName!!.lowercase(Locale.getDefault())
+						if (nsCategoryData.brandName != null) {
+							if (nsCategoryData.brandName!!.lowercase(Locale.getDefault())
 									.contains(
 										charSequence.toString().lowercase(
 											Locale.getDefault()
@@ -584,17 +577,17 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 				productBinding.categoriesTypeSpinner.text = itemSelected
 			}
 
-			val diseases = NSApplication.getInstance().getDiseasesFilterList()
-			if (diseases.isEmpty()) {
-				productBinding.diseasesTypeSpinner.text = "All"
+			val brands = NSApplication.getInstance().getBrandFilterList()
+			if (brands.isEmpty()) {
+				productBinding.brandsTypeSpinner.text = "All"
 			} else {
-				val itemSelected = "${diseases.size} Item Selected"
-				productBinding.diseasesTypeSpinner.text = itemSelected
+				val itemSelected = "${brands.size} Item Selected"
+				productBinding.brandsTypeSpinner.text = itemSelected
 			}
 
 			setFirstPage()
 			categoryId = ""
-			diseasesId = ""
+			brandId = ""
 			//var tempCategoryId = ""
 			for (dat in data) {
 				if (categoryId?.isNotEmpty() == true) {
@@ -604,11 +597,11 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
 				}
 			}
 
-			for (dat in diseases) {
-				if (diseasesId?.isNotEmpty() == true) {
-					diseasesId += ",$dat"
+			for (dat in brands) {
+				if (brandId?.isNotEmpty() == true) {
+					brandId += ",$dat"
 				} else {
-					diseasesId = dat
+					brandId = dat
 				}
 			}
 

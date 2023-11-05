@@ -5,5 +5,6 @@ package com.moneytree.app.repository.network.responses
  */
 data class NSJointCategoryDiseasesResponse(
     var categoryList: MutableList<NSCategoryData> = arrayListOf(),
-    var diseasesList: MutableList<NSDiseasesData> = arrayListOf()
+    var diseasesList: MutableList<NSDiseasesData> = arrayListOf(),
+    var brandList: MutableList<NSBrandData> = arrayListOf()
 )

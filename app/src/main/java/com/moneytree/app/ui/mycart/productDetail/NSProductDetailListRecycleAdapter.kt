@@ -88,6 +88,10 @@ class NSProductDetailListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
+					if (isFromOrderProduct) {
+						tvQtyTitleGrid.gone()
+						tvStockQtyGrid.gone()
+					}
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
 					tvStockQtyGrid.text = if (isFromOrderProduct) maxOrderQty else stockQty
 
@@ -156,7 +160,7 @@ class NSProductDetailListRecycleAdapter(
 							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					} else {
-						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
+						Toast.makeText(activity, if (isFromOrderProduct) NSConstants.MAX_TITLE + maxOrderQty?.toInt() + NSConstants.MAX_TITLE_SECOND else NSConstants.STOCK_NOT_AVAILABLE, Toast.LENGTH_SHORT).show()
 					}
 				}
 			}

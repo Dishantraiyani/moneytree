@@ -95,6 +95,7 @@ class OrderHistoryRecycleAdapter(
                         llMtCoin.visible()
                         tvMtCoin.text = response.mtCoin
                     }
+
                     if (response.mtCoinTotal?.isNotEmpty() == true) {
                         llMtCoinTotal.visible()
                         tvMtCoinTotal.text = mtCoinTotal?.let { addText(activity, R.string.price_value, it) }

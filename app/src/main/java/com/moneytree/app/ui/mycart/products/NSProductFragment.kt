@@ -485,6 +485,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 		val dialog = builder.create()
 		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 		with(bind) {
+			tvTop.text = activity.resources.getString(R.string.select_categroies)
 			listItems.layoutManager = LinearLayoutManager(activity)
 			val listAdapter = NSMyFilterRecycleAdapter(activity)
 			listItems.adapter = listAdapter
@@ -547,6 +548,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 		val dialog = builder.create()
 		dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 		with(bind) {
+			tvTop.text = activity.resources.getString(R.string.select_diseases)
 			listItems.layoutManager = LinearLayoutManager(activity)
 			val listAdapter = NSMyDiseasesFilterRecycleAdapter(activity)
 			listItems.adapter = listAdapter

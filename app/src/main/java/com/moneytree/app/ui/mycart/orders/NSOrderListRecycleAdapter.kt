@@ -56,7 +56,7 @@ class NSOrderListRecycleAdapter(
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val voucherView =
-			LayoutShopProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+			LayoutOrderProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		return NSProductViewHolder(voucherView)
 	}
 
@@ -82,7 +82,7 @@ class NSOrderListRecycleAdapter(
 	 *
 	 * @property productBinding The voucher list view binding
 	 */
-	inner class NSProductViewHolder(private val productBinding: LayoutShopProductItemBinding) :
+	inner class NSProductViewHolder(private val productBinding: LayoutOrderProductItemBinding) :
 		RecyclerView.ViewHolder(productBinding.root) {
 
 		/**
@@ -93,6 +93,10 @@ class NSOrderListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
+					tvQtyTitleGrid.gone()
+					tvStockQtyGrid.gone()
+					tvQtyTitle.gone()
+					tvStockQty.gone()
 					clProductLayout.setVisibility(!isGrid)
 					clProductLayoutGrid.setVisibility(isGrid)
 					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
@@ -200,7 +204,7 @@ class NSOrderListRecycleAdapter(
 							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					} else {
-						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
+						Toast.makeText(activity, NSConstants.MAX_TITLE + maxOrderQty?.toInt() + NSConstants.MAX_TITLE_SECOND, Toast.LENGTH_SHORT).show()
 					}
 				}
 			}

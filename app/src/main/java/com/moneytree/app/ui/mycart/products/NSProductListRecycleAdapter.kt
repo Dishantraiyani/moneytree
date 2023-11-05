@@ -192,7 +192,7 @@ class NSProductListRecycleAdapter(
 							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					} else {
-						Toast.makeText(activity, "No Stock Available", Toast.LENGTH_SHORT).show()
+						Toast.makeText(activity, NSConstants.STOCK_NOT_AVAILABLE, Toast.LENGTH_SHORT).show()
 					}
 				}
 			}

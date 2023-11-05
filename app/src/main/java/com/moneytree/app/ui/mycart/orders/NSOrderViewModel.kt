@@ -8,19 +8,17 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.SliderDoctorAdapter
 import com.moneytree.app.common.callbacks.NSSearchResponseCallback
 import com.moneytree.app.common.utils.NSUtilities
-import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDiseasesRepository
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.NSSearchRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.NSCategoryData
+import com.moneytree.app.repository.network.responses.NSBrandResponse
 import com.moneytree.app.repository.network.responses.NSCategoryListResponse
-import com.moneytree.app.repository.network.responses.NSDiseasesData
 import com.moneytree.app.repository.network.responses.NSDiseasesResponse
+import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.NSSearchListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.moneytree.app.repository.network.responses.SearchData
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
@@ -38,9 +36,12 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
 	var categoryId: String? = ""
-    var diseasesId: String? = ""
+    var brandId: String? = ""
     var selectedStock: String = "All"
     val mFragmentList: MutableList<String> = ArrayList()
+
+    var isCategoryDataAvailable = MutableLiveData<NSJointCategoryDiseasesResponse>()
+    var jointResponse: NSJointCategoryDiseasesResponse = NSJointCategoryDiseasesResponse()
 
     fun searchAll(search: String, callback: NSSearchResponseCallback) {
         if (search.length > 2) {
@@ -86,7 +87,7 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-		categoryId?.let { NSProductRepository.getOnlineOrderList(pageIndex, search, it, diseasesId?:"", selectedStock, this) }
+		categoryId?.let { NSProductRepository.getOnlineOrderList(pageIndex, search, it, brandId?:"", selectedStock, this) }
     }
 
     override fun <T> onSuccess(data: T) {
@@ -115,6 +116,36 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
         viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE)
         viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
         // viewPager.startAutoCycle()
+    }
+
+    fun getOnlineOrderCategory(isShowProgress: Boolean, isDiseases: Boolean = false) {
+        if (isShowProgress) showProgress()
+        callCommonApi({ obj ->
+            NSProductRepository.getOnlineOrderCategory(obj)
+        }, { data, isSuccess ->
+            hideProgress()
+            if (isSuccess) {
+                if (data is NSCategoryListResponse) {
+                    jointResponse.categoryList = data.data
+                    if (!isDiseases) {
+                        isCategoryDataAvailable.value = jointResponse
+                        isProgressShowing.value = false
+                    } else {
+                        callCommonApi({ obj ->
+                            NSDiseasesRepository.getBrandListData(obj)
+                        }, { dataDiseases, _ ->
+                            hideProgress()
+                            if (dataDiseases is NSBrandResponse) {
+                                isProgressShowing.value = false
+                                jointResponse.brandList = dataDiseases.data
+                                isCategoryDataAvailable.value = jointResponse
+                            }
+                        })
+
+                    }
+                }
+            }
+        })
     }
 
     override fun onError(errors: List<Any>) {

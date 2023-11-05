@@ -101,6 +101,9 @@ class NSConstants {
 		const val PAYMENT_GATEWAY = "payment"
 		const val PAYMENT_MT_COIN = "mt_coin"
 		const val DIRECTORY_PATH = "/moneyTree/"
+		const val STOCK_NOT_AVAILABLE = "No Stock Available"
+		const val MAX_TITLE = "Max "
+		const val MAX_TITLE_SECOND = " Qty Available"
 		var RECHARGE_USING_PAYMENT_GATEWAY: Boolean = false
 	}
 }

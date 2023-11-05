@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView android:id="@+id/cl_shop_item" xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_2sdp"
-    app:cardUseCompatPadding="true"
-    android:layout_marginBottom="@dimen/_5sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardCornerRadius="@dimen/_2sdp"
+	app:cardUseCompatPadding="true"
+	android:layout_marginBottom="@dimen/_5sdp"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/cl_product_layout"

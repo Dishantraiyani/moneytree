@@ -10,6 +10,7 @@ import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
+import com.moneytree.app.repository.network.responses.NSBrandData
 import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.NSDiseasesData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -29,6 +30,7 @@ class NSApplication : Application() {
 	private var orderList: HashMap<String, ProductDataDTO> = hashMapOf()
 	private var filterProduct: HashMap<String, String> = hashMapOf()
 	private var diseasesProduct: HashMap<String, String> = hashMapOf()
+	private var brandProduct: HashMap<String, String> = hashMapOf()
 	private var selectedAddress: NSAddressCreateResponse = NSAddressCreateResponse()
 	private var kycKey: String = ""
 
@@ -210,6 +212,10 @@ class NSApplication : Application() {
 		diseasesProduct.clear()
 	}
 
+	fun clearBrandFilter(){
+		brandProduct.clear()
+	}
+
 	fun getDiseasesFilterList(): ArrayList<String> {
 		val list: ArrayList<String> = arrayListOf()
 		for ((key, value) in diseasesProduct.entries) {
@@ -234,6 +240,29 @@ class NSApplication : Application() {
 		return diseasesProduct.contains(key)
 	}
 
+	fun isBrandFilterAvailable(model: NSBrandData) : Boolean {
+		val key = model.brandId
+		return brandProduct.contains(key)
+	}
+
+	fun removeBrandFilter(model: NSBrandData): ArrayList<String> {
+		val key = model.brandId
+		brandProduct.remove(key)
+		return getBrandFilterList()
+	}
+
+	fun getBrandFilterList(): ArrayList<String> {
+		val list: ArrayList<String> = arrayListOf()
+		for ((key, value) in brandProduct.entries) {
+			list.add(key)
+		}
+		return list
+	}
+
+	fun setBrandFilterList(diseasesData: NSBrandData) {
+		val key = diseasesData.brandId!!
+		brandProduct[key] = diseasesData.brandName!!
+	}
 
     companion object {
         private lateinit var instance: NSApplication

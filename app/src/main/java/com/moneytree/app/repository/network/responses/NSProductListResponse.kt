@@ -97,6 +97,9 @@ data class ProductDataDTO(
 	@field:SerializedName("category_tag_name")
 	val categoryTagName: String? = null,
 
+	@field:SerializedName("reward_coin")
+	val rewardCoin: String? = null,
+
 	@field:SerializedName("is_from_order")
 	var isFromOrder: Boolean = false
 )
