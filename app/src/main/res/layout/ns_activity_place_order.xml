@@ -288,16 +288,17 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_notes"
                 style="@style/LoginSubFontsWrap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="@string/below_order"
-                android:textColor="@color/black"
+                android:textColor="@color/red"
                 android:fontFamily="@font/inter_medium"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:textSize="@dimen/_9sdp"
-                android:visibility="gone"/>
+                />
 
             <Button
                 android:id="@+id/btn_submit"

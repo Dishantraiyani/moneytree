@@ -66,34 +66,6 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
 
         }
 
-    private val kycLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            val resultCode = result.resultCode
-            if (resultCode == Activity.RESULT_OK) {
-                productModel.apply {
-                    val instance = NSApplication.getInstance()
-                    val productList = if (isFromOrder) instance.getOrderList() else instance.getProductList()
-                    if (productList.size > 0) {
-                        if (pref.selectedAddress == null) {
-                            Toast.makeText(activity, "Please Add Address Detail", Toast.LENGTH_SHORT).show()
-                        } else {
-                            val razorpayUtility = RazorpayUtility(activity)
-                            model.productName = "Orders"
-                            model.price = productModel.finalAmount
-                            model.email = userDetail?.email
-                            model.mobile = userDetail?.mobile
-                            model.address = Gson().toJson(pref.selectedAddress)
-                            model.productDetail = Gson().toJson(productList)
-                            razorpayUtility.startOrderPayment(model)
-                        }
-                        //saveMyCart(memberId, selectedWalletType, remark, Gson().toJson(productList), true)
-                    } else {
-                        Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = NsActivityPlaceOrderBinding.inflate(layoutInflater)
@@ -173,7 +145,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                 val instance = NSApplication.getInstance()
                 val productList = if (isFromOrder) instance.getOrderList() else instance.getProductList()
                 if (productList.size > 0) {
-                    if (pref.selectedAddress == null) {
+                    if (instance.getSelectedAddress().addressId.isEmpty()) {
                         Toast.makeText(activity, "Please Add Address Detail", Toast.LENGTH_SHORT).show()
                         return
                     } else {
@@ -182,7 +154,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
                         model.price = productModel.finalAmount
                         model.email = userDetail?.email
                         model.mobile = userDetail?.mobile
-                        model.address = Gson().toJson(pref.selectedAddress)
+                        model.address = Gson().toJson(instance.getSelectedAddress())
                         model.productDetail = Gson().toJson(productList)
 
                         showPaymentOption() {
@@ -219,7 +191,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
 
     private fun setAddress() {
         binding.apply {
-            val model: NSAddressCreateResponse = if (productModel.isDefaultAddress) pref.selectedAddress?: NSAddressCreateResponse() else NSApplication.getInstance().getSelectedAddress()
+            val model: NSAddressCreateResponse = NSApplication.getInstance().getSelectedAddress()
             etUserName.text = model.fullName
 
             val list: MutableList<String> = arrayListOf()
@@ -277,9 +249,10 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
             tvTotalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
             val deliveryCharge = if (totalAmountValue <= 0) 0 else 50
             tvDeliveryCharge.text = if (totalAmountValue <= 0) "0" else addText(activity, R.string.price_value, deliveryCharge.toString())
-            tvRewardPoint.text = addText(activity, R.string.price_value, rewardCoinsValue.toString())
-            val grandTotal = totalAmountValue + deliveryCharge + rewardCoinsValue
+            tvRewardPoint.text = rewardCoinsValue.toString()
+            val grandTotal = totalAmountValue + deliveryCharge
             tvGrandTotal.text = addText(activity, R.string.price_value, grandTotal.toString())
+            tvNotes.text = "Congratulations! You will earn ${rewardCoinsValue} reward points."
         }
     }
 

@@ -120,9 +120,6 @@ class NSAddressFragment : BaseViewModelFragment<NSAddressViewModel, NsFragmentAd
 						val model = NSAddressCreateResponse(fullName, mobile, flatHouse, area, "", pinCode, city, state, country, if (cbChecked.isChecked) "Y" else "N", viewModel.selectedAddressModel?.addressId?:"")
 
 						viewModel.addOrUpdateAddress(model) {
-							if (cbChecked.isChecked || !isAddAddress) {
-								pref.selectedAddress = model
-							}
 							NSApplication.getInstance().addSelectedAddress(model)
 							requireActivity().setResult(RESULT_OK)
 							finish()
