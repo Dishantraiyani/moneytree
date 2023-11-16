@@ -34,4 +34,22 @@ object NSSearchRepository {
             }
         })
     }
+
+    fun searchDirectOrderList(search: String,
+                   viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.searchDirectOrderList(search, object :
+            NSRetrofitCallback<NSSearchListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_SEARCH_LIST_DATA) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as NSSearchListResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
 }

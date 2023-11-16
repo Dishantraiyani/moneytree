@@ -45,7 +45,7 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
 
     fun searchAll(search: String, callback: NSSearchResponseCallback) {
         if (search.length > 2) {
-            NSSearchRepository.searchList(search, object : NSGenericViewModelCallback {
+            NSSearchRepository.searchDirectOrderList(search, object : NSGenericViewModelCallback {
                 override fun <T> onSuccess(data: T) {
                     if (data is NSSearchListResponse) {
                         callback.onSearch(data.data)

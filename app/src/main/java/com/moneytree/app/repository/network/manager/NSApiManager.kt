@@ -1211,6 +1211,10 @@ class NSApiManager {
 		request(unAuthorised3020Client.searchList(NSUserManager.getAuthToken(), search), callback)
 	}
 
+	fun searchDirectOrderList(search: String, callback: NSRetrofitCallback<NSSearchListResponse>) {
+		request(unAuthorised3020Client.searchDirectOrderList(NSUserManager.getAuthToken(), search), callback)
+	}
+
 	/**
 	 * To call the set default register data API
 	 *
@@ -1865,6 +1869,13 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("search-list-api")
 	fun searchList(
+		@Field("token_id") token: String,
+		@Field("search") search: String
+	): Call<NSSearchListResponse>
+
+	@FormUrlEncoded
+	@POST("search-list-direct-order-api")
+	fun searchDirectOrderList(
 		@Field("token_id") token: String,
 		@Field("search") search: String
 	): Call<NSSearchListResponse>
