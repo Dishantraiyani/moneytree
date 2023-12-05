@@ -186,4 +186,22 @@ object NSRechargeRepository {
 			}
 		})
 	}
+
+	fun getPrepaidPlan(accountDisplay: String,
+						   viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getPrepaidPlan(accountDisplay, object :
+			NSRetrofitCallback<PlansResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PLAN_LIST) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as PlansResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

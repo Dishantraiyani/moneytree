@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -28,6 +29,7 @@ import com.moneytree.app.ui.recharge.RechargeDetailRecycleAdapter
 import com.moneytree.app.ui.recharge.detail.NSRechargeDetailActivity
 import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
 import com.moneytree.app.ui.recharge.history.NSRechargeListRecycleAdapter
+import com.moneytree.app.ui.recharge.plans.PlansFragment
 
 
 class NSMobileRechargeFragment : NSFragment() {
@@ -108,6 +110,43 @@ class NSMobileRechargeFragment : NSFragment() {
 		setRechargeHistoryAdapter()
     }
 
+	private fun prepaidPostpaid(isPostpaid: Boolean) {
+		rgBinding.apply {
+			tvServiceProviderTitle.setVisibility(isPostpaid)
+			cardWalletAmount.setVisibility(isPostpaid)
+			cardAmount.setVisibility(isPostpaid)
+			tvAmountTitle.setVisibility(isPostpaid)
+			tvMobileNumberTitle.setVisibility(!isPostpaid)
+			cardMobileNumber.setVisibility(!isPostpaid)
+
+			if (!isPostpaid) {
+				etCustomerDetail.gone()
+				tvCustomerDetail.visible()
+
+				cardMobileNumber.setSafeOnClickListener {
+					val planFragment = PlansFragment.newInstance(object : PlansFragment.DialogDismissListener {
+						override fun onDismiss() {
+
+						}
+
+						override fun showProgress(isShowProgress: Boolean) {
+							if (isShowProgress) {
+								viewModel.showProgress()
+							} else {
+								viewModel.hideProgress()
+							}
+						}
+					})
+					planFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
+					planFragment.show(childFragmentManager, "show_plans")
+				}
+			} else {
+				etCustomerDetail.visible()
+				tvCustomerDetail.gone()
+			}
+		}
+	}
+
     /**
      * Set listener
      */
@@ -123,6 +162,7 @@ class NSMobileRechargeFragment : NSFragment() {
 									isShowProgress = true
 								)
 								rechargeType = "prepaid"
+								prepaidPostpaid(false)
 								getRechargeListData(true)
 							}
 						}
@@ -136,6 +176,7 @@ class NSMobileRechargeFragment : NSFragment() {
 									isShowProgress = true
 								)
 								rechargeType = "postpaid"
+								prepaidPostpaid(true)
 								getRechargeListData(true)
 							}
 						}

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:background="@color/white"
+	android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<include android:id="@+id/layout_header"
+		layout="@layout/layout_header"/>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_search"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="@dimen/_1sdp"
+		android:layout_marginTop="@dimen/_12sdp"
+		android:layout_marginHorizontal="@dimen/_10sdp"
+		android:background="@drawable/gray_border"
+		android:layout_below="@id/layout_header">
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/iv_search_icon"
+			android:layout_width="@dimen/_22sdp"
+			android:layout_height="@dimen/_22sdp"
+			android:src="@drawable/ic_search_new"
+			android:layout_marginStart="@dimen/_10sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			android:contentDescription="@string/username_title" />
+
+		<AutoCompleteTextView
+			android:id="@+id/et_search"
+			style="@style/LoginSubFontsZeroWrap"
+			android:minHeight="@dimen/_38sdp"
+			android:textColor="@color/black"
+			android:background="@null"
+			android:paddingStart="@dimen/_10sdp"
+			android:paddingEnd="@dimen/_10sdp"
+			android:hint="@string/enter_mobile_number"
+			android:gravity="center_vertical"
+			android:focusableInTouchMode="true"
+			android:textColorHint="@color/hint_color"
+			android:imeOptions="actionSearch"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/iv_search_icon"
+			app:layout_constraintEnd_toEndOf="parent"
+			android:dropDownListViewStyle="@style/CustomDropDownItemStyle"
+			android:inputType="textPersonName"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<View
+		android:id="@+id/view_line1"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/line_color"
+		android:layout_marginTop="@dimen/_12sdp"
+		android:layout_below="@id/cl_search" />
+
+	<LinearLayout
+		android:id="@+id/ll_plans"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:visibility="gone"
+		android:layout_below="@id/view_line1">
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/rv_category_list"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/_40sdp"
+			android:clipToPadding="false"
+			android:orientation="horizontal"
+			tools:listitem="@layout/layout_category_name"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"/>
+
+		<View
+			android:id="@+id/view_line3"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/line_color"
+			app:layout_constraintTop_toBottomOf="@id/rv_category_list"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent" />
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+				android:id="@+id/srl_refresh"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/rv_plans_list"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"/>
+
+			</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+		</RelativeLayout>
+
+	</LinearLayout>
+
+	<ProgressBar
+		android:id="@+id/progress"
+		style="@style/Widget.AppCompat.ProgressBar"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:progressTint="@color/orange"
+		android:visibility="gone"
+		android:indeterminate="true"
+		android:indeterminateTintMode="src_atop"
+		android:indeterminateTint="@color/orange"/>
+
+</RelativeLayout>

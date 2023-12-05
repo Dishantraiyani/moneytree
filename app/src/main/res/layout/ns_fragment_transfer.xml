@@ -164,7 +164,7 @@
 					android:id="@+id/btn_search"
 					android:layout_width="@dimen/_38sdp"
 					android:layout_height="@dimen/_38sdp"
-					android:src="@drawable/ic_search"
+					android:src="@drawable/ic_search_new"
 					android:tint="@color/white"
 					android:padding="@dimen/_7sdp"
 					style="@style/LayoutWidthHeightZeroWrap"

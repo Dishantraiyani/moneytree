@@ -808,6 +808,10 @@ class NSApiManager {
 		request(unAuthorised3020Client.productCategoryOnlineOrder(NSUserManager.getAuthToken()), callback)
 	}
 
+	fun getPrepaidPlan(accountDisplay: String, callback: NSRetrofitCallback<PlansResponse>) {
+		request(unAuthorised3020Client.getPrepaidPlan(NSUserManager.getAuthToken(), accountDisplay), callback)
+	}
+
 	/**
 	 * To call the user detail data API
 	 *
@@ -1625,6 +1629,10 @@ interface RTApiInterface {
 	@FormUrlEncoded
 	@POST("category-master-online-order-api")
 	fun productCategoryOnlineOrder(@Field("token_id") token: String): Call<NSCategoryListResponse>
+
+	@FormUrlEncoded
+	@POST("get-prepaid-plan")
+	fun getPrepaidPlan(@Field("token_id") token: String, @Field("account_display") accountDisplay: String): Call<PlansResponse>
 
 	@FormUrlEncoded
 	@POST("product-master-api")
