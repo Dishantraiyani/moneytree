@@ -20,8 +20,8 @@
 		android:background="@drawable/gray_border"
 		android:layout_below="@id/layout_header">
 
-		<androidx.appcompat.widget.AppCompatImageView
-			android:id="@+id/iv_search_icon"
+		<ImageView
+			android:id="@+id/iv_search_ico"
 			android:layout_width="@dimen/_22sdp"
 			android:layout_height="@dimen/_22sdp"
 			android:src="@drawable/ic_search_new"
@@ -46,7 +46,7 @@
 			android:imeOptions="actionSearch"
 			app:layout_constraintTop_toTopOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toEndOf="@+id/iv_search_icon"
+			app:layout_constraintStart_toEndOf="@+id/iv_search_ico"
 			app:layout_constraintEnd_toEndOf="parent"
 			android:dropDownListViewStyle="@style/CustomDropDownItemStyle"
 			android:inputType="textPersonName"/>
