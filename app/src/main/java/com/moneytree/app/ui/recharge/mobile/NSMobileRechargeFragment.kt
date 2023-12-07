@@ -22,7 +22,9 @@ import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
 import com.moneytree.app.common.utils.*
 import com.moneytree.app.databinding.NsFragmentMobileRechargeBinding
 import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
+import com.moneytree.app.repository.network.responses.PlansResponse
 import com.moneytree.app.repository.network.responses.RechargeListDataItem
+import com.moneytree.app.repository.network.responses.ServiceProviderDataItem
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
 import com.moneytree.app.ui.recharge.RechargeDetailRecycleAdapter
@@ -82,12 +84,12 @@ class NSMobileRechargeFragment : NSFragment() {
 					when (rechargeSelectedType) {
 						getString(R.string.mobile) -> {
 							rdoSimType.visible()
-							if (isApiCall) {
+							/*if (isApiCall) {
 								setServiceProvider(
 									getString(R.string.prepaid),
 									isShowProgress = true
 								)
-							}
+							}*/
 							llRechargeData.visible()
 						}
 						else -> {
@@ -124,21 +126,11 @@ class NSMobileRechargeFragment : NSFragment() {
 				tvCustomerDetail.visible()
 
 				cardMobileNumber.setSafeOnClickListener {
-					val planFragment = PlansFragment.newInstance(object : PlansFragment.DialogDismissListener {
-						override fun onDismiss() {
+					openPrepaidDialog()
+				}
 
-						}
-
-						override fun showProgress(isShowProgress: Boolean) {
-							if (isShowProgress) {
-								viewModel.showProgress()
-							} else {
-								viewModel.hideProgress()
-							}
-						}
-					})
-					planFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
-					planFragment.show(childFragmentManager, "show_plans")
+				cardPrepaidOperator.setSafeOnClickListener {
+					openPrepaidDialog()
 				}
 			} else {
 				etCustomerDetail.visible()
@@ -146,6 +138,43 @@ class NSMobileRechargeFragment : NSFragment() {
 			}
 		}
 	}
+
+	private fun openPrepaidDialog() {
+		rgBinding.apply {
+			viewModel.apply {
+				val planFragment = PlansFragment.newInstance(tvCustomerDetail.text.toString(), object : PlansFragment.DialogDismissListener {
+					override fun onDismiss() {
+
+					}
+
+					override fun showProgress(isShowProgress: Boolean) {
+						if (isShowProgress) {
+							viewModel.showProgress()
+						} else {
+							viewModel.hideProgress()
+						}
+					}
+
+					override fun onClickDetail(planResponse: PlansResponse, mobileNo: String) {
+						dataItemModel = ServiceProviderDataItem(rechargeMasterId = planResponse.serviceProvider, rechargeType = rechargeType, accountDisplay = mobileNo, serviceProvider = planResponse.mobileOperator?.info?.opr)
+						rgBinding.llPrepaidView.visible()
+						tvServiceProviderPrepaid.text = planResponse.mobileOperator?.info?.opr
+						tvAmountTitle.visible()
+						cardAmount.visible()
+						//Prepaid in display tvCustomerDetail other etCustomerDetail
+						tvCustomerDetail.text = mobileNo
+						etCustomerDetail.setText(mobileNo)
+						etAmount.setText(planResponse.data?.selectedPack?.amount?:"0")
+					}
+				})
+				planFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
+				planFragment.show(childFragmentManager, "show_plans")
+			}
+		}
+	}
+
+	//RechargeMasterId = service_provider
+	//AccountDisplay = phoneNumber
 
     /**
      * Set listener
@@ -157,10 +186,10 @@ class NSMobileRechargeFragment : NSFragment() {
 					rbPrepaid.setOnCheckedChangeListener { p0, isChecked ->
 						run {
 							if (isChecked) {
-								setServiceProvider(
+								/*setServiceProvider(
 									getString(R.string.prepaid),
 									isShowProgress = true
-								)
+								)*/
 								rechargeType = "prepaid"
 								prepaidPostpaid(false)
 								getRechargeListData(true)
@@ -194,8 +223,8 @@ class NSMobileRechargeFragment : NSFragment() {
 
 						override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 							if (p0.toString().length >= 10) {
-								if (spinner.selectedItemPosition != 0) {
-									with(dataItemModel!!) {
+								if (spinner.selectedItemPosition != 0 || rechargeType == "prepaid") {
+									dataItemModel?.apply {
 										rechargeRequestFetchData =
 											NSRechargeSaveRequest(
 												rechargeType,
@@ -246,7 +275,7 @@ class NSMobileRechargeFragment : NSFragment() {
 							} else if (etAmount.text.toString().isEmpty()) {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount)
 								return
-							} else if (amount.toDouble() < dataItemModel?.minAmt!!.toDouble() || amount.toDouble() > dataItemModel?.maxAmt!!.toDouble()) {
+							} else if ((amount.toDouble() < (dataItemModel?.minAmt?:"0.0").toDouble() || amount.toDouble() > (dataItemModel?.maxAmt?:"0.0").toDouble()) && rechargeType != "prepaid") {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount_between, dataItemModel!!.minAmt, dataItemModel!!.maxAmt)
 								return
 							} else {

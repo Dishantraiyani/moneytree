@@ -165,6 +165,76 @@
 
 		</androidx.cardview.widget.CardView>
 
+		<LinearLayout
+			android:id="@+id/ll_prepaid_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:visibility="gone"
+			android:layout_marginTop="@dimen/_15sdp">
+
+			<TextView
+				style="@style/LoginSubFontsWrap"
+				android:text="@string/service_provider"
+				android:textColor="@color/black"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:textSize="@dimen/_10sdp" />
+
+			<androidx.cardview.widget.CardView
+				android:id="@+id/card_prepaid_operator"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/_6sdp"
+				android:layout_marginBottom="@dimen/_2sdp"
+				app:cardCornerRadius="@dimen/_5sdp"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/_1sdp"
+					app:guidelineUseRtl="true"
+					app:chainUseRtl="true"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+
+					<ImageView
+						android:id="@+id/iv_1"
+						android:layout_width="@dimen/_15sdp"
+						android:layout_height="@dimen/_15sdp"
+						android:src="@drawable/ic_operator_ico"
+						android:layout_marginStart="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						android:contentDescription="@string/username_title" />
+
+					<TextView
+						android:id="@+id/tv_service_provider_prepaid"
+						style="@style/LoginSubFontsZeroWrap"
+						android:minHeight="@dimen/_38sdp"
+						android:textColor="@color/black"
+						android:background="@drawable/phone_white_background"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:gravity="center_vertical"
+						android:textColorHint="@color/hint_color"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toEndOf="@id/iv_1"
+						app:layout_constraintEnd_toEndOf="parent" />
+
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.cardview.widget.CardView>
+
+		</LinearLayout>
+
 		<TextView
 			android:id="@+id/tv_mobile_number_title"
 			style="@style/LoginSubFontsWrap"

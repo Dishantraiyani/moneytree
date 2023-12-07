@@ -31,13 +31,14 @@ class NSPlansViewModel(application: Application) : NSViewModel(application) {
 						callback.invoke(data, hashMapOf())
 					}
 				}
+			} else {
+				callback.invoke(PlansResponse(), hashMapOf())
 			}
 		})
 	}
 
 	private fun plansList(list: MutableList<PackItem>, callback: (HashMap<String, MutableList<PackItem>>) -> Unit) {
 		val map: HashMap<String, MutableList<PackItem>> = hashMapOf()
-
 		for (data in list) {
 			if (map.containsKey(data.catagory?.lowercase())) {
 				val mapList = map[data.catagory?.lowercase()]
@@ -49,7 +50,6 @@ class NSPlansViewModel(application: Application) : NSViewModel(application) {
 				map[data.catagory!!.lowercase()] = mapList
 			}
 		}
-
 		callback.invoke(map)
 	}
 }

@@ -35,7 +35,11 @@ data class PlansData(
 	val pack: MutableList<PackItem> = arrayListOf(),
 
 	@field:SerializedName("status")
-	val status: String? = null
+	val status: String? = null,
+
+	//Custom Selected
+	@field:SerializedName("selected_pack_item")
+	var selectedPack: PackItem? = null,
 )
 
 data class MobileOperator(

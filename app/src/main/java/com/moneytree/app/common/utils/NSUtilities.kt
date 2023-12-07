@@ -9,16 +9,21 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.util.Base64
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.moneytree.app.R
@@ -410,5 +415,25 @@ object NSUtilities {
 	fun capitalizeEveryFirstLetter(input: String?): String {
 		val regex = "\\b\\w".toRegex()
 		return regex.replace(input?:"") { it.value.uppercase() }
+	}
+
+	fun getBoldTexts(originalText: String, textView: TextView) {
+		val wordArrayList = arrayListOf("Talktime:", "Validity:", "Voice:", "SMS:", "SMS :", "Data:", "Validity :")
+		val spannableStringBuilder = SpannableStringBuilder(originalText)
+
+		// Iterate through the wordArrayList and set the style for each word
+		for (word in wordArrayList) {
+			val startIndex = originalText.indexOf(word)
+			if (startIndex != -1) {
+				val endIndex = startIndex + word.length
+				spannableStringBuilder.setSpan(
+					StyleSpan(Typeface.BOLD),
+					startIndex,
+					endIndex,
+					Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+				)
+			}
+		}
+		textView.text = spannableStringBuilder
 	}
 }
