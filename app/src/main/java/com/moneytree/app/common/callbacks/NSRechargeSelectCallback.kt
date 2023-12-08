@@ -8,5 +8,5 @@ interface NSRechargeSelectCallback {
     /**
      * Invoked when the recharge click
      */
-    fun onClick(position: Int)
+    fun onClick(position: Int, selectedType: String)
 }

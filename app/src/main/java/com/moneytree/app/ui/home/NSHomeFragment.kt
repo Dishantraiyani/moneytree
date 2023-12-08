@@ -63,6 +63,7 @@ import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.products.MTProductsActivity
 import com.moneytree.app.ui.qrCode.QRCodeActivity
 import com.moneytree.app.ui.recharge.NSRechargeActivity
+import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
 import com.moneytree.app.ui.recharge.rechargePayment.RozerActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
@@ -192,11 +193,15 @@ class NSHomeFragment : NSFragment() {
 
 				bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
-                        override fun onClick(position: Int) {
-							switchActivity(
-								NSRechargeActivity::class.java,
-								bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
-							)
+                        override fun onClick(position: Int, selectedType: String) {
+							if (selectedType != "History") {
+								switchActivity(
+									NSRechargeActivity::class.java,
+									bundle = bundleOf(NSConstants.KEY_RECHARGE_TYPE to fieldName[position])
+								)
+							} else {
+								switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
+							}
                         }
                     }
                 )
@@ -204,7 +209,6 @@ class NSHomeFragment : NSFragment() {
             }
         }
     }
-
 
 
 	private fun setRechargeLayout() {

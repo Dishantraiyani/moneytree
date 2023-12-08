@@ -120,7 +120,7 @@ class NSMobileRechargeFragment : NSFragment() {
 			tvAmountTitle.setVisibility(isPostpaid)
 			tvMobileNumberTitle.setVisibility(!isPostpaid)
 			cardMobileNumber.setVisibility(!isPostpaid)
-
+			etAmount.isEnabled = isPostpaid
 			if (!isPostpaid) {
 				etCustomerDetail.gone()
 				tvCustomerDetail.visible()
@@ -165,6 +165,7 @@ class NSMobileRechargeFragment : NSFragment() {
 						tvCustomerDetail.text = mobileNo
 						etCustomerDetail.setText(mobileNo)
 						etAmount.setText(planResponse.data?.selectedPack?.amount?:"0")
+						etAmount.isEnabled = false
 					}
 				})
 				planFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
@@ -190,7 +191,7 @@ class NSMobileRechargeFragment : NSFragment() {
 									getString(R.string.prepaid),
 									isShowProgress = true
 								)*/
-								rechargeType = "prepaid"
+								rechargeType = "Prepaid"
 								prepaidPostpaid(false)
 								getRechargeListData(true)
 							}
@@ -204,7 +205,7 @@ class NSMobileRechargeFragment : NSFragment() {
 									getString(R.string.postpaid),
 									isShowProgress = true
 								)
-								rechargeType = "postpaid"
+								rechargeType = "Postpaid"
 								prepaidPostpaid(true)
 								getRechargeListData(true)
 							}
@@ -223,7 +224,7 @@ class NSMobileRechargeFragment : NSFragment() {
 
 						override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 							if (p0.toString().length >= 10) {
-								if (spinner.selectedItemPosition != 0 || rechargeType == "prepaid") {
+								if (spinner.selectedItemPosition != 0 || rechargeType.lowercase() == "prepaid") {
 									dataItemModel?.apply {
 										rechargeRequestFetchData =
 											NSRechargeSaveRequest(
@@ -275,7 +276,7 @@ class NSMobileRechargeFragment : NSFragment() {
 							} else if (etAmount.text.toString().isEmpty()) {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount)
 								return
-							} else if ((amount.toDouble() < (dataItemModel?.minAmt?:"0.0").toDouble() || amount.toDouble() > (dataItemModel?.maxAmt?:"0.0").toDouble()) && rechargeType != "prepaid") {
+							} else if ((amount.toDouble() < (dataItemModel?.minAmt?:"0.0").toDouble() || amount.toDouble() > (dataItemModel?.maxAmt?:"0.0").toDouble()) && rechargeType?.lowercase() != "prepaid") {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount_between, dataItemModel!!.minAmt, dataItemModel!!.maxAmt)
 								return
 							} else {

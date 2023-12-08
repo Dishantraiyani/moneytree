@@ -50,7 +50,7 @@ class GridRecycleAdapter(
                     tvFieldName.text = fieldName
                     ivFieldImage.setImageResource(fieldImage)
                     llRecharge.setOnClickListener {
-                        nsRechargeCallBack.onClick(absoluteAdapterPosition)
+                        nsRechargeCallBack.onClick(absoluteAdapterPosition, fieldName)
                     }
                 }
             }
