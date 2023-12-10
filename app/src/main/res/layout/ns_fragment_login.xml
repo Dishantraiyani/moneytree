@@ -80,7 +80,8 @@
                 app:layout_constraintStart_toEndOf="@id/iv_user"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:autofillHints="phone"
-                android:inputType="textPersonName" />
+                android:inputType="phone"
+				android:digits="0123456789"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,43 +14,69 @@
 		android:id="@+id/cl_search"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="@dimen/_1sdp"
-		android:layout_marginTop="@dimen/_12sdp"
-		android:layout_marginHorizontal="@dimen/_10sdp"
-		android:background="@drawable/gray_border"
-		android:layout_below="@id/layout_header">
+		android:layout_below="@id/layout_header"
+		android:layout_marginTop="@dimen/_12sdp">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/_1sdp"
+			android:layout_marginHorizontal="@dimen/_10sdp"
+			android:background="@drawable/gray_border"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toStartOf="@+id/iv_phone_book"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent">
+
+			<ImageView
+				android:id="@+id/iv_search_ico"
+				android:layout_width="@dimen/_22sdp"
+				android:layout_height="@dimen/_22sdp"
+				android:src="@drawable/ic_search_new"
+				android:tint="@color/gray"
+				android:layout_marginStart="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				android:contentDescription="@string/username_title"
+				tools:ignore="UseAppTint" />
+
+			<EditText
+				android:id="@+id/et_search_mobile"
+				style="@style/LoginSubFontsZeroWrap"
+				android:minHeight="@dimen/_38sdp"
+				android:textColor="@color/black"
+				android:background="@null"
+				android:paddingStart="@dimen/_10sdp"
+				android:paddingEnd="@dimen/_10sdp"
+				android:hint="@string/enter_mobile_number"
+				android:gravity="center_vertical"
+				android:focusableInTouchMode="true"
+				android:textColorHint="@color/hint_color"
+				android:imeOptions="actionSearch"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintStart_toEndOf="@+id/iv_search_ico"
+				app:layout_constraintEnd_toEndOf="parent"
+				android:inputType="phone"/>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
 
 		<ImageView
-			android:id="@+id/iv_search_ico"
-			android:layout_width="@dimen/_22sdp"
-			android:layout_height="@dimen/_22sdp"
-			android:src="@drawable/ic_search_new"
-			android:tint="@color/gray"
-			android:layout_marginStart="@dimen/_10sdp"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
+			android:id="@+id/iv_phone_book"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:src="@drawable/phone_book"
+			android:tint="@color/orange"
+			android:padding="@dimen/_8sdp"
+			app:layout_constraintDimensionRatio="W,1:1"
+			android:background="@drawable/gray_border"
+			android:layout_marginEnd="@dimen/_10sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="@id/cl_search"
+			app:layout_constraintBottom_toBottomOf="@id/cl_search"
 			android:contentDescription="@string/username_title"
 			tools:ignore="UseAppTint" />
-
-		<EditText
-			android:id="@+id/et_search_mobile"
-			style="@style/LoginSubFontsZeroWrap"
-			android:minHeight="@dimen/_38sdp"
-			android:textColor="@color/black"
-			android:background="@null"
-			android:paddingStart="@dimen/_10sdp"
-			android:paddingEnd="@dimen/_10sdp"
-			android:hint="@string/enter_mobile_number"
-			android:gravity="center_vertical"
-			android:focusableInTouchMode="true"
-			android:textColorHint="@color/hint_color"
-			android:imeOptions="actionSearch"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintStart_toEndOf="@+id/iv_search_ico"
-			app:layout_constraintEnd_toEndOf="parent"
-			android:inputType="phone"/>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

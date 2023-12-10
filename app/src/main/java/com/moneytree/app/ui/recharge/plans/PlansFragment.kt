@@ -1,12 +1,22 @@
 package com.moneytree.app.ui.recharge.plans
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -84,6 +94,14 @@ class PlansFragment(private val listener: DialogDismissListener) : DialogFragmen
 
                 if (selectedMobileNo.isNotEmpty() && selectedMobileNo.length >= 10) {
                     binding.etSearchMobile.setText(selectedMobileNo)
+                }
+
+                binding.ivPhoneBook.setSafeOnClickListener {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestContactsPermission()
+                    } else {
+                        getPhoneNumber()
+                    }
                 }
             }
         }
@@ -174,5 +192,79 @@ class PlansFragment(private val listener: DialogDismissListener) : DialogFragmen
 
         fun onClickDetail(planResponse: PlansResponse, mobileNo: String)
 
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                // Permission granted
+                getPhoneNumber()
+            } else {
+                // Permission denied
+                // Handle the case where the user denies the permission
+            }
+        }
+
+    private val pickContactLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data: Intent? = result.data
+                if (data != null) {
+                    // Handle the selected contact data
+                    handleSelectedContact(data)
+                }
+            } else {
+                // The user canceled the action
+                Toast.makeText(requireContext(), "Contact selection canceled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    private fun requestContactsPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+        } else {
+            // Permission has already been granted
+            getPhoneNumber()
+        }
+    }
+
+    private fun getPhoneNumber() {
+        val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+        pickContactLauncher.launch(intent)
+    }
+
+    @SuppressLint("Range")
+    private fun handleSelectedContact(data: Intent) {
+        // Extract the contact details from the Intent
+        val contactUri = data.data
+        val cursor = requireContext().contentResolver.query(contactUri!!, null, null, null, null)
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val contactId = it.getString(it.getColumnIndex(ContactsContract.Contacts._ID))
+                val name =
+                    it.getString(it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+
+                // Query the phone numbers for the selected contact
+                val phoneCursor = requireContext().contentResolver.query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                    arrayOf(contactId),
+                    null
+                )
+
+                phoneCursor?.use { pc ->
+                    if (pc.moveToFirst()) {
+                        val phoneNumber = pc.getString(pc.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                        binding.etSearchMobile.setText(phoneNumber)
+                    }
+                }
+            }
+        }
     }
 }
