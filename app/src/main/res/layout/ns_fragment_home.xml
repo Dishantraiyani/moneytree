@@ -667,6 +667,50 @@
 				</androidx.cardview.widget.CardView>
 
 				<androidx.cardview.widget.CardView
+					android:id="@+id/card_recharge_history"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					app:cardElevation="@dimen/_1sdp"
+					android:layout_marginTop="@dimen/_10sdp">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/_50sdp"
+						android:orientation="horizontal"
+						android:layout_margin="@dimen/_1sdp"
+						android:gravity="center_vertical">
+
+						<ImageView
+							android:layout_width="@dimen/_20sdp"
+							android:layout_height="@dimen/_20sdp"
+							android:src="@drawable/ic_history_home"
+							android:layout_marginStart="@dimen/_12sdp"
+							android:layout_marginEnd="@dimen/_10sdp"
+							android:contentDescription="@string/home"/>
+
+						<TextView
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:textSize="15sp"
+							android:layout_weight="1"
+							android:fontFamily="@font/inter_regular"
+							android:textStyle="normal"
+							android:textColor="@color/black"
+							android:text="@string/recharge_history"
+							/>
+
+						<ImageView
+							android:layout_width="@dimen/_13sdp"
+							android:layout_height="@dimen/_13sdp"
+							android:src="@drawable/arrow_right"
+							android:layout_marginStart="@dimen/_12sdp"
+							android:layout_marginEnd="@dimen/_10sdp"
+							android:contentDescription="@string/home"/>
+
+					</LinearLayout>
+				</androidx.cardview.widget.CardView>
+
+				<androidx.cardview.widget.CardView
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:cardElevation="@dimen/_1sdp"
@@ -678,23 +722,43 @@
 						android:orientation="vertical"
 						android:layout_margin="@dimen/_1sdp">
 
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:textSize="15sp"
-							android:layout_marginTop="13.6dp"
-							android:fontFamily="@font/inter_regular"
-							android:textStyle="normal"
-							android:paddingLeft="16.7dp"
-							android:textColor="@color/black"
-							android:text="@string/recharges_amp_pay_bills"
-							/>
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="@dimen/_40sdp"
+							android:orientation="horizontal"
+							android:gravity="center_vertical">
+
+							<TextView
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:textSize="15sp"
+								android:layout_weight="1"
+								android:fontFamily="@font/inter_regular"
+								android:textStyle="normal"
+								android:paddingLeft="16.7dp"
+								android:textColor="@color/black"
+								android:text="@string/recharges_amp_pay_bills"
+								/>
+
+							<ImageView
+								android:id="@+id/iv_history"
+								android:layout_width="@dimen/_23sdp"
+								android:layout_height="@dimen/_23sdp"
+								android:src="@drawable/ic_history_recharge"
+								android:tint="@color/orange"
+								tools:ignore="UseAppTint"
+								android:clickable="true"
+								android:visibility="gone"
+								android:layout_marginEnd="@dimen/_10sdp"
+								android:contentDescription="@string/home"/>
+
+						</LinearLayout>
 
 						<View
 							android:layout_width="match_parent"
 							android:layout_height="0.7dp"
 							android:background="#eef0f1"
-							android:layout_marginTop="13.1dp"/>
+							/>
 
 						<androidx.recyclerview.widget.RecyclerView
 							android:layout_width="match_parent"

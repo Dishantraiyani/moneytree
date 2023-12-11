@@ -153,6 +153,13 @@ class NSHomeFragment : NSFragment() {
 					switchActivity(NSActivateActivity::class.java)
 				}
 			})
+
+			cardRechargeHistory.setOnClickListener(object : SingleClickListener() {
+				override fun performClick(v: View?) {
+					switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
+				}
+			})
+
 		}
 	}
 

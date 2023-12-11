@@ -237,7 +237,6 @@
         <item>Landline</item>
         <item>LPG Booking</item>
         <item>Water</item>
-        <item>History</item>
     </string-array>
 
     <string-array name="recharge_list_second">
