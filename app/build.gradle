@@ -34,8 +34,8 @@ android {
     productFlavors {
         development {
             dimension "moneytree"
-            versionCode 21
-            versionName "2.7"
+            versionCode 22
+            versionName "2.8"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'BASE_URL', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkx3PT0K" '
             buildConfigField 'String', 'BASE_URL_IMAGE', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzVndiRzloWkM5d2NtOWtkV04wTHc9PQo=" '
