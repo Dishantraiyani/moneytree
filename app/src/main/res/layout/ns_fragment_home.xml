@@ -671,6 +671,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					app:cardElevation="@dimen/_1sdp"
+					android:visibility="gone"
 					android:layout_marginTop="@dimen/_10sdp">
 
 					<LinearLayout
@@ -741,14 +742,14 @@
 								/>
 
 							<ImageView
-								android:id="@+id/iv_history"
+								android:id="@+id/iv_history_recharge"
 								android:layout_width="@dimen/_23sdp"
 								android:layout_height="@dimen/_23sdp"
 								android:src="@drawable/ic_history_recharge"
 								android:tint="@color/orange"
 								tools:ignore="UseAppTint"
 								android:clickable="true"
-								android:visibility="gone"
+								android:focusable="true"
 								android:layout_marginEnd="@dimen/_10sdp"
 								android:contentDescription="@string/home"/>
 
