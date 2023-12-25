@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.coins.redeemHistory.NSPendingFragment">
+    tools:context=".ui.wallets.redeemHistory.NSRedeemFragment">
 
 	<include android:id="@+id/layout_date_range"
 		layout="@layout/layout_date_range_select"/>

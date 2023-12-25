@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_gray"
-    tools:context=".ui.coins.NSCoinWalletFragment">
+    tools:context=".ui.wallets.NSWalletFragment">
 
     <include android:id="@+id/layout_header"
         layout="@layout/layout_header"/>

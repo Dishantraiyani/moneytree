@@ -69,8 +69,8 @@ import com.moneytree.app.ui.recharge.rechargePayment.RozerActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
-import com.moneytree.app.ui.coins.redeemForm.NSAddRedeemActivity
-import com.moneytree.app.ui.coins.transfer.NSTransferActivity
+import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
+import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import com.moneytree.app.ui.youtube.YoutubeActivity
 import maulik.barcodescanner.OnScannerResponse
 import maulik.barcodescanner.ui.BarcodeScanningActivity

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.coins.redeemForm.NSAddRedeemFragment">
+    tools:context=".ui.wallets.redeemForm.NSAddRedeemFragment">
 
     <include android:id="@+id/layout_header"
         layout="@layout/layout_header"/>

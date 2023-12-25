@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.coins.transfer.NSTransferFragment">
+    tools:context=".ui.wallets.transfer.NSTransferFragment">
 
     <include android:id="@+id/layout_header"
         layout="@layout/layout_header"/>

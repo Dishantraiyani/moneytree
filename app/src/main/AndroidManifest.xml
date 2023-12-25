@@ -272,7 +272,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.coins.verifyMember.VerifyMemberActivity"
+            android:name=".ui.wallets.verifyMember.VerifyMemberActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -281,13 +281,13 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.coins.redeemForm.NSAddRedeemActivity"
+            android:name=".ui.wallets.redeemForm.NSAddRedeemActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ui.coins.transfer.NSTransferActivity"
+            android:name=".ui.wallets.transfer.NSTransferActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
