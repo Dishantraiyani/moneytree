@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_8sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_order_no"
+        style="@style/LoginSubFontsZeroWrap"
+        tools:text="Transfer Id: 1234567890"
+        app:guidelineUseRtl="true"
+        android:textColor="@color/orange"
+        android:gravity="center|start"
+        android:textStyle="bold"
+        android:paddingHorizontal="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_amount_data"
+        style="@style/LoginSubFontsZeroWrap"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/ll_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_no" >
+
+        <TextView
+            android:id="@+id/tv_member_id_title"
+            style="@style/LoginSubFontsWrap"
+            android:text="@string/member_id_title"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/black"
+            android:paddingStart="@dimen/_10sdp"
+            android:lines="1"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/inter_regular"
+            android:paddingEnd="@dimen/_4sdp"
+            />
+
+        <TextView
+            android:id="@+id/tv_member_id"
+            style="@style/LoginSubFontsWrap"
+            tools:text="Value"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/gray_text"
+            android:lines="1"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/inter_medium"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_level"
+        style="@style/LoginSubFontsZeroWrap"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:paddingTop="0dp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/ll_amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_amount_data" >
+
+        <TextView
+            android:id="@+id/tv_total_title"
+            style="@style/LoginSubFontsWrap"
+            android:text="@string/earning_date"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/black"
+            android:paddingStart="@dimen/_10sdp"
+            android:lines="1"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/inter_regular"
+            android:paddingEnd="@dimen/_2sdp"
+            />
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/LoginSubFontsWrap"
+            tools:text="Value"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/orange"
+            android:lines="1"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/inter_medium"
+            android:paddingStart="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            />
+
+        <TextView
+            style="@style/LoginSubFontsWrap"
+            android:text="@string/level_no_new"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/black"
+            android:paddingStart="@dimen/_10sdp"
+            android:lines="1"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/inter_regular"
+            android:paddingEnd="@dimen/_2sdp"
+            />
+
+        <TextView
+            android:id="@+id/tv_level_no"
+            style="@style/LoginSubFontsWrap"
+            tools:text="Value"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/gray_text"
+            android:lines="1"
+            android:textSize="@dimen/_11sdp"
+            android:fontFamily="@font/inter_medium"
+            android:paddingStart="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_5sdp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/view_line"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_amount"
+            style="@style/LoginSubFontsWrap"
+            tools:text="10"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/black"
+            android:lines="1"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/inter_medium" />
+
+        <TextView
+            android:id="@+id/tv_amount_pending"
+            style="@style/LoginSubFontsWrap"
+            android:text="@string/pending"
+            android:gravity="start"
+            app:guidelineUseRtl="true"
+            android:textColor="@color/light_yellow"
+            android:lines="1"
+            android:textSize="@dimen/_9sdp"
+            android:fontFamily="@font/inter_regular"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@id/ll_level"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

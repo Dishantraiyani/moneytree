@@ -9,11 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentPackageDetailBinding
-import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
-import org.greenrobot.eventbus.EventBus
+import com.moneytree.app.ui.coins.transfer.NSTransferActivity
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 

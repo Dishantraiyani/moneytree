@@ -25,6 +25,7 @@ class NSPreferences(context: Context) {
         private const val KEY_SELECTED_ADDRESS = "key_is_selected_address"
         private const val KEY_KYC_VERIFIED = "key_is_kyc_verified"
         private const val KEY_KYC_VERIFIED_SKIP = "key_is_kyc_verified_skip"
+        private const val KEY_REWARD_COIN_PERIOD = "key_is_reward_coin_period"
     }
 
     /**
@@ -83,6 +84,10 @@ class NSPreferences(context: Context) {
         set(language) {
             prefEdit.putInt(KEY_OFFER_TAB_POSITION, language!!).apply()
         }
+
+    var rewardCoinPeriod: String?
+        get() = preference.getString(KEY_REWARD_COIN_PERIOD, null)
+        set(period) = prefEdit.putString(KEY_REWARD_COIN_PERIOD, period).apply()
 
     /**
      * To clear all preferences data

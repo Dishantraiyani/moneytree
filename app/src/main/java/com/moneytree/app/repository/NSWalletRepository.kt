@@ -105,4 +105,40 @@ object NSWalletRepository {
 			}
 		})
 	}
+
+	fun getCoinWalletList(pageIndex: String, search: String, startDate: String, endDate: String, type: String,
+					  viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getCoinWalletList(pageIndex, search, startDate, endDate, type, object :
+			NSRetrofitCallback<NSWalletListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_COMMON) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSWalletListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	fun getPendingCoinWalletList(pageIndex: String, search: String,
+						  viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getPendingCoinWalletList(pageIndex, search, object :
+			NSRetrofitCallback<NSPendingCoinWalletListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_COMMON) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSPendingCoinWalletListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

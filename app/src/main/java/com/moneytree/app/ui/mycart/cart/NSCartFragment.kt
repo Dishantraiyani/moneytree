@@ -89,13 +89,14 @@ class NSCartFragment : NSFragment() {
 				with(layoutHeader) {
 
 					proceed.setOnClickListener {
-                        if (isFromOrder) {
-                            switchResultActivity(
-                                dataResult,
-                                NSSelectAddressActivity::class.java,
-                                bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
-                            )
-                            /*if (pref.selectedAddress != null) {
+                        if (productList.isValidList()) {
+                            if (isFromOrder) {
+                                switchResultActivity(
+                                    dataResult,
+                                    NSSelectAddressActivity::class.java,
+                                    bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder)
+                                )
+                                /*if (pref.selectedAddress != null) {
                                 switchResultActivity(
                                     dataResult,
                                     NSPlaceOrderActivity::class.java,
@@ -108,22 +109,23 @@ class NSCartFragment : NSFragment() {
                                     bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder, NSConstants.KEY_IS_ADD_ADDRESS to true)
                                 )
                             }*/
-                        } else {
-                            if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
-                                switchResultActivity(
-                                    dataResult,
-                                    PurchaseCompleteActivity::class.java
-                                )
-                                finish()
                             } else {
-                                if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
-                                    clBottomSheet.visible()
-                                } else {
+                                if (NSConstants.SOCKET_TYPE.isNullOrEmpty()) {
                                     switchResultActivity(
                                         dataResult,
                                         PurchaseCompleteActivity::class.java
                                     )
                                     finish()
+                                } else {
+                                    if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
+                                        clBottomSheet.visible()
+                                    } else {
+                                        switchResultActivity(
+                                            dataResult,
+                                            PurchaseCompleteActivity::class.java
+                                        )
+                                        finish()
+                                    }
                                 }
                             }
                         }
@@ -214,7 +216,7 @@ class NSCartFragment : NSFragment() {
     private fun voucherDataManage(isVoucherVisible: Boolean) {
         with(productBinding) {
 			rvCartItem.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
-			llItem.visibility = if (isVoucherVisible) View.VISIBLE else View.VISIBLE
+			llItem.visibility = if (isVoucherVisible) View.VISIBLE else View.GONE
             emptyCart.visibility = if (isVoucherVisible) View.GONE else View.VISIBLE
         }
     }

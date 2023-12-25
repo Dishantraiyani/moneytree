@@ -32,6 +32,7 @@ class NSApiErrorHandler {
         const val ERROR_LEVEL_WISE_MEMBER_TREE = "error_level_wise_member_tree"
         const val ERROR_LOGOUT = "error_logout"
         const val ERROR_MEMBER_DETAIL = "error_member_detail"
+        const val ERROR_COMMON = "error_common"
         const val ERROR_CHECK_STOKE_TYPE = "error_check_stock_type"
         const val ERROR_CHANGE_PASSWORD = "error_change_password"
         const val ERROR_CHANGE_TRAN_PASSWORD = "error_change_tran_password"

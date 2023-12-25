@@ -1,0 +1,10 @@
+Reward point /2 karva display karva nu
+Message lakhi nakhva no 7 di pachi coin madse evo
+
+Order History ma Pan display karva nu reward point
+
+Home Screen ma Coin button uper
+Creadit/Debit  Pending
+
+https://moneytree.biz/coin-wallet-list-api
+{"status":true,"message":"No Data Found..","wallet_amount":[{"amount":null}],"nextPage":false,"data":[]}

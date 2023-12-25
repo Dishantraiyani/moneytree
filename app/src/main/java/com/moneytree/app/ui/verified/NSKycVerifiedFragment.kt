@@ -5,25 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
-import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
-import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.buildAlertDialog
 import com.moneytree.app.common.utils.setSafeOnClickListener
-import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.LayoutCustomAlertDialogBinding
 import com.moneytree.app.databinding.NsFragmentKycVerifiedBinding
-import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
 import com.moneytree.app.ui.mycart.kyc.NSKycActivity
-import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class NSKycVerifiedFragment : NSFragment() {
     private val viewModel: NSKycViewModel by lazy {

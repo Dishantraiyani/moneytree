@@ -6,14 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.coins.redeemHistory.NSPendingFragment">
 
-	<include android:id="@+id/layout_date_range"
-		layout="@layout/layout_date_range_select"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_redeem_not_found"
         style="@style/LayoutWidthHeightZero"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_date_range"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone">
@@ -37,7 +34,7 @@
             android:id="@+id/tv_redeem_not_found_sub"
             style="@style/LayoutWidthHeightZero"
             android:clipToPadding="false"
-            android:text="@string/no_redeem_available"
+            android:text="@string/no_pending_item_available"
             android:textColor="@color/gray_text"
             android:gravity="center|top"
             android:textSize="@dimen/_14sdp"
@@ -52,7 +49,7 @@
         android:id="@+id/srl_refresh"
         style="@style/LayoutWidthHeightZero"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_date_range"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

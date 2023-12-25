@@ -7,6 +7,7 @@ import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.requests.NSLoginRequest
 import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
+import com.moneytree.app.repository.network.responses.NSDirectSettingResponse
 import com.moneytree.app.repository.network.responses.NSLogoutResponse
 import com.moneytree.app.repository.network.responses.NSMemberDetailResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
@@ -127,4 +128,21 @@ object NSUserRepository {
 			}
 		})
 	}
+
+    fun getDirectSetting(viewModelCallback: NSGenericViewModelCallback) {
+        apiManager.directOrderSettings(object : NSRetrofitCallback<NSDirectSettingResponse>(
+            viewModelCallback, NSApiErrorHandler.ERROR_COMMON
+        ) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as NSDirectSettingResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
 }

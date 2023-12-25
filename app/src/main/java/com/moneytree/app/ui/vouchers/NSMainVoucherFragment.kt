@@ -1,7 +1,6 @@
 package com.moneytree.app.ui.vouchers
 
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.NsFragmentMainVouchersBinding
-import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
+import com.moneytree.app.ui.coins.transfer.NSTransferActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

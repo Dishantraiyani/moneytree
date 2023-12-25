@@ -1366,6 +1366,45 @@ class NSApiManager {
 			), callback
 		)
 	}
+
+	fun directOrderSettings(callback: NSRetrofitCallback<NSDirectSettingResponse>) {
+		request(
+			unAuthorised3020Client.directOrderSetting(
+				NSUserManager.getAuthToken()
+			), callback
+		)
+	}
+
+	fun getCoinWalletList(
+		pageIndex: String,
+		search: String,
+		startDate: String,
+		endDate: String,
+		type: String,
+		callback: NSRetrofitCallback<NSWalletListResponse>
+	) {
+		request(
+			unAuthorised3020Client.getCoinWalletList(
+				NSUserManager.getAuthToken(),
+				pageIndex,
+				search, startDate, endDate, type
+			), callback
+		)
+	}
+
+	fun getPendingCoinWalletList(
+		pageIndex: String,
+		search: String,
+		callback: NSRetrofitCallback<NSPendingCoinWalletListResponse>
+	) {
+		request(
+			unAuthorised3020Client.getPendingCoinWalletList(
+				NSUserManager.getAuthToken(),
+				pageIndex,
+				search
+			), callback
+		)
+	}
 }
 
 private fun requestBody(text: String): RequestBody {
@@ -2002,4 +2041,29 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("month") month: String
 	): Call<ResponseBody>
+
+	@FormUrlEncoded
+	@POST("direct-order-setting")
+	fun directOrderSetting(
+		@Field("token_id") token: String
+	): Call<NSDirectSettingResponse>
+
+	@FormUrlEncoded
+	@POST("coin-wallet-list-api")
+	fun getCoinWalletList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String,
+		@Field("start_date") startDate: String,
+		@Field("end_date") endDate: String,
+		@Field("type") type: String
+	): Call<NSWalletListResponse>
+
+	@FormUrlEncoded
+	@POST("pending-coin-wallet-list-api")
+	fun getPendingCoinWalletList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String
+	): Call<NSPendingCoinWalletListResponse>
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.NSUtilities
@@ -273,4 +274,16 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
 			}
 		})
 	}
+
+    fun getDirectSettings() {
+        callCommonApi({ obj ->
+            NSUserRepository.getDirectSetting(obj)
+        }, { data, isSuccess ->
+            if (isSuccess) {
+                if (data is NSDirectSettingResponse) {
+                    NSApplication.getInstance().getPrefs().rewardCoinPeriod = data.rewardCoinPeriod
+                }
+            }
+        })
+    }
 }

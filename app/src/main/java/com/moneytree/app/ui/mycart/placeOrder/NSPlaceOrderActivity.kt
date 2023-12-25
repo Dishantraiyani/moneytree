@@ -233,7 +233,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
     private fun setTotalAmount() {
         with(binding) {
             var totalAmountValue = 0
-            var rewardCoinsValue = 0
+            var rewardCoinsValue: Float = 0f
             for (data in NSApplication.getInstance().getOrderList()) {
                 val amount1: Int = data.rate?.toInt() ?: 0
                 val coins: Int = data.rewardCoin?.toInt() ?: 0
@@ -247,12 +247,13 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
             productModel.finalAmount = totalAmountValue.toString()
 
             tvTotalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
-            val deliveryCharge = if (totalAmountValue <= 0) 0 else 50
-            tvDeliveryCharge.text = if (totalAmountValue <= 0) "0" else addText(activity, R.string.price_value, deliveryCharge.toString())
-            tvRewardPoint.text = rewardCoinsValue.toString()
+            val deliveryCharge = if (totalAmountValue <= 0) 0 else if (totalAmountValue > 500) 0 else 50
+            tvDeliveryCharge.text = if (totalAmountValue <= 0) "0" else if (totalAmountValue > 500) "0" else addText(activity, R.string.price_value, deliveryCharge.toString())
+            tvRewardPoint.text = (rewardCoinsValue/2).toString()
             val grandTotal = totalAmountValue + deliveryCharge
             tvGrandTotal.text = addText(activity, R.string.price_value, grandTotal.toString())
-            tvNotes.text = "Congratulations! You will earn ${rewardCoinsValue} reward points."
+            val pointsRewardsTime = if (pref.rewardCoinPeriod.isNullOrEmpty()) "Some" else pref.rewardCoinPeriod
+            tvNotes.text = "Congratulations! You will earn ${rewardCoinsValue/2} reward points. and remaining points will be earn after $pointsRewardsTime days"
         }
     }
 

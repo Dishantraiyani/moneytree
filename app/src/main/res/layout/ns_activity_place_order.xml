@@ -294,7 +294,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="@string/below_order"
-                android:textColor="@color/red"
+                android:textColor="@color/orange"
                 android:fontFamily="@font/inter_medium"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textSize="@dimen/_9sdp"
