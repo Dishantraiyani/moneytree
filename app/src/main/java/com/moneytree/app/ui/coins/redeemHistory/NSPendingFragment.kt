@@ -90,6 +90,7 @@ class NSPendingFragment : NSFragment() {
 
     fun loadFragment(callback: NSHeaderMainSearchCallback?) {
         mainCallback = callback
+        updateBalance()
     }
 
     /**
@@ -156,14 +157,22 @@ class NSPendingFragment : NSFragment() {
     private fun setRedeemData(isRedeem: Boolean) {
         with(redeemListModel) {
             redeemDataManage(isRedeem)
-			var amount = "0"
-			if (redeemResponse?.walletAmount.isValidList()) {
-				amount = redeemResponse!!.walletAmount[0].amount ?:"0"
-			}
-			EventBus.getDefault().post(NSWalletAmount(amount))
+            updateBalance()
             if (isRedeem) {
 				redeemListAdapter!!.clearData()
                 redeemListAdapter!!.updateData(redeemList)
+            }
+        }
+    }
+
+    private fun updateBalance() {
+        redeemBinding.apply {
+            redeemListModel.apply {
+                var amount = "0"
+                if (redeemResponse?.walletAmount.isValidList()) {
+                    amount = redeemResponse!!.walletAmount[0].amount ?: "0"
+                }
+                EventBus.getDefault().post(NSWalletAmount(amount))
             }
         }
     }

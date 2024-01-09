@@ -331,6 +331,12 @@ fun addText(activity: Activity, resource: Int, data: String): String {
     }
 }
 
+fun addAmount(activity: Activity, resource: Int, data: String): String {
+    with(activity.resources) {
+        return getString(resource, if (data.isNotEmpty()) (data.toDouble()/2).toString() else "0")
+    }
+}
+
 fun setUserName(activity: Activity, userName: String): String {
     return userName.ifEmpty {
         activity.resources.getString(R.string.no_user_name)

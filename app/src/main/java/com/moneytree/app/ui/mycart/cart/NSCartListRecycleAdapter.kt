@@ -14,6 +14,7 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.utils.addAmount
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
@@ -86,6 +87,10 @@ class NSCartListRecycleAdapter(
 						qutOrder.visible()
 						productDel.gone()
 						productDelOrder.visible()
+						if (rewardCoin?.isNotEmpty() == true) {
+							llReward.visible()
+							tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
+						}
 					}
 
 					clProductLayout.setVisibility(!isGrid)
@@ -127,6 +132,12 @@ class NSCartListRecycleAdapter(
 
 							tvPrice.text =
 								addText(activity, R.string.price_value, finalAmount1.toString())
+
+							if (rewardCoin?.isNotEmpty() == true) {
+								val finalReward = itemQty * rewardCoin.toInt()
+								tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, finalReward.toString())
+							}
+
 							onProductClick.onResponse()
 						} else {
 							Toast.makeText(activity, if (isFromOrderProduct) NSConstants.MAX_TITLE + maxOrderQty?.toInt() + NSConstants.MAX_TITLE_SECOND else NSConstants.STOCK_NOT_AVAILABLE, Toast.LENGTH_SHORT)
@@ -154,6 +165,11 @@ class NSCartListRecycleAdapter(
 
 							tvPrice.text =
 								addText(activity, R.string.price_value, finalAmount1.toString())
+
+							if (rewardCoin?.isNotEmpty() == true) {
+								val finalReward = itemQty * rewardCoin.toInt()
+								tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, finalReward.toString())
+							}
 
 							if (itemQty == 0) {
 								val instance = NSApplication.getInstance()

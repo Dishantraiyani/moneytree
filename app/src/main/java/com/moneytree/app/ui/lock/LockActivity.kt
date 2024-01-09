@@ -111,7 +111,7 @@ class LockActivity : NSActivity() {
 
     private fun showLockScreenFragment(isPinExist: Boolean) {
         if (!isPinExist) {
-            activityLockBinding.tvSkip.visible()
+           // activityLockBinding.tvSkip.visible()
         }
         val builder = PFFLockScreenConfiguration.Builder(this)
             .setTitle(if (isPinExist) "Unlock with your pin code or fingerprint" else "Create Code")

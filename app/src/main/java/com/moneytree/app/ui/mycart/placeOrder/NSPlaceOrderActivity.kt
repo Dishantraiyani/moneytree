@@ -253,7 +253,7 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
             val grandTotal = totalAmountValue + deliveryCharge
             tvGrandTotal.text = addText(activity, R.string.price_value, grandTotal.toString())
             val pointsRewardsTime = if (pref.rewardCoinPeriod.isNullOrEmpty()) "Some" else pref.rewardCoinPeriod
-            tvNotes.text = "Congratulations! You will earn ${rewardCoinsValue/2} reward points. and remaining points will be earn after $pointsRewardsTime days"
+            tvNotes.text = "Congratulations! You will get ${rewardCoinsValue/2} reward coins and remaining coins will be earn after $pointsRewardsTime days"
         }
     }
 

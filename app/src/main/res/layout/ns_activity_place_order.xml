@@ -183,7 +183,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_5sdp">
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/ic_wallet_coin"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/orange"
+                    tools:ignore="UseAppTint"
+                    />
 
                 <TextView
                     style="@style/LoginSubFontsWrap"
@@ -212,6 +222,15 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_5sdp">
 
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/ic_delivery"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/orange"
+                    tools:ignore="UseAppTint"
+                    />
+
                 <TextView
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="0dp"
@@ -239,6 +258,12 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_5sdp">
 
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/ic_reward"
+                    android:layout_gravity="center_vertical"/>
+
                 <TextView
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="0dp"
@@ -265,6 +290,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/_5sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@drawable/ic_total"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/orange"
+                    tools:ignore="UseAppTint"
+                    />
 
                 <TextView
                     style="@style/LoginSubFontsWrap"

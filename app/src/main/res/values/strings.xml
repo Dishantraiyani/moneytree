@@ -419,6 +419,7 @@
     <string name="phone">Phone</string>
     <string name="submit">Submit</string>
     <string name="total_balance">Wallet Balance</string>
+    <string name="total_balance_pending">Total Balance</string>
     <string name="coins">Coins</string>
     <string name="redeem">Redeem</string>
 
@@ -723,7 +724,7 @@
     <string name="select_diseases">Select Diseases</string>
     <string name="brands">Brands</string>
     <string name="delivery_charges">Delivery Charges</string>
-    <string name="reward_point">Reward Point</string>
+    <string name="reward_point">Reward Coins</string>
     <string name="grand_total">Grand Total</string>
     <string name="no_pending_item_available">No Pending Items Available</string>
     <string name="earning_date">Earning Date:</string>

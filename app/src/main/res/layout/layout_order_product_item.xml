@@ -12,8 +12,8 @@
 		android:id="@+id/cl_product_layout"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/_75sdp"
-		android:visibility="gone"
-		android:paddingHorizontal="@dimen/_5sdp">
+		android:paddingHorizontal="@dimen/_5sdp"
+		android:visibility="gone">
 
 		<ImageView
 			android:id="@+id/iv_product_img"
@@ -72,6 +72,39 @@
 			app:layout_constraintTop_toTopOf="@id/tv_price"
 			app:layout_constraintBottom_toBottomOf="@id/tv_price"
 			/>
+
+		<LinearLayout
+			android:id="@+id/ll_reward"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center_vertical"
+			android:layout_marginStart="@dimen/_5sdp"
+			android:visibility="gone"
+			app:layout_constraintStart_toEndOf="@id/tv_rate"
+			app:layout_constraintTop_toTopOf="@id/tv_price"
+			app:layout_constraintBottom_toBottomOf="@id/tv_price">
+
+			<ImageView
+				android:layout_width="@dimen/_10sdp"
+				android:layout_height="@dimen/_10sdp"
+				android:src="@drawable/ic_reward" />
+
+			<TextView
+				android:id="@+id/tv_reward_point"
+				style="@style/LoginSubFontsWrap"
+				tools:text="Reward : 1"
+				android:textSize="@dimen/_10sdp"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:paddingHorizontal="@dimen/_5sdp"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium"
+				/>
+
+		</LinearLayout>
+
 
 		<TextView
 			android:id="@+id/tv_qty_title"
@@ -256,6 +289,38 @@
 			app:layout_constraintTop_toTopOf="@id/tv_price_grid"
 			app:layout_constraintBottom_toBottomOf="@id/tv_price_grid"
 			/>
+
+		<LinearLayout
+			android:id="@+id/ll_reward_grid"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center_vertical"
+			android:layout_marginStart="@dimen/_5sdp"
+			android:visibility="gone"
+			app:layout_constraintStart_toEndOf="@id/tv_rate_grid"
+			app:layout_constraintTop_toTopOf="@id/tv_rate_grid"
+			app:layout_constraintBottom_toBottomOf="@id/tv_rate_grid">
+
+			<ImageView
+				android:layout_width="@dimen/_10sdp"
+				android:layout_height="@dimen/_10sdp"
+				android:src="@drawable/ic_reward" />
+
+			<TextView
+				android:id="@+id/tv_reward_point_grid"
+				style="@style/LoginSubFontsWrap"
+				tools:text="Reward : 1"
+				android:textSize="@dimen/_10sdp"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:paddingHorizontal="@dimen/_5sdp"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium"
+				/>
+
+		</LinearLayout>
 
 		<TextView
 			android:id="@+id/tv_price_title_grid"

@@ -18,11 +18,13 @@ import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.utils.addAmount
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutOrderProductItemBinding
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.databinding.LayoutShopProductItemBinding
@@ -126,6 +128,12 @@ class NSOrderListRecycleAdapter(
 
 					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
 					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
+					if (rewardCoin?.isNotEmpty() == true) {
+						llReward.visible()
+						tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
+						llRewardGrid.visible()
+						tvRewardPointGrid.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
+					}
 
 					if (sdPrice == rate) {
 						tvRate.gone()

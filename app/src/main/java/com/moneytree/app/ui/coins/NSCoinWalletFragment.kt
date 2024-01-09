@@ -67,8 +67,6 @@ class NSCoinWalletFragment : NSFragment(), NSHeaderMainSearchCallback, NSSearchC
             with(walletModel) {
                 NSConstants.tabName = this@NSCoinWalletFragment.javaClass
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.coins), isSearch = true, searchCallback = this@NSCoinWalletFragment)
-                tvTransfer.visibility = View.VISIBLE
-                tvRedeem.visibility = View.GONE
                 setFragmentData(requireActivity())
                 setupViewPager(walletContainer)
             }
@@ -97,20 +95,7 @@ class NSCoinWalletFragment : NSFragment(), NSHeaderMainSearchCallback, NSSearchC
             with(walletModel) {
                 with(layoutHeader) {
                     clBack.setOnClickListener {
-                        EventBus.getDefault().post(BackPressEvent())
-                    }
-
-                    tvRedeem.setOnClickListener {
-						switchResultActivity(
-							dataResult, NSAddRedeemActivity::class.java,
-							bundleOf(
-								NSConstants.KEY_AVAILABLE_BALANCE to amountAvailable
-							)
-						)
-                    }
-
-                    tvTransfer.setOnClickListener {
-                        switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false, NSConstants.KEY_AVAILABLE_BALANCE to amountAvailable))
+                        onBackPress()
                     }
 
                     ivClose.setOnClickListener {
@@ -142,8 +127,6 @@ class NSCoinWalletFragment : NSFragment(), NSHeaderMainSearchCallback, NSSearchC
                             tabPosition = position
                             when (position) {
                                 0 -> {
-                                    tvTransfer.visibility = View.VISIBLE
-                                    tvRedeem.visibility = View.GONE
                                     if (!isTransactionAdded) {
                                         EventBus.getDefault().post(
                                             NSTransactionsEventTab()
@@ -154,8 +137,6 @@ class NSCoinWalletFragment : NSFragment(), NSHeaderMainSearchCallback, NSSearchC
 
                                 }
                                 1 -> {
-                                    tvTransfer.visibility = View.GONE
-                                    tvRedeem.visibility = View.VISIBLE
                                     if (!isRedemptionAdded) {
                                         EventBus.getDefault().post(
                                             NSRedemptionEventTab()

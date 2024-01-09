@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/total_balance"
+                android:text="@string/total_balance_pending"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -55,37 +55,6 @@
 				android:textSize="@dimen/_18sdp"
 				android:textStyle="bold"
 				tools:text="₹ 200.00" />
-
-            <TextView
-                android:id="@+id/tv_transfer"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_28sdp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/white_background"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:src="@drawable/ic_add"
-                android:text="@string/transfer"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_12sdp" />
-
-            <TextView
-                android:id="@+id/tv_redeem"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_28sdp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:background="@drawable/white_background"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:src="@drawable/ic_add"
-                android:text="@string/redeem"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_12sdp"
-                android:visibility="gone"/>
 
         </RelativeLayout>
 
