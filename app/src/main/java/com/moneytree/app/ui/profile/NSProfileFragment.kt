@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -116,7 +117,9 @@ class NSProfileFragment : NSFragment() {
     private fun onClickProfile(position: Int) {
         when (position) {
             0 -> {
-                NSUtilities.isKycVerified(activity, true)
+                if(NSUtilities.isKycVerified(activity, true)) {
+                    Toast.makeText(activity, "Your Kyc is verified", Toast.LENGTH_SHORT).show()
+                }
             }
             1 -> {
                 switchActivity(

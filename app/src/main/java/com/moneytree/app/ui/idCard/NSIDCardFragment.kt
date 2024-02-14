@@ -17,27 +17,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.cardview.widget.CardView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.kal.rackmonthpicker.RackMonthPicker
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.utils.setSafeOnClickListener
+import com.moneytree.app.common.utils.setUserName
 import com.moneytree.app.databinding.NsFragmentIdCardBinding
-import com.moneytree.app.databinding.NsFragmentPaymentSummaryBinding
-import com.rajat.pdfviewer.PdfViewerActivity
 import java.io.File
 import java.io.FileOutputStream
-import java.util.Locale
 
 
 class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCardBinding>() {
@@ -76,7 +72,7 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
             viewModel.apply {
                 getUserDetail {
                     binding.apply {
-                        tvIdValue.text = it.sponsorId
+                        tvIdValue.text = setUserName(activity, it.userName?:"")
                         tvEmailValue.text = it.email
                         tvUserName.text = it.fullName
                         tvMobileValue.text = it.mobile
@@ -96,9 +92,34 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
             with(viewModel) {
 
                 btnSubmit.setSafeOnClickListener {
-                    generateAndDownloadIdCard(requireContext())
+                    checkPermission()
                 }
             }
+        }
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                generateAndDownloadIdCard(requireContext())
+            } else {
+                Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                // Permission denied, handle accordingly
+            }
+        }
+
+    private fun checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val permission = Manifest.permission.READ_MEDIA_IMAGES
+            if (ContextCompat.checkSelfPermission(requireContext(), permission)
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(permission)
+            } else {
+                generateAndDownloadIdCard(requireContext())
+            }
+        } else {
+            generateAndDownloadIdCard(requireContext())
         }
     }
 
@@ -136,7 +157,12 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
         // Create a bitmap for the ID card
         val idCardBitmap = convertCardViewToBitmap(binding.viewId)
 
-        val dirPath = "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DOWNLOADS + "/" +NSConstants.DIRECTORY_PATH}"
+        val dirPath = "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DOWNLOADS + "/" +NSConstants.DIRECTORY_PATH_ID}"
+        val dir = File(dirPath)
+        if (!dir.exists()) {
+            dir.mkdir()
+        }
+
         // Save the bitmap as a JPEG image
         val imageFileName = "id_card.jpg"
         val imageFile = File(dirPath, imageFileName)
@@ -154,7 +180,31 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
             showDownloadCompleteNotification(requireContext(), imageFile)
         } catch (e: Exception) {
             e.printStackTrace()
+            val dirPathNew = "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DOWNLOADS + "/" +NSConstants.DIRECTORY_PATH_ID}"
+            val imageFileNew = File(dirPathNew)
+            deleteDirectory(imageFileNew)
+            if (!imageFileNew.exists()) {
+                generateAndDownloadIdCard(requireContext())
+            }
         }
+    }
+
+    fun deleteDirectory(directory: File): Boolean {
+        if (!directory.exists()) {
+            return false
+        }
+
+        val files = directory.listFiles()
+        if (files != null) {
+            for (file in files) {
+                if (file.isDirectory) {
+                    deleteDirectory(file)
+                } else {
+                    file.delete()
+                }
+            }
+        }
+        return directory.delete()
     }
 
     private fun convertCardViewToBitmap(cardView: LinearLayout): Bitmap {

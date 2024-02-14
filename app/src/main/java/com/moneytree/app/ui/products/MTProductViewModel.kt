@@ -3,10 +3,13 @@ package com.moneytree.app.ui.products
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.callbacks.NSSearchResponseCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSProductRepository
+import com.moneytree.app.repository.NSSearchRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.NSProductListResponse
+import com.moneytree.app.repository.network.responses.NSSearchListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 
 
@@ -17,14 +20,42 @@ class MTProductViewModel(application: Application) : NSViewModel(application),
     NSGenericViewModelCallback {
     var productList: MutableList<ProductDataDTO> = arrayListOf()
     var tempProductList: MutableList<ProductDataDTO> = arrayListOf()
-    var isProductsDataAvailable = MutableLiveData<Boolean>()
+    var isProductsDataAvailable = MutableLiveData<MutableList<ProductDataDTO>>()
     var pageIndex: String = "1"
     var productResponse: NSProductListResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
 	var categoryId: String? = null
 	var categoryName: String? = null
+    var pageList: MutableList<String> = arrayListOf()
+    var diseasesId: String? = ""
+    var selectedStock: String = "All"
 
+    fun searchAll(search: String, callback: NSSearchResponseCallback) {
+        if (search.length > 2) {
+            NSSearchRepository.searchList(search, object : NSGenericViewModelCallback {
+                override fun <T> onSuccess(data: T) {
+                    if (data is NSSearchListResponse) {
+                        callback.onSearch(data.data)
+                        //isSearchDataAvailable.postValue(data.data)
+                    }
+                }
+
+                override fun onError(errors: List<Any>) {
+
+                }
+
+                override fun onFailure(failureMessage: String?) {
+
+                }
+
+                override fun <T> onNoNetwork(localData: T) {
+
+                }
+
+            })
+        }
+    }
 
     /**
      * Get voucher list data
@@ -57,12 +88,12 @@ class MTProductViewModel(application: Application) : NSViewModel(application),
         if (productListData.data != null) {
             if (productListData.data.isValidList()) {
                 productList.addAll(productListData.data)
-                isProductsDataAvailable.value = productList.isValidList()
+                isProductsDataAvailable.value = productList
             } else if (pageIndex == "1" || searchData.isNotEmpty()){
-				isProductsDataAvailable.value = false
+				isProductsDataAvailable.value = arrayListOf()
             }
         } else if (pageIndex == "1" || searchData.isNotEmpty()){
-			isProductsDataAvailable.value = false
+			isProductsDataAvailable.value = arrayListOf()
         }
     }
 

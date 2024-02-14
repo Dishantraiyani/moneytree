@@ -35,7 +35,6 @@
 				android:textColor="@color/white"
 				android:includeFontPadding="false"
 				android:fontFamily="@font/inter_regular"
-				android:layout_marginStart="@dimen/_3sdp"
 				app:layout_constraintStart_toStartOf="parent"
 				app:layout_constraintTop_toTopOf="parent"
 				android:visibility="visible"/>
@@ -72,7 +71,7 @@
 				android:id="@+id/tv_account_no"
 				style="@style/LayoutWidthHeightWrap"
 				android:clipToPadding="false"
-				android:text="@string/no_order_available"
+				tools:text="@string/no_order_available"
 				android:textColor="@color/white"
 				android:fontFamily="@font/inter_regular"
 				android:gravity="center|start"
