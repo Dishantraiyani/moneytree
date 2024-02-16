@@ -14,6 +14,8 @@ import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPaymentDetailCallback
 import com.moneytree.app.common.callbacks.NSPaymentFragmentCallback
 import com.moneytree.app.common.rozerpay.RazorpayUtility
+import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentRozerBinding
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
@@ -67,6 +69,13 @@ class RozerFragment : NSFragment() {
 				headerTitle = resources.getString(R.string.recharge)
 			)
 			tvWalletAmount.text = if (viewModel.walletAmount.isNullOrEmpty()) "0" else viewModel.walletAmount
+			if (pref.isRechargeDisplay?.equals("1") == true) {
+				tvFuncNotAvailable.gone()
+				btnSubmit.visible()
+			} else {
+				tvFuncNotAvailable.visible()
+				btnSubmit.gone()
+			}
 		}
 		observeViewModel()
     }

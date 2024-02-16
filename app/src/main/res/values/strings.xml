@@ -431,6 +431,7 @@
     <string name="transaction_id">Transaction Id: %1$s</string>
     <string name="entry_date">Date: %1$s</string>
     <string name="available_wallet_amount">Available Wallet Amount</string>
+    <string name="this_functionality_not_available">This functionality is currently not available.</string>
     <string name="transfer_id">Transfer Id</string>
     <string name="transaction_password">Transaction Password</string>
     <string name="amount_title">Amount</string>

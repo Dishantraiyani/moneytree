@@ -167,6 +167,7 @@
 		android:textColor="@color/white"
 		android:textAllCaps="true"
 		android:textSize="@dimen/_12sdp"
+		android:visibility="gone"
 		android:paddingHorizontal="@dimen/_50sdp"
 		android:fontFamily="@font/inter_regular"
 		android:layout_marginHorizontal="@dimen/_5sdp"
@@ -176,5 +177,16 @@
 		app:layout_constraintTop_toBottomOf="@id/et_note"
 		app:layout_constraintBottom_toBottomOf="parent"/>
 
+	<TextView
+		android:id="@+id/tv_func_not_available"
+		style="@style/LoginSubFontsWrap"
+		android:text="@string/this_functionality_not_available"
+		android:textColor="@color/orange"
+		android:layout_marginTop="@dimen/_15sdp"
+		android:textSize="@dimen/_12sdp"
+		android:visibility="gone"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/et_note" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,7 @@ class NSPreferences(context: Context) {
         private const val KEY_KYC_VERIFIED = "key_is_kyc_verified"
         private const val KEY_KYC_VERIFIED_SKIP = "key_is_kyc_verified_skip"
         private const val KEY_REWARD_COIN_PERIOD = "key_is_reward_coin_period"
+        private const val KEY_RECHARGE_DISPLAY = "key_is_recharge_display"
     }
 
     /**
@@ -38,6 +39,10 @@ class NSPreferences(context: Context) {
     var isKycVerified: String?
         get() = preference.getString(KEY_KYC_VERIFIED, null)
         set(token) = prefEdit.putString(KEY_KYC_VERIFIED, token).apply()
+
+    var isRechargeDisplay: String?
+        get() = preference.getString(KEY_RECHARGE_DISPLAY, null)
+        set(token) = prefEdit.putString(KEY_RECHARGE_DISPLAY, token).apply()
 
     var isKycVerifiedSkip: Boolean
         get() = preference.getBoolean(KEY_KYC_VERIFIED_SKIP, false)

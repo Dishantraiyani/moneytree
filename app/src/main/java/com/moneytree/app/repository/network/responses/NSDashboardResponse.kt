@@ -57,7 +57,9 @@ data class NSDashboardData(
     @SerializedName("qr_status")
     val qrStatus: String? = null,
     @SerializedName("kyc_status")
-    val kycStatus: String? = null
+    val kycStatus: String? = null,
+    @SerializedName("is_recharge_display")
+    val isRechargeDisplay: String? = null
 )
 
 /**

@@ -72,6 +72,10 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
                 isProgressShowing.value = false
                 val dashboardMainData = data as NSDashboardResponse
                 dashboardData = dashboardMainData
+
+                val pref = NSApplication.getInstance().getPrefs()
+                pref.isRechargeDisplay = dashboardData?.data?.isRechargeDisplay
+
 				setFragmentData()
 
             }
