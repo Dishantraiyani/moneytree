@@ -256,20 +256,13 @@ class NSApiManager {
 	 * @param callback     The callback for the result
 	 */
 	fun updateProfile(
-		updateRequest: NSUpdateProfileRequest,
+		updateRequest: HashMap<String, String>,
 		callback: NSRetrofitCallback<NSUserResponse>
 	) {
 		request(
 			unAuthorised3020Client.updateProfile(
 				NSUserManager.getAuthToken(),
-				updateRequest.fullName!!,
-				updateRequest.address!!,
-				updateRequest.email!!,
-				updateRequest.mobile!!,
-				updateRequest.panno!!,
-				updateRequest.ifscCode!!,
-				updateRequest.bankName!!,
-				updateRequest.acNo!!
+				updateRequest
 			), callback
 		)
 	}
@@ -1556,14 +1549,7 @@ interface RTApiInterface {
 	@POST("update-profile-api")
 	fun updateProfile(
 		@Field("token_id") token: String,
-		@Field("fullname") fullname: String,
-		@Field("address") address: String,
-		@Field("email") email: String,
-		@Field("mobile") mobile: String,
-		@Field("panno") panno: String,
-		@Field("ifsc_code") ifscCode: String,
-		@Field("bank_name") bankName: String,
-		@Field("ac_no") acNo: String
+		@FieldMap map: HashMap<String, String>
 	): Call<NSUserResponse>
 
 	@FormUrlEncoded

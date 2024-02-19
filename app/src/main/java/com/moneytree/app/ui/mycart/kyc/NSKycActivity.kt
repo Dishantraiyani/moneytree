@@ -3,6 +3,7 @@ package com.moneytree.app.ui.mycart.kyc
 import android.os.Bundle
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
+import com.moneytree.app.ui.mycart.kyc.main.KycBaseFragment
 
 class NSKycActivity : NSActivity() {
     private lateinit var productsBinding: ActivityCommonBinding
@@ -15,10 +16,10 @@ class NSKycActivity : NSActivity() {
     }
 
     /**
-     * To initialize product fragment
+     * To initialize kyc fragment
      *
      */
     private fun loadInitialFragment() {
-        replaceCurrentFragment(NSKycFragment.newInstance(), false, productsBinding.commonContainer.id)
+        replaceCurrentFragment(KycBaseFragment.newInstance(), false, productsBinding.commonContainer.id)
     }
 }

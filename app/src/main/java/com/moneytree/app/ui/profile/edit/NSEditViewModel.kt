@@ -9,6 +9,7 @@ import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
+import retrofit2.http.Field
 
 
 /**
@@ -47,7 +48,17 @@ class NSEditViewModel(application: Application) : NSViewModel(application) {
         if (isShowProgress) {
             isProgressShowing.value = true
         }
-        NSUserRepository.updateProfile(strFullName, strAddress, strEmail, strMobile, strPanNo, strBankIfsc, strBankName, strAccNo, object : NSGenericViewModelCallback {
+        val map: HashMap<String, String> = hashMapOf()
+        map["fullname"] = strFullName
+        map["address"] = strAddress
+        map["email"] = strEmail
+        map["mobile"] = strMobile
+        map["panno"] = strPanNo
+        map["ifsc_code"] = strBankIfsc
+        map["bank_name"] = strBankName
+        map["ac_no"] = strAccNo
+
+        NSUserRepository.updateProfile(map, object : NSGenericViewModelCallback {
             override fun <T> onSuccess(data: T) {
                 isProgressShowing.value = false
                 val userData = data as NSUserResponse

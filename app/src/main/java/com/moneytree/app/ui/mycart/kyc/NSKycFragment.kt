@@ -3,6 +3,7 @@ package com.moneytree.app.ui.mycart.kyc
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.github.drjacky.imagepicker1.ImagePicker
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
+import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.utils.buildAlertDialog
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
@@ -55,7 +57,16 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 	}
 
 	companion object {
-		fun newInstance() = NSKycFragment()
+		fun newInstance(bundle: Bundle?) = NSKycFragment().apply {
+			arguments = bundle
+		}
+	}
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		arguments?.let {
+			viewModel.kycType = it.getString(NSConstants.KEY_KYC_TYPE)?:"pancard"
+		}
 	}
 
 	override fun getFragmentBinding(

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.main.MainFragment">
+
+    <include android:id="@+id/layout_header"
+        layout="@layout/layout_header"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        style="@style/MyTabLayoutWallet"
+        app:tabSelectedTextColor="@color/orange"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorColor="@color/orange"
+        app:tabTextColor="@color/gray_text"
+        app:tabRippleColor="@null"
+        app:tabMode="scrollable"
+        app:tabIndicatorHeight="@dimen/_2sdp"
+        android:layout_below="@+id/layout_header"/>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="0dp"
+        android:layout_height="0.7dp"
+        android:background="@color/line_color"
+        android:layout_below="@id/tab_layout"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_below="@+id/view_line" />
+
+</RelativeLayout>

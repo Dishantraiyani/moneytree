@@ -29,6 +29,7 @@ import kotlin.random.Random
  * The view model class for redeem. It handles the business logic to communicate with the model for the redeem and provides the data to the observing UI component.
  */
 class NSKycViewModel(application: Application) : NSViewModel(application) {
+	var kycType: String = "pancard"
 
 	fun kycVerification(isShowProgress: Boolean, imageList: MutableList<String>, callback: (KycResponse, Boolean) -> Unit) {
 

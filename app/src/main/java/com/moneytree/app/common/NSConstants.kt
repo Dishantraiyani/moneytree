@@ -61,6 +61,7 @@ class NSConstants {
 		const val KEY_RECHARGE_DETAIL = "key_recharge_detail_selected"
 		const val KEY_QR_CODE_ID = "key_qr_code_id"
 		const val KEY_WALLET_AMOUNT = "key_wallet_amount"
+		const val KEY_KYC_TYPE = "key_kyc_type"
 		const val KEY_SUCCESS_FAIL = "key_success_fail"
 		var SOCKET_TYPE: String? = null
 		const val SUPER_SOCKET_TYPE: String = "Super Stockiest"

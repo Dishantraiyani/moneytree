@@ -484,6 +484,11 @@
     <string name="product_voucher">Product Voucher</string>
     <string name="joining_voucher">Joining Voucher</string>
     <string name="voucher_list">Voucher List</string>
+    <string name="personal_detail">Personal Details</string>
+    <string name="bank_detail">Bank Details</string>
+    <string name="nominee_detail">Nominee Details</string>
+    <string name="pan_card_detail">Pan Card Upload</string>
+    <string name="aadhar_detail">Aadhar Card</string>
     <string name="package_name_title">Package Name:</string>
     <string name="active">ACTIVE</string>
     <string name="is_active">Is Active: %1$s</string>
@@ -693,6 +698,7 @@
     <string name="pin_code">Pincode</string>
     <string name="town">Town/City</string>
     <string name="state">State</string>
+    <string name="district">District</string>
     <string name="make_this_my_default_address">Make this my default address</string>
     <string name="add_address">Add Address</string>
     <string name="verify">Verify</string>
@@ -729,4 +735,12 @@
     <string name="grand_total">Grand Total</string>
     <string name="no_pending_item_available">No Pending Items Available</string>
     <string name="earning_date">Earning Date:</string>
+    <string name="nominee_name">Nominee Name</string>
+    <string name="nominee_mobile">Nominee Mobile No.</string>
+    <string name="kyc_detail">Kyc Detail</string>
+    <string name="please_enter_state">Please Enter State</string>
+    <string name="please_enter_district">Please Enter District</string>
+    <string name="please_enter_city">Please Enter City</string>
+    <string name="please_enter_pincode">Please Enter PinCode</string>
+    <string name="please_enter_address">Please Enter Address</string>
 </resources>

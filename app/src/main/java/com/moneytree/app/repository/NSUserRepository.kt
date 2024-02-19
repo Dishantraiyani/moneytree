@@ -57,18 +57,10 @@ object NSUserRepository {
      * @param viewModelCallback The callback to communicate back to the view model
      */
     fun updateProfile(
-        fullName: String?,
-        address: String?,
-        email: String?,
-        mobile: String?,
-        panno: String?,
-        ifscCode: String?,
-        bankName: String?,
-        acNo: String?,
+        map: HashMap<String, String>,
         viewModelCallback: NSGenericViewModelCallback
     ) {
-        val updateRequest = NSUpdateProfileRequest(fullName, address, email, mobile, panno, ifscCode, bankName, acNo)
-        apiManager.updateProfile(updateRequest, object :
+        apiManager.updateProfile(map, object :
             NSRetrofitCallback<NSUserResponse>(viewModelCallback, NSApiErrorHandler.ERROR_UPDATE_PROFILE) {
             override fun <T> onResponse(response: Response<T>) {
                 val data = response.body() as NSUserResponse
