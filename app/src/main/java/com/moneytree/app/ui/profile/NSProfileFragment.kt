@@ -20,6 +20,7 @@ import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.idCard.NSIdCardActivity
 import com.moneytree.app.ui.invite.NSInviteActivity
 import com.moneytree.app.ui.login.NSLoginActivity
+import com.moneytree.app.ui.mycart.kyc.NSKycActivity
 import com.moneytree.app.ui.profile.edit.NSEditActivity
 import com.moneytree.app.ui.profile.password.NSChangePasswordActivity
 import org.greenrobot.eventbus.EventBus
@@ -34,7 +35,7 @@ class NSProfileFragment : NSFragment() {
 
     private val profileBinding get() = _binding!!
     private var profileAdapter: ProfileRecycleAdapter? = null
-	private var referralCode: String? = ""
+	private var referralCodeValue: String? = ""
 
     companion object {
         fun newInstance() = NSProfileFragment()
@@ -117,9 +118,10 @@ class NSProfileFragment : NSFragment() {
     private fun onClickProfile(position: Int) {
         when (position) {
             0 -> {
-                if(NSUtilities.isKycVerified(activity, true)) {
+                activity.startActivity(Intent(activity, NSKycActivity::class.java))
+                /*if(NSUtilities.isKycVerified(activity, true)) {
                     Toast.makeText(activity, "Your Kyc is verified", Toast.LENGTH_SHORT).show()
-                }
+                }*/
             }
             1 -> {
                 switchActivity(
@@ -177,7 +179,7 @@ class NSProfileFragment : NSFragment() {
                     tvUserName.text = setUserName(activity, userName!!)
                     tvMobile.text = setMobile(activity, mobile!!)
                     tvEmailId.text = setEmail(activity, email!!)
-                    referralCode = userDetail.referCode
+                    referralCodeValue = userDetail.referCode
                     if (!email.isNullOrEmpty()) {
                         tvIcon.text = email!!.substring(0, 1).uppercase()
                     } else {

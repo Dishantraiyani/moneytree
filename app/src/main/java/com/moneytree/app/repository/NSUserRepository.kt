@@ -7,10 +7,13 @@ import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.requests.NSLoginRequest
 import com.moneytree.app.repository.network.requests.NSUpdateProfileRequest
+import com.moneytree.app.repository.network.responses.DistrictResponse
 import com.moneytree.app.repository.network.responses.NSDirectSettingResponse
 import com.moneytree.app.repository.network.responses.NSLogoutResponse
 import com.moneytree.app.repository.network.responses.NSMemberDetailResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
+import com.moneytree.app.repository.network.responses.StateResponse
+import okhttp3.ResponseBody
 import retrofit2.Response
 
 /**
@@ -127,6 +130,40 @@ object NSUserRepository {
         ) {
             override fun <T> onResponse(response: Response<T>) {
                 val data = response.body() as NSDirectSettingResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+    fun getStateList(viewModelCallback: NSGenericViewModelCallback) {
+        apiManager.getStateList(object : NSRetrofitCallback<StateResponse>(
+            viewModelCallback, NSApiErrorHandler.ERROR_LOGOUT
+        ) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as StateResponse
+                if (data.status) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+
+    fun getDistrictList(viewModelCallback: NSGenericViewModelCallback) {
+        apiManager.getDistrictList(object : NSRetrofitCallback<DistrictResponse>(
+            viewModelCallback, NSApiErrorHandler.ERROR_LOGOUT
+        ) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as DistrictResponse
                 if (data.status) {
                     viewModelCallback.onSuccess(response.body())
                 } else {

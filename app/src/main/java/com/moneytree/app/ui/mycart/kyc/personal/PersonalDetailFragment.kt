@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
-import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.callbacks.NSDialogClickCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.setPlaceholderAdapter
 import com.moneytree.app.common.utils.setSafeOnClickListener
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentPersonalDetailBinding
 import com.moneytree.app.ui.mycart.kyc.common.KycCommonViewModel
 
@@ -46,6 +48,7 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
      */
     private fun viewCreated() {
         observeViewModel()
+        setPersonalDetail()
     }
 
     /**
@@ -65,8 +68,8 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                         val fullName = binding.etFullName.text.toString()
                         val mobile = binding.etPhone.text.toString()
                         val email = binding.etEmail.text.toString()
-                        val state = binding.etState.text.toString()
-                        val district = binding.etDistrict.text.toString()
+                        val state = selectedState
+                        val district = selectedDistrict
                         val city = binding.etCity.text.toString()
                         val dob = binding.etDob.text.toString()
                         val pinCode = binding.etPinCode.text.toString()
@@ -114,12 +117,96 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                             map["pincode"] = pinCode
                             map["address"] = address
 
-                            updateProfile(true, map) {
-                                binding.btnSubmit.gone()
+                            updateProfile(true, map) { isSuccess, message ->
+                                showAlertDialog(message, object : NSDialogClickCallback {
+                                    override fun onClick(isOk: Boolean) {
+                                        if (isOk && isSuccess) {
+                                            binding.btnSubmit.gone()
+                                            etFullName.isEnabled = false
+                                            etPhone.isEnabled = false
+                                            etEmail.isEnabled = false
+                                            stateSpinner.isEnabled = false
+                                            districtSpinner.isEnabled = false
+                                            etCity.isEnabled = false
+                                            etPinCode.isEnabled = false
+                                            etAddress.isEnabled = false
+                                            cardDob.isEnabled = false
+                                        }
+                                    }
+                                })
                             }
                         }
                     }
                 })
+            }
+        }
+    }
+
+    private fun setPersonalDetail() {
+        binding.apply {
+            viewModel.apply {
+                getStateList { stateList, districtList ->
+
+                    stateSpinner.setPlaceholderAdapter(stateList.toTypedArray(), requireContext(), isHideFirstPosition = true, "Select State") {
+                        selectedState = it?:""
+                    }
+
+                    districtSpinner.setPlaceholderAdapter(districtList.toTypedArray(), requireContext(), isHideFirstPosition = true, "Select District") {
+                        selectedDistrict = it?:""
+                    }
+
+                    getUserDetail {
+                        it.apply {
+                            binding.etFullName.setText(fullName)
+                            binding.etPhone.setText(mobile)
+                            binding.etEmail.setText(email)
+                            binding.etCity.setText(cityNameValue)
+                            binding.etDob.text = dobValue
+                            binding.etPinCode.setText(pinCodeValue)
+                            binding.etAddress.setText(address)
+
+                            if (fullName?.isNotEmpty() == true &&
+                                mobile?.isNotEmpty() == true &&
+                                email?.isNotEmpty() == true &&
+                                stateNameValue?.isNotEmpty() == true &&
+                                districtNameValue?.isNotEmpty() == true &&
+                                cityNameValue?.isNotEmpty() == true &&
+                                dobValue?.isNotEmpty() == true &&
+                                pinCodeValue?.isNotEmpty() == true &&
+                                address?.isNotEmpty() == true
+                            ) {
+                                btnSubmit.gone()
+                            } else {
+                                btnSubmit.visible()
+                            }
+
+                            etFullName.isEnabled = fullName== null || fullName?.isEmpty() == true
+                            etPhone.isEnabled = mobile == null || mobile?.isEmpty() == true
+                            etEmail.isEnabled = email == null || email?.isEmpty() == true
+                            stateSpinner.isEnabled = stateNameValue == null || stateNameValue?.isEmpty() == true
+                            districtSpinner.isEnabled = districtNameValue == null || districtNameValue?.isEmpty() == true
+                            etCity.isEnabled = cityNameValue == null || cityNameValue?.isEmpty() == true
+                            etPinCode.isEnabled = pinCodeValue == null || pinCodeValue?.isEmpty() == true
+                            etAddress.isEnabled = address == null || address?.isEmpty() == true
+                            cardDob.isEnabled = dobValue == null || dobValue?.isEmpty() == true
+
+                            val aPosition = stateList.indexOf(stateNameValue)
+                            stateSpinner.setSelection(aPosition)
+
+                            val dPosition = districtList.indexOf(districtNameValue)
+                            districtSpinner.setSelection(dPosition)
+
+                            /* cardFullName.isEnabled = fullName?.isEmpty() == true
+                             cardMobile.isEnabled = mobile?.isEmpty() == true
+                             cardEmail.isEnabled = email?.isEmpty() == true
+                             cardState.isEnabled = stateNameValue?.isEmpty() == true
+                             cardDistrict.isEnabled = districtNameValue?.isEmpty() == true
+                             cardCity.isEnabled = cityNameValue?.isEmpty() == true
+                             cardPinCode.isEnabled = pinCodeValue?.isEmpty() == true
+                             cardAddress.isEnabled = address?.isEmpty() == true*/
+                        }
+                    }
+                }
             }
         }
     }

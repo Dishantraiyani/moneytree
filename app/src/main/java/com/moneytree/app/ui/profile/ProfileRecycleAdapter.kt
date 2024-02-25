@@ -57,20 +57,22 @@ class ProfileRecycleAdapter(
         fun bind(response: String) {
             with(profileBinding) {
                 tvProfileTitle.text = response
-                if (response.lowercase().contains("kyc")) {
-                    ivNext.gone()
+                /*if (response.lowercase().contains("kyc")) {
+                    ivNext.visible()
                     tvStatus.visible()
                     val kyc = NSApplication.getInstance().getPrefs().isKycVerified?.lowercase()
                     tvStatus.text = NSUtilities.capitalizeEveryFirstLetter(kyc)
                     if (kyc == "pending") {
+                        ivNext.gone()
                         tvStatus.setTextColor(Color.parseColor("#eba94a"))
                     } else if (kyc == "verified") {
+                        ivNext.gone()
                         tvStatus.setTextColor(Color.GREEN)
                     }
                 } else {
                     ivNext.visible()
                     tvStatus.gone()
-                }
+                }*/
                 ivIcon.setImageResource(profileIconListData[absoluteAdapterPosition])
                 if (absoluteAdapterPosition == itemCount - 1) {
                     viewLine.visibility = View.GONE

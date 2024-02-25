@@ -74,5 +74,37 @@ data class NSDataUser(
 	var packageName: String? = null,
     @SerializedName("created_at")
     @Expose
-    var createdAt: String? = null
+    var createdAt: String? = null,
+    @field:SerializedName("gender")
+    var genderValue: String? = null,
+
+    @field:SerializedName("nominee_gender")
+    var nomineeGenderValue: String? = null,
+
+    @field:SerializedName("nominee_name")
+    var nomineeNameValue: String? = null,
+
+    @field:SerializedName("nominee_relationship")
+    var nomineeRelationshipValue: String? = null,
+
+    @field:SerializedName("district_name")
+    var districtNameValue: String? = null,
+
+    @field:SerializedName("city_name")
+    var cityNameValue: String? = null,
+
+    @field:SerializedName("state_name")
+    var stateNameValue: String? = null,
+
+    @field:SerializedName("nominee_dob")
+    var nomineeDobValue: String? = null,
+
+    @field:SerializedName("pincode")
+    var pinCodeValue: String? = null,
+
+    @field:SerializedName("dob")
+    var dobValue: String? = null,
+
+    @field:SerializedName("nominee_mobile")
+    var nomineeMobileValue: String? = null
 )

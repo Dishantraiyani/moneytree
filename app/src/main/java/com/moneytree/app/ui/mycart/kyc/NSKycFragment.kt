@@ -81,6 +81,39 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 		baseObserveViewModel(viewModel)
 		binding.tvHeaderBack.text = activity.resources.getString(R.string.kyc_verification)
 		setListener()
+		checkStatus()
+	}
+
+	private fun checkStatus() {
+		var type = "PanCard"
+		type = if (viewModel.kycType == "pancard") {
+			"PanCard"
+		} else {
+			"AddharCard"
+		}
+		viewModel.checkKycStatus(type) { model, isSuccess ->
+			if (isSuccess) {
+				Glide.with(activity.applicationContext).load("https://moneytree.biz/upload/kyc_verification/${model?.img}").into(binding.ivKycImg)
+
+				if (model?.responseData?.isNotEmpty() == true) {
+					val innerMap = Gson().fromJson(model.responseData, HashMap::class.java)
+					val map: HashMap<String, Any> = innerMap.mapValues { it.value as Any } as HashMap<String, Any>
+					setAdapter(map, model.kycType?:"")
+				}
+				if (model?.kycType.equals("PanCard") && ((model?.status?:"").lowercase().contains("pending") || (model?.status?:"").lowercase().contains("verified"))) {
+					binding.tvStatus.text = "(${model?.status})"
+					binding.tvStatus.visible()
+					binding.btnNext.gone()
+					binding.btnSend.gone()
+				} else {
+					binding.tvStatus.gone()
+					binding.btnSend.gone()
+					binding.btnNext.gone()
+				}
+			} else {
+				binding.btnSend.visible()
+			}
+		}
 	}
 
 	private fun setListener() {
@@ -98,14 +131,14 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 				if (imageList.isValidList()) {
 					viewModel.kycVerification(true, imageList) { data, isSuccess ->
 						if (isSuccess) {
-							setAdapter(data.extractedData)
+							setAdapter(data.extractedData, data.docType?:"")
 						}
 					}
 				} else {
 					Toast.makeText(activity, "Please Upload Image", Toast.LENGTH_SHORT).show()
 				}
 			}
-
+// 	kyc_verification
 			tvSkip.setSafeOnClickListener {
 				pref.isKycVerifiedSkip = true
 				activity.startActivity(Intent(activity, NSMainActivity::class.java))
@@ -114,7 +147,7 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 		}
 	}
 
-	private fun setAdapter(map: HashMap<String, Any>) {
+	private fun setAdapter(map: HashMap<String, Any>, docType: String) {
 		val keyOrder = listOf("pan_no","aadhar_id", "name", "father_name", "dob", "gender", "address")
 		val list: MutableList<KycListResponse> = arrayListOf()
 
@@ -151,13 +184,13 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 		}
 
 		binding.btnNext.setSafeOnClickListener {
-			showAlertDialog(activity.resources.getString(R.string.kyc_verification), "To confirm, please verify that the following details belong to you and are accurate.", map = map, isDirectApi = true)
+			showAlertDialog(activity.resources.getString(R.string.kyc_verification), "To confirm, please verify that the following details belong to you and are accurate.", map = map, isDirectApi = true, docType = docType)
 		}
 	}
 
-	private fun showAlertDialog(title: String, message: String, isSuccess: Boolean = false, map: HashMap<String, Any>, isDirectApi: Boolean) {
-		buildAlertDialog(activity, LayoutCustomAlertDialogBinding::inflate) { dialog, binding ->
-			binding.apply {
+	private fun showAlertDialog(title: String, message: String, isSuccess: Boolean = false, map: HashMap<String, Any>, isDirectApi: Boolean, docType: String) {
+		buildAlertDialog(activity, LayoutCustomAlertDialogBinding::inflate) { dialog, bind ->
+			bind.apply {
 				tvTitle.visible()
 				tvTitle.text = title
 				tvSubTitle.text = message
@@ -170,13 +203,36 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 //9e24f8c9a0316693a125b6b215d3ab16 
 				tvOk.setOnClickListener {
 					dialog.dismiss()
+					var type = "PanCard"
+					type = if (viewModel.kycType == "pancard") {
+						"PanCard"
+					} else {
+						"AddharCard"
+					}
+
+					if (viewModel.kycType == "pancard" && docType != "pancard") {
+						showAlertDialog("Please Upload PanCard")
+						return@setOnClickListener
+					} else if (viewModel.kycType == "adharcard" && docType != "aadhar") {
+						showAlertDialog("Please Upload Aadhar Card")
+						return@setOnClickListener
+					}
+
+
 					if (isDirectApi) {
-						viewModel.sendKycRequest(Gson().toJson(map), imageList) { str, isSuccess ->
-							showAlertDialog(activity.resources.getString(R.string.app_name), str, isSuccess, map, false)
+						viewModel.sendKycRequest(type, Gson().toJson(map), imageList) { str, isSuccess ->
+							showAlertDialog(activity.resources.getString(R.string.app_name), str, isSuccess, map, false, docType)
 						}
 					} else if (isSuccess) {
-						activity.startActivity(Intent(activity, NSMainActivity::class.java))
-						activity.finish()
+						binding.btnNext.gone()
+						if (viewModel.kycType == "pancard" && docType == "pancard") {
+							checkStatus()
+						} else {
+							binding.btnSend.gone()
+						}
+
+						//activity.startActivity(Intent(activity, NSMainActivity::class.java))
+						//activity.finish()
 					}
 				}
 

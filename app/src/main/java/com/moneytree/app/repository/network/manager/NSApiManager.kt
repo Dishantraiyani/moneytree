@@ -1297,9 +1297,9 @@ class NSApiManager {
 	 *
 	 * @param callback  The callback for the result
 	 */
-	fun kycRequestSend(kycDetail: String, image: MultipartBody.Part, callback: NSRetrofitCallback<NSSuccessResponse>) {
+	fun kycRequestSend(type: String, kycDetail: String, image: MultipartBody.Part, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(multiPartClient.sendKycVerificationRequest(requestBody(NSUserManager.getAuthToken()),
-			requestBody(kycDetail), image), callback)
+			requestBody(kycDetail), requestBody(type), image), callback)
 	}
 
 	/**
@@ -1307,8 +1307,8 @@ class NSApiManager {
 	 *
 	 * @param callback  The callback for the result
 	 */
-	fun checkKycVerification(callback: NSRetrofitCallback<NSSuccessResponse>) {
-		request(unAuthorised3020Client.checkKycVerification(NSUserManager.getAuthToken()), callback)
+	fun checkKycVerification(type: String, callback: NSRetrofitCallback<KycVerificationCheckResponse>) {
+		request(unAuthorised3020Client.checkKycVerification(NSUserManager.getAuthToken(), type), callback)
 	}
 
 	fun getKycKey(callback: NSRetrofitCallback<NSKycKeyResponse>) {
@@ -1395,6 +1395,26 @@ class NSApiManager {
 				NSUserManager.getAuthToken(),
 				pageIndex,
 				search
+			), callback
+		)
+	}
+
+	fun getStateList(
+		callback: NSRetrofitCallback<StateResponse>
+	) {
+		request(
+			unAuthorised3020Client.getStateList(
+				NSUserManager.getAuthToken()
+			), callback
+		)
+	}
+
+	fun getDistrictList(
+		callback: NSRetrofitCallback<DistrictResponse>
+	) {
+		request(
+			unAuthorised3020Client.getDistrictList(
+				NSUserManager.getAuthToken()
 			), callback
 		)
 	}
@@ -1976,14 +1996,16 @@ interface RTApiInterface {
 	fun sendKycVerificationRequest(
 		@Part("token_id") token: RequestBody,
 		@Part("kyc_detail") kycDetail: RequestBody,
+		@Part("kyc_type") type: RequestBody,
 		@Part image: MultipartBody.Part,
 	): Call<NSSuccessResponse>
 
-	@Multipart
+	@FormUrlEncoded
 	@POST("check-kyc-verification")
 	fun checkKycVerification(
-		@Part("token_id") token: String
-	): Call<NSSuccessResponse>
+		@Field("token_id") token: String,
+		@Field("kyc_type") type: String,
+	): Call<KycVerificationCheckResponse>
 
 	@FormUrlEncoded
 	@POST("kyc-key")
@@ -2052,4 +2074,16 @@ interface RTApiInterface {
 		@Field("page_index") pageIndex: String,
 		@Field("search") search: String
 	): Call<NSPendingCoinWalletListResponse>
+
+	@FormUrlEncoded
+	@POST("state-list-api")
+	fun getStateList(
+		@Field("token_id") token: String
+	): Call<StateResponse>
+
+	@FormUrlEncoded
+	@POST("district-list-api")
+	fun getDistrictList(
+		@Field("token_id") token: String
+	): Call<DistrictResponse>
 }

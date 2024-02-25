@@ -3,7 +3,9 @@ package com.moneytree.app.ui.wallets.redeemForm
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSDoctorRepository
 import com.moneytree.app.repository.NSVoucherRepository
 import com.moneytree.app.repository.NSWalletRepository
@@ -32,6 +34,14 @@ class NSRedeemSaveViewModel(application: Application) : NSViewModel(application)
                 callback.invoke(true, data)
             } else {
                 callback.invoke(isSuccess, NSSuccessResponse())
+            }
+        })
+    }
+
+    fun getUserDetail(callback: (Boolean) -> Unit) {
+        MainDatabase.getUserData(object : NSUserDataCallback {
+            override fun onResponse(userDetail: NSDataUser) {
+                callback.invoke(userDetail.fullName?.isNotEmpty() == true)
             }
         })
     }

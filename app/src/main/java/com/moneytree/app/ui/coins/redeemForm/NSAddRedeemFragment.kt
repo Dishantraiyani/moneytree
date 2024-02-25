@@ -82,23 +82,39 @@ class NSAddRedeemFragment : NSFragment() {
 					} else if (etTransactionPassword.text.toString().isEmpty()) {
 						etTransactionPassword.error = activity.resources.getString(R.string.please_enter_transaction_password)
 					} else {
-						if (NSUtilities.checkKycVerified()) {
-							btnSubmit.isEnabled = false
-							btnSubmit.isClickable  = false
-							redeem()
-							return@setSafeOnClickListener
-						}
-						showCommonDialog("Kyc Verification", activity.resources.getString(R.string.your_kyc_verification_ask), "Yes", "No", callback = object : NSDialogClickCallback {
-							override fun onClick(isOk: Boolean) {
-								if (isOk) {
-									NSUtilities.isKycVerified(activity, false)
-								} else {
+						redeemModel.getUserDetail {
+							if (it) {
+								if (NSUtilities.checkKycVerified()) {
 									btnSubmit.isEnabled = false
 									btnSubmit.isClickable  = false
 									redeem()
+									return@getUserDetail
 								}
+								showCommonDialog("Kyc Verification", activity.resources.getString(R.string.your_kyc_verification_ask), "Yes", "No", callback = object : NSDialogClickCallback {
+									override fun onClick(isOk: Boolean) {
+										if (isOk) {
+											NSUtilities.isKycVerified(activity, false)
+										} else {
+											btnSubmit.isEnabled = false
+											btnSubmit.isClickable  = false
+											redeem()
+										}
+									}
+								})
+							} else {
+								showCommonDialog("Kyc Verification", activity.resources.getString(R.string.your_kyc_verification_ask), "Yes", "No", callback = object : NSDialogClickCallback {
+									override fun onClick(isOk: Boolean) {
+										if (isOk) {
+											NSUtilities.isKycVerified(activity, false)
+										} else {
+											btnSubmit.isEnabled = false
+											btnSubmit.isClickable  = false
+											redeem()
+										}
+									}
+								})
 							}
-						})
+						}
 					}
 				}
 			}

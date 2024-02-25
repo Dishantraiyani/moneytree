@@ -30,7 +30,7 @@ class KycBaseViewModel(application: Application) : NSViewModel(application) {
             titleList.add(getString(R.string.personal_detail))
             titleList.add(getString(R.string.bank_detail))
             titleList.add(getString(R.string.nominee_detail))
-            titleList.add(getString(R.string.pan_card_detail))
+            titleList.add(getString(R.string.pan_card))
             titleList.add(getString(R.string.aadhar_detail))
         }
         fragmentList.clear()

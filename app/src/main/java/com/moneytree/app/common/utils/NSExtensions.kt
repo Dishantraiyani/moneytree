@@ -39,6 +39,8 @@ import com.moneytree.app.base.clicks.SafeClickListener
 import com.moneytree.app.base.clicks.SingleClickListener
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSLog
+import com.moneytree.app.databinding.LayoutSpinnerItemBinding
+import com.moneytree.app.databinding.LayoutSpinnerItemDropDownBinding
 import java.text.DecimalFormat
 
 
@@ -463,6 +465,77 @@ fun Spinner.setPlaceholderAdapter(
 
     // Set the adapter to the Spinner
     this.adapter = adapter
+
+    // Set the OnItemSelectedListener to handle item selection
+    this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val selectedItem = if (position >= 0) items[position] else null
+            onItemSelectedListener?.invoke(selectedItem)
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+            onItemSelectedListener?.invoke(null)
+        }
+    }
+}
+
+fun Spinner.setPlaceholderAdapter(
+    items: Array<String>,
+    context: Context,
+    isHideFirstPosition: Boolean,
+    placeholderName: String? = null,
+    onItemSelectedListener: ((String?) -> Unit)?
+) {
+    if (isHideFirstPosition) {
+        if (items.isNotEmpty()) {
+            items[0] = placeholderName ?: ""
+        } else {
+            items.toMutableList().add(placeholderName?:"")
+        }
+    }
+    // Create a custom adapter with the items
+    val adapter = object : ArrayAdapter<String>(context, R.layout.layout_spinner_item, android.R.id.text1, items) {
+        override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = super.getDropDownView(position, convertView, parent)
+            if (isHideFirstPosition) {
+                val bind = LayoutSpinnerItemDropDownBinding.bind(view)
+                if (position == 0) {
+                    bind.text1.visibility = View.GONE
+                } else {
+                    bind.text1.visibility = View.VISIBLE
+                }
+            }
+            return view
+        }
+
+        override fun getView(
+            position: Int,
+            convertView: View?,
+            parent: ViewGroup
+        ): View {
+            val view = super.getView(position, convertView, parent)
+            val bind = LayoutSpinnerItemBinding.bind(view)
+            if (isHideFirstPosition && position == 0) {
+                bind.text1.setTextColor(ContextCompat.getColor(context, R.color.hint_color))
+            } else {
+                bind.text1.setTextColor(ContextCompat.getColor(context, R.color.black))
+            }
+            return view
+        }
+    }
+
+    // Set the drop-down layout style
+    adapter.setDropDownViewResource(R.layout.layout_spinner_item_drop_down)
+
+    // Set the adapter to the Spinner
+    this.adapter = adapter
+
+    // Set a default selection to the first item (placeholder item) if needed
+    if (!isHideFirstPosition && items.isNotEmpty()) {
+        this.setSelection(1, false)
+    } else {
+        this.setSelection(0, false)
+    }
 
     // Set the OnItemSelectedListener to handle item selection
     this.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

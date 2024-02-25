@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.callbacks.NSDialogClickCallback
+import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.switchResultActivity
@@ -161,22 +163,55 @@ class NSTransferFragment : NSFragment() {
 									return
 								}
 
-
-
-								val model = NSWalletTransferModel(
-									transactionId,
-									password,
-									remark,
-									amount,
-									isTransferFromVoucher,
-									packageId,
-									amount.toInt()
-								)
-								switchResultActivity(
-									dataResult, VerifyMemberActivity::class.java, bundleOf(
-										NSConstants.KEY_WALLET_VERIFY to Gson().toJson(model)
+								fun walletTransfer() {
+									val model = NSWalletTransferModel(
+										transactionId,
+										password,
+										remark,
+										amount,
+										isTransferFromVoucher,
+										packageId,
+										amount.toInt()
 									)
-								)
+									switchResultActivity(
+										dataResult, VerifyMemberActivity::class.java, bundleOf(
+											NSConstants.KEY_WALLET_VERIFY to Gson().toJson(model)
+										)
+									)
+								}
+
+								transferModel.getUserDetail {
+									if (it) {
+										if (NSUtilities.checkKycVerified()) {
+											walletTransfer()
+											return@getUserDetail
+										}
+										showCommonDialog("Kyc Verification", activity.resources.getString(R.string.your_kyc_verification_ask), "Yes", "No", callback = object :
+											NSDialogClickCallback {
+											override fun onClick(isOk: Boolean) {
+												if (isOk) {
+													NSUtilities.isKycVerified(activity, false)
+												} else {
+													walletTransfer()
+												}
+											}
+										})
+									} else {
+										showCommonDialog("Kyc Verification", activity.resources.getString(R.string.your_kyc_verification_ask), "Yes", "No", callback = object :
+											NSDialogClickCallback {
+											override fun onClick(isOk: Boolean) {
+												if (isOk) {
+													NSUtilities.isKycVerified(activity, false)
+												} else {
+													walletTransfer()
+												}
+											}
+										})
+									}
+								}
+
+
+
 							} else {
 								Toast.makeText(
 									activity,

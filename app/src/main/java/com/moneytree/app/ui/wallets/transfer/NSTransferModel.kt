@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.NSVoucherRepository
 import com.moneytree.app.repository.NSWalletRepository
@@ -140,4 +142,11 @@ class NSTransferModel(application: Application) : NSViewModel(application),
 		})
 	}
 
+	fun getUserDetail(callback: (Boolean) -> Unit) {
+		MainDatabase.getUserData(object : NSUserDataCallback {
+			override fun onResponse(userDetail: NSDataUser) {
+				callback.invoke(userDetail.fullName?.isNotEmpty() == true)
+			}
+		})
+	}
 }

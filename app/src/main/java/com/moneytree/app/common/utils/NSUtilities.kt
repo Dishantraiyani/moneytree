@@ -379,9 +379,6 @@ object NSUtilities {
 	}
 
 	fun checkUserVerified(activity: Activity, callback: (Boolean) -> Unit) {
-		val pref = NSApplication.getInstance().getPrefs()
-		val status = pref.isKycVerified
-		val skip = pref.isKycVerifiedSkip
 		callback.invoke(true)
 		/*if (status.equals("pending")) {
 			activity.startActivity(Intent(activity, NSKycVerifiedActivity::class.java))

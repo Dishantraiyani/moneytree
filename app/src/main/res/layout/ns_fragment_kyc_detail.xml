@@ -109,6 +109,7 @@
                     android:fontFamily="@font/inter_semi_bold"
                     android:text="@string/submit"
                     android:textAllCaps="true"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +124,6 @@
                 android:fontFamily="@font/inter_regular"
                 android:gravity="center"
                 android:lines="1"
-                android:visibility="gone"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="@string/information"
@@ -131,8 +131,24 @@
                 android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
                 app:guidelineUseRtl="true"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cl_doctor_layout" />
+
+            <TextView
+                android:id="@+id/tv_status"
+                style="@style/LoginSubFontsZeroWrap"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_11sdp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:guidelineUseRtl="true"
+                app:layout_constraintStart_toEndOf="@+id/tv_information"
+                app:layout_constraintTop_toTopOf="@+id/tv_information"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_information"/>
 
             <View
                 android:id="@+id/iv_view"

@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.callbacks.NSDialogClickCallback
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentBankDetailBinding
 import com.moneytree.app.ui.mycart.kyc.common.KycCommonViewModel
 
@@ -43,6 +45,7 @@ class BankDetailFragment : BaseViewModelFragment<KycCommonViewModel, FragmentBan
      */
     private fun viewCreated() {
         observeViewModel()
+        setPersonalDetail()
     }
 
     /**
@@ -73,12 +76,49 @@ class BankDetailFragment : BaseViewModelFragment<KycCommonViewModel, FragmentBan
                             map["ac_no"] = accountNo
                             map["ifsc_code"] = ifsc
 
-                            updateProfile(true, map) {
-                                binding.btnSubmit.gone()
+                            updateProfile(true, map) { isSuccess, message ->
+                                showAlertDialog(message, object : NSDialogClickCallback {
+                                    override fun onClick(isOk: Boolean) {
+                                        if (isOk && isSuccess) {
+                                            binding.btnSubmit.gone()
+
+                                            etBankName.isEnabled = false
+                                            etIfsc.isEnabled = false
+                                            etAccountNo.isEnabled = false
+                                        }
+                                    }
+                                })
                             }
                         }
                     }
                 })
+            }
+        }
+    }
+
+    private fun setPersonalDetail() {
+        binding.apply {
+            viewModel.apply {
+                getUserDetail {
+                    it.apply {
+                        binding.etBankName.setText(bankName)
+                        binding.etIfsc.setText(ifscCode)
+                        binding.etAccountNo.setText(acNo)
+
+                        if (bankName?.isNotEmpty() == true &&
+                            ifscCode?.isNotEmpty() == true &&
+                            acNo?.isNotEmpty() == true
+                        ) {
+                            btnSubmit.gone()
+                        } else {
+                            btnSubmit.visible()
+                        }
+
+                        etBankName.isEnabled = bankName == null || bankName?.isEmpty() == true
+                        etIfsc.isEnabled = ifscCode == null || ifscCode?.isEmpty() == true
+                        etAccountNo.isEnabled = acNo == null || acNo?.isEmpty() == true
+                    }
+                }
             }
         }
     }

@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +58,7 @@
                         style="@style/LoginSubFontsZeroWrap"
                         android:minHeight="@dimen/_38sdp"
                         android:textColor="@color/black"
-                        android:background="@drawable/phone_white_background"
+                        android:background="@null"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:hint="@string/full_name"
                         android:inputType="textPersonName"
@@ -78,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +112,7 @@
                         style="@style/LoginSubFontsZeroWrap"
                         android:minHeight="@dimen/_38sdp"
                         android:textColor="@color/black"
-                        android:background="@drawable/phone_white_background"
+                        android:background="@null"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:hint="@string/phone"
                         android:maxLength="10"
@@ -133,6 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +169,7 @@
                         style="@style/LoginSubFontsZeroWrap"
                         android:minHeight="@dimen/_38sdp"
                         android:textColor="@color/black"
-                        android:background="@drawable/phone_white_background"
+                        android:background="@null"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:hint="@string/email"
                         android:textColorHint="@color/hint_color"
@@ -188,49 +191,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/card_full_name">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_state"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_38sdp"
                     android:padding="@dimen/_1sdp"
                     app:guidelineUseRtl="true"
                     app:chainUseRtl="true"
+                    app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+                    app:layout_constraintTop_toBottomOf="@id/card_categories_type">
 
                     <ImageView
                         android:id="@+id/iv_state"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:src="@drawable/remark"
+                        android:src="@drawable/tab_profile"
                         android:layout_marginStart="@dimen/_10sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:contentDescription="@string/username_title" />
 
-                    <EditText
-                        android:id="@+id/et_state"
+                    <Spinner
+                        android:id="@+id/state_spinner"
                         style="@style/LoginSubFontsZeroWrap"
                         android:minHeight="@dimen/_38sdp"
-                        android:textColor="@color/black"
-                        android:inputType="text"
-                        android:lines="1"
-                        android:background="@drawable/phone_white_background"
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:hint="@string/state"
-                        android:gravity="center_vertical"
-                        android:textColorHint="@color/hint_color"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:textSize="@dimen/_12sdp"
+                        android:includeFontPadding="false"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_state"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -242,49 +242,46 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/card_full_name">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_district"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_38sdp"
                     android:padding="@dimen/_1sdp"
                     app:guidelineUseRtl="true"
                     app:chainUseRtl="true"
+                    app:layout_constrainedWidth="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+                    app:layout_constraintTop_toBottomOf="@id/card_categories_type">
 
                     <ImageView
                         android:id="@+id/iv_district"
                         android:layout_width="@dimen/_15sdp"
                         android:layout_height="@dimen/_15sdp"
-                        android:src="@drawable/remark"
+                        android:src="@drawable/tab_profile"
                         android:layout_marginStart="@dimen/_10sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:contentDescription="@string/username_title" />
 
-                    <EditText
-                        android:id="@+id/et_district"
+                    <Spinner
+                        android:id="@+id/district_spinner"
                         style="@style/LoginSubFontsZeroWrap"
                         android:minHeight="@dimen/_38sdp"
-                        android:textColor="@color/black"
-                        android:inputType="text"
-                        android:lines="1"
-                        android:background="@drawable/phone_white_background"
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:hint="@string/district"
-                        android:gravity="center_vertical"
-                        android:textColorHint="@color/hint_color"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:textSize="@dimen/_12sdp"
+                        android:includeFontPadding="false"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_district"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -296,6 +293,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -330,7 +328,7 @@
                         android:textColor="@color/black"
                         android:inputType="text"
                         android:lines="1"
-                        android:background="@drawable/phone_white_background"
+                        android:background="@null"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:hint="@string/town"
                         android:gravity="center_vertical"
@@ -383,7 +381,7 @@
                         android:minHeight="@dimen/_38sdp"
                         android:textColor="@color/black"
                         android:lines="1"
-                        android:background="@drawable/phone_white_background"
+                        android:background="@null"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:hint="@string/date_of_birth"
                         android:gravity="center_vertical"
@@ -403,6 +401,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -437,7 +436,7 @@
                         android:textColor="@color/black"
                         android:inputType="number"
                         android:lines="1"
-                        android:background="@drawable/phone_white_background"
+                        android:background="@null"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:hint="@string/pin_code"
                         android:digits="0123456789"
@@ -458,6 +457,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                app:cardBackgroundColor="@color/card_color"
                 android:layout_marginHorizontal="@dimen/_5sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -512,6 +513,7 @@
                 android:textColor="@color/white"
                 android:textAllCaps="true"
                 android:textSize="@dimen/_12sdp"
+                android:visibility="gone"
                 android:fontFamily="@font/inter_regular"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_15sdp"

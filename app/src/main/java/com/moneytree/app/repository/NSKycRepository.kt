@@ -8,6 +8,7 @@ import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
 import com.moneytree.app.repository.network.requests.NSKycSendRequest
 import com.moneytree.app.repository.network.responses.DoctorResponse
 import com.moneytree.app.repository.network.responses.KycResponse
+import com.moneytree.app.repository.network.responses.KycVerificationCheckResponse
 import com.moneytree.app.repository.network.responses.NSKycKeyResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import okhttp3.MultipartBody
@@ -38,10 +39,10 @@ object NSKycRepository {
         })
     }
 
-    fun sendKycRequest(kycDetail: String, image: MultipartBody.Part,
+    fun sendKycRequest(type: String, kycDetail: String, image: MultipartBody.Part,
                           viewModelCallback: NSGenericViewModelCallback
     ) {
-        apiManager.kycRequestSend(kycDetail, image, object :
+        apiManager.kycRequestSend(type, kycDetail, image, object :
             NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_KYC_DATA_SEND) {
             override fun <T> onResponse(response: Response<T>) {
                 val data = response.body() as NSSuccessResponse
@@ -56,11 +57,11 @@ object NSKycRepository {
         })
     }
 
-    fun checkKycVerification(viewModelCallback: NSGenericViewModelCallback) {
-        apiManager.checkKycVerification(object :
-            NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_KYC_STATUS) {
+    fun checkKycVerification(type: String, viewModelCallback: NSGenericViewModelCallback) {
+        apiManager.checkKycVerification(type, object :
+            NSRetrofitCallback<KycVerificationCheckResponse>(viewModelCallback, NSApiErrorHandler.ERROR_KYC_STATUS) {
             override fun <T> onResponse(response: Response<T>) {
-                val data = response.body() as NSSuccessResponse
+                val data = response.body() as KycVerificationCheckResponse
                 if (data.status) {
                     viewModelCallback.onSuccess(response.body())
                 } else {

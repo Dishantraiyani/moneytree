@@ -11,7 +11,9 @@ import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
 import com.moneytree.app.repository.network.requests.NSKycSendRequest
 import com.moneytree.app.repository.network.responses.DoctorDataItem
 import com.moneytree.app.repository.network.responses.DoctorResponse
+import com.moneytree.app.repository.network.responses.KycDataItem
 import com.moneytree.app.repository.network.responses.KycResponse
+import com.moneytree.app.repository.network.responses.KycVerificationCheckResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -61,6 +63,28 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 
 	}
 
+	fun checkKycStatus(type: String, callback: ((KycDataItem?, Boolean) -> Unit)) {
+		showProgress()
+
+		callCommonApi({ obj ->
+			NSKycRepository.checkKycVerification(type, obj)
+		}, { data, isSuccess ->
+			hideProgress()
+			if (isSuccess) {
+				if (data is KycVerificationCheckResponse) {
+					if (data.data.isValidList()) {
+						callback.invoke(data.data[0], true)
+					} else {
+						callback.invoke(null, true)
+					}
+
+				}
+			} else {
+				callback.invoke(null, false)
+			}
+		}, false)
+	}
+
 	private fun convertImageToBase64(imagePath: String): String {
 		val bufferSize = 4096 // Adjust the buffer size as needed
 
@@ -85,7 +109,7 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 		return ""
 	}
 
-	fun sendKycRequest(kycDetail: String, imageFile: List<String>, callback: ((String, Boolean) -> Unit)) {
+	fun sendKycRequest(type: String, kycDetail: String, imageFile: List<String>, callback: ((String, Boolean) -> Unit)) {
 		showProgress()
 
 		val file = File(imageFile[0])
@@ -93,7 +117,7 @@ class NSKycViewModel(application: Application) : NSViewModel(application) {
 		val part = MultipartBody.Part.createFormData("image", file.name, requestBody)
 
 		callCommonApi({ obj ->
-			NSKycRepository.sendKycRequest(kycDetail, part, obj)
+			NSKycRepository.sendKycRequest(type, kycDetail, part, obj)
 		}, { data, isSuccess ->
 			hideProgress()
 			if (isSuccess) {
