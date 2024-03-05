@@ -20,5 +20,8 @@ data class DistrictResponse(
 data class DistrictDataItem(
 
 	@field:SerializedName("district_name")
-	val districtName: String = ""
+	val districtName: String = "",
+
+	@field:SerializedName("state_name")
+	val stateName: String = ""
 )

@@ -100,16 +100,23 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 					val map: HashMap<String, Any> = innerMap.mapValues { it.value as Any } as HashMap<String, Any>
 					setAdapter(map, model.kycType?:"")
 				}
-				if (model?.kycType.equals("PanCard") && ((model?.status?:"").lowercase().contains("pending") || (model?.status?:"").lowercase().contains("verified"))) {
-					binding.tvStatus.text = "(${model?.status})"
-					binding.tvStatus.visible()
-					binding.btnNext.gone()
-					binding.btnSend.gone()
-				} else {
+				//if (model?.kycType.equals("PanCard") && ((model?.status?:"").lowercase().contains("pending") || (model?.status?:"").lowercase().contains("verified"))) {
+					if (!model?.status?.lowercase().equals("reject")) {
+						binding.tvStatus.text = "(${model?.status})"
+						binding.tvStatus.visible()
+						binding.btnNext.gone()
+						binding.btnSend.gone()
+					} else if (model?.status?.lowercase().equals("reject")) {
+						binding.tvStatus.text = "(${model?.status})"
+						binding.tvStatus.visible()
+						binding.btnSend.visible()
+						binding.btnNext.gone()
+					}
+				/*} else {
 					binding.tvStatus.gone()
 					binding.btnSend.gone()
 					binding.btnNext.gone()
-				}
+				}*/
 			} else {
 				binding.btnSend.visible()
 			}

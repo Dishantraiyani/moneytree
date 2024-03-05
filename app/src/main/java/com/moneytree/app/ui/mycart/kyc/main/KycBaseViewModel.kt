@@ -31,13 +31,13 @@ class KycBaseViewModel(application: Application) : NSViewModel(application) {
             titleList.add(getString(R.string.bank_detail))
             titleList.add(getString(R.string.nominee_detail))
             titleList.add(getString(R.string.pan_card))
-            titleList.add(getString(R.string.aadhar_detail))
+            //titleList.add(getString(R.string.aadhar_detail))
         }
         fragmentList.clear()
         fragmentList.add(PersonalDetailFragment())
         fragmentList.add(BankDetailFragment())
         fragmentList.add(NomineeDetailFragment())
         fragmentList.add(NSKycFragment.newInstance(bundleOf(NSConstants.KEY_KYC_TYPE to "pancard")))
-        fragmentList.add(NSKycFragment.newInstance(bundleOf(NSConstants.KEY_KYC_TYPE to "adharcard")))
+       // fragmentList.add(NSKycFragment.newInstance(bundleOf(NSConstants.KEY_KYC_TYPE to "adharcard")))
     }
 }

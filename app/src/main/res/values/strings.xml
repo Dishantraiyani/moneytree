@@ -759,4 +759,6 @@
     <string name="please_enter_address">Please Enter Address</string>
     <string name="nominee_relation">Nominee Relation</string>
     <string name="please_select_gender">Please Select Gender</string>
+    <string name="aadhar_no">Enter Aadhar No</string>
+    <string name="please_enter_aadhar_no">Please Enter Aadhar No</string>
 </resources>

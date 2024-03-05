@@ -121,7 +121,7 @@ class NomineeDetailFragment :
                             showAlertDialog(activity.resources.getString(R.string.please_select_gender))
                             return
                         } else if (dob.isEmpty()) {
-                            showAlertDialog(activity.resources.getString(R.string.please_enter_email))
+                            showAlertDialog(activity.resources.getString(R.string.please_enter_dob))
                             return
                         } else if (relation.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_select_relation))

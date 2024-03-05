@@ -90,6 +90,9 @@ data class NSDataUser(
     @field:SerializedName("district_name")
     var districtNameValue: String? = null,
 
+    @field:SerializedName("addhar_no")
+    var aadharNo: String? = null,
+
     @field:SerializedName("city_name")
     var cityNameValue: String? = null,
 

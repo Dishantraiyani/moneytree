@@ -26,6 +26,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSDateTimeHelper
@@ -34,8 +36,17 @@ import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.databinding.DialogPopupHomeBinding
 import com.moneytree.app.databinding.DialogUpdateBinding
 import com.moneytree.app.databinding.LayoutDateRangeSelectBinding
+import com.moneytree.app.repository.network.responses.CityResponseItem
+import com.moneytree.app.repository.network.responses.StateResponseItem
 import com.moneytree.app.ui.mycart.kyc.NSKycActivity
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.io.StringWriter
 import java.io.UnsupportedEncodingException
+import java.io.Writer
+import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -432,5 +443,32 @@ object NSUtilities {
 			}
 		}
 		textView.text = spannableStringBuilder
+	}
+
+	private fun commonJsonResponse(activity: Activity, rawFile: Int): String {
+		val inputStream: InputStream = activity.resources.openRawResource(rawFile)
+		val writer: Writer = StringWriter()
+		val buffer = CharArray(1024)
+		inputStream.use { inputStream ->
+			val reader: Reader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+			var n: Int
+			while (reader.read(buffer).also { n = it } != -1) {
+				writer.write(buffer, 0, n)
+			}
+		}
+
+		return writer.toString()
+	}
+
+	fun getStateRowData(activity: Activity): MutableList<StateResponseItem> {
+		val jsonString: String = commonJsonResponse(activity, R.raw.states)
+		val type: Type = object : TypeToken<List<StateResponseItem?>?>() {}.type
+		return Gson().fromJson(jsonString, type)
+	}
+
+	fun getCityRowData(activity: Activity): MutableList<CityResponseItem> {
+		val jsonString: String = commonJsonResponse(activity, R.raw.cities)
+		val type: Type = object : TypeToken<List<CityResponseItem?>?>() {}.type
+		return Gson().fromJson(jsonString, type)
 	}
 }

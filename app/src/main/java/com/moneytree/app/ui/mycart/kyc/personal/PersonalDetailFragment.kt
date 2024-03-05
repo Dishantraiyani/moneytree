@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSDialogClickCallback
 import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.utils.addTextChangeListener
 import com.moneytree.app.common.utils.gone
-import com.moneytree.app.common.utils.setPlaceholderAdapter
+import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentPersonalDetailBinding
@@ -63,9 +66,12 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                     }
                 }
 
+
+
                 btnSubmit.setOnClickListener(object : SingleClickListener() {
                     override fun performClick(v: View?) {
                         val fullName = binding.etFullName.text.toString()
+                        val aadharNO = binding.etAadharNo.text.toString()
                         val mobile = binding.etPhone.text.toString()
                         val email = binding.etEmail.text.toString()
                         val state = selectedState
@@ -77,6 +83,9 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
 
                         if (fullName.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_name))
+                            return
+                        } else if (aadharNO.isEmpty()) {
+                            showAlertDialog(activity.resources.getString(R.string.please_enter_aadhar_no))
                             return
                         } else if (mobile.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_mobile_no))
@@ -116,6 +125,7 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                             map["dob"] = dob
                             map["pincode"] = pinCode
                             map["address"] = address
+                            map["addhar_no"] = aadharNO
 
                             updateProfile(true, map) { isSuccess, message ->
                                 showAlertDialog(message, object : NSDialogClickCallback {
@@ -131,6 +141,7 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                                             etPinCode.isEnabled = false
                                             etAddress.isEnabled = false
                                             cardDob.isEnabled = false
+                                            etAadharNo.isEnabled = false
                                         }
                                     }
                                 })
@@ -142,18 +153,35 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
         }
     }
 
+
+    private fun showSuggestions(suggestionsStr: MutableList<String>) {
+        val adapter = ArrayAdapter(
+            requireActivity(),
+            R.layout.layout_spinner_item,
+            suggestionsStr
+        )
+        val spinner = binding.districtSpinner
+
+        spinner.setAdapter(adapter)
+        /*if (suggestionsStr.isValidList()) {
+            spinner.showDropDown()
+        } else {
+            spinner.dismissDropDown()
+        }*/
+    }
+
     private fun setPersonalDetail() {
         binding.apply {
             viewModel.apply {
-                getStateList { stateList, districtList ->
+                getDistrictList { districtList ->
 
-                    stateSpinner.setPlaceholderAdapter(stateList.toTypedArray(), requireContext(), isHideFirstPosition = true, "Select State") {
+                   /* stateSpinner.setPlaceholderAdapter(stateList.toTypedArray(), requireContext(), isHideFirstPosition = true, "Select State") {
                         selectedState = it?:""
-                    }
+                    }*/
 
-                    districtSpinner.setPlaceholderAdapter(districtList.toTypedArray(), requireContext(), isHideFirstPosition = true, "Select District") {
+                    /*districtSpinner.setPlaceholderAdapter(districtList.toTypedArray(), requireContext(), isHideFirstPosition = true, "Select District") {
                         selectedDistrict = it?:""
-                    }
+                    }*/
 
                     getUserDetail {
                         it.apply {
@@ -164,6 +192,13 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                             binding.etDob.text = dobValue
                             binding.etPinCode.setText(pinCodeValue)
                             binding.etAddress.setText(address)
+                            binding.stateSpinner.text = stateNameValue
+                            binding.districtSpinner.setText(districtNameValue)
+                            binding.etAadharNo.setText(aadharNo)
+
+                            viewModel.selectedDistrict = districtNameValue?:""
+                            viewModel.selectedState = stateNameValue?:""
+                            viewModel.selectedStateCode = districtList.find { names -> names.stateName == stateNameValue }?.stateName?:""
 
                             if (fullName?.isNotEmpty() == true &&
                                 mobile?.isNotEmpty() == true &&
@@ -173,7 +208,8 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                                 cityNameValue?.isNotEmpty() == true &&
                                 dobValue?.isNotEmpty() == true &&
                                 pinCodeValue?.isNotEmpty() == true &&
-                                address?.isNotEmpty() == true
+                                address?.isNotEmpty() == true &&
+                                aadharNo?.isNotEmpty() == true
                             ) {
                                 btnSubmit.gone()
                             } else {
@@ -190,11 +226,11 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                             etAddress.isEnabled = address == null || address?.isEmpty() == true
                             cardDob.isEnabled = dobValue == null || dobValue?.isEmpty() == true
 
-                            val aPosition = stateList.indexOf(stateNameValue)
-                            stateSpinner.setSelection(aPosition)
+                           /* val aPosition = stateList.indexOf(stateNameValue)
+                            stateSpinner.setSelection(aPosition)*/
 
-                            val dPosition = districtList.indexOf(districtNameValue)
-                            districtSpinner.setSelection(dPosition)
+                           /* val dPosition = districtList.indexOf(districtNameValue)
+                            districtSpinner.setSelection(dPosition)*/
 
                             /* cardFullName.isEnabled = fullName?.isEmpty() == true
                              cardMobile.isEnabled = mobile?.isEmpty() == true
@@ -204,6 +240,34 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                              cardCity.isEnabled = cityNameValue?.isEmpty() == true
                              cardPinCode.isEnabled = pinCodeValue?.isEmpty() == true
                              cardAddress.isEnabled = address?.isEmpty() == true*/
+
+                            /*stateSpinner.addTextChangeListener { searchText ->
+                                val stateNameList = districtList.map { names -> names.stateName }
+                                val set: Set<String> = HashSet<String>(stateNameList)
+                                val list: MutableList<String> = arrayListOf()
+                                list.addAll(set)
+                                viewModel.selectedState = searchText
+                                showSuggestions(list, true)
+                            }*/
+
+                            districtSpinner.addTextChangeListener { searchText ->
+                                if (searchText.length > 2) {
+                                    viewModel.selectedDistrict = searchText
+                                    viewModel.selectedState = ""
+                                    val list = districtList.map { names -> names.districtName }.filter { names -> names.startsWith(searchText, ignoreCase = true) }
+                                    val set: Set<String> = HashSet<String>(list)
+                                    val finalList: MutableList<String> = arrayListOf()
+                                    finalList.addAll(set)
+                                    showSuggestions(finalList)
+                                }
+                            }
+
+                            districtSpinner.onItemClickListener = AdapterView.OnItemClickListener { _, _, _, _ ->
+                                val newList = districtList.find { names -> names.districtName == viewModel.selectedDistrict }
+                                binding.stateSpinner.text = newList?.stateName
+                                viewModel.selectedState = newList?.stateName?:""
+                                districtSpinner.dismissDropDown()
+                            }
                         }
                     }
                 }

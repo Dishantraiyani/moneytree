@@ -7,10 +7,10 @@ import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
+import com.moneytree.app.repository.network.responses.DistrictDataItem
 import com.moneytree.app.repository.network.responses.DistrictResponse
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.repository.network.responses.NSUserResponse
-import com.moneytree.app.repository.network.responses.StateResponse
 
 /**
  * The view model class for change password. It handles the business logic to communicate with the model for the change password item and provides the data to the observing UI component.
@@ -19,10 +19,10 @@ class KycCommonViewModel(application: Application) : NSViewModel(application) {
     var selectedGender: String? = null
     var selectedRelation: String? = null
     var selectedState = ""
+    var selectedStateCode = ""
     var selectedDistrict = ""
 
     var isChangeDataAvailable = NSSingleLiveEvent<Boolean>()
-
 
     fun updateProfile(isShowProgress: Boolean, map: HashMap<String, String>, callback: (Boolean, String) -> Unit) {
         if (isShowProgress) {
@@ -70,7 +70,7 @@ class KycCommonViewModel(application: Application) : NSViewModel(application) {
         })
     }
 
-    fun getStateList(callback: (List<String>, List<String>) -> Unit) {
+    /*fun getStateList(callback: (List<String>, List<String>) -> Unit) {
         isProgressShowing.value = true
         NSUserRepository.getStateList(object : NSGenericViewModelCallback {
             override fun <T> onSuccess(data: T) {
@@ -94,33 +94,33 @@ class KycCommonViewModel(application: Application) : NSViewModel(application) {
                 getDistrictList(arrayListOf(), callback)
             }
         })
-    }
+    }*/
 
-    fun getDistrictList(list: List<String>, callback: (List<String>, List<String>) -> Unit) {
+    fun getDistrictList(callback: (List<DistrictDataItem>) -> Unit) {
         NSUserRepository.getDistrictList(object : NSGenericViewModelCallback {
             override fun <T> onSuccess(data: T) {
                 isProgressShowing.value = false
                 if (data is DistrictResponse) {
                     val districtList = data.data.map { it.districtName }
-                    callback.invoke(list, districtList)
+                    callback.invoke(data.data)
                 } else {
-                    callback.invoke(list, arrayListOf())
+                    callback.invoke(arrayListOf())
                 }
             }
 
             override fun onError(errors: List<Any>) {
                 isProgressShowing.value = false
-                callback.invoke(list, arrayListOf())
+                callback.invoke(arrayListOf())
             }
 
             override fun onFailure(failureMessage: String?) {
                 isProgressShowing.value = false
-                callback.invoke(list, arrayListOf())
+                callback.invoke(arrayListOf())
             }
 
             override fun <T> onNoNetwork(localData: T) {
                 isProgressShowing.value = false
-                callback.invoke(list, arrayListOf())
+                callback.invoke(arrayListOf())
             }
         })
     }
