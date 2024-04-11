@@ -754,6 +754,7 @@
     <string name="kyc_detail">Kyc Detail</string>
     <string name="please_enter_state">Please Enter State</string>
     <string name="please_enter_district">Please Enter District</string>
+    <string name="please_enter_valid_district">Please Enter Valid District</string>
     <string name="please_enter_city">Please Enter City</string>
     <string name="please_enter_pincode">Please Enter PinCode</string>
     <string name="please_enter_address">Please Enter Address</string>

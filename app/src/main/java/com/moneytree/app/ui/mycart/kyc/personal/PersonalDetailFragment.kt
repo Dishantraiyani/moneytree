@@ -96,11 +96,14 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                         } else if (email.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_email))
                             return
-                        } else if (state.isEmpty()) {
-                            showAlertDialog(activity.resources.getString(R.string.please_enter_state))
-                            return
                         } else if (district.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_district))
+                            return
+                        } else if (!viewModel.isDistrictAvailable) {
+                            showAlertDialog(activity.resources.getString(R.string.please_enter_valid_district))
+                            return
+                        } else if (state.isEmpty()) {
+                            showAlertDialog(activity.resources.getString(R.string.please_enter_state))
                             return
                         } else if (city.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_city))
@@ -254,6 +257,8 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                                 if (searchText.length > 2) {
                                     viewModel.selectedDistrict = searchText
                                     viewModel.selectedState = ""
+                                    binding.stateSpinner.text = ""
+                                    viewModel.isDistrictAvailable = districtList.find { names -> names.districtName == searchText }?.districtName != null
                                     val list = districtList.map { names -> names.districtName }.filter { names -> names.startsWith(searchText, ignoreCase = true) }
                                     val set: Set<String> = HashSet<String>(list)
                                     val finalList: MutableList<String> = arrayListOf()

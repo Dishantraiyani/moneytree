@@ -21,6 +21,7 @@ class KycCommonViewModel(application: Application) : NSViewModel(application) {
     var selectedState = ""
     var selectedStateCode = ""
     var selectedDistrict = ""
+    var isDistrictAvailable: Boolean = false
 
     var isChangeDataAvailable = NSSingleLiveEvent<Boolean>()
 
