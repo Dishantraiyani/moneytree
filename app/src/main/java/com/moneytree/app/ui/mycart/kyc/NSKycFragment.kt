@@ -191,7 +191,23 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 		}
 
 		binding.btnNext.setSafeOnClickListener {
-			showAlertDialog(activity.resources.getString(R.string.kyc_verification), "To confirm, please verify that the following details belong to you and are accurate.", map = map, isDirectApi = true, docType = docType)
+			if (map["pan_no"] == null || map["pan_no"].toString().isEmpty()) {
+				showAlertDialog("Pan No can't be Empty")
+			} else if (map["name"] == null || map["name"].toString().isEmpty()) {
+				showAlertDialog("Name can't be Empty")
+			} else if (map["father_name"] == null || map["father_name"].toString().isEmpty()) {
+				showAlertDialog("Father Name can't be Empty")
+			} else if (map["dob"] == null || map["dob"].toString().isEmpty()) {
+				showAlertDialog("DoB can't be Empty")
+			} else {
+				showAlertDialog(
+					activity.resources.getString(R.string.kyc_verification),
+					"To confirm, please verify that the following details belong to you and are accurate.",
+					map = map,
+					isDirectApi = true,
+					docType = docType
+				)
+			}
 		}
 	}
 
@@ -207,7 +223,7 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 					tvCancel.visible()
 					viewLine2.visible()
 				}
-//9e24f8c9a0316693a125b6b215d3ab16 
+
 				tvOk.setOnClickListener {
 					dialog.dismiss()
 					var type = "PanCard"

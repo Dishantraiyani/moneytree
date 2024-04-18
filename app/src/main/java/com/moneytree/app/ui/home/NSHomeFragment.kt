@@ -320,7 +320,7 @@ class NSHomeFragment : NSFragment() {
 					HomeRepository.setupViewPager(activity, homeBinding, homeModel, viewPager)
 					showPopup(getPopUpImage())
 					EventBus.getDefault().post(NSChangeNavigationMenuNameEvent())
-					productCategoryModel.getProductCategory(true)
+					productCategoryModel.getProductCategory(true, isFromHome = true)
                 }
             }
         }

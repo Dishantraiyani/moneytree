@@ -2,7 +2,9 @@ package com.moneytree.app.ui.common
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.common.ProductCategory
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSDiseasesRepository
 import com.moneytree.app.repository.NSProductRepository
@@ -29,40 +31,46 @@ class ProductCategoryViewModel(application: Application) : NSViewModel(applicati
      * Get product category list data
      *
      */
-    fun getProductCategory(isShowProgress: Boolean, isDiseases: Boolean = false) {
-        if (isShowProgress) {
-            isProgressShowing.value = true
-        }
+    fun getProductCategory(isShowProgress: Boolean, isDiseases: Boolean = false, isFromHome: Boolean = false) {
+        if (isFromHome) {
+            val gson: NSCategoryListResponse = Gson().fromJson(ProductCategory.categories, NSCategoryListResponse::class.java)
+            jointResponse.categoryList = gson.data
+            isCategoryDataAvailable.value = jointResponse
+        } else {
+            if (isShowProgress) {
+                isProgressShowing.value = true
+            }
 
-        obj = object : NSGenericViewModelCallback {
-            override fun <T> onSuccess(data: T) {
-                if (data is NSCategoryListResponse) {
-                    jointResponse.categoryList = data.data
-                    if (!isDiseases) {
-                        isCategoryDataAvailable.value = jointResponse
+            obj = object : NSGenericViewModelCallback {
+                override fun <T> onSuccess(data: T) {
+                    if (data is NSCategoryListResponse) {
+                        jointResponse.categoryList = data.data
+                        if (!isDiseases) {
+                            isCategoryDataAvailable.value = jointResponse
+                            isProgressShowing.value = false
+                        } else {
+                            NSDiseasesRepository.getDiseasesListData(obj!!)
+                        }
+                    } else if (data is NSDiseasesResponse) {
                         isProgressShowing.value = false
-                    } else {
-                        NSDiseasesRepository.getDiseasesListData(obj!!)
+                        jointResponse.diseasesList = data.data
+                        isCategoryDataAvailable.value = jointResponse
                     }
-                } else if (data is NSDiseasesResponse) {
-                    isProgressShowing.value = false
-                    jointResponse.diseasesList = data.data
-                    isCategoryDataAvailable.value = jointResponse
+                }
+
+                override fun onError(errors: List<Any>) {
+                    handleError(errors)
+                }
+
+                override fun onFailure(failureMessage: String?) {
+                    handleFailure(failureMessage)
+                }
+
+                override fun <T> onNoNetwork(localData: T) {
+                    handleNoNetwork()
                 }
             }
-
-            override fun onError(errors: List<Any>) {
-                handleError(errors)
-            }
-
-            override fun onFailure(failureMessage: String?) {
-                handleFailure(failureMessage)
-            }
-
-            override fun <T> onNoNetwork(localData: T) {
-                handleNoNetwork()
-            }
+            NSProductRepository.getCategoryOfProducts(obj!!)
         }
-        NSProductRepository.getCategoryOfProducts(obj!!)
     }
 }

@@ -1,0 +1,6 @@
+package com.moneytree.app.common
+
+object ProductCategory {
+
+    const val categories = "{\"data\":[{\"category_id\":\"31\",\"category_img\":\"AyurvedicIcon.png\",\"category_name\":\"Ayurvedic\"},{\"category_id\":\"32\",\"category_img\":\"Cosmetic.png\",\"category_name\":\"Cosmetic\"},{\"category_id\":\"33\",\"category_img\":\"FMCGIcon.png\",\"category_name\":\"FMCG\"},{\"category_id\":\"34\",\"category_img\":\"Nutraceuticals.png\",\"category_name\":\"Herbo Nutraceuticals\"},{\"category_id\":\"35\",\"category_img\":\"otc.png\",\"category_name\":\"OTC\"},{\"category_id\":\"36\",\"category_img\":\"powder.png\",\"category_name\":\"Protein Powder\"},{\"category_id\":\"37\",\"category_img\":\"SprayIcon.png\",\"category_name\":\"Spray\"},{\"category_id\":\"38\",\"category_img\":\"HomeCareicon.png\",\"category_name\":\"Home Care\"},{\"category_id\":\"39\",\"category_img\":\"AgriculturalIcon.png\",\"category_name\":\"Agriculture Product\"},{\"category_id\":\"40\",\"category_img\":\"PersonalCareIcon.png\",\"category_name\":\"Personal Care\"},{\"category_id\":\"41\",\"category_img\":\"GYMSupplement.png\",\"category_name\":\"GYM Supplement\"}],\"message\":\"success\",\"status\":true}"
+}

@@ -20,11 +20,19 @@
             android:paddingVertical="@dimen/_15sdp"
             android:paddingHorizontal="@dimen/_15sdp">
 
+            <TextView
+                style="@style/LoginSubFontsWrap"
+                android:text="@string/bank_account_no"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textSize="@dimen/_10sdp"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_account_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,11 +80,19 @@
 
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                style="@style/LoginSubFontsWrap"
+                android:text="@string/bank_name"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textSize="@dimen/_10sdp"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_bank_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 app:cardCornerRadius="@dimen/_5sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,12 +142,20 @@
 
             </androidx.cardview.widget.CardView>
 
+            <TextView
+                style="@style/LoginSubFontsWrap"
+                android:text="@string/bank_ifsc"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textSize="@dimen/_10sdp"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_ifsc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginHorizontal="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"

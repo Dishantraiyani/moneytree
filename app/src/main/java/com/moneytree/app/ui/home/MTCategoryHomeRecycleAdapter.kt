@@ -66,17 +66,17 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
             with(voucherBinding) {
                 with(response) {
 
-                    if (response.categoryImg?.isNotEmpty() == true) {
+                    /*if (response.categoryImg?.isNotEmpty() == true) {
                         val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE_CATEGORY) + response.categoryImg
                         Glide.with(context).load(url).into(ivFieldImage)
-                    } else {
+                    } else {*/
                         try {
                             val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
                             ivFieldImage.setImageDrawable(drawable)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-                    }
+                   // }
 
                     tvFieldName.text = categoryName?.replace(" ", "\n")
 					llRecharge.setOnClickListener(object : SingleClickListener() {
