@@ -87,7 +87,7 @@ class NSPendingVoucherFragment : NSFragment(), NSJoiningVoucherCallback {
                 voucherListAdapter =
                     NSVoucherListRecycleAdapter(activity, object : NSPageChangeCallback{
                         override fun onPageChange(pageNo: Int) {
-                            if (voucherResponse!!.nextPage) {
+                            if (voucherResponse?.nextPage == true) {
                                 val page: Int = voucherList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
                                 getVoucherListData(pageIndex, "", true, isBottomProgress = true, this@NSPendingVoucherFragment)
@@ -116,8 +116,8 @@ class NSPendingVoucherFragment : NSFragment(), NSJoiningVoucherCallback {
         with(voucherListModel) {
             voucherDataManage(isVoucher)
             if (isVoucher) {
-                voucherListAdapter!!.clearData()
-                voucherListAdapter!!.updateData(voucherList, tabPosition)
+                voucherListAdapter?.clearData()
+                voucherListAdapter?.updateData(voucherList, tabPosition)
             }
         }
     }

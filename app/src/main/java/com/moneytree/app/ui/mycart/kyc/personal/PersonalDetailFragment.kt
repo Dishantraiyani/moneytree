@@ -84,9 +84,6 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                         if (fullName.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_name))
                             return
-                        } else if (aadharNO.isEmpty()) {
-                            showAlertDialog(activity.resources.getString(R.string.please_enter_aadhar_no))
-                            return
                         } else if (mobile.isEmpty()) {
                             showAlertDialog(activity.resources.getString(R.string.please_enter_mobile_no))
                             return
