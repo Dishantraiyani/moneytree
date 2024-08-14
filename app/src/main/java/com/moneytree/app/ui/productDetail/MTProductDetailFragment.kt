@@ -84,15 +84,23 @@ class MTProductDetailFragment : NSFragment() {
 						tvHeaderBack.text = productName
 						tvSimilarProducts.gone()
 						rvProductList.gone()
-						viewPager.gone()
-						ivProductImg.visible()
-						Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
-							.diskCacheStrategy(DiskCacheStrategy.NONE)
-							.skipMemoryCache(true).placeholder(R.drawable.placeholder)
-							.error(R.drawable.placeholder).into(ivProductImg)
 						tvProductName.text = productName
+
+						if (productDetail?.multiImageList?.isNotEmpty() == true) {
+							ivProductImg.gone()
+							viewPager.visible()
+							productModel.setupViewPager(activity, viewPager, productDetail!!)
+						} else {
+							ivProductImg.visible()
+							viewPager.gone()
+							Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
+								.diskCacheStrategy(DiskCacheStrategy.NONE)
+								.skipMemoryCache(true).placeholder(R.drawable.placeholder)
+								.error(R.drawable.placeholder).into(ivProductImg)
+						}
+
 						tvPrice.text = addText(activity, R.string.price_value, sdPrice!!)
-						tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
+						tvRate.text = addText(activity, R.string.rate_title, sdPrice)
 
 						if (sdPrice == rate) {
 							tvRate.gone()
