@@ -269,7 +269,7 @@
 				android:textColor="@color/gray_text"
 				android:paddingStart="@dimen/_15sdp"
 				android:lines="1"
-				android:layout_marginTop="@dimen/_6sdp"
+				android:layout_marginTop="@dimen/_10sdp"
 				android:fontFamily="@font/inter_medium"
 				android:paddingEnd="@dimen/_5sdp"
 				app:layout_constraintEnd_toEndOf="parent"

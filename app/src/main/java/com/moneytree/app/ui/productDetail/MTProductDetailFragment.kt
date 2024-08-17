@@ -93,7 +93,7 @@ class MTProductDetailFragment : NSFragment() {
 						} else {
 							ivProductImg.visible()
 							viewPager.gone()
-							Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
+							Glide.with(activity.applicationContext).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
 								.diskCacheStrategy(DiskCacheStrategy.NONE)
 								.skipMemoryCache(true).placeholder(R.drawable.placeholder)
 								.error(R.drawable.placeholder).into(ivProductImg)
