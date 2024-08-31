@@ -28,18 +28,16 @@ class StockDetailViewModel(application: Application) : NSViewModel(application),
     fun getStockInfo(isShowProgress: Boolean) {
         stockList.clear()
 
-
-		stockId?.let {
-			if (isShowProgress) {
-				isProgressShowing.value = true
-			}
-			if (isStock == true) {
-				NSProductRepository.getStockTransferInfo(it, this)
-			} else {
-				NSRePurchaseRepository.getRePurchaseInfoData("1", it, this)
-			}
-
-		}
+        stockId?.let {
+            if (isShowProgress) {
+                isProgressShowing.value = true
+            }
+            if (isStock) {
+                NSProductRepository.getStockTransferInfo(it, this)
+            } else {
+                NSRePurchaseRepository.getRePurchaseInfoData("1", it, this)
+            }
+        }
     }
 
     override fun <T> onSuccess(data: T) {

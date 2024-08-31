@@ -33,7 +33,7 @@ class NSRechargeListRecycleAdapter(
     private val onPageChangeCallback: NSPageChangeCallback = onPageChange
 
     fun updateData(rechargeList: MutableList<RechargeListDataItem>) {
-        rechargeData.addAll(rechargeList)
+		rechargeData.addAll(rechargeList)
 		notifyDataSetChanged()
     }
 

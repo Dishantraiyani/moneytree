@@ -73,7 +73,7 @@ class MTProductViewModel(application: Application) : NSViewModel(application),
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-		if (categoryId != null) {
+        if (categoryId != null) {
 			NSProductRepository.getProductList(pageIndex, search, categoryId!!, this)
 		}
     }

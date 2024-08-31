@@ -22,11 +22,6 @@ class NSCartViewModel(application: Application) : NSViewModel(application) {
 	var categoryName: String? = null
     var isFromOrder: Boolean = false
 
-
-    /**
-     * Get voucher list data
-     *
-     */
     fun getProductListData() {
         productList.clear()
         val instance = NSApplication.getInstance()

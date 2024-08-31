@@ -38,20 +38,14 @@ class NSDownloadPlanFragment : NSFragment() {
         return binding.root
     }
 
-    /**
-     * View created
-     */
     private fun viewCreated() {
         with(binding) {
             HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.downloads))
         }
-		setDownloadPlanAdapter()
+        setDownloadPlanAdapter()
         observeViewModel()
     }
 
-	/**
-	 * To add data of vouchers in list
-	 */
 	private fun setDownloadPlanAdapter() {
 		with(binding) {
 			with(downloadModel) {

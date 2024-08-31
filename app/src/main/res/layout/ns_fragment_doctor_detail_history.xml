@@ -9,7 +9,7 @@
 	<include android:id="@+id/layout_header"
 		layout="@layout/layout_header"/>
 
-	<com.smarteist.autoimageslider.SliderView
+	<com.moneytree.app.slider.SliderView
 		android:id="@+id/viewPager"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/_200sdp"

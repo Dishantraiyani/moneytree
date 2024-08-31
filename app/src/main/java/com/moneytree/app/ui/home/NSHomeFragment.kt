@@ -191,17 +191,17 @@ class NSHomeFragment : NSFragment() {
     private fun addRechargeItems() {
         with(homeBinding) {
             with(homeModel) {
-                val layoutManager = GridLayoutManager(activity, 4)
+				val layoutManager = GridLayoutManager(activity, 4)
 				recyclerView.layoutManager = layoutManager
 				recyclerView.itemAnimator = DefaultItemAnimator()
 
 				homeListModelClassArrayList1 = ArrayList()
-                fieldName = resources.getStringArray(R.array.recharge_list_home)
+				fieldName = resources.getStringArray(R.array.recharge_list_home)
 
 				for (i in fieldName.indices) {
-                    val gridModel = GridModel(fieldName[i], fieldImage[i])
-                    homeListModelClassArrayList1!!.add(gridModel)
-                }
+					val gridModel = GridModel(fieldName[i], fieldImage[i])
+					homeListModelClassArrayList1!!.add(gridModel)
+				}
 
 				bAdapterNS = GridRecycleAdapter(
                     homeListModelClassArrayList1!!, object : NSRechargeSelectCallback {
@@ -308,8 +308,9 @@ class NSHomeFragment : NSFragment() {
             with(homeModel) {
                 if (isDashboardData) {
 					setKycStatus(activity)
-                    tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
+					tvDownline.text = addText(activity, R.string.dashboard_data, setDownLine())
 					NSConstants.SOCKET_TYPE = getSocketType()
+
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
                     NSApplication.getInstance().setWalletBalance(setWallet())
                     tvStatusRoyalty.text =

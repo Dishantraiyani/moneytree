@@ -65,7 +65,7 @@ class NSMobileRechargeFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentMobileRechargeBinding.inflate(inflater, container, false)
-        rgBinding.llRechargeData.gone()
+		rgBinding.llRechargeData.gone()
 		viewCreated(true)
         setListener()
 		getRechargeRepeatData()

@@ -85,7 +85,7 @@ class NSVerifyWalletModel(application: Application) : NSViewModel(application),
 
     override fun <T> onSuccess(data: T) {
         isProgressShowing.value = false
-        successResponse = data as NSSuccessResponse
+		successResponse = data as NSSuccessResponse
 		isWalletTransferDataAvailable.value = true
     }
 

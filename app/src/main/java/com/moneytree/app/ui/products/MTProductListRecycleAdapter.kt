@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.moneytree.app.BuildConfig
-import com.moneytree.app.ImageDownloader
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
@@ -24,8 +23,6 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.onesignal.HTML
-import java.util.concurrent.ExecutionException
 
 
 class MTProductListRecycleAdapter(
@@ -101,18 +98,17 @@ class MTProductListRecycleAdapter(
                     tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
                     tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                     tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-					tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-						Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
-					} else {
-						Html.fromHtml(description)
-					}
+                    tvDescription.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Html.fromHtml(description, Html.FROM_HTML_MODE_COMPACT)
+                    } else {
+                        Html.fromHtml(description)
+                    }
 
                     if (sdPrice == rate) {
                         tvRate.gone()
                         tvRateGrid.gone()
                     }
 
-                    //tvDescription.text = description!!
 					clProductLayout.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)

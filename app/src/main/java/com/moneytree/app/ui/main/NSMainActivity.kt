@@ -26,7 +26,7 @@ class NSMainActivity : NSActivity() {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
-        loadInitialFragment()
+		loadInitialFragment()
 		locationPermission()
     }
 

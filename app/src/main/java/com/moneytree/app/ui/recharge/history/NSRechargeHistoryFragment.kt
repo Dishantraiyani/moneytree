@@ -78,7 +78,7 @@ class NSRechargeHistoryFragment : NSFragment(), NSSearchCallback {
                 headerTitle = resources.getString(R.string.recharge_history), isSearch = true, searchCallback = this@NSRechargeHistoryFragment
             )
             setRegisterAdapter()
-			setServiceProvider(true)
+            setServiceProvider(true)
 			setStatusFilter()
         }
         observeViewModel()

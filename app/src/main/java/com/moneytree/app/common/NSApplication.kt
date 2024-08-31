@@ -34,15 +34,15 @@ class NSApplication : Application() {
 	private var selectedAddress: NSAddressCreateResponse = NSAddressCreateResponse()
 	private var kycKey: String = ""
 
-    override fun onCreate() {
-        super.onCreate()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        initInstance()
+	override fun onCreate() {
+		super.onCreate()
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+		initInstance()
 
 		OneSignal.initWithContext(this)
 		OneSignal.setAppId(ONESIGNAL_APP_ID)
 		OneSignal.unsubscribeWhenNotificationsAreDisabled(true)
-    }
+	}
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)

@@ -252,7 +252,7 @@ class CustomPlayerUiController(private val youTubePlayerView: YouTubePlayerView,
     }
 
     private fun updatePlayPauseButtonIcon(playing: Boolean) {
-        val drawable = if (playing) R.drawable.ayp_ic_pause_36dp else R.drawable.ayp_ic_play_36dp
+        val drawable = if (playing) com.google.android.exoplayer2.R.drawable.exo_icon_pause else com.google.android.exoplayer2.R.drawable.exo_icon_play
         playPauseButton.setImageResource(drawable)
     }
 }

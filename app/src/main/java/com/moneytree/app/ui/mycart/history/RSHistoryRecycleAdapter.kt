@@ -92,7 +92,7 @@ class RSHistoryRecycleAdapter(
 
                     tvDate.text = createdAt
                     tvRemark.text = remark
-					tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
+                    tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
 					tvStockId.text = response.stockiestid
 
 					clProductLayout.setOnClickListener(object : SingleClickListener() {

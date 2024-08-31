@@ -202,13 +202,14 @@ class NSActivationFormFragment : NSFragment() {
     private fun observeViewModel() {
         with(activationFormModel) {
             with(activationFormBinding) {
-                isProgressShowing.observe(
-                    viewLifecycleOwner
-                ) { shouldShowProgress ->
-                    updateProgress(shouldShowProgress)
-                }
 
-                isPackageDataAvailable.observe(
+				isProgressShowing.observe(
+					viewLifecycleOwner
+				) { shouldShowProgress ->
+					updateProgress(shouldShowProgress)
+				}
+
+				isPackageDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isPackageData ->
                     if (isPackageData) {

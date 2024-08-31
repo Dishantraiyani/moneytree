@@ -1,16 +1,26 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://jitpack.io" }
+    }
+}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         jcenter()
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven { url "https://jitpack.io" }
-		gradlePluginPortal()
     }
 }
+
 rootProject.name = "MoneyTree"
 include ':app'
 include ':scanner'
 include ':pdfViewer'
-include ':ucrop'
 include ':imagepicker'
+include ':ucrop'

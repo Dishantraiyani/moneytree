@@ -82,7 +82,7 @@ class NSYoutubeListDetailRecycleAdapter(
 					}
 
                     tvVideoTitle.text = snippet?.title
-					var thumbUrl: String? = null
+                    var thumbUrl: String? = null
 					if (snippet != null) {
 						if (snippet.thumbnails != null) {
 							if (snippet.thumbnails.medium != null) {

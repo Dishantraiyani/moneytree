@@ -20,10 +20,8 @@ import com.moneytree.app.repository.network.responses.NSDiseasesResponse
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.NSSearchListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.moneytree.app.repository.network.responses.SearchData
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
+import com.moneytree.app.slider.IndicatorView.animation.type.IndicatorAnimationType
+import com.moneytree.app.slider.SliderView
 
 
 /**
@@ -79,7 +77,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
         }
         if (isShowProgress) {
             isProgressShowing.value = true
-			isBottomProgressShowing.value = false
+            isBottomProgressShowing.value = false
         }
         if (isBottomProgress) {
             isBottomProgressShowing.value = true
@@ -113,7 +111,7 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
         viewPager.setSliderAdapter(pagerAdapter)
         pagerAdapter.notifyDataSetChanged()
         viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE)
-        viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        viewPager.setSliderTransformAnimation()
         // viewPager.startAutoCycle()
     }
 
@@ -127,5 +125,13 @@ class NSProductViewModel(application: Application) : NSViewModel(application),
 
     override fun <T> onNoNetwork(localData: T) {
         handleNoNetwork()
+    }
+
+    fun removeTrailingComma(input: String): String {
+        return if (input.endsWith(",")) {
+            input.dropLast(1)
+        } else {
+            input
+        }
     }
 }

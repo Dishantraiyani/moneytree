@@ -63,15 +63,15 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
      *
      */
     fun setServiceProvider(rechargeType: String, rechargeMemberId: String = "", isShowProgress: Boolean) {
-        if (isShowProgress) {
-            isProgressShowing.value = true
-        }
+		if (isShowProgress) {
+			isProgressShowing.value = true
+		}
 		NSRechargeRepository.getServiceProvider(rechargeType, rechargeMemberId, this)
     }
 
     override fun <T> onSuccess(data: T) {
         isProgressShowing.value = false
-        serviceProviderResponse = data as NSServiceProviderResponse
+		serviceProviderResponse = data as NSServiceProviderResponse
 		setServiceProvider()
     }
 

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.moneytree.app.R
 import com.moneytree.app.databinding.RowSliderBinding
-import com.smarteist.autoimageslider.SliderViewAdapter
+import com.moneytree.app.slider.SliderViewAdapter
 
 class SliderDoctorAdapter(private val context: Context, private val mItems: List<String>) :
 	SliderViewAdapter<SliderDoctorAdapter.SliderAdapterVH>() {
@@ -21,23 +21,12 @@ class SliderDoctorAdapter(private val context: Context, private val mItems: List
 	}
 
 	override fun getCount(): Int {
-		//slider view count could be dynamic size
 		return mItems.size
 	}
 
-	/**
-	 * The view holder for voucher list
-	 *
-	 * @property productBinding The voucher list view binding
-	 */
 	inner class SliderAdapterVH(private val productBinding: RowSliderBinding) :
 		ViewHolder(productBinding.root) {
 
-		/**
-		 * To bind the voucher details view into Recycler view with given data
-		 *
-		 * @param response The voucher details
-		 */
 		fun bind(response: String) {
 			Glide.with(context).load(response).placeholder(R.drawable.placeholder).centerCrop().into(productBinding.image)
 		}

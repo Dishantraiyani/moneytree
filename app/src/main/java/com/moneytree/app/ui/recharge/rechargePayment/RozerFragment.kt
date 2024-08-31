@@ -52,7 +52,7 @@ class RozerFragment : NSFragment() {
     ): View {
         _binding = FragmentRozerBinding.inflate(inflater, container, false)
         viewCreated()
-        setListener()
+		setListener()
 		setPaymentCallback()
         return rgBinding.root
     }

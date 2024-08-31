@@ -100,7 +100,10 @@ class NSProductDetailFragment : NSFragment() {
 						)
 						NSConstants.STOCK_UPDATE = NSRequestCodes.REQUEST_PRODUCT_CART_UPDATE_DETAIL
 						tvHeaderBack.text = productName
-						if (productDetail?.multiImageList?.isNotEmpty() == true) {
+
+						val productData = productModel.removeTrailingComma(productDetail?.multiImageList?:"")
+
+						if (productData.isNotEmpty() && productData.contains(",")) {
 							ivProductImg.gone()
 							viewPager.visible()
 							productModel.setupViewPager(activity, viewPager, productDetail!!)

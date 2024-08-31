@@ -141,7 +141,7 @@ class NSSelectAddressFragment : BaseViewModelFragment<NSSelectAddressViewModel, 
     private fun setAdapter(list: MutableList<NSAddressCreateResponse>) {
         with(binding) {
             with(viewModel) {
-				rvCommon.layoutManager = LinearLayoutManager(activity)
+                rvCommon.layoutManager = LinearLayoutManager(activity)
                 adapter = NSAddressListRecycleAdapter{ model, isEdit, isDelete, position ->
                     if (isDelete) {
                         activity.resources.apply {

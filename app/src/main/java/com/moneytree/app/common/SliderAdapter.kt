@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.moneytree.app.databinding.RowSliderBinding
-import com.smarteist.autoimageslider.SliderViewAdapter
+import com.moneytree.app.slider.SliderViewAdapter
 
 class SliderAdapter(private val context: Context, private val mItems: List<String>) :
 	SliderViewAdapter<SliderAdapter.SliderAdapterVH>() {

@@ -38,8 +38,8 @@ class MyFilterListAdapter(
         holder.mTextView!!.text = listState[position].categoryName
 
         // To check weather checked event fire from getview() or user input
-        isFromView = true
-		val isChecked = NSApplication.getInstance().isFilterAvailable(listState[position])
+        // isFromView = true
+        val isChecked = NSApplication.getInstance().isFilterAvailable(listState[position])
         holder.mCheckBox!!.isChecked = isChecked
         isFromView = false
         if (position == 0) {

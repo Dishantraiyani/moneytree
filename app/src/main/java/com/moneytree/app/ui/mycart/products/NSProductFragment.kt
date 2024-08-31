@@ -71,7 +71,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentProductsBinding.inflate(inflater, container, false)
+		_binding = NsFragmentProductsBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
 		observeViewModel()

@@ -48,7 +48,7 @@ class NSNotificationDetailFragment : NSFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentNotificationDetailBinding.inflate(inflater, container, false)
+		_binding = NsFragmentNotificationDetailBinding.inflate(inflater, container, false)
 		viewCreated()
         return notificationBinding.root
     }

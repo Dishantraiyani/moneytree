@@ -35,8 +35,8 @@ class MTProductCategoryFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentProductCategoryBinding.inflate(inflater, container, false)
-		viewCreated()
-		setListener()
+        viewCreated()
+        setListener()
         return productCategoryBinding.root
     }
 
@@ -45,8 +45,8 @@ class MTProductCategoryFragment : NSFragment() {
      */
     private fun viewCreated() {
         with(productCategoryBinding) {
-            with(productCategoryModel) {
-				NSConstants.tabName = this@MTProductCategoryFragment.javaClass
+            productCategoryModel.apply {
+                NSConstants.tabName = this@MTProductCategoryFragment.javaClass
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.categories))
                 setProductCategoryAdapter()
             }
@@ -75,10 +75,10 @@ class MTProductCategoryFragment : NSFragment() {
             with(productCategoryModel) {
                 rvCategoryList.layoutManager = LinearLayoutManager(activity)
                 categoryListAdapter = MTCategoryListRecycleAdapter(object : NSProductCategoryCallback {
-					override fun onResponse(categoryData: NSCategoryData) {
-							switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
-					}
-				})
+                    override fun onResponse(categoryData: NSCategoryData) {
+                        switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
+                    }
+                })
 				rvCategoryList.adapter = categoryListAdapter
 				getProductCategory(true)
             }

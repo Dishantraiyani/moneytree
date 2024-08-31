@@ -5,9 +5,8 @@ import com.moneytree.app.common.SliderAdapter
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.NsFragmentHomeBinding
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
+import com.moneytree.app.slider.IndicatorView.animation.type.IndicatorAnimationType
+import com.moneytree.app.slider.SliderView
 
 class HomeRepository {
 
@@ -22,7 +21,7 @@ class HomeRepository {
 						viewPager.setSliderAdapter(pagerAdapter)
 						pagerAdapter.notifyDataSetChanged()
 						viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE)
-						viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+						viewPager.setSliderTransformAnimation()
 						viewPager.startAutoCycle()
 					} catch (e: Exception) {
 						e.printStackTrace()

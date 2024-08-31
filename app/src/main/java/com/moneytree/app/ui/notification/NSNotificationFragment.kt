@@ -95,7 +95,7 @@ class NSNotificationFragment : NSFragment() {
 
 					})
                 rvNotificationList.adapter = notificationAdapter
-				pageIndex = "1"
+                pageIndex = "1"
                 getNotificationData(pageIndex, true, isBottomProgress = false)
             }
         }

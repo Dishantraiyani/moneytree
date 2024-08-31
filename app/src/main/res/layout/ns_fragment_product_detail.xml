@@ -29,7 +29,7 @@
 				app:layout_constraintEnd_toEndOf="parent"
 				app:layout_constraintTop_toTopOf="parent">
 
-				<com.smarteist.autoimageslider.SliderView
+				<com.moneytree.app.slider.SliderView
 					android:id="@+id/viewPager"
 					android:layout_width="match_parent"
 					android:layout_height="0dp"

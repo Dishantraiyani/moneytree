@@ -52,12 +52,12 @@ class NSTransactionViewModel(application: Application) : NSViewModel(application
         }
         val transactionMainListData = data as NSWalletListResponse
         transactionResponse = transactionMainListData
-		if (transactionMainListData.data.isValidList()) {
-			transactionList.addAll(transactionMainListData.data)
-			isTransactionDataAvailable.value = transactionList.isValidList()
-		} else if (pageIndex == "1" || searchData.isNotEmpty()){
-			isTransactionDataAvailable.value = false
-		}
+        if (transactionMainListData.data.isValidList()) {
+            transactionList.addAll(transactionMainListData.data)
+            isTransactionDataAvailable.value = transactionList.isValidList()
+        } else if (pageIndex == "1" || searchData.isNotEmpty()){
+            isTransactionDataAvailable.value = false
+        }
     }
 
     override fun onError(errors: List<Any>) {

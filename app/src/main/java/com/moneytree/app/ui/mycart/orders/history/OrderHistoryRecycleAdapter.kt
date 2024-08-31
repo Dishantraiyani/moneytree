@@ -89,7 +89,7 @@ class OrderHistoryRecycleAdapter(
                     tvMemberId.text = response.memberId
                     tvDate.text = createdAt
                     tvRemark.text = response.walletType
-					tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
+                    tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
                     tvAddress.text = response.address1
                     if (response.mtCoin?.isNotEmpty() == true) {
                         llMtCoin.visible()

@@ -1,5 +1,6 @@
 package com.github.drjacky.imagepicker1
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -148,6 +149,7 @@ class ImagePickerActivity : AppCompatActivity() {
     /**
      * Handle Activity Back Press
      */
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         setResultCancel()
     }

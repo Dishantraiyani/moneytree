@@ -75,9 +75,7 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
 
                 val pref = NSApplication.getInstance().getPrefs()
                 pref.isRechargeDisplay = dashboardData?.data?.isRechargeDisplay
-
-				setFragmentData()
-
+                setFragmentData()
             }
 
             override fun onError(errors: List<Any>) {
@@ -98,10 +96,6 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     }
 
     fun setFragmentData() {
-		/*dashboardData!!.data!!.banners.add("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
-		dashboardData!!.data!!.banners.add("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
-		dashboardData!!.data!!.banners.add("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg")
-*/
         mFragmentList.clear()
 		if (dashboardData != null) {
 			if (dashboardData!!.data != null) {

@@ -79,7 +79,7 @@ class NSActivationViewModel(application: Application) : NSViewModel(application)
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-		NSProductRepository.getActivationList(pageIndex, search, this)
+        NSProductRepository.getActivationList(pageIndex, search, this)
     }
 
     override fun <T> onSuccess(data: T) {
@@ -89,15 +89,11 @@ class NSActivationViewModel(application: Application) : NSViewModel(application)
         }
         val activationListData = data as NSActivationListResponse
         productResponse = activationListData
-        if (activationListData.data != null) {
-            if (activationListData.data.isValidList()) {
-                activationList.addAll(activationListData.data)
-                isActivationDataAvailable.value = activationList.isValidList()
-            } else if (pageIndex == "1" || searchData.isNotEmpty()){
-				isActivationDataAvailable.value = false
-            }
+        if (activationListData.data.isValidList()) {
+            activationList.addAll(activationListData.data)
+            isActivationDataAvailable.value = activationList.isValidList()
         } else if (pageIndex == "1" || searchData.isNotEmpty()){
-			isActivationDataAvailable.value = false
+            isActivationDataAvailable.value = false
         }
     }
 

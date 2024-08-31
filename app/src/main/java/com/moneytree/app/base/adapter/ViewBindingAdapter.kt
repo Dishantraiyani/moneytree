@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import okhttp3.internal.toImmutableList
 
 class ViewBindingAdapter<T : ViewBinding, D>(
     private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T,
@@ -23,14 +22,14 @@ class ViewBindingAdapter<T : ViewBinding, D>(
     fun setData(newData: List<D>, isLastPage: Boolean) {
         this.isLastPage = isLastPage
         data.clear()
-        data.addAll(newData.toImmutableList())
+        data.addAll(newData.toMutableList())
         notifyDataSetChanged()
     }
 
     fun addData(newData: List<D>, isLastPage: Boolean) {
         this.isLastPage = isLastPage
         val previousSize = data.size
-        data.addAll(newData.toImmutableList())
+        data.addAll(newData.toMutableList())
         notifyItemRangeInserted(previousSize, newData.size)
     }
 

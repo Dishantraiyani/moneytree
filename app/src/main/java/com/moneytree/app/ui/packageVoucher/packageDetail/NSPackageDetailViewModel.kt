@@ -48,7 +48,7 @@ class NSPackageDetailViewModel(application: Application) : NSViewModel(applicati
 
     override fun <T> onSuccess(data: T) {
         isProgressShowing.value = false
-        val packageMainData = data as NSPackageVoucherQntResponse
+		val packageMainData = data as NSPackageVoucherQntResponse
 		if (packageMainData.data.isValidList()) {
 			voucherQuantity = packageMainData.voucherCount.toString()
 			packageList.clear()

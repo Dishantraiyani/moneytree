@@ -19,9 +19,8 @@ import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesRes
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.NSSearchListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
+import com.moneytree.app.slider.IndicatorView.animation.type.IndicatorAnimationType
+import com.moneytree.app.slider.SliderView
 
 
 /**
@@ -114,7 +113,7 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
         viewPager.setSliderAdapter(pagerAdapter)
         pagerAdapter.notifyDataSetChanged()
         viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE)
-        viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        viewPager.setSliderTransformAnimation()
         // viewPager.startAutoCycle()
     }
 

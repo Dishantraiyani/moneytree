@@ -62,7 +62,7 @@ class OrderDetailInfoFragment : NSFragment(), NSSearchCallback {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRsOrderInfoBinding.inflate(inflater, container, false)
-		viewCreated()
+        viewCreated()
 		setListener()
         return stockBinding.root
     }

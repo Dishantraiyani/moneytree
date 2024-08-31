@@ -58,7 +58,7 @@ class RSHistoryFragment : NSFragment(), NSSearchCallback {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRsHistoryBinding.inflate(inflater, container, false)
-		viewCreated()
+        viewCreated()
 		setListener()
         return stockBinding.root
     }

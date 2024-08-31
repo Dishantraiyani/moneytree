@@ -70,7 +70,7 @@ class StockDetailFragment : NSFragment() {
             with(stockTreeViewModel) {
                 rvStockList.layoutManager = LinearLayoutManager(activity)
                 stockListAdapter = StockDetailRecycleAdapter(activity, isStock)
-				rvStockList.adapter = stockListAdapter
+                rvStockList.adapter = stockListAdapter
                 getStockInfo(true)
             }
         }

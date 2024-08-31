@@ -120,7 +120,7 @@ open class NSFragment : Fragment() {
      */
     protected fun showNoNetworkAlertDialog(title: String?, message: String?) {
         val errorMessage: String = message ?: getString(R.string.something_went_wrong)
-		switchActivity(
+        switchActivity(
 			NoNetworkActivity::class.java
 		)
         //NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title)

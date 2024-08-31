@@ -35,13 +35,13 @@ class NSActivationFragment : NSFragment(), NSSearchCallback {
 		fun newInstance() = NSActivationFragment()
 	}
 
-	override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentActivationBinding.inflate(inflater, container, false)
-		viewCreated()
-		setListener()
+        viewCreated()
+        setListener()
         return activationBinding.root
     }
 
@@ -62,16 +62,17 @@ class NSActivationFragment : NSFragment(), NSSearchCallback {
     private fun setListener() {
         with(activationModel) {
             with(activationBinding) {
+
                 srlRefresh.setOnRefreshListener {
                     pageIndex = "1"
                     getActivationListData(pageIndex, "", false, isBottomProgress = false)
                 }
 
-				btnActivation.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						getActivationPackage(true)
-					}
-				})
+                btnActivation.setOnClickListener(object : SingleClickListener() {
+                    override fun performClick(v: View?) {
+                        getActivationPackage(true)
+                    }
+                })
 
 				with(layoutHeader) {
                     ivClose.setOnClickListener {
@@ -101,7 +102,7 @@ class NSActivationFragment : NSFragment(), NSSearchCallback {
             with(activationModel) {
                 rvActivationList.layoutManager = LinearLayoutManager(activity)
                 activationListAdapter =
-					NSActivationListRecycleAdapter(activity, object : NSPageChangeCallback{
+                    NSActivationListRecycleAdapter(activity, object : NSPageChangeCallback{
                         override fun onPageChange(pageNo: Int) {
                             if (productResponse!!.nextPage) {
                                 val page: Int = activationList.size/NSConstants.PAGINATION + 1
@@ -110,7 +111,7 @@ class NSActivationFragment : NSFragment(), NSSearchCallback {
                             }
                         }
                     })
-				rvActivationList.adapter = activationListAdapter
+                rvActivationList.adapter = activationListAdapter
                 pageIndex = "1"
                 getActivationListData(pageIndex, "", true, isBottomProgress = false)
             }
@@ -156,16 +157,16 @@ class NSActivationFragment : NSFragment(), NSSearchCallback {
     private fun observeViewModel() {
         with(activationModel) {
             with(activationBinding) {
-                isProgressShowing.observe(
-                    viewLifecycleOwner
-                ) { shouldShowProgress ->
-                    updateProgress(shouldShowProgress)
-                }
-
                 isBottomProgressShowing.observe(
                     viewLifecycleOwner
                 ) { isBottomProgressShowing ->
                     bottomProgress(isBottomProgressShowing)
+                }
+
+                isProgressShowing.observe(
+                    viewLifecycleOwner
+                ) { shouldShowProgress ->
+                    updateProgress(shouldShowProgress)
                 }
 
 				isActivationPackageDataAvailable.observe(

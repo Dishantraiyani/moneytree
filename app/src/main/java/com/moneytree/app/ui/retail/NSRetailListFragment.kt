@@ -92,7 +92,7 @@ class NSRetailListFragment : NSFragment() {
                             val data = retailList[position]
                             val bundle = Bundle()
                             bundle.putString(NSConstants.KEY_RETAIL_INFO, data.directRetailOfferMainId)
-							bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.RETAIL_LIST)
+                            bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.RETAIL_LIST)
 							switchActivity(OfferDetailActivity::class.java, bundle)
                             //EventBus.getDefault().post(NSFragmentChange(NSRetailInfoFragment.newInstance(bundle)))
                         }

@@ -59,8 +59,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun sendRegistrationToServer(token: String?) {
         NSLog.d(TAG, "sendRegistrationTokenToServer($token)")
-		loginPref = NSLoginPreferences(this)
-		loginPref?.notificationToken = token
+        loginPref = NSLoginPreferences(this)
+        loginPref?.notificationToken = token
     }
 
     private fun sendNotification(fcmResponse: NSFcmResponse) {
@@ -96,7 +96,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val channel = NotificationChannel(channelId,
                 resources.getString(R.string.app_name),
                 NotificationManager.IMPORTANCE_DEFAULT)
-			channel.setShowBadge(true)
+            channel.setShowBadge(true)
             notificationManager.createNotificationChannel(channel)
         }
 

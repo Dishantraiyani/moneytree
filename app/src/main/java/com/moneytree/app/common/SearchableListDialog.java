@@ -148,7 +148,7 @@ public class SearchableListDialog extends DialogFragment implements
 
     private void setData(View rootView) {
         _searchView = rootView.findViewById(R.id.et_search);
-		_tvApply = rootView.findViewById(R.id.tv_apply);
+        _tvApply = rootView.findViewById(R.id.tv_apply);
 		if (isApply) {
 			_tvApply.setVisibility(View.VISIBLE);
 		}

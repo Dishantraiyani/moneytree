@@ -92,7 +92,7 @@ class NSRoyaltyListFragment : NSFragment() {
                             val data = royaltyList[position]
                             val bundle = Bundle()
                             bundle.putString(NSConstants.KEY_ROYALTY_INFO, data.royaltyOfferMainId)
-							bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.ROYALTY_LIST)
+                            bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.ROYALTY_LIST)
 							switchActivity(OfferDetailActivity::class.java, bundle)
                            // EventBus.getDefault().post(NSFragmentChange(NSRoyaltyInfoFragment.newInstance(bundle)))
                         }

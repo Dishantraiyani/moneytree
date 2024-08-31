@@ -133,7 +133,7 @@ class NSWalletFragment : NSFragment(), NSHeaderMainSearchCallback, NSSearchCallb
                     val adapter = ViewPagerMDAdapter(requireActivity())
                     adapter.setFragment(mFragmentList)
                     viewPager.adapter = adapter
-					viewPager.isUserInputEnabled = false
+                    viewPager.isUserInputEnabled = false
                     TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                         tab.text = mFragmentTitleList[position]
                     }.attach()

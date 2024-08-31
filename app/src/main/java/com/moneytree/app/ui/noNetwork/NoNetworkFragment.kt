@@ -25,14 +25,14 @@ class NoNetworkFragment : NSFragment() {
 		fun newInstance() = NoNetworkFragment()
 	}
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+	override fun onCreateView(
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View {
 		_binding = FragmentNoNetworkBinding.inflate(inflater, container, false)
-        setListener()
-        return memberTreeBinding.root
-    }
+		setListener()
+		return memberTreeBinding.root
+	}
 
 	private fun setListener() {
 		with(memberTreeBinding) {

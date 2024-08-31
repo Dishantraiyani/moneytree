@@ -74,7 +74,7 @@ class OrderDetailRecycleAdapter(
             with(voucherBinding) {
                 with(response) {
 					ivNext.gone()
-					tvRepurchaseNo.text = response.productName
+                    tvRepurchaseNo.text = response.productName
                     tvStockId.text = response.productId
 
 					//Quantity

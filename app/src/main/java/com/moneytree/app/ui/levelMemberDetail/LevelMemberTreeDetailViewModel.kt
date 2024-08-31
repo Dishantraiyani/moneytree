@@ -28,7 +28,7 @@ class LevelMemberTreeDetailViewModel(application: Application) : NSViewModel(app
         if (isShowProgress) {
             isProgressShowing.value = true
         }
-		if (levelNumber != null) {
+        if (levelNumber != null) {
 			NSMemberTreeRepository.getLevelWiseTreeDetail(levelNumber!!, this)
 		} else {
 			isProgressShowing.value = false

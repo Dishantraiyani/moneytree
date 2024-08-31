@@ -28,7 +28,7 @@ class NSDownloadPlanRecycleAdapter(val activity: Activity) : RecyclerView.Adapte
 
     fun updateData(downloadList: MutableList<DownloadDataItem>) {
         downloadData.addAll(downloadList)
-		notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     fun clearData() {

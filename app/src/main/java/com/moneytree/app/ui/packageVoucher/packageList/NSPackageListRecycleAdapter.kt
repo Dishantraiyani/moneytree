@@ -69,7 +69,7 @@ class NSPackageListRecycleAdapter(
                 with(response) {
 					tvPackageId.text = addText(activity, R.string.package_id, packageId!!)
                     tvPackageName.text = packageName!!
-					tvMrp.text = addText(activity, R.string.mrp, mrp!!)
+                    tvMrp.text = addText(activity, R.string.mrp, mrp!!)
 
 					clPackageLayout.setOnClickListener {
 						onClickAdapter.onResponse(response)

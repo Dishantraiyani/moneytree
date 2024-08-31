@@ -35,7 +35,7 @@ class MainFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-		getUserDetail()
+        getUserDetail()
         viewCreated()
         setListener()
         return mainBinding.root

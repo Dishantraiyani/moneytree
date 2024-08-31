@@ -49,7 +49,7 @@ class NSQRCodeFragment : NSFragment() {
      * View created
      */
     private fun viewCreated() {
-        with(rgBinding) {
+		with(rgBinding) {
 			HeaderUtils(
 				layoutHeader,
 				requireActivity(),

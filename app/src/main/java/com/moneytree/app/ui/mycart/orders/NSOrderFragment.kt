@@ -65,7 +65,7 @@ class NSOrderFragment : NSFragment(), NSSearchCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentOrdersBinding.inflate(inflater, container, false)
+		_binding = NsFragmentOrdersBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
 		observeViewModel()

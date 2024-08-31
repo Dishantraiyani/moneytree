@@ -73,7 +73,7 @@ class NSOfferFragment : NSFragment(), NSSearchCallback {
                             super.onPageSelected(position)
                             tabPosition = position
                             layoutHeader.etSearch.setText("")
-							layoutHeader.ivSearch.visibility = View.VISIBLE
+                            layoutHeader.ivSearch.visibility = View.VISIBLE
                             when (position) {
                                 0 -> {
                                     if (!isRepurchaseAdded) {

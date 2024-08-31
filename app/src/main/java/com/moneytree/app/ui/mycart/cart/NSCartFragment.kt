@@ -56,13 +56,13 @@ class NSCartFragment : NSFragment() {
         productModel.isFromOrder = arguments?.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
     }
 
-	override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentMyCartBinding.inflate(inflater, container, false)
-		viewCreated()
-		setListener()
+        viewCreated()
+        setListener()
         return productBinding.root
     }
 
@@ -159,14 +159,14 @@ class NSCartFragment : NSFragment() {
     private fun setVoucherAdapter() {
         with(productBinding) {
             with(productModel) {
-				rvCartItem.layoutManager = LinearLayoutManager(activity)
+                rvCartItem.layoutManager = LinearLayoutManager(activity)
                 productListAdapter =
-					NSCartListRecycleAdapter(activity, isFromOrder, false, object : NSCartTotalAmountCallback {
-						override fun onResponse() {
-							setTotalAmount()
-						}
-					})
-				rvCartItem.adapter = productListAdapter
+                    NSCartListRecycleAdapter(activity, isFromOrder, false, object : NSCartTotalAmountCallback {
+                        override fun onResponse() {
+                            setTotalAmount()
+                        }
+                    })
+                rvCartItem.adapter = productListAdapter
 
                 getProductListData()
             }
@@ -192,18 +192,13 @@ class NSCartFragment : NSFragment() {
 		}
 	}
 
-    /**
-     * Set voucher data
-     *
-     * @param isVoucher when data available it's true
-     */
     private fun setVoucherData(isVoucher: Boolean) {
         with(productModel) {
             voucherDataManage(isVoucher)
             if (isVoucher) {
-                productListAdapter!!.clearData()
-                productListAdapter!!.updateData(productList)
-				setTotalAmount()
+                productListAdapter?.clearData()
+                productListAdapter?.updateData(productList)
+                setTotalAmount()
             }
         }
     }

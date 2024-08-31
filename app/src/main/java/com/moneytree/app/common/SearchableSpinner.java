@@ -48,9 +48,9 @@ public class SearchableSpinner extends androidx.appcompat.widget.AppCompatSpinne
             if (attr == R.styleable.SearchableSpinner_hintText) {
                 _strHintText = a.getString(attr);
             }
-			if (attr == R.styleable.SearchableSpinner_isApply) {
-				_isApply = a.getBoolean(attr, false);
-			}
+            if (attr == R.styleable.SearchableSpinner_isApply) {
+                _isApply = a.getBoolean(attr, false);
+            }
         }
         a.recycle();
         init();

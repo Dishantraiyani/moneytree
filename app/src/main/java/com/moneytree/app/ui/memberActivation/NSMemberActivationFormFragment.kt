@@ -202,7 +202,7 @@ class NSMemberActivationFormFragment : NSFragment() {
                     updateProgress(shouldShowProgress)
                 }
 
-                isPackageDataAvailable.observe(
+				isPackageDataAvailable.observe(
                     viewLifecycleOwner
                 ) { isPackageData ->
                     if (isPackageData) {

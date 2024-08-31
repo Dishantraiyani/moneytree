@@ -10,61 +10,61 @@
         <item name="colorSecondaryVariant">@color/purple_500</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-		<item name="pf_lock_screen">@style/MyLockScreenStyle</item>
-		<item name="pf_code_view">@style/MyLockScreenCodeStyle</item>
-		<item name="pf_title">@style/MyLockTitleStyle</item>
-		<item name="pf_hint">@style/MyLockHintStyle</item>
-		<item name="pf_key_button">@style/MyLockScreenButtonStyle</item>
-		<item name="pf_fingerprint_button">@style/MyLockScreenFingerprintButtonStyle</item>
-		<item name="pf_next">@style/MyLockNextButtonStyle</item>
-		<item name="pf_delete_button">@style/MyLockScreenDeleteButtonStyle</item>
+        <item name="pf_lock_screen">@style/MyLockScreenStyle</item>
+        <item name="pf_code_view">@style/MyLockScreenCodeStyle</item>
+        <item name="pf_title">@style/MyLockTitleStyle</item>
+        <item name="pf_hint">@style/MyLockHintStyle</item>
+        <item name="pf_key_button">@style/MyLockScreenButtonStyle</item>
+        <item name="pf_fingerprint_button">@style/MyLockScreenFingerprintButtonStyle</item>
+        <item name="pf_next">@style/MyLockNextButtonStyle</item>
+        <item name="pf_delete_button">@style/MyLockScreenDeleteButtonStyle</item>
     </style>
 
-	<style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-		<item name="colorAccent">@color/purple_200</item>
-	</style>
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/purple_200</item>
+    </style>
 
-	<!--LockScreen-->
-	<style name="MyLockScreenStyle">
-		<item name="android:background">@drawable/phone_gray_background</item>
-	</style>
+    <!--LockScreen-->
+    <style name="MyLockScreenStyle">
+        <item name="android:background">@drawable/phone_gray_background</item>
+    </style>
 
-	<style name="MyLockScreenCodeStyle">
-		<item name="android:button">@drawable/code_selector_pf</item>
-	</style>
+    <style name="MyLockScreenCodeStyle">
+        <item name="android:button">@drawable/code_selector_pf</item>
+    </style>
 
-	<style name="MyLockTitleStyle">
-		<item name="android:textColor">@color/black</item>
-	</style>
+    <style name="MyLockTitleStyle">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-	<style name="MyLockHintStyle">
-		<item name="android:textColor">@color/black</item>
-	</style>
+    <style name="MyLockHintStyle">
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-	<style name="MyLockScreenButtonStyle">
-		<item name="android:textColor">@android:color/black</item>
-		<item name="android:textSize">@dimen/_14sdp</item>
-		<item name="android:foreground">@drawable/key_foreground</item>
-	</style>
+    <style name="MyLockScreenButtonStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:foreground">@drawable/key_foreground</item>
+    </style>
 
-	<style name="MyLockScreenFingerprintButtonStyle">
-		<item name="android:src">@drawable/fingerprint_icon</item>
-	</style>
+    <style name="MyLockScreenFingerprintButtonStyle">
+        <item name="android:src">@drawable/fingerprint_icon</item>
+    </style>
 
-	<style name="MyLockNextButtonStyle">
-		<item name="android:textColor">@color/orange</item>
-		<item name="android:textSize">@dimen/_16sdp</item>
-		<item name="android:background">@null</item>
-		<item name="android:layout_margin">@dimen/_10sdp</item>
-		<item name="android:textAllCaps">false</item>
-		<item name="android:fontFamily">@font/inter_medium</item>
-	</style>
+    <style name="MyLockNextButtonStyle">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textSize">@dimen/_16sdp</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_margin">@dimen/_10sdp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+    </style>
 
-	<style name="MyLockScreenDeleteButtonStyle">
-		<item name="android:src">@drawable/delete_lockscreen</item>
-	</style>
+    <style name="MyLockScreenDeleteButtonStyle">
+        <item name="android:src">@drawable/delete_lockscreen</item>
+    </style>
 
     <style name="LayoutWidthHeightWrap">
         <item name="android:layout_width">wrap_content</item>
@@ -193,36 +193,36 @@
         <item name="textAllCaps">false</item>
     </style>
 
-	<style name="QueThemeVertical">
-		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textSize">@dimen/_12sdp</item>
-		<item name="android:fontFamily">@font/inter_medium</item>
-		<item name="android:textColor">@color/black</item>
-	</style>
+    <style name="QueThemeVertical">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-	<style name="QueThemeWrap">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textSize">@dimen/_12sdp</item>
-		<item name="android:fontFamily">@font/inter_medium</item>
-		<item name="android:textColor">@color/black</item>
-	</style>
+    <style name="QueThemeWrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:fontFamily">@font/inter_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 
-	<style name="Theme.PdfView.SelectedTheme" parent="@style/Theme.PdfView.Light">
-		<item name="pdfView_backIcon">@drawable/ic_arrow_back</item>
-		<item name="pdfView_actionBarTint">@color/orange</item>
-		<item name="pdfView_downloadIcon">@drawable/ic_downloads</item>
-		<item name="pdfView_titleTextStyle">@style/MyTabTextAppearanceSecond</item>
-		<item name="pdfView_downloadIconTint">@color/white</item>
-	</style>
+    <style name="Theme.PdfView.SelectedTheme" parent="@style/Theme.PdfView.Light">
+        <item name="pdfView_backIcon">@drawable/ic_arrow_back</item>
+        <item name="pdfView_actionBarTint">@color/orange</item>
+        <item name="pdfView_downloadIcon">@drawable/ic_downloads</item>
+        <item name="pdfView_titleTextStyle">@style/MyTabTextAppearanceSecond</item>
+        <item name="pdfView_downloadIconTint">@color/white</item>
+    </style>
 
-	<style name="MyTabTextAppearanceSecond" parent="TextAppearance.AppCompat.Button">
-		<item name="android:textSize">@dimen/_12sdp</item>
-		<item name="android:fontFamily">@font/inter_regular</item>
-		<item name="textAllCaps">false</item>
-		<item name="android:textColor">@color/white</item>
-	</style>
+    <style name="MyTabTextAppearanceSecond" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="CustomDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:shadowColor">@android:color/transparent</item>

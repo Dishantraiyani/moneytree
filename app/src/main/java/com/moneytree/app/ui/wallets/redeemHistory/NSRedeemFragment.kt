@@ -40,7 +40,7 @@ class NSRedeemFragment : NSFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRedeemBinding.inflate(inflater, container, false)
-		observeViewModel()
+        observeViewModel()
         getCallback()
         return redeemBinding.root
     }

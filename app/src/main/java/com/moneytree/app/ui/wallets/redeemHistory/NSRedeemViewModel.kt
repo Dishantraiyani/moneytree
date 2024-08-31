@@ -51,7 +51,7 @@ class NSRedeemViewModel(application: Application) : NSViewModel(application),
         }
         val voucherMainListData = data as NSRedeemListResponse
         redeemResponse = voucherMainListData
-		if (voucherMainListData.data.isValidList()) {
+        if (voucherMainListData.data.isValidList()) {
 			redeemList.addAll(voucherMainListData.data)
 			isRedeemDataAvailable.value = redeemList.isValidList()
 		} else if (pageIndex == "1" || searchData.isNotEmpty()){

@@ -119,7 +119,7 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
             val progressBar = ProgressBar(this).apply { //don't set style with material design
                 isIndeterminate = true
             }
-			progressBar.indeterminateTintList = ColorStateList.valueOf(Color.parseColor(resources.getString(R.string.orange)))
+            progressBar.indeterminateTintList = ColorStateList.valueOf(Color.parseColor(resources.getString(R.string.orange)))
             val paramsForProgressBar = RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )

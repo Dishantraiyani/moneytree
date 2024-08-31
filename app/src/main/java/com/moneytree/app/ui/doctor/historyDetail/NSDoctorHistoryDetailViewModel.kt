@@ -6,14 +6,10 @@ import com.google.gson.Gson
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.SliderDoctorAdapter
 import com.moneytree.app.repository.network.responses.DoctorHistoryDataItem
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
+import com.moneytree.app.slider.IndicatorView.animation.type.IndicatorAnimationType
+import com.moneytree.app.slider.SliderView
 
 
-/**
- * The view model class for redeem. It handles the business logic to communicate with the model for the redeem and provides the data to the observing UI component.
- */
 class NSDoctorHistoryDetailViewModel(application: Application) : NSViewModel(application) {
 
     val mFragmentList: MutableList<String> = ArrayList()
@@ -37,7 +33,7 @@ class NSDoctorHistoryDetailViewModel(application: Application) : NSViewModel(app
         viewPager.setSliderAdapter(pagerAdapter)
         pagerAdapter.notifyDataSetChanged()
         viewPager.setIndicatorAnimation(IndicatorAnimationType.NONE)
-        viewPager.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
+        viewPager.setSliderTransformAnimation()
        // viewPager.startAutoCycle()
     }
 

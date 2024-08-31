@@ -85,7 +85,7 @@ class NSApiErrorHandler {
         ) {
             val context: Context = NSApplication.getInstance().applicationContext
             errorMessageList = mutableListOf()
-			errorMessageList.clear()
+            errorMessageList.clear()
             if (rawErrorResponse.body() == null && rawErrorResponse.errorBody() == null) {
                 val errorString = "Session TimeOut!!\n"
                 errorMessageList.add(errorString)
@@ -97,7 +97,7 @@ class NSApiErrorHandler {
                             viewModelCallback.onFailure(REFRESH_TOKEN_ENABLE)
                         } else {
                             val errorString = context.getString(R.string.error_01, responseErrorCode)
-							errorMessageList.clear()
+                            errorMessageList.clear()
                             errorMessageList.add(rawErrorResponse.message())
                             errorMessageList.add(errorString)
                         }

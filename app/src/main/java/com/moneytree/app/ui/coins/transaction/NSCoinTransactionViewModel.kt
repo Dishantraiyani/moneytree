@@ -52,7 +52,7 @@ class NSCoinTransactionViewModel(application: Application) : NSViewModel(applica
         }
         val transactionMainListData = data as NSWalletListResponse
         transactionResponse = transactionMainListData
-		if (transactionMainListData.data.isValidList()) {
+        if (transactionMainListData.data.isValidList()) {
 			transactionList.addAll(transactionMainListData.data)
 			isTransactionDataAvailable.value = transactionList.isValidList()
 		} else if (pageIndex == "1" || searchData.isNotEmpty()){

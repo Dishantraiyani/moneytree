@@ -26,7 +26,7 @@ class WelcomeActivity : NSActivity() {
 	var circles: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
 		binding = ActivityWelcomeLayoutBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		loadInitialFragment()

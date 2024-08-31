@@ -8,7 +8,7 @@ class YoutubeActivity : NSActivity() {
 	private lateinit var binding: ActivityCommonBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+		super.onCreate(savedInstanceState)
 		binding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		loadInitialFragment()

@@ -53,7 +53,7 @@ class NSPendingViewModel(application: Application) : NSViewModel(application),
         }
         val voucherMainListData = data as NSPendingCoinWalletListResponse
         redeemResponse = voucherMainListData
-		if (voucherMainListData.data.isValidList()) {
+        if (voucherMainListData.data.isValidList()) {
 			redeemList.addAll(voucherMainListData.data)
 			isRedeemDataAvailable.value = redeemList.isValidList()
 		} else if (pageIndex == "1" || searchData.isNotEmpty()){

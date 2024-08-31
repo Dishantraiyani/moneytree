@@ -74,8 +74,8 @@ class LevelMemberTreeDetailRecycleAdapter(
             with(voucherBinding) {
                 with(response) {
                     tvLevelNo.text = addText(activity, R.string.level_no, levelNo!!)
-					tvMemberId.text = memberId
-					tvMemberName.text = fullName
+                    tvMemberId.text = memberId
+                    tvMemberName.text = fullName
 					tvDirectSponsor.text = directSponsor.toString()
 					tvRoyaltyRank.text = royaltyName
 					tvSponsorId.text = sponsorId

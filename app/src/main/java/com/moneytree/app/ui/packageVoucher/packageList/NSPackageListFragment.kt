@@ -85,7 +85,7 @@ class NSPackageListFragment : NSFragment() {
 							switchActivity(PackageDetailActivity::class.java, bundleOf(NSConstants.KEY_PACKAGE_DETAIL to Gson().toJson(packageData)))
 						}
 					})
-				rvPackageList.adapter = packageListAdapter
+                rvPackageList.adapter = packageListAdapter
                 getPackageListData(true)
             }
         }

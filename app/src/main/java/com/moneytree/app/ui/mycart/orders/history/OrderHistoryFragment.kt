@@ -59,8 +59,8 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
         savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentRsHistoryBinding.inflate(inflater, container, false)
-		viewCreated()
-		setListener()
+        viewCreated()
+        setListener()
         return stockBinding.root
     }
 

@@ -79,7 +79,7 @@ class NSRechargeFragment : NSFragment() {
     }
 
     private fun setFragmentData() {
-        fieldName = resources.getStringArray(R.array.recharge_list_second)
+		fieldName = resources.getStringArray(R.array.recharge_list_second)
 		rgBinding.tabLayout.removeAllTabs()
 
 		rechargeMainSelectedType = rechargeSelectedType

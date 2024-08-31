@@ -164,7 +164,7 @@ class NSTransactionFragment : NSFragment() {
     private fun setTransactionData(isTransaction: Boolean) {
         with(transactionListModel) {
             transactionDataManage(isTransaction)
-			var amount = "0"
+            var amount = "0"
 			if (transactionResponse?.walletAmount.isValidList()) {
 				amount = transactionResponse!!.walletAmount[0].amount?:"0"
 			}

@@ -94,7 +94,7 @@ class NSRePurchaseListFragment : NSFragment() {
                             val bundle = Bundle()
                             bundle.putString(NSConstants.KEY_REPURCHASE_INFO, data.repurchaseId)
                             bundle.putString(NSConstants.KEY_OFFER_DETAIL_TYPE, NSConstants.REPURCHASE_HISTORY)
-							switchActivity(OfferDetailActivity::class.java, bundle)
+                            switchActivity(OfferDetailActivity::class.java, bundle)
                             ///EventBus.getDefault().post(NSFragmentChange(NSRePurchaseInfoFragment.newInstance(bundle)))
                         }
 

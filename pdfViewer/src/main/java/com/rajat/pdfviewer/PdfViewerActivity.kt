@@ -208,7 +208,7 @@ class PdfViewerActivity : AppCompatActivity() {
 		/*if (item.itemId == R.id.share) {
 			NSPdfPath.sharePdf(this@PdfViewerActivity, "")
 		}*/
-		if (item.itemId == android.R.id.home) {
+        if (item.itemId == android.R.id.home) {
             finish() // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item)
