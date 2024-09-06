@@ -15,6 +15,7 @@ import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSProfileSelectCallback
 import com.moneytree.app.common.utils.*
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.NsFragmentProfileBinding
 import com.moneytree.app.repository.network.responses.NSDataUser
 import com.moneytree.app.ui.idCard.NSIdCardActivity
@@ -155,13 +156,13 @@ class NSProfileFragment : NSFragment() {
                 activity.startActivity(intent)
             }
             8 -> {
-                NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.TERMS))
+                NSUtilities.openBrowser(activity, ApiConfig.terms)
             }
             9 -> {
-                NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.PRIVACY))
+                NSUtilities.openBrowser(activity, ApiConfig.policy)
             }
 			10 -> {
-				NSUtilities.openBrowser(activity, NSUtilities.decrypt(BuildConfig.REFUND))
+				NSUtilities.openBrowser(activity, ApiConfig.refund)
 			}
             11 -> {
                 with(activity.resources) {

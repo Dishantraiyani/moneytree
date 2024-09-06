@@ -6,10 +6,14 @@ package com.moneytree.app.common
  */
 class NSConstants {
     companion object {
+        const val KEY_IS_MEETING_IMAGES = "key_is_meeting_images"
+        const val KEY_IS_MEETING_REVIEW = "key_is_meeting_review"
         const val KEY_IS_SELECTED_ADDRESS = "key_is_selected_address"
+        const val KEY_IS_SELECTED_MEETING = "key_is_selected_meeting"
         const val KEY_IS_FROM_ORDER = "key_is_from_order"
         const val KEY_IS_DEFAULT_ADDRESS = "key_is_default_address"
         const val KEY_IS_ADD_ADDRESS = "key_is_add_address"
+        const val KEY_IS_ADD_MEETING = "key_is_add_meeting"
         const val KEY_LOGIN_DATA = "key_login_data"
         const val UNKNOWN_HOST_EXCEPTION = "Unable to reach server"
         const val KEY_ALERT_BUTTON_POSITIVE = "alertButtonPositive"

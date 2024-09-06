@@ -31,6 +31,7 @@ import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
 import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.NsFragmentSignupBinding
 import com.moneytree.app.ui.lock.LockActivity
 import org.greenrobot.eventbus.Subscribe
@@ -139,7 +140,7 @@ class NSSignUpFragment : NSFragment() {
 
 	private fun setTerms() {
 		with(signUpBinding) {
-			val html = "I agree to the <a href=${NSUtilities.decrypt(BuildConfig.TERMS)}>Terms & Conditions</a> and <a href=${NSUtilities.decrypt(BuildConfig.PRIVACY)}>Privacy Policy</a>"
+			val html = "I agree to the <a href=${ApiConfig.terms}>Terms & Conditions</a> and <a href=${ApiConfig.policy}>Privacy Policy</a>"
 			tvTermsConditions.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 			tvTermsConditions.movementMethod = LinkMovementMethod.getInstance()
 		}

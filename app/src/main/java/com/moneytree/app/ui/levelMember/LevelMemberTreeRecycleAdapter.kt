@@ -73,7 +73,7 @@ class LevelMemberTreeRecycleAdapter(
                     tvLevelNo.text = addText(activity, R.string.level_no, levelNo!!)
                     tvActiveMember.text = addText(activity, R.string.active_members, cnt!!)
                     tvDirect.text = addText(activity, R.string.direct, directFifty.toString())
-                    tvRepurchase.text = addText(activity, R.string.repurchase_data, repurchase.toString())
+                    tvRepurchase.text = addText(activity, R.string.repurchase_data, repTotal.toString())
 
 					btnView.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {

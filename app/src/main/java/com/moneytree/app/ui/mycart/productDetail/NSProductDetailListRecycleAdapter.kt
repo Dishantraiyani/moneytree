@@ -20,6 +20,7 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.LayoutShopProductDetailItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 
@@ -92,7 +93,7 @@ class NSProductDetailListRecycleAdapter(
 						tvQtyTitleGrid.gone()
 						tvStockQtyGrid.gone()
 					}
-					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
+					val url = ApiConfig.baseUrlImage + productImage
 					tvStockQtyGrid.text = if (isFromOrderProduct) maxOrderQty else stockQty
 
 					val instance = NSApplication.getInstance()

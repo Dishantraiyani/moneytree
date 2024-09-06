@@ -5,11 +5,11 @@ import com.moneytree.app.BuildConfig
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.requests.*
 import com.moneytree.app.repository.network.responses.*
 import okhttp3.Interceptor
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -161,7 +161,7 @@ class NSApiManager {
 		 */
 		private fun buildRetrofit(okHttpClient: OkHttpClient, endpoint: String): Retrofit =
 			Retrofit.Builder().apply {
-				baseUrl(NSUtilities.decrypt(BuildConfig.BASE_URL) + endpoint)
+				baseUrl(ApiConfig.baseUrl + endpoint)
 				client(okHttpClient)
 				addConverterFactory(
 					GsonConverterFactory.create(
@@ -1334,6 +1334,30 @@ class NSApiManager {
 		)
 	}
 
+	fun getMeetingsList(callback: NSRetrofitCallback<MeetingsListResponse>) {
+		request(
+			unAuthorised3020Client.getMeetingsList(
+				NSUserManager.getAuthToken()
+			), callback
+		)
+	}
+
+	fun saveMeetings(map: HashMap<String, RequestBody>, image: MultipartBody.Part?, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(
+			unAuthorised3020Client.saveMeeting(
+				requestBody(NSUserManager.getAuthToken()), map, image
+			), callback
+		)
+	}
+
+	fun deleteMeetings(eventId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(
+			unAuthorised3020Client.deleteMeeting(
+				NSUserManager.getAuthToken(), eventId
+			), callback
+		)
+	}
+
 	fun getAddressList(callback: NSRetrofitCallback<NSAddressListResponse>) {
 		request(
 			unAuthorised3020Client.getAddressList(
@@ -1420,7 +1444,7 @@ class NSApiManager {
 	}
 }
 
-private fun requestBody(text: String): RequestBody {
+fun requestBody(text: String): RequestBody {
 	return RequestBody.create("text/plain".toMediaTypeOrNull(), text)
 }
 
@@ -2086,4 +2110,26 @@ interface RTApiInterface {
 	fun getDistrictList(
 		@Field("token_id") token: String
 	): Call<DistrictResponse>
+
+	@FormUrlEncoded
+	@POST("view-meeting-list")
+	fun getMeetingsList(
+		@Field("token_id") token: String
+	): Call<MeetingsListResponse>
+
+
+	@Multipart
+	@POST("save-meeting")
+	fun saveMeeting(
+		@Part("token_id") token: RequestBody,
+		@PartMap map: HashMap<String, RequestBody>,
+		@Part image: MultipartBody.Part?,
+	): Call<NSSuccessResponse>
+
+	@FormUrlEncoded
+	@POST("delete-meeting")
+	fun deleteMeeting(
+		@Field("token_id") token: String,
+		@Field("event_id") eventId: String
+	): Call<NSSuccessResponse>
 }

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	tools:context=".ui.profile.password.NSChangePasswordFragment">
+
+	<include android:id="@+id/layout_header"
+		layout="@layout/layout_header"/>
+
+	<androidx.core.widget.NestedScrollView
+		style="@style/LayoutWidthHeightZero"
+		android:layout_marginBottom="@dimen/_15sdp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingVertical="@dimen/_20sdp"
+			android:paddingHorizontal="@dimen/_15sdp">
+
+			<TextView
+				style="@style/LoginSubFontsWrap"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:text="@string/meeting_review"
+				android:textColor="@color/black"
+				android:textSize="@dimen/_10sdp" />
+
+			<androidx.cardview.widget.CardView
+				android:id="@+id/card_meeting_review"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/_6sdp"
+				app:cardCornerRadius="@dimen/_5sdp"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/card_wallet_amount">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_meeting_review"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/_1sdp"
+					app:guidelineUseRtl="true"
+					app:chainUseRtl="true"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+
+					<EditText
+						android:id="@+id/et_review"
+						style="@style/LoginSubFontsZeroWrap"
+						android:minHeight="@dimen/_38sdp"
+						android:textColor="@color/black"
+						android:background="@null"
+						android:inputType="textMultiLine"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:hint="@string/meeting_name"
+						android:minLines="8"
+						android:paddingVertical="@dimen/_10sdp"
+						android:textColorHint="@color/hint_color"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						android:gravity="start"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.cardview.widget.CardView>
+
+			<Button
+				android:id="@+id/btn_submit"
+				android:layout_width="match_parent"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:background="@drawable/login_button_border"
+				android:text="@string/submit"
+				android:textColor="@color/white"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"/>
+
+		</LinearLayout>
+
+	</androidx.core.widget.NestedScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

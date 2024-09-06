@@ -21,6 +21,7 @@ import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.utils.*
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.NsFragmentProductDetailBinding
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -110,7 +111,7 @@ class NSProductDetailFragment : NSFragment() {
 						} else {
 							ivProductImg.visible()
 							viewPager.gone()
-							Glide.with(activity).load(NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage)
+							Glide.with(activity).load(ApiConfig.baseUrlImage + productImage)
 								.diskCacheStrategy(DiskCacheStrategy.NONE)
 								.skipMemoryCache(true).placeholder(R.drawable.placeholder)
 								.error(R.drawable.placeholder).into(ivProductImg)

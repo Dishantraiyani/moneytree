@@ -455,6 +455,7 @@
 
     <string name="full_name">Full Name</string>
     <string name="address">Address</string>
+    <string name="meetings">Meetings</string>
     <string name="email">Email</string>
     <string name="mobile">Mobile</string>
     <string name="pan_no">Pan No</string>
@@ -715,6 +716,8 @@
     <string name="district">District</string>
     <string name="make_this_my_default_address">Make this my default address</string>
     <string name="add_address">Add Address</string>
+    <string name="add_meeting">Add Meeting</string>
+    <string name="edit_meeting">Edit Meeting</string>
     <string name="verify">Verify</string>
     <string name="kyc_verification">Kyc Verification</string>
     <string name="select_payment_option">Select Payment Option</string>
@@ -763,4 +766,17 @@
     <string name="aadhar_no">Enter Aadhar No</string>
     <string name="please_enter_aadhar_no">Please Enter Aadhar No</string>
     <string name="aadhar_no_">Aadhar No</string>
+    <string name="meeting_name">Meeting Name</string>
+    <string name="meeting_date">Meeting Date</string>
+    <string name="meeting_time">Meeting Time</string>
+    <string name="host_name">Host Name</string>
+    <string name="special_guest_name">Special Guest Name</string>
+    <string name="new_person">New Person</string>
+    <string name="old_person">Old Person</string>
+    <string name="expected_result">Expected Result</string>
+    <string name="yyyy_mm_dd">YYYY-MM-DD</string>
+    <string name="time_hint">--:--:--</string>
+    <string name="add_review">Add Review</string>
+    <string name="meeting_review">Meeting Review</string>
+    <string name="edit_review">Edit Review</string>
 </resources>

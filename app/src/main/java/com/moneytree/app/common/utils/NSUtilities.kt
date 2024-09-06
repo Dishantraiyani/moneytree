@@ -3,6 +3,7 @@ package com.moneytree.app.common.utils
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -48,6 +49,7 @@ import java.io.UnsupportedEncodingException
 import java.io.Writer
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -387,6 +389,36 @@ object NSUtilities {
 			callback.invoke(startingDate)
 		}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
 		dpd.show()
+	}
+
+	fun selectMeetingDate(activity: Activity, callback: ((String) -> Unit)) {
+		var startingDate: String
+		val startDateList = NSDateTimeHelper.getCurrentDate().split("-")
+		val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
+			startingDate = "$year-${getDateZero(monthOfYear)}-${getDateZero(dayOfMonth)}"
+			callback.invoke(startingDate)
+		}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
+		dpd.show()
+	}
+
+	fun selectTime(activity: Activity, callback: ((String) -> Unit)) {
+		val currentTime = Calendar.getInstance()
+		val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+		val minute = currentTime.get(Calendar.MINUTE)
+
+		val timePickerDialog = TimePickerDialog(
+			activity,
+			R.style.DialogTheme,
+			{ _, selectedHour, selectedMinute ->
+				val formattedTime = "$selectedHour:$selectedMinute:00"
+				callback.invoke(formattedTime)
+			},
+			hour,
+			minute,
+			true
+		)
+
+		timePickerDialog.show()
 	}
 
 	fun checkUserVerified(activity: Activity, callback: (Boolean) -> Unit) {

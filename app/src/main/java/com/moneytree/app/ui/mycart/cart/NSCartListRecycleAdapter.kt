@@ -20,6 +20,7 @@ import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.LayoutCartItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 
@@ -94,7 +95,7 @@ class NSCartListRecycleAdapter(
 					}
 
 					clProductLayout.setVisibility(!isGrid)
-					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
+					val url = ApiConfig.baseUrlImage + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder)
 						.diskCacheStrategy(DiskCacheStrategy.NONE)
 						.skipMemoryCache(true).into(ivProductImg)

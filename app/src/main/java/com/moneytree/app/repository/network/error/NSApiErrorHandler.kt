@@ -72,6 +72,9 @@ class NSApiErrorHandler {
         const val ERROR_KYC_DATA_SEND = "error_kyc_data_send"
         const val ERROR_KYC_STATUS = "error_kyc_status_check"
         const val ERROR_PLAN_LIST = "error_plan_list"
+        const val ERROR_MEETING_LIST = "error_meeting_list"
+        const val ERROR_SAVE_MEETING = "error_save_meeting"
+        const val ERROR_DELETE_MEETING = "error_delete_meeting"
 
         /**
          * To get the error messages from API endpoints

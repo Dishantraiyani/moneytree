@@ -8,6 +8,7 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.SliderDoctorAdapter
 import com.moneytree.app.common.callbacks.NSSearchResponseCallback
 import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.repository.NSDiseasesRepository
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.NSSearchRepository
@@ -105,7 +106,7 @@ class NSOrderViewModel(application: Application) : NSViewModel(application),
         val imageList = list?.split(",")
         mFragmentList.clear()
         for (image in imageList?: arrayListOf()) {
-            val base = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE)
+            val base = ApiConfig.baseUrlImage
             mFragmentList.add(base + image)
         }
 

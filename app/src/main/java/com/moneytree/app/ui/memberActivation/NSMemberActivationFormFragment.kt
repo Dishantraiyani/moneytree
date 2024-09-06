@@ -18,6 +18,7 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.NsFragmentActivationFormBinding
 import com.moneytree.app.databinding.NsFragmentMemberActivationFormBinding
 import com.moneytree.app.ui.activationForm.NSActivationFormModel
@@ -184,7 +185,7 @@ class NSMemberActivationFormFragment : NSFragment() {
 
     private fun setTerms() {
         with(activationFormBinding) {
-            val html = "I agree to the <a href=${NSUtilities.decrypt(BuildConfig.TERMS)}>Terms & Conditions</a> and <a href=${NSUtilities.decrypt(BuildConfig.PRIVACY)}>Privacy Policy</a>"
+            val html = "I agree to the <a href=${ApiConfig.terms}>Terms & Conditions</a> and <a href=${ApiConfig.policy}>Privacy Policy</a>"
             tvTermsConditions.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
             tvTermsConditions.movementMethod = LinkMovementMethod.getInstance()
         }

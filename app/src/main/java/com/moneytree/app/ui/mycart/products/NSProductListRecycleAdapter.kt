@@ -22,6 +22,7 @@ import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.LayoutProductItemBinding
 import com.moneytree.app.databinding.LayoutShopProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
@@ -93,7 +94,7 @@ class NSProductListRecycleAdapter(
 				with(response) {
 					clProductLayout.setVisibility(!isGrid)
 					clProductLayoutGrid.setVisibility(isGrid)
-					val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE) + productImage
+					val url = ApiConfig.baseUrlImage + productImage
 					Glide.with(activity).load(url).error(R.drawable.placeholder).into(ivProductImg)
 					tvProductName.text = productName
 					tvStockQty.text = stockQty

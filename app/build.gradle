@@ -25,8 +25,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 		debug {
-			minifyEnabled true
-			shrinkResources true
+			minifyEnabled false
+			shrinkResources false
 			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 		}
     }
@@ -37,13 +37,6 @@ android {
             versionCode 27
             versionName "3.3"
             applicationIdSuffix ".dev"
-            buildConfigField 'String', 'BASE_URL', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkx3PT0K" '
-            buildConfigField 'String', 'BASE_URL_IMAGE', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzVndiRzloWkM5d2NtOWtkV04wTHc9PQo=" '
-            buildConfigField 'String', 'BASE_URL_IMAGE_POPUP', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzVndiRzloWkM5d2IzQjFjQzg9Cg==" '
-            buildConfigField 'String', 'BASE_URL_IMAGE_CATEGORY', ' "YUhSMGNEb3ZMMjF2Ym1WNWRISmxaUzVpYVhvdmRYQnNiMkZrTDJOaGRHVm5iM0o1THc9PQo=" '
-            buildConfigField 'String', 'TERMS', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzUmxjbTF6TFdGdVpDMWpiMjVrYVhScGIyND0K" '
-            buildConfigField 'String', 'PRIVACY', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzQnlhWFpoWTNrdGNHOXNhV041Cg==" '
-            buildConfigField 'String', 'REFUND', ' "YUhSMGNITTZMeTl0YjI1bGVYUnlaV1V1WW1sNkwzSmxkSFZ5YmkxaGJtUXRjbVZtZFc1a2N3PT0K" '
             buildConfigField 'String', 'PREFERENCE', ' "MoneyTreeNext" '
             buildConfigField 'String', 'WELCOME_PREFERENCE', ' "Welcome_MoneyTree" '
             buildConfigField 'String', 'LOGIN_PREFERENCE', ' "MoneyTreeLogin" '
