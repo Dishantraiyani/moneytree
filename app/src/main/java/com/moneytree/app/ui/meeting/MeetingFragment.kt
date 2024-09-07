@@ -73,6 +73,10 @@ class MeetingFragment : BaseViewModelFragment<MeetingViewModel, FragmentMeetingB
                         bundleOf(NSConstants.KEY_IS_ADD_MEETING to true)
                     )
                 }
+
+                srlRefresh.setOnRefreshListener {
+                    getMeetings(false)
+                }
             }
         }
     }
@@ -123,6 +127,7 @@ class MeetingFragment : BaseViewModelFragment<MeetingViewModel, FragmentMeetingB
     private fun setAdapter(list: MutableList<MeetingsDataResponse>) {
         with(binding) {
             with(viewModel) {
+                srlRefresh.isRefreshing = false
                 rvCommon.layoutManager = LinearLayoutManager(activity)
                 adapter = MeetingRecycleAdapter{ model, isEdit, isDelete, position ->
                     if (isDelete) {

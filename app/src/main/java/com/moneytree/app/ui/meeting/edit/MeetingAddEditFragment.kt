@@ -39,6 +39,7 @@ class MeetingAddEditFragment : BaseViewModelFragment<MeetingAddEditViewModel, Fr
 
 	private var isAddMeeting = false
 	private var selectedMeeting: String? = null
+	private var selectedModel: MeetingsDataResponse? = null
 
 	private var imageList: MutableList<String> = arrayListOf()
 
@@ -129,7 +130,7 @@ class MeetingAddEditFragment : BaseViewModelFragment<MeetingAddEditViewModel, Fr
 		}
 	}
 
-	private fun addUpdateData(isUpdate: Boolean = false, response: MeetingsDataResponse? = null) {
+	private fun addUpdateData(isUpdate: Boolean = false) {
 		binding.apply {
 			viewModel.apply {
 				val meetingName = etFullName.text.toString()
@@ -182,7 +183,7 @@ class MeetingAddEditFragment : BaseViewModelFragment<MeetingAddEditViewModel, Fr
 
 				val map: HashMap<String, String> = hashMapOf()
 				if (isUpdate) {
-					map["event_id"] = response?.eventId?:""
+					map["event_id"] = selectedModel?.eventId?:""
 				}
 				map["event_name"] = meetingName
 				map["meeting_date"] = meetingDate
@@ -210,7 +211,7 @@ class MeetingAddEditFragment : BaseViewModelFragment<MeetingAddEditViewModel, Fr
 						finish()
 					}
 				} else {
-					map["event_id"] = response?.eventId?:""
+					map["event_id"] = selectedModel?.eventId?:""
 					switchResultActivity(meetingReviewLauncher, ReviewActivity::class.java, bundleOf(NSConstants.KEY_IS_MEETING_REVIEW to Gson().toJson(map), NSConstants.KEY_IS_MEETING_IMAGES to Gson().toJson(imageList)))
 				}
 			}
@@ -228,51 +229,57 @@ class MeetingAddEditFragment : BaseViewModelFragment<MeetingAddEditViewModel, Fr
 	private fun setMeetingDetail() {
 		binding.apply {
 			if (selectedMeeting != null && selectedMeeting?.isNotEmpty() == true) {
-				val model: MeetingsDataResponse = Gson().fromJson(selectedMeeting, MeetingsDataResponse::class.java)
-				etFullName.setText(model.eventName)
-				etMeetingDate.text = model.eventDate
-				etMeetingTime.text = model.eventTime
-				etAddress.setText(model.venue)
-				etCity.setText(model.city)
-				etState.setText(model.state)
-				etHostName.setText(model.hostName)
-				etSpecialGuestName.setText(model.specialGuestName)
-				etMobile.setText(model.mobile)
-				etNewPerson.setText(model.newPerson)
-				etOldPerson.setText(model.oldPerson)
-				etExpectedResult.setText(model.meetingResult)
-				tvReview.text = model.meetingReview
-				btnUpdate.visible()
-				btnSubmit.text = activity.resources.getString(if(model.meetingReview.isNullOrEmpty())R.string.add_review else R.string.edit_review)
-				binding.ivEdit.visible()
-				Glide.with(requireActivity()).load(ApiConfig.meetingImages + model.meetingImage).into(binding.ivMeetingImg)
+				selectedModel = Gson().fromJson(selectedMeeting, MeetingsDataResponse::class.java)
+				selectedModel?.apply {
+					etFullName.setText(eventName)
+					etMeetingDate.text = eventDate
+					etMeetingTime.text = eventTime
+					etAddress.setText(venue)
+					etCity.setText(city)
+					etState.setText(state)
+					etHostName.setText(hostName)
+					etSpecialGuestName.setText(specialGuestName)
+					etMobile.setText(mobile)
+					etNewPerson.setText(newPerson)
+					etOldPerson.setText(oldPerson)
+					etExpectedResult.setText(meetingResult)
+					tvReview.text = meetingReview
+					btnUpdate.visible()
+					btnSubmit.text = activity.resources.getString(if(meetingReview.isNullOrEmpty())R.string.add_review else R.string.edit_review)
 
-				btnUpdate.setOnClickListener(object : SingleClickListener() {
-					override fun performClick(v: View?) {
-						addUpdateData(true, model)
+					if (!meetingImage.isNullOrEmpty()) {
+						binding.ivEdit.visible()
+						Glide.with(requireActivity()).load(ApiConfig.meetingImages + meetingImage)
+							.into(binding.ivMeetingImg)
 					}
-				})
 
-				ivDelete.visible()
-				ivDelete.setSafeOnClickListener {
-					viewModel.apply {
-						showCommonDialog(getString(R.string.app_name), getString(R.string.are_you_sure_delete), getString(R.string.yes_title), getString(R.string.no_title), callback = object :
-							NSDialogClickCallback {
-							override fun onClick(isOk: Boolean) {
-								if (isOk) {
-									deleteMeetings(model.eventId) {
-										if (it.status) {
-											requireActivity().setResult(RESULT_OK)
-											finish()
-										} else {
-											if (it.message?.isNotEmpty() == true) {
-												showError(it.message ?: "")
+					btnUpdate.setOnClickListener(object : SingleClickListener() {
+						override fun performClick(v: View?) {
+							addUpdateData(true)
+						}
+					})
+
+					ivDelete.visible()
+					ivDelete.setSafeOnClickListener {
+						viewModel.apply {
+							showCommonDialog(getString(R.string.app_name), getString(R.string.are_you_sure_delete), getString(R.string.yes_title), getString(R.string.no_title), callback = object :
+								NSDialogClickCallback {
+								override fun onClick(isOk: Boolean) {
+									if (isOk) {
+										deleteMeetings(eventId!!) {
+											if (it.status) {
+												requireActivity().setResult(RESULT_OK)
+												finish()
+											} else {
+												if (it.message?.isNotEmpty() == true) {
+													showError(it.message ?: "")
+												}
 											}
 										}
 									}
 								}
-							}
-						})
+							})
+						}
 					}
 				}
 			}
