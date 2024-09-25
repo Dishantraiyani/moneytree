@@ -28,4 +28,7 @@ data class NSWalletTransferModel(
 	@SerializedName("voucherQty")
 	@Expose
 	var voucherQty: Int? = 0,
+	@SerializedName("select_transfer_from")
+	@Expose
+	var selectTransferFrom: String? = null,
 )

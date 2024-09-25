@@ -1,6 +1,5 @@
 package com.moneytree.app.ui.wallets.transfer
 
-import android.R.attr.country
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,11 +12,17 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSActivityEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRequestCodes
+import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.callbacks.NSDialogClickCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.setPlaceholderAdapter
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentTransferBinding
@@ -102,6 +107,19 @@ class NSTransferFragment : NSFragment() {
 		with(adBinding) {
 			with(layoutHeader) {
 
+				var selectedTransferFrom: String? = ""
+				spinnerTransferFrom.setPlaceholderAdapter(
+					resources.getStringArray(R.array.select_transfer_from),
+					requireContext(), isHideFirstPosition = true, "Select Transfer From"
+				) {
+					selectedTransferFrom = if (it.equals("Select Transfer From")) {
+						""
+					} else {
+						it
+					}
+				}
+				spinnerTransferFrom.prompt = "Select Transfer From"
+
 				btnSearch.setOnClickListener {
 					val id = etTransactionId.text.toString()
 					if (id.isNotEmpty()) {
@@ -118,6 +136,15 @@ class NSTransferFragment : NSFragment() {
 						val remark = etRemark.text.toString()
 						val amount = etAmount.text.toString()
 						val memberName = tvMember.text.toString()
+
+						if (selectedTransferFrom.isNullOrEmpty()) {
+							Toast.makeText(
+								activity,
+								activity.resources.getString(R.string.please_select_transfer_from),
+								Toast.LENGTH_SHORT
+							).show()
+							return
+						}
 
 						if (isTransferFromVoucher && memberName.isEmpty()) {
 							Toast.makeText(
@@ -171,7 +198,7 @@ class NSTransferFragment : NSFragment() {
 										amount,
 										isTransferFromVoucher,
 										packageId,
-										amount.toInt()
+										amount.toInt(), selectedTransferFrom
 									)
 									switchResultActivity(
 										dataResult, VerifyMemberActivity::class.java, bundleOf(

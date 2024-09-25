@@ -333,6 +333,13 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="select_transfer_from">
+        <item>Select Transfer From</item>
+        <item>PUP</item>
+        <item>Stockiest</item>
+        <item>DSP</item>
+    </string-array>
+
     <string-array name="registration_type">
         <item>Select Register Type</item>
         <item>Wallet Register</item>
@@ -779,4 +786,6 @@
     <string name="add_review">Add Review</string>
     <string name="meeting_review">Meeting Review</string>
     <string name="edit_review">Edit Review</string>
+    <string name="transfer_from">Transfer From</string>
+    <string name="please_select_transfer_from">Please Select Transfer From</string>
 </resources>

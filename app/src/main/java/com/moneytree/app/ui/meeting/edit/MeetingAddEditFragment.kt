@@ -220,7 +220,7 @@ class MeetingAddEditFragment : BaseViewModelFragment<MeetingAddEditViewModel, Fr
 
 	private fun imagePicker() {
 		ImagePicker.with(requireActivity())
-			.crop(16f, 9f)
+			.crop()
 			.createIntentFromDialog { intent, _ ->
 				imagePickerLauncher.launch(intent)
 			}
