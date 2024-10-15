@@ -248,6 +248,15 @@ class NSApiManager {
 		)
 
 	}
+	
+	fun getProfile(callback: NSRetrofitCallback<NSUserResponse>) {
+		request(
+			unAuthorised3020Client.getProfileApi(
+				NSUserManager.getAuthToken()
+			), callback
+		)
+		
+	}
 
 	/**
 	 * To call the update profile API endpoint to update profile
@@ -1460,6 +1469,12 @@ interface RTApiInterface {
 		@Field("password") password: String,
 		@Field("notification_token") token: String,
 		@Field("device_detail") deviceDetail: String
+	): Call<NSUserResponse>
+	
+	@FormUrlEncoded
+	@POST("get-profile-api")
+	fun getProfileApi(
+		@Field("token_id") token: String
 	): Call<NSUserResponse>
 
 	@FormUrlEncoded

@@ -224,6 +224,7 @@ class NSActivationFragment : NSFragment(), NSSearchCallback {
 	fun onResultEvent(event: NSActivityEvent) {
 		if (event.resultCode == NSRequestCodes.REQUEST_ACTIVATION_FORM) {
 			with(activationModel) {
+				NSConstants.isStatusUpdate = true
 				pageIndex = "1"
 				getActivationListData(pageIndex, "", true, isBottomProgress = false)
 			}

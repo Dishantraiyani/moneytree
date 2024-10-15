@@ -57,6 +57,8 @@ class NSRechargeFragment : NSFragment() {
         with(rgBinding) {
 			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.recharge), isAddNew = true)
             with(layoutHeader) {
+				tvHistory.visible()
+				tvHistory.text = activity.resources.getString(R.string.history)
 				ivAddNew.setImageResource(R.drawable.ic_history_recharge)
             }
             setFragmentData()
@@ -69,7 +71,7 @@ class NSRechargeFragment : NSFragment() {
     private fun setListener() {
         with(rgBinding) {
             with(layoutHeader) {
-				ivAddNew.setOnClickListener(object : SingleClickListener() {
+				llHistory.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
 						switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
 					}

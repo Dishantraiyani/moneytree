@@ -6,17 +6,19 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
-import com.moneytree.app.common.*
-import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSAlertButtonClickEvent
+import com.moneytree.app.common.NSApplication
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRequestCodes
+import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.databinding.NsFragmentActivationFormBinding
@@ -104,8 +106,7 @@ class NSActivationFormFragment : NSFragment() {
 								}
 
 								if (spinnerPackageType.selectedItemPosition != 0) {
-									val packageType =
-										packageList[spinnerPackageType.selectedItemPosition - 1]
+									val packageType = packageList[spinnerPackageType.selectedItemPosition - 1]
 									val packageId = packageType.packageId
 
 									if (cbChecked.isChecked) {
@@ -153,23 +154,6 @@ class NSActivationFormFragment : NSFragment() {
                     )
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerRegisterType.adapter = arrayAdapter
-				spinnerRegisterType.onItemSelectedListener =
-
-					object : AdapterView.OnItemSelectedListener {
-						override fun onItemSelected(
-							parentView: AdapterView<*>?,
-							selectedItemView: View?,
-							position: Int,
-							id: Long
-						) {
-							// your code here
-							cardAmount.setVisibility(position == 1)
-						}
-
-						override fun onNothingSelected(parentView: AdapterView<*>?) {
-							// your code here
-						}
-					}
             }
         }
     }

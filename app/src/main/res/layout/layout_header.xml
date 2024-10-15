@@ -93,24 +93,48 @@
             android:layout_marginEnd="@dimen/_10sdp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_add_new"
+            app:layout_constraintEnd_toStartOf="@id/ll_history"
             tools:ignore="UseAppTint"
             android:contentDescription="@string/search_hint"/>
 
-        <ImageView
-            android:id="@+id/iv_add_new"
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_24sdp"
-            android:src="@drawable/ic_add"
-            android:tint="@color/white"
-            android:gravity="center"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_cart"
-            tools:ignore="UseAppTint"
-            android:contentDescription="@string/add_new"/>
+		<LinearLayout
+			android:id="@+id/ll_history"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:gravity="center_vertical"
+			android:layout_marginEnd="@dimen/_10sdp"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toStartOf="@id/iv_cart">
+
+			<TextView
+				android:id="@+id/tv_history"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_regular"
+				android:textStyle="normal"
+				android:textColor="@color/white"
+				android:text="@string/history"
+				android:paddingHorizontal="@dimen/_3sdp"
+				android:visibility="gone"/>
+
+			<ImageView
+				android:id="@+id/iv_add_new"
+				android:layout_width="@dimen/_24sdp"
+				android:layout_height="@dimen/_24sdp"
+				android:src="@drawable/ic_add"
+				android:tint="@color/white"
+				android:gravity="center"
+				android:visibility="gone"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toStartOf="@id/iv_cart"
+				tools:ignore="UseAppTint"
+				android:contentDescription="@string/add_new"/>
+
+		</LinearLayout>
 
 		<ImageView
 			android:id="@+id/iv_cart"

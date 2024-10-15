@@ -48,6 +48,8 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 		baseObserveViewModel(viewModel)
 		HeaderUtils(binding.layoutHeader, requireActivity(), headerTitle = activity.resources.getString(
 			R.string.doctors), clBackView = true, isSearch = true, searchCallback = this, isAddNew = true)
+		binding.layoutHeader.tvHistory.visible()
+		binding.layoutHeader.tvHistory.text = activity.resources.getString(R.string.history)
 		binding.layoutHeader.ivAddNew.setImageResource(R.drawable.ic_history_recharge)
 		setListener()
 		getDoctorList(true)
@@ -68,7 +70,7 @@ class NSDoctorFragment : BaseViewModelFragment<NSDoctorViewModel, NsFragmentDoct
 				}
 			}
 
-			layoutHeader.ivAddNew.setSafeOnClickListener {
+			layoutHeader.llHistory.setSafeOnClickListener {
 				switchActivity(NSDoctorHistoryActivity::class.java)
 			}
 		}

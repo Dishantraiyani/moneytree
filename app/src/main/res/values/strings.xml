@@ -788,4 +788,7 @@
     <string name="edit_review">Edit Review</string>
     <string name="transfer_from">Transfer From</string>
     <string name="please_select_transfer_from">Please Select Transfer From</string>
+    <string name="history">History</string>
+    <string name="no_active_plan">STATUS INACTIVE</string>
+    <string name="active_now">Active Now</string>
 </resources>

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSUserManager
+import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.NSUtilities
@@ -14,11 +14,11 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.NSCheckVersionRepository
 import com.moneytree.app.repository.NSDashboardRepository
-import com.moneytree.app.repository.NSDoctorRepository
 import com.moneytree.app.repository.NSKycRepository
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -284,4 +284,36 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
             }
         })
     }
+	
+	fun getProfile(isShowProgress: Boolean, callback: (NSDataUser) -> Unit) {
+		if (isShowProgress) showProgress()
+		NSUserRepository.getProfile(object : NSGenericViewModelCallback {
+			override fun <T> onSuccess(data: T) {
+				hideProgress()
+				val user = data as NSUserResponse
+				val users = user.data?: NSDataUser()
+				MainDatabase.insertUserData(users, object : NSUserDataCallback {
+						override fun onResponse(userDetail: NSDataUser) {
+						
+						}
+					})
+				callback.invoke(users)
+			}
+			
+			override fun onError(errors: List<Any>) {
+				hideProgress()
+				handleError(errors)
+			}
+			
+			override fun onFailure(failureMessage: String?) {
+				hideProgress()
+				handleFailure(failureMessage)
+			}
+			
+			override fun <T> onNoNetwork(localData: T) {
+				hideProgress()
+				handleNoNetwork()
+			}
+		})
+	}
 }

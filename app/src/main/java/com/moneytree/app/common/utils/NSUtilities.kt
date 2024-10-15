@@ -253,7 +253,7 @@ object NSUtilities {
 		val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
 		val manufacturer = Build.MANUFACTURER
 		val model = Build.MODEL
-		val versionName: String = try {
+		val versionName: String? = try {
 			val manager = context.packageManager
 			val info = manager.getPackageInfo(context.packageName, 0)
 			info.versionName
@@ -308,20 +308,20 @@ object NSUtilities {
 		layoutDateRange.tvStartDate.setOnClickListener {
 			startDateList = if (layoutDateRange.tvStartDate.text.isNotEmpty())  layoutDateRange.tvStartDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 			val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
-				startingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear)}-$year"
+				startingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear + 1)}-$year"
 				layoutDateRange.tvStartDate.text = startingDate
 				checkDateRange(activity, startingDate, endingDate, selectedFilterType, callback)
-			}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
+			}, startDateList[2].toInt(), startDateList[1].toInt() - 1, startDateList[0].toInt())
 			dpd.show()
 		}
 
 		layoutDateRange.tvEndDate.setOnClickListener {
 			endDateList = if (layoutDateRange.tvEndDate.text.isNotEmpty())  layoutDateRange.tvEndDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 			val endDate = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
-				endingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear)}-$year"
+				endingDate = "${getDateZero(dayOfMonth)}-${getDateZero(monthOfYear + 1)}-$year"
 				layoutDateRange.tvEndDate.text = endingDate
 				checkDateRange(activity, startingDate, endingDate, selectedFilterType,callback)
-			}, endDateList[2].toInt(), endDateList[1].toInt(), endDateList[0].toInt())
+			}, endDateList[2].toInt(), endDateList[1].toInt() - 1, endDateList[0].toInt())
 			endDate.show()
 		}
 
@@ -385,9 +385,9 @@ object NSUtilities {
 		var startingDate: String
 		val startDateList = NSDateTimeHelper.getCurrentDate().split("-")
 		val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
-			startingDate = "${getDateZero(dayOfMonth)}/${getDateZero(monthOfYear)}/$year"
+			startingDate = "${getDateZero(dayOfMonth)}/${getDateZero(monthOfYear + 1)}/$year"
 			callback.invoke(startingDate)
-		}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
+		}, startDateList[2].toInt(), startDateList[1].toInt() - 1, startDateList[0].toInt())
 		dpd.show()
 	}
 
@@ -395,9 +395,9 @@ object NSUtilities {
 		var startingDate: String
 		val startDateList = NSDateTimeHelper.getCurrentDate().split("-")
 		val dpd = DatePickerDialog(activity, R.style.DialogTheme, { view, year, monthOfYear, dayOfMonth ->
-			startingDate = "$year-${getDateZero(monthOfYear)}-${getDateZero(dayOfMonth)}"
+			startingDate = "$year-${getDateZero(monthOfYear + 1)}-${getDateZero(dayOfMonth)}"
 			callback.invoke(startingDate)
-		}, startDateList[2].toInt(), startDateList[1].toInt(), startDateList[0].toInt())
+		}, startDateList[2].toInt(), startDateList[1].toInt() - 1, startDateList[0].toInt())
 		dpd.show()
 	}
 

@@ -7,13 +7,13 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace 'com.moneytree.app'
 
     defaultConfig {
         applicationId "com.money.tree.app"
         minSdk 21
-        targetSdk 34
+        targetSdk 35
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -144,4 +144,5 @@ dependencies {
     implementation project(':scanner')
     implementation project(':pdfViewer')
     implementation project(':imagepicker')
+    implementation("io.coil-kt:coil:2.6.0")
 }

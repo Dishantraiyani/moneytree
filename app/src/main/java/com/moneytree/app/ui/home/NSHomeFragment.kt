@@ -33,6 +33,7 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.NSUtilities.showPopUpHome
 import com.moneytree.app.common.utils.NSUtilities.showUpdateDialog
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isInteger
 import com.moneytree.app.common.utils.setEmail
@@ -163,7 +164,7 @@ class NSHomeFragment : NSFragment() {
 				}
 			})
 
-			ivHistoryRecharge.setSafeOnClickListener {
+			llHistory.setSafeOnClickListener {
 				switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
 			}
 		}
@@ -280,9 +281,16 @@ class NSHomeFragment : NSFragment() {
 					if (activeValue.equals("Y")) {
 						pref.isActive = true
 						tvActive.text = "${packageName?.uppercase()} (${activity.resources.getString(R.string.active)})"
+						clActivePlanCheck.gone()
+						
 					} else {
 						pref.isActive = false
 						tvActive.text = activity.resources.getString(R.string.deActive)
+						clActivePlanCheck.visible()
+						
+						tvPlanActive.setSafeOnClickListener {
+							switchActivity(NSActivateActivity::class.java)
+						}
 					}
 					navigationView(userDetail)
 				}
@@ -595,6 +603,11 @@ class NSHomeFragment : NSFragment() {
 		if (NSConstants.RECHARGE_USING_PAYMENT_GATEWAY) {
 			NSConstants.RECHARGE_USING_PAYMENT_GATEWAY = false
 			EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
+		} else if(NSConstants.isStatusUpdate) {
+			NSConstants.isStatusUpdate = false
+			homeModel.getProfile(true) {
+				setUserData(it)
+			}
 		} else {
 			checkUpdateDialog(homeModel.chekVersionResponse)
 		}
