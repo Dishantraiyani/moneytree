@@ -185,6 +185,9 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
 
                     getUserDetail {
                         it.apply {
+                            val districtNames  = districtList.find { names -> names.districtName == districtNameValue }
+                            stateNameValue = if(stateNameValue.isNullOrEmpty()) districtNames?.stateName?:"" else stateNameValue?:""
+                            
                             binding.etFullName.setText(fullName)
                             binding.etPhone.setText(mobile)
                             binding.etEmail.setText(email)
@@ -197,8 +200,8 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                             binding.etAadharNo.setText(aadharNo)
 
                             viewModel.selectedDistrict = districtNameValue?:""
-                            viewModel.selectedState = stateNameValue?:""
-                            viewModel.selectedStateCode = districtList.find { names -> names.stateName == stateNameValue }?.stateName?:""
+                            viewModel.selectedState = if(stateNameValue.isNullOrEmpty()) districtNames?.stateName?:"" else stateNameValue?:""
+                            viewModel.selectedStateCode = if(stateNameValue.isNullOrEmpty()) districtNames?.stateName?:"" else districtList.find { names -> names.stateName == stateNameValue }?.stateName?:""
 
                             if (fullName?.isNotEmpty() == true &&
                                 mobile?.isNotEmpty() == true &&
@@ -225,7 +228,8 @@ class PersonalDetailFragment : BaseViewModelFragment<KycCommonViewModel, Fragmen
                             etPinCode.isEnabled = pinCodeValue == null || pinCodeValue?.isEmpty() == true
                             etAddress.isEnabled = address == null || address?.isEmpty() == true
                             cardDob.isEnabled = dobValue == null || dobValue?.isEmpty() == true
-
+                            viewModel.isDistrictAvailable = districtList.find { names -> names.districtName == districtNameValue }?.districtName != null
+                            
                            /* val aPosition = stateList.indexOf(stateNameValue)
                             stateSpinner.setSelection(aPosition)*/
 

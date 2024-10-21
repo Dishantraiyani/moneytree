@@ -129,42 +129,49 @@ class MeetingFragment : BaseViewModelFragment<MeetingViewModel, FragmentMeetingB
             with(viewModel) {
                 srlRefresh.isRefreshing = false
                 rvCommon.layoutManager = LinearLayoutManager(activity)
-                adapter = MeetingRecycleAdapter{ model, isEdit, isDelete, position ->
-                    if (isDelete) {
-                        activity.resources.apply {
-                            showCommonDialog(getString(R.string.app_name), getString(R.string.are_you_sure_delete), getString(R.string.yes_title), getString(R.string.no_title), callback = object : NSDialogClickCallback {
-                                override fun onClick(isOk: Boolean) {
-                                    if (isOk) {
-                                        deleteMeetings(model.eventId) {
-                                            if (it.status) {
-                                                adapter?.getData()?.removeAt(position)
-                                                adapter?.notifyItemRemoved(position)
-                                            } else {
-                                                if (it.message?.isNotEmpty() == true) {
-                                                    showError(it.message ?: "")
+                if (adapter == null) {
+                    adapter = MeetingRecycleAdapter { model, isEdit, isDelete, position ->
+                        if (isDelete) {
+                            activity.resources.apply {
+                                showCommonDialog(
+                                    getString(R.string.app_name),
+                                    getString(R.string.are_you_sure_delete),
+                                    getString(R.string.yes_title),
+                                    getString(R.string.no_title),
+                                    callback = object : NSDialogClickCallback {
+                                        override fun onClick(isOk: Boolean) {
+                                            if (isOk) {
+                                                deleteMeetings(model.eventId) {
+                                                    if (it.status) {
+                                                        adapter?.getData()?.removeAt(position)
+                                                        adapter?.notifyItemRemoved(position)
+                                                    } else {
+                                                        if (it.message?.isNotEmpty() == true) {
+                                                            showError(it.message ?: "")
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                }
-                            })
-                        }
-                    } else {
-                        if (isEdit) {
-                            switchResultActivity(
-                                meetingResult,
-                                MeetingAddEditActivity::class.java,
-                                bundleOf(
-                                    NSConstants.KEY_IS_ADD_MEETING to false,
-                                    NSConstants.KEY_IS_SELECTED_MEETING to Gson().toJson(model)
-                                )
-                            )
+                                    })
+                            }
                         } else {
-                            adapter?.notifyDataSetChanged()
+                            if (isEdit) {
+                                switchResultActivity(
+                                    meetingResult,
+                                    MeetingAddEditActivity::class.java,
+                                    bundleOf(
+                                        NSConstants.KEY_IS_ADD_MEETING to false,
+                                        NSConstants.KEY_IS_SELECTED_MEETING to Gson().toJson(model)
+                                    )
+                                )
+                            } else {
+                                adapter?.notifyDataSetChanged()
+                            }
                         }
                     }
+                    rvCommon.adapter = adapter
                 }
-				rvCommon.adapter = adapter
 
                 adapter?.setData(list)
 
