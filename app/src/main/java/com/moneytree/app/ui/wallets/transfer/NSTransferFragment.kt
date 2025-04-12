@@ -137,14 +137,14 @@ class NSTransferFragment : NSFragment() {
 						val amount = etAmount.text.toString()
 						val memberName = tvMember.text.toString()
 
-						if (selectedTransferFrom.isNullOrEmpty()) {
+						/*if (selectedTransferFrom.isNullOrEmpty()) {
 							Toast.makeText(
 								activity,
 								activity.resources.getString(R.string.please_select_transfer_from),
 								Toast.LENGTH_SHORT
 							).show()
 							return
-						}
+						}*/
 
 						if (isTransferFromVoucher && memberName.isEmpty()) {
 							Toast.makeText(
@@ -236,9 +236,6 @@ class NSTransferFragment : NSFragment() {
 										})
 									}
 								}
-
-
-
 							} else {
 								Toast.makeText(
 									activity,

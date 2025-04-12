@@ -454,7 +454,7 @@
     <string name="transfer_id">Transfer Id</string>
     <string name="transaction_password">Transaction Password</string>
     <string name="amount_title">Amount</string>
-    <string name="note_5_admin"><![CDATA[Note:5% Tds charges will be deducted]]></string>
+    <string name="note_5_admin"><![CDATA[Note: 2% Tds charges will be deducted]]></string>
     <string name="enter_amount">Enter Amount</string>
     <string name="enter_transaction_id">Enter Transaction Id</string>
     <string name="remark">Remark</string>

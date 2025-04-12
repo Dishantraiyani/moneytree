@@ -1,6 +1,7 @@
 package com.rajat.pdfviewer
 
 import android.Manifest.permission
+import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -21,11 +22,11 @@ import android.view.View
 import android.view.View.GONE
 import android.webkit.CookieManager
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.rajat.pdfviewer.databinding.ActivityPdfViewerBinding
-import com.rajat.pdfviewer.util.NSPdfPath
 import java.io.File
 
 /**
@@ -40,7 +41,8 @@ class PdfViewerActivity : AppCompatActivity() {
     private var menuItem: MenuItem? = null
     private var shareItem: MenuItem? = null
     private var fileUrl: String? = null
-
+    private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
+    
     companion object {
         const val FILE_URL = "pdf_file_url"
         const val FILE_DIRECTORY = "pdf_file_directory"
@@ -115,6 +117,19 @@ class PdfViewerActivity : AppCompatActivity() {
         engine = PdfEngine.INTERNAL
 
         init()
+        
+        permissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+	        val allGranted = permissions.all { it.value }
+            if (allGranted) {
+                permissionGranted = true
+                downloadPdf()
+            } else {
+                // Handle the case when the user denies the permission
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun init() {
@@ -138,7 +153,7 @@ class PdfViewerActivity : AppCompatActivity() {
 
     private fun checkInternetConnection(context: Context): Boolean {
         var result = 0 // Returns connection type. 0: none; 1: mobile data; 2: wifi
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val cm = context.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             cm?.run {
                 cm.getNetworkCapabilities(cm.activeNetwork)?.run {
@@ -204,7 +219,7 @@ class PdfViewerActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.download) checkPermission(PERMISSION_CODE)
+        if (item.itemId == R.id.download) checkPermission()
 		/*if (item.itemId == R.id.share) {
 			NSPdfPath.sharePdf(this@PdfViewerActivity, "")
 		}*/
@@ -324,6 +339,7 @@ class PdfViewerActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     private fun downloadPdf() {
         try {
             if (permissionGranted!!) {
@@ -344,7 +360,7 @@ class PdfViewerActivity : AppCompatActivity() {
                     } else {
                         val downloadUrl = Uri.parse(fileUrl)
                         val downloadManger =
-                            getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
+                            getSystemService(DOWNLOAD_SERVICE) as DownloadManager?
                         val cookie = CookieManager.getInstance().getCookie(fileUrl)
                         val request = DownloadManager.Request(downloadUrl)
                         request.setAllowedNetworkTypes(
@@ -362,10 +378,17 @@ class PdfViewerActivity : AppCompatActivity() {
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                         if (!TextUtils.isEmpty(cookie))
                             request.addRequestHeader("Cookie", cookie)
-                        registerReceiver(
-                            onComplete,
-                            IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-                        )
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            registerReceiver(
+                                onComplete,
+                                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), RECEIVER_NOT_EXPORTED
+                            )
+                        } else {
+                            registerReceiver(
+                                onComplete,
+                                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+                            )
+                        }
                         downloadManger!!.enqueue(request)
                     }
                 } catch (e: Exception) {
@@ -384,32 +407,43 @@ class PdfViewerActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPermission(requestCode: Int) {
-        if (ContextCompat.checkSelfPermission(this, permission.WRITE_EXTERNAL_STORAGE)
-            == PackageManager.PERMISSION_DENIED && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU
-        ) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(permission.WRITE_EXTERNAL_STORAGE),
-                requestCode
-            )
+    private fun checkPermission() {
+        if (isMIUIDevice()) {
+            permissionGranted = true
+            downloadPdf()
         } else {
-            permissionGranted = true
-            downloadPdf()
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_CODE &&
-            grantResults.isNotEmpty() &&
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
-        ) {
-            permissionGranted = true
-            downloadPdf()
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                if (ContextCompat.checkSelfPermission(this, permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED) {
+                    permissionLauncher.launch(arrayOf(permission.WRITE_EXTERNAL_STORAGE))
+                } else {
+                    permissionGranted = true
+                    downloadPdf()
+                }
+            } else if (Build.VERSION.SDK_INT in Build.VERSION_CODES.Q..Build.VERSION_CODES.S_V2) {
+                permissionGranted = true
+                downloadPdf()
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionGranted = true
+                downloadPdf()
+            } else {
+                permissionGranted = true
+                downloadPdf()
+            }
+            /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                if (ContextCompat.checkSelfPermission(
+                        this, permission.WRITE_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_DENIED
+                ) {
+                    permissionLauncher.launch(permission.WRITE_EXTERNAL_STORAGE)
+                } else {
+                    permissionGranted = true
+                    downloadPdf()
+                }
+            } else {
+                permissionGranted = true
+                downloadPdf()
+            }*/
         }
     }
 
@@ -417,5 +451,19 @@ class PdfViewerActivity : AppCompatActivity() {
         super.onDestroy()
         binding.pdfView.closePdfRender()
     }
-
+    
+    fun isMIUIDevice(): Boolean {
+        return try {
+            val manufacturer = Build.MANUFACTURER
+            if (!manufacturer.equals("Xiaomi", ignoreCase = true)) {
+                return false // Not a Xiaomi device
+            }
+            val systemPropertiesClass = Class.forName("android.os.SystemProperties")
+            val getMethod = systemPropertiesClass.getDeclaredMethod("get", String::class.java)
+            val miuiVersion = getMethod.invoke(null, "ro.miui.ui.version.name") as String
+            miuiVersion.isNotEmpty()
+        } catch (e: Exception) {
+            false // Default to non-MIUI
+        }
+    }
 }
