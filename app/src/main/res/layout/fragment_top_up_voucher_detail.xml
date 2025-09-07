@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.vouchers.joining.NSPendingVoucherFragment">
+
+    <include android:id="@+id/layout_header"
+        layout="@layout/layout_header"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:useDefaultMargins="true">
+
+
+            <LinearLayout
+                android:id="@+id/layoutTopupStatus"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/topup_status" />
+                <TextView
+                    android:id="@+id/txtTopupStatus"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="Active" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutTotalSponsor"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/total_sponsor" />
+                <TextView
+                    android:id="@+id/txtTotalSponsor"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutTotalReceivable"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/total_receivable" />
+                <TextView
+                    android:id="@+id/txtTotalReceivable"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="56000" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutTotalPayout"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/total_payout" />
+                <TextView
+                    android:id="@+id/txtTotalPayout"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutPendingReceivable"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/pending_receivable" />
+                <TextView
+                    android:id="@+id/txtPendingReceivable"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="56000" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutSponsorIncome"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/sponsor_income" />
+                <TextView
+                    android:id="@+id/txtSponsorIncome"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutTotalShare"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/total_share" />
+                <TextView
+                    android:id="@+id/txtTotalShare"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="50" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutShareValue"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/share_value" />
+                <TextView
+                    android:id="@+id/txtShareValue"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="1500" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutTotalVoucher"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/total_voucher" />
+                <TextView
+                    android:id="@+id/txtTotalVoucher"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="28" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutUsedVoucher"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/used_voucher" />
+                <TextView
+                    android:id="@+id/txtUsedVoucher"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutPendingVoucher"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/pending_voucher" />
+                <TextView
+                    android:id="@+id/txtPendingVoucher"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="28" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutLapseVoucher"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/lapse_voucher" />
+                <TextView
+                    android:id="@+id/txtLapseVoucher"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutUniversalIdIncome"
+                style="@style/DashboardCard">
+                <TextView style="@style/CardTitle" android:text="@string/universal_id_income" />
+                <TextView
+                    android:id="@+id/txtUniversalIdIncome"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layoutTopupIncome"
+                style="@style/DashboardCard"
+                android:layout_marginStart="@dimen/_8sdp">
+                <TextView style="@style/CardTitle" android:text="@string/topup_income" />
+                <TextView
+                    android:id="@+id/txtTopupIncome"
+                    style="@style/CardValue"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    tools:text="0" />
+            </LinearLayout>
+
+        </GridLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

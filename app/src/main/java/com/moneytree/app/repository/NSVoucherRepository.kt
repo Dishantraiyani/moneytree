@@ -4,10 +4,17 @@ import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
+import com.moneytree.app.repository.network.requests.VoucherActiveSaveModel
+import com.moneytree.app.repository.network.requests.VoucherTransferModel
+import com.moneytree.app.repository.network.responses.DspAndSponsorModel
 import com.moneytree.app.repository.network.responses.NSPackageResponse
 import com.moneytree.app.repository.network.responses.NSPackageVoucherQntResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.NSVoucherListResponse
+import com.moneytree.app.repository.network.responses.TopUpDashboardResponse
+import com.moneytree.app.repository.network.responses.TopUpVoucherAvailableListResponse
+import com.moneytree.app.repository.network.responses.TopUpVoucherListResponse
+import com.moneytree.app.repository.network.responses.TopUpVoucherQntResponse
 import retrofit2.Response
 
 /**
@@ -146,6 +153,118 @@ object NSVoucherRepository {
 				} else {
 					errorMessageList.clear()
 					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getTopUpVoucherTransferList(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getTopUpVoucherTransferList(object :
+			NSRetrofitCallback<TopUpVoucherListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as TopUpVoucherListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getTopUpVoucherQuantity(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getTopUpVoucherQuantity(object :
+			NSRetrofitCallback<TopUpVoucherQntResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as TopUpVoucherQntResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun saveTopUpVoucher(model: VoucherTransferModel, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.saveVoucherTransfer(model, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getTopUpVoucherAvailableList(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getTopUpVoucherAvailableList(object :
+			NSRetrofitCallback<TopUpVoucherAvailableListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as TopUpVoucherAvailableListResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun checkDspAndSponsor(memberType: String, memberCode: String, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.checkDspAndSponsor(memberType, memberCode, object :
+			NSRetrofitCallback<DspAndSponsorModel>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as DspAndSponsorModel?
+				if (data?.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data?.message?:"")
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun saveTopUpActiveVoucher(model: VoucherActiveSaveModel, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.saveTopUpActiveVoucher(model, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getTopUpDashboardList(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getTopUpDashboardList(object :
+			NSRetrofitCallback<TopUpDashboardResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as TopUpDashboardResponse?
+				if (data?.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data?.message?:"")
 					viewModelCallback.onError(errorMessageList)
 				}
 			}

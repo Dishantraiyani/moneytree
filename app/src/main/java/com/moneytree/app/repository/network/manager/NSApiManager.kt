@@ -1451,6 +1451,43 @@ class NSApiManager {
 			), callback
 		)
 	}
+	
+	fun getTopUpVoucherTransferList(callback: NSRetrofitCallback<TopUpVoucherListResponse>) {
+		request(unAuthorised3020Client.getTopUpVoucherTransferListPending(NSUserManager.getAuthToken()), callback)
+	}
+	
+	fun getTopUpVoucherQuantity(callback: NSRetrofitCallback<TopUpVoucherQntResponse>) {
+		request(unAuthorised3020Client.getTopUpVoucherQuantity(NSUserManager.getAuthToken()), callback)
+	}
+	
+	fun saveVoucherTransfer(model: VoucherTransferModel, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		val transferId = model.transferId
+		val transferQty = model.transferQty
+		val paymentType = model.paymentType
+		
+		request(unAuthorised3020Client.saveVoucherTransfer(NSUserManager.getAuthToken(), transferId?:"", transferQty?:"", paymentType?:""), callback)
+	}
+	
+	fun getTopUpVoucherAvailableList(callback: NSRetrofitCallback<TopUpVoucherAvailableListResponse>) {
+		request(unAuthorised3020Client.getTopUpVoucherAvailableList(NSUserManager.getAuthToken()), callback)
+	}
+	
+	fun checkDspAndSponsor(memberType: String, memberCode: String, callback: NSRetrofitCallback<DspAndSponsorModel>) {
+		request(unAuthorised3020Client.checkDspAndSponsor(NSUserManager.getAuthToken(), memberType, memberCode), callback)
+	}
+	
+	fun saveTopUpActiveVoucher(model: VoucherActiveSaveModel, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		val dspId = model.dspId
+		val sponsorId = model.sponsored
+		val packageId = model.packageNo
+		val voucherId = model.voucherId
+		
+		request(unAuthorised3020Client.saveTopUpActiveVoucher(NSUserManager.getAuthToken(), dspId?:"", sponsorId?:"", packageId?:"", voucherId?:""), callback)
+	}
+	
+	fun getTopUpDashboardList(callback: NSRetrofitCallback<TopUpDashboardResponse>) {
+		request(unAuthorised3020Client.getTopUpDashboardList(NSUserManager.getAuthToken()), callback)
+	}
 }
 
 fun requestBody(text: String): RequestBody {
@@ -2147,4 +2184,56 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("event_id") eventId: String
 	): Call<NSSuccessResponse>
+	
+	@FormUrlEncoded
+	@POST("topupvoucher-transfer-list")
+	fun getTopUpVoucherTransferListPending(
+		@Field("token_id") token: String
+	): Call<TopUpVoucherListResponse>
+	
+	@FormUrlEncoded
+	@POST("topup-voucher-avilable")
+	fun getTopUpVoucherQuantity(
+		@Field("token_id") token: String
+	): Call<TopUpVoucherQntResponse>
+	
+	@FormUrlEncoded
+	@POST("save-topupvoucher-transfer")
+	fun saveVoucherTransfer(
+		@Field("token_id") token: String,
+		@Field("transferid") transferId: String,
+		@Field("transfer_qty") transferQty: String,
+		@Field("payment_type") paymentType: String
+	): Call<NSSuccessResponse>
+	
+	
+	@FormUrlEncoded
+	@POST("topup-voucher-avilable-list")
+	fun getTopUpVoucherAvailableList(
+		@Field("token_id") token: String
+	): Call<TopUpVoucherAvailableListResponse>
+	
+	@FormUrlEncoded
+	@POST("check-dsp-and-sponsor")
+	fun checkDspAndSponsor(
+		@Field("token_id") token: String,
+		@Field("member_type") memberType: String,
+		@Field("member_code") memberCode: String
+	): Call<DspAndSponsorModel>
+	
+	@FormUrlEncoded
+	@POST("save-topup-activation")
+	fun saveTopUpActiveVoucher(
+		@Field("token_id") token: String,
+		@Field("dsp_id") dspId: String,
+		@Field("sponsored") sponsored: String,
+		@Field("package_no") packageNo: String,
+		@Field("voucher_id") voucherId: String
+	): Call<NSSuccessResponse>
+	
+	@FormUrlEncoded
+	@POST("topup-dashboard-list")
+	fun getTopUpDashboardList(
+		@Field("token_id") token: String
+	): Call<TopUpDashboardResponse>
 }

@@ -196,6 +196,7 @@
     <string name="ac_no">Ac No. %1$s</string>
     <string name="balance">₹%1$s</string>
     <string name="vouchers">Vouchers</string>
+    <string name="top_vouchers">Topup Vouchers</string>
     <string name="register">Register</string>
     <string name="register_as_seller">Register as seller</string>
     <string name="repurchase">Repurchase</string>
@@ -303,6 +304,14 @@
         <item>Failed</item>
     </string-array>
 
+    <string-array name="select_option">
+        <item>Select Option</item>
+        <item>onlyveda 1</item>
+        <item>onlyveda 2</item>
+        <item>onlyveda 3</item>
+        <item>onlyveda 4</item>
+    </string-array>
+
     <string-array name="register_filter">
         <item>All</item>
         <item>Activation</item>
@@ -338,6 +347,13 @@
         <item>PUP</item>
         <item>Stockiest</item>
         <item>DSP</item>
+    </string-array>
+
+    <string-array name="select_payment_type">
+        <item>Select Transfer From</item>
+        <item>Bank</item>
+        <item>Cash</item>
+        <item>Wallet</item>
     </string-array>
 
     <string-array name="registration_type">
@@ -393,6 +409,8 @@
     <string name="mrp_price">M.R.P:</string>
     <string name="price_value">₹%1$s</string>
     <string name="offers">Offers</string>
+    <string name="transfer_id_value">Transfer Id: %1$s</string>
+    <string name="transfer_type">Transfer Type: %1$s</string>
 
     <string name="payout_no">Payout No: %1$s</string>
     <string name="repurchase_no">Repurchase No: %1$s</string>
@@ -457,6 +475,7 @@
     <string name="note_5_admin"><![CDATA[Note: 2% Tds charges will be deducted]]></string>
     <string name="enter_amount">Enter Amount</string>
     <string name="enter_transaction_id">Enter Transaction Id</string>
+    <string name="enter_transfer_id">Enter Transfer Id</string>
     <string name="remark">Remark</string>
     <string name="enter_remark">Enter Remark</string>
 
@@ -517,6 +536,7 @@
     <string name="please_enter_amount">Please Enter Amount</string>
     <string name="please_enter_valid_amount">Please Enter Valid Amount</string>
     <string name="please_enter_transation_id">Please Enter Transaction Id</string>
+    <string name="please_enter_transfer_id">Please Enter Transfer Id</string>
     <string name="email_">Email:</string>
     <string name="name_">Name:</string>
     <string name="mobile_">Mobile:</string>
@@ -791,4 +811,37 @@
     <string name="history">History</string>
     <string name="no_active_plan">STATUS INACTIVE</string>
     <string name="active_now">Active Now</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="available_quantity">Available Quantity</string>
+    <string name="please_select_payment_type">Please Select Payment Type</string>
+    <string name="top_voucher_activation">TopUp Voucher Activation</string>
+    <string name="options">Options</string>
+    <string name="select_option">Select Option</string>
+    <string name="select_voucher">Select Voucher</string>
+    <string name="dsp_id">DSP ID</string>
+    <string name="enter_dsp_id">Enter DSP ID</string>
+    <string name="please_enter_dsp_id">Please Enter Dsp Id</string>
+    <string name="please_enter_sponsor_id">Please Enter Sponsor Id</string>
+    <string name="please_select_option">Please Select Option</string>
+    <string name="please_select_voucher">Please Select Voucher</string>
+    <string name="enter_sponsor_id">Enter Sponsor Id</string>
+    <string name="activation_date">Activation Date</string>
+    <string name="view_detail">View Detail</string>
+
+    <string name="topup_status">TOPUP STATUS</string>
+    <string name="total_sponsor">TOTAL SPONSOR</string>
+    <string name="total_receivable">TOTAL RECEIVABLE</string>
+    <string name="total_payout">TOTAL PAYOUT</string>
+    <string name="pending_receivable">PENDING RECEIVABLE</string>
+    <string name="sponsor_income">SPONSOR INCOME</string>
+    <string name="total_share">TOTAL SHARE</string>
+    <string name="share_value">SHARE VALUE</string>
+    <string name="total_voucher">TOTAL VOUCHER</string>
+    <string name="used_voucher">USED VOUCHER</string>
+    <string name="pending_voucher">PENDING VOUCHER</string>
+    <string name="lapse_voucher">LAPSE VOUCHER</string>
+    <string name="universal_id_income">UNIVERSAL ID INCOME</string>
+    <string name="topup_income">TOPUP INCOME</string>
+    <string name="top_voucher_detail">TopUp Voucher Detail</string>
+    <string name="no_top_up_active_voucher_available">No TopUp Active Voucher Available</string>
 </resources>

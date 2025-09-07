@@ -71,6 +71,9 @@ import com.moneytree.app.ui.recharge.rechargePayment.RozerActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
+import com.moneytree.app.ui.vouchers.topup.TopUpVoucherActivity
+import com.moneytree.app.ui.vouchers.topup.list.TopUpVoucherListActivity
+import com.moneytree.app.ui.vouchers.topupact.list.TopUpVoucherActivationListActivity
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
 import com.moneytree.app.ui.youtube.YoutubeActivity
@@ -391,6 +394,16 @@ class NSHomeFragment : NSFragment() {
                                 NSVouchersActivity::class.java
                             )
                         }
+	                    
+	                    llTopupVouchers.setOnClickListener {
+		                    drawer.closeDrawer(GravityCompat.START)
+		                    switchActivity(TopUpVoucherListActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true))
+	                    }
+	                    
+	                    llTopupVouchersActivation.setOnClickListener {
+		                    drawer.closeDrawer(GravityCompat.START)
+		                    switchActivity(TopUpVoucherActivationListActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true))
+	                    }
 
 						llMeetings.setOnClickListener {
                             drawer.closeDrawer(GravityCompat.START)

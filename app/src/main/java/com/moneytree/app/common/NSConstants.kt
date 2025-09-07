@@ -31,6 +31,7 @@ class NSConstants {
 		const val KEY_WALLET_VERIFY = "key_wallet_verify"
 		const val KEY_PACKAGE_DETAIL = "key_package_detail"
 		const val KEY_IS_VOUCHER_FROM_TRANSFER = "key_voucher_from_transfer"
+		const val KEY_IS_TOP_UP_DETAIL = "key_voucher_top_up_detail"
 		const val KEY_IS_PACKAGE_ID = "key_voucher_package_id"
 		const val KEY_IS_VOUCHER_QUANTITY = "key_voucher_quantity"
 		const val KEY_PRODUCT_CATEGORY = "key_product_category"
