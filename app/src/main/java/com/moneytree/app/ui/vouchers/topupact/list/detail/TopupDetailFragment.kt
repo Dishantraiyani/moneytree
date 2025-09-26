@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
+import com.moneytree.app.common.utils.setSafeOnClickListener
+import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.databinding.FragmentTopUpVoucherDetailBinding
 import com.moneytree.app.repository.network.responses.TopUpDashboardData
+import com.moneytree.app.ui.vouchers.topupact.pending.PendingVoucherListActivity
+import com.moneytree.app.ui.vouchers.topupact.sponsorList.SponsorListActivity
 
 class TopupDetailFragment : NSFragment() {
     
@@ -59,6 +63,14 @@ class TopupDetailFragment : NSFragment() {
             txtLapseVoucher.text = data.lapseVoucher?.toString() ?: "0"
             txtUniversalIdIncome.text = data.universalIdIncome?.toString() ?: "0"
             txtTopupIncome.text = data.topupIncome?.toString() ?: "0"
+            
+            layoutPendingVoucher.setSafeOnClickListener {
+                switchActivity(PendingVoucherListActivity::class.java)
+            }
+            
+            layoutTotalSponsor.setSafeOnClickListener {
+                switchActivity(SponsorListActivity::class.java)
+            }
         }
     }
 }

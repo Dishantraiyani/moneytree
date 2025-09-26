@@ -10,9 +10,9 @@ data class VoucherActiveSaveModel(
 	@SerializedName("dsp_id")
     @Expose
     var dspId: String?,
-	@SerializedName("sponsored")
+	@SerializedName("sponsorid")
     @Expose
-    var sponsored: String?,
+    var sponsorId : String?,
 	@SerializedName("package_no")
 	@Expose
 	var packageNo: String?,

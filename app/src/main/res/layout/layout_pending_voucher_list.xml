@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:id="@+id/cl_repurchase" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardCornerRadius="@dimen/_2sdp"
+	app:cardUseCompatPadding="true"
+	android:layout_marginBottom="@dimen/_5sdp"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_repurchase_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingVertical="@dimen/_5sdp"
+		android:paddingHorizontal="@dimen/_5sdp">
+
+		<LinearLayout
+			android:id="@+id/ll_top"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			app:layout_constraintEnd_toStartOf="@id/ll_end"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+
+			<TextView
+				android:id="@+id/tv_serial_no"
+				style="@style/LoginSubFontsWrap"
+				tools:text="Level No: "
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/black"
+				android:paddingStart="@dimen/_10sdp"
+				android:lines="1"
+				android:textStyle="bold"
+				android:fontFamily="@font/inter_semi_bold"
+				android:paddingEnd="@dimen/_5sdp" />
+
+			<TextView
+				android:id="@+id/tv_date_title"
+				style="@style/LoginSubFontsWrap"
+				tools:text="Level No: "
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:paddingStart="@dimen/_5sdp"
+				android:lines="1"
+				android:textStyle="bold"
+				android:fontFamily="@font/inter_semi_bold"
+				android:paddingEnd="@dimen/_5sdp" />
+
+		</LinearLayout>
+
+		<TextView
+			android:id="@+id/tv_voucher_name_title"
+			style="@style/LoginSubFontsWrap"
+			android:text="@string/voucher_name_title"
+			android:textSize="@dimen/_11sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/ll_top" />
+
+		<TextView
+			android:id="@+id/tv_voucher_name"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Active Members: "
+			android:textSize="@dimen/_11sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/black"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_medium"
+			app:layout_constraintEnd_toStartOf="@id/ll_end"
+			app:layout_constraintStart_toEndOf="@+id/tv_voucher_name_title"
+			app:layout_constraintTop_toBottomOf="@+id/ll_top" />
+
+		<TextView
+			android:id="@+id/tv_date"
+			style="@style/LoginSubFontsZeroWrap"
+			tools:text="Direct 15 "
+			android:textSize="@dimen/_10sdp"
+			android:gravity="start"
+			app:guidelineUseRtl="true"
+			android:textColor="@color/gray_text"
+			android:paddingStart="@dimen/_10sdp"
+			android:lines="1"
+			android:layout_marginTop="@dimen/_6sdp"
+			android:fontFamily="@font/inter_medium"
+			android:paddingEnd="@dimen/_5sdp"
+			app:layout_constraintEnd_toStartOf="@+id/ll_end"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/tv_voucher_name" />
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/ll_end"
+			android:layout_width="@dimen/_80sdp"
+			android:layout_height="0dp"
+			android:orientation="horizontal"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent">
+
+			<View
+				android:id="@+id/view_line"
+				android:layout_width="@dimen/_1sdp"
+				android:layout_height="match_parent"
+				android:background="@color/line_color"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:gravity="center"
+				android:layout_gravity="center"
+				app:layout_constraintStart_toEndOf="@+id/view_line"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintBottom_toBottomOf="parent">
+
+				<Button
+					android:id="@+id/btn_view"
+					style="@style/LayoutWidthHeightZeroWrap"
+					android:layout_width="wrap_content"
+					android:layout_height="@dimen/_25sdp"
+					android:background="@drawable/blue_button_order_border"
+					android:fontFamily="@font/inter_regular"
+					android:text="@string/claim"
+					android:textColor="@color/white"
+					android:paddingHorizontal="@dimen/_10sdp"
+					android:textSize="@dimen/_10sdp"
+					android:textAllCaps="false"
+					android:visibility="gone"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<TextView
+					android:id="@+id/tv_status"
+					style="@style/LoginSubFontsWrap"
+					android:textSize="@dimen/_9sdp"
+					android:gravity="start"
+					app:guidelineUseRtl="true"
+					android:textColor="@color/gray_text"
+					android:paddingStart="@dimen/_10sdp"
+					android:lines="1"
+					android:text="@string/status"
+					android:fontFamily="@font/inter_medium"
+					android:paddingEnd="@dimen/_5sdp"
+					android:visibility="gone"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<TextView
+					android:id="@+id/tv_status_value"
+					style="@style/LoginSubFontsWrap"
+					tools:text="Direct 15 "
+					android:textSize="@dimen/_12sdp"
+					android:gravity="start"
+					app:guidelineUseRtl="true"
+					android:textColor="@color/black"
+					android:paddingStart="@dimen/_10sdp"
+					android:lines="1"
+					android:visibility="gone"
+					android:fontFamily="@font/inter_medium"
+					android:paddingEnd="@dimen/_5sdp"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+			</LinearLayout>
+
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

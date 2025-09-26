@@ -36,6 +36,18 @@
         tools:targetApi="n">
 
         <activity
+            android:name=".ui.vouchers.topupact.sponsorList.SponsorListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.vouchers.topupact.pending.PendingVoucherListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
             android:name=".ui.vouchers.topupact.list.detail.TopUpDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/half_top_white">
+
+    <View
+        android:id="@+id/view_line_top"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@drawable/round_black"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:gravity="center"
+        android:textSize="@dimen/_13sdp"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingTop="@dimen/_14sdp"
+        android:paddingBottom="@dimen/_14sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/gray_text"
+        android:text="@string/select_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_line_top"/>
+
+    <View
+        android:id="@+id/view_lineTop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:paddingVertical="@dimen/_6sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_lineTop"/>
+
+    <TextView
+        android:id="@+id/tv_product_option"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:gravity="center|start"
+        android:textSize="@dimen/_13sdp"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/orange"
+        android:text="@string/choose_product_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_list"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_product_options"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:paddingVertical="@dimen/_6sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_option"/>
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/login_button_border"
+        android:fontFamily="@font/inter_regular"
+        android:text="@string/submit"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_product_options" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/LayoutWidthHeightZeroWrap"
+        android:gravity="center"
+        android:textSize="@dimen/_13sdp"
+        android:textColor="@color/orange"
+        android:text="@string/cancel"
+        android:paddingHorizontal="@dimen/_19sdp"
+        android:paddingBottom="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp"
+        android:fontFamily="@font/inter_semi_bold"
+        app:layout_constraintTop_toBottomOf="@id/btn_submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

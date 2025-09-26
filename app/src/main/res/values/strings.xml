@@ -312,6 +312,13 @@
         <item>onlyveda 4</item>
     </string-array>
 
+    <string-array name="select_option_value">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
     <string-array name="register_filter">
         <item>All</item>
         <item>Activation</item>
@@ -390,6 +397,10 @@
 
     <!--Voucher-->
     <string name="voucher_code">Voucher Code: %1$s</string>
+    <string name="voucher_name">Voucher Name: %1$s</string>
+    <string name="voucher_name_title">Voucher Name:</string>
+    <string name="serial_no">Serial No: %1$s</string>
+    <string name="serial_no_title">Serial No</string>
     <string name="product_name">Product Name: %1$s</string>
     <string name="qty_title_new">Qty</string>
     <string name="qty_title">Qty: %1$s</string>
@@ -400,6 +411,9 @@
     <string name="member_id">Member Id: %1$s</string>
     <string name="member_type">Member Type: %1$s</string>
     <string name="voucher_date">Date: %1$s</string>
+    <string name="voucher_claim_date">Claim Month: %1$s</string>
+    <string name="voucher_status_value">(%1$s)</string>
+    <string name="remark_value">Remark: %1$s</string>
     <string name="voucher_status">Status: %1$s</string>
     <string name="order_no">Order No: %1$s</string>
     <string name="total">Total: </string>
@@ -839,9 +853,19 @@
     <string name="total_voucher">TOTAL VOUCHER</string>
     <string name="used_voucher">USED VOUCHER</string>
     <string name="pending_voucher">PENDING VOUCHER</string>
+    <string name="pending_voucher_title">Pending Voucher</string>
+    <string name="sponsor_title">Sponsor List</string>
     <string name="lapse_voucher">LAPSE VOUCHER</string>
     <string name="universal_id_income">UNIVERSAL ID INCOME</string>
     <string name="topup_income">TOPUP INCOME</string>
     <string name="top_voucher_detail">TopUp Voucher Detail</string>
     <string name="no_top_up_active_voucher_available">No TopUp Active Voucher Available</string>
+    <string name="dsp_member_name">Dsp Member Name</string>
+    <string name="sponsor_member_name">Sponsor Member Name</string>
+    <string name="no_pending_voucher_available">No Pending Voucher Available</string>
+    <string name="update_status">Update Status</string>
+    <string name="self_store">Self/Store</string>
+    <string name="claim">Claim</string>
+    <string name="no_sponsors_available">No Sponsors Available</string>
+    <string name="choose_product_option">Choose an Product Option</string>
 </resources>

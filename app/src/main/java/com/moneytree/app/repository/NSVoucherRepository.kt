@@ -11,6 +11,7 @@ import com.moneytree.app.repository.network.responses.NSPackageResponse
 import com.moneytree.app.repository.network.responses.NSPackageVoucherQntResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.NSVoucherListResponse
+import com.moneytree.app.repository.network.responses.PendingVoucherListResponse
 import com.moneytree.app.repository.network.responses.TopUpDashboardResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherAvailableListResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherListResponse
@@ -260,6 +261,38 @@ object NSVoucherRepository {
 			NSRetrofitCallback<TopUpDashboardResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as TopUpDashboardResponse?
+				if (data?.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data?.message?:"")
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getPendingVoucherList(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getPendingVoucherList(object :
+			NSRetrofitCallback<PendingVoucherListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as PendingVoucherListResponse?
+				if (data?.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data?.message?:"")
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun topUpVoucherClaim(voucherId: String, deliveryType: String, productOption: String, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.topUpClaimVoucher(voucherId, deliveryType, productOption, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse?
 				if (data?.status == true) {
 					viewModelCallback.onSuccess(response.body())
 				} else {

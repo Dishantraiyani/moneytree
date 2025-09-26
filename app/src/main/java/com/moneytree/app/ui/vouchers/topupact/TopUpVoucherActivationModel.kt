@@ -70,17 +70,17 @@ class TopUpVoucherActivationModel(application: Application) : NSViewModel(applic
 			}
 
 			override fun onError(errors: List<Any>) {
-				callback.invoke(false, dspAndSponsorModel)
+				//callback.invoke(false, dspAndSponsorModel)
 				handleError(errors)
 			}
 
 			override fun onFailure(failureMessage: String?) {
-				callback.invoke(false, dspAndSponsorModel)
+				//callback.invoke(false, dspAndSponsorModel)
 				handleFailure(failureMessage)
 			}
 
 			override fun <T> onNoNetwork(localData: T) {
-				callback.invoke(false, dspAndSponsorModel)
+				//callback.invoke(false, dspAndSponsorModel)
 				handleNoNetwork()
 			}
 		})

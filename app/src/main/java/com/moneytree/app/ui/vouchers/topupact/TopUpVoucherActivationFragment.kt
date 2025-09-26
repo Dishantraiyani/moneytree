@@ -19,9 +19,12 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addTextChangeListener
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.setPlaceholderAdapter
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentTopupVoucherActivationBinding
 import com.moneytree.app.repository.network.requests.VoucherActiveSaveModel
+import com.moneytree.app.repository.network.responses.DsPSponsorListData
+import com.moneytree.app.repository.network.responses.DspAndSponsorModel
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -75,7 +78,7 @@ class TopUpVoucherActivationFragment : NSFragment() {
 					selectedOption = if (it.equals(selectOptionStr)) {
 						""
 					} else {
-						it
+						it?.split(" ")[1]
 					}
 				}
 				spinnerOptions.prompt = selectOptionStr
@@ -118,7 +121,7 @@ class TopUpVoucherActivationFragment : NSFragment() {
 				btnSearch.setOnClickListener {
 					val id = etDspId.text.toString()
 					if (id.isNotEmpty()) {
-						transferModel.checkDspSponsor("DSP ", id) { isSuccess, modelData ->
+						transferModel.checkDspSponsor("DSP", id) { isSuccess, modelData ->
 							if (isSuccess) {
 								transferModel.selectedDspId = etDspId.text.toString()
 							} else {
@@ -133,10 +136,12 @@ class TopUpVoucherActivationFragment : NSFragment() {
 				
 				etDspId.addTextChangeListener {
 					if (it.length >= 10) {
-						transferModel.checkDspSponsor("DSP ", it) { isSuccess, modelData ->
+						transferModel.checkDspSponsor("DSP", it) { isSuccess, modelData ->
 							if (isSuccess) {
+								setDsPSponsorData("DSP", modelData)
 								transferModel.selectedDspId = etDspId.text.toString()
 							} else {
+								setDsPSponsorData("DSP", null)
 								transferModel.selectedDspId = ""
 								showAlertDialog(modelData.message)
 							}
@@ -146,10 +151,12 @@ class TopUpVoucherActivationFragment : NSFragment() {
 				
 				etSponsorId.addTextChangeListener {
 					if (it.length >= 10) {
-						transferModel.checkDspSponsor("SPONSOR ", it) { isSuccess, modelData ->
+						transferModel.checkDspSponsor("SPONSOR", it) { isSuccess, modelData ->
 							if (isSuccess) {
+								setDsPSponsorData("SPONSOR", modelData)
 								transferModel.selectedSponsorId = etSponsorId.text.toString()
 							} else {
+								setDsPSponsorData("SPONSOR", null)
 								transferModel.selectedSponsorId = ""
 								showAlertDialog(modelData.message)
 							}
@@ -221,6 +228,19 @@ class TopUpVoucherActivationFragment : NSFragment() {
 					
 				})
 			}
+		}
+	}
+	
+	private fun setDsPSponsorData(type: String,data: DspAndSponsorModel?) {
+		val first = data?.data?.first()
+		if (type == "SPONSOR") {
+			adBinding.tvSponsorName.setVisibility(first != null)
+			adBinding.cardSponsorMember.setVisibility(first != null)
+			adBinding.tvSponsorMember.text = first?.fullname
+		} else {
+			adBinding.tvMemberName.setVisibility(first != null)
+			adBinding.cardMember.setVisibility(first != null)
+			adBinding.tvMember.text = first?.fullname
 		}
 	}
 	

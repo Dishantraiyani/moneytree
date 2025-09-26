@@ -1473,12 +1473,12 @@ class NSApiManager {
 	}
 	
 	fun checkDspAndSponsor(memberType: String, memberCode: String, callback: NSRetrofitCallback<DspAndSponsorModel>) {
-		request(unAuthorised3020Client.checkDspAndSponsor(NSUserManager.getAuthToken(), memberType, memberCode), callback)
+		request(unAuthorised3020Client.checkDspAndSponsor(NSUserManager.getAuthToken(), memberType.trim(), memberCode), callback)
 	}
 	
 	fun saveTopUpActiveVoucher(model: VoucherActiveSaveModel, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		val dspId = model.dspId
-		val sponsorId = model.sponsored
+		val sponsorId = model.sponsorId
 		val packageId = model.packageNo
 		val voucherId = model.voucherId
 		
@@ -1487,6 +1487,14 @@ class NSApiManager {
 	
 	fun getTopUpDashboardList(callback: NSRetrofitCallback<TopUpDashboardResponse>) {
 		request(unAuthorised3020Client.getTopUpDashboardList(NSUserManager.getAuthToken()), callback)
+	}
+	
+	fun getPendingVoucherList(callback: NSRetrofitCallback<PendingVoucherListResponse>) {
+		request(unAuthorised3020Client.getPendingVoucherListPending(NSUserManager.getAuthToken()), callback)
+	}
+	
+	fun topUpClaimVoucher(voucherId: String, deliveryType: String, productOption: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.topUpClaimVoucher(NSUserManager.getAuthToken(), voucherId, deliveryType, productOption), callback)
 	}
 }
 
@@ -2226,7 +2234,7 @@ interface RTApiInterface {
 	fun saveTopUpActiveVoucher(
 		@Field("token_id") token: String,
 		@Field("dsp_id") dspId: String,
-		@Field("sponsored") sponsored: String,
+		@Field("sponsorid") sponsorId : String,
 		@Field("package_no") packageNo: String,
 		@Field("voucher_id") voucherId: String
 	): Call<NSSuccessResponse>
@@ -2236,4 +2244,19 @@ interface RTApiInterface {
 	fun getTopUpDashboardList(
 		@Field("token_id") token: String
 	): Call<TopUpDashboardResponse>
+	
+	@FormUrlEncoded
+	@POST("topup-voucher-list")
+	fun getPendingVoucherListPending(
+		@Field("token_id") token: String
+	): Call<PendingVoucherListResponse>
+	
+	@FormUrlEncoded
+	@POST("topup-claim-voucher")
+	fun topUpClaimVoucher(
+		@Field("token_id") token: String,
+		@Field("topup_28_voucher_id") topUp28VoucherId: String,
+		@Field("delivery_type") deliveryType: String,
+		@Field("product_option") productOption: String
+	): Call<NSSuccessResponse>
 }

@@ -244,6 +244,71 @@
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
 			<TextView
+				android:id="@+id/tv_member_name"
+				style="@style/LoginSubFontsWrap"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:text="@string/dsp_member_name"
+				android:textColor="@color/black"
+				android:visibility="gone"
+				android:textSize="@dimen/_10sdp" />
+
+			<androidx.cardview.widget.CardView
+				android:id="@+id/card_member"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/_6sdp"
+				app:cardCornerRadius="@dimen/_5sdp"
+				android:visibility="gone"
+				app:cardBackgroundColor="@color/gray_background"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/card_wallet_amount">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_member"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/_1sdp"
+					app:guidelineUseRtl="true"
+					app:chainUseRtl="true"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+
+					<ImageView
+						android:id="@+id/iv_member"
+						android:layout_width="@dimen/_15sdp"
+						android:layout_height="@dimen/_15sdp"
+						android:src="@drawable/tab_profile"
+						android:layout_marginStart="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						android:contentDescription="@string/username_title" />
+
+					<TextView
+						android:id="@+id/tv_member"
+						style="@style/LoginSubFontsZeroWrap"
+						android:minHeight="@dimen/_38sdp"
+						android:textColor="@color/black"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:hint="@string/member_name"
+						android:gravity="center_vertical"
+						android:textColorHint="@color/hint_color"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toEndOf="@id/iv_member"
+						app:layout_constraintEnd_toEndOf="parent"
+						/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.cardview.widget.CardView>
+
+			<TextView
 				style="@style/LoginSubFontsWrap"
 				android:text="@string/sponsor_id"
 				android:textColor="@color/black"
@@ -313,18 +378,18 @@
 			</androidx.constraintlayout.widget.ConstraintLayout>
 
 			<TextView
-				android:id="@+id/tv_member_name"
+				android:id="@+id/tv_sponsor_name"
 				style="@style/LoginSubFontsWrap"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="@dimen/_5sdp"
 				android:layout_marginTop="@dimen/_15sdp"
-				android:text="@string/member_name"
+				android:text="@string/sponsor_member_name"
 				android:textColor="@color/black"
 				android:visibility="gone"
 				android:textSize="@dimen/_10sdp" />
 
 			<androidx.cardview.widget.CardView
-				android:id="@+id/card_member"
+				android:id="@+id/card_sponsor_member"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/_6sdp"
@@ -337,7 +402,6 @@
 				app:layout_constraintTop_toBottomOf="@+id/card_wallet_amount">
 
 				<androidx.constraintlayout.widget.ConstraintLayout
-					android:id="@+id/cl_member"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
@@ -348,7 +412,7 @@
 					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
 
 					<ImageView
-						android:id="@+id/iv_member"
+						android:id="@+id/iv_sponsor_member"
 						android:layout_width="@dimen/_15sdp"
 						android:layout_height="@dimen/_15sdp"
 						android:src="@drawable/tab_profile"
@@ -359,7 +423,7 @@
 						android:contentDescription="@string/username_title" />
 
 					<TextView
-						android:id="@+id/tv_member"
+						android:id="@+id/tv_sponsor_member"
 						style="@style/LoginSubFontsZeroWrap"
 						android:minHeight="@dimen/_38sdp"
 						android:textColor="@color/black"
@@ -369,7 +433,7 @@
 						android:textColorHint="@color/hint_color"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent"
-						app:layout_constraintStart_toEndOf="@id/iv_member"
+						app:layout_constraintStart_toEndOf="@id/iv_sponsor_member"
 						app:layout_constraintEnd_toEndOf="parent"
 						/>
 
