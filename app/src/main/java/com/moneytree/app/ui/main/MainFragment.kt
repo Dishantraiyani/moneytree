@@ -44,8 +44,12 @@ class MainFragment : NSFragment() {
 	fun getUserDetail() {
 		MainDatabase.getUserData(object : NSUserDataCallback {
 			override fun onResponse(userDetail: NSDataUser) {
-				OneSignal.sendTag("user_id_sponsor", userDetail.sponsorId)
-                OneSignal.sendTag("user_id", userDetail.userName)
+				val tags: HashMap<String, String> = HashMap()
+				tags["user_id_sponsor"] = userDetail.sponsorId?:""
+				tags["user_id"] = userDetail.userName?:""
+				OneSignal.User.addTags(tags)
+				//OneSignal.User.addTag("user_id_sponsor", userDetail.sponsorId)
+                //OneSignal.User.addTag("user_id", userDetail.userName)
             }
 		})
 	}

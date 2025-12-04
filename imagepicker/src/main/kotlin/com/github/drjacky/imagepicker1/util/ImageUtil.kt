@@ -180,7 +180,7 @@ object ImageUtil {
             // allocation byte count.
             val width: Int = targetOptions.outWidth / targetOptions.inSampleSize
             val height: Int = targetOptions.outHeight / targetOptions.inSampleSize
-            val byteCount: Int = width * height * getBytesPerPixel(candidate.config)
+            val byteCount: Int = width * height * getBytesPerPixel(candidate.config!!)
             byteCount <= candidate.allocationByteCount
         } else { // On earlier versions, the dimensions must match exactly and the inSampleSize must be 1
             candidate.width == targetOptions.outWidth && candidate.height == targetOptions.outHeight && targetOptions.inSampleSize == 1

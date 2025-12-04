@@ -22,10 +22,11 @@ import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.FragmentYoutubeViewBinding
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.customui.DefaultPlayerUiController
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions
 
@@ -57,7 +58,7 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentYoutubeViewBinding.inflate(inflater, container, false)
         viewCreated()
@@ -74,29 +75,26 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
                 HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = youtubeSelectedItem?.snippet?.title?:"")
                 tvYoutubeVideoTitle.text = youtubeSelectedItem?.snippet?.title
                 lifecycle.addObserver(videoFullScreenPlayer)
-                //val customPlayerUi: View = videoFullScreenPlayer.inflateCustomPlayerUi(R.layout.custom_player_ui_youtube)
+                
                 val listener: YouTubePlayerListener = object : AbstractYouTubePlayerListener() {
                     override fun onReady(youTubePlayer: YouTubePlayer) {
-                        val defaultPlayerUiController =
-                            CustomPlayerUiController(videoFullScreenPlayer, youTubePlayer)
+                        
+                        
+                        // using pre-made custom ui
+                        val defaultPlayerUiController = DefaultPlayerUiController(videoFullScreenPlayer, youTubePlayer)
                         defaultPlayerUiController.showYouTubeButton(false)
                         defaultPlayerUiController.showMenuButton(false)
                         defaultPlayerUiController.showBufferingProgress(false)
                         defaultPlayerUiController.showFullscreenButton(true)
                         defaultPlayerUiController.showUi(true)
                         videoFullScreenPlayer.setCustomPlayerUi(defaultPlayerUiController.rootView)
-
-                        /*val defaultPlayerUiController = CustomPlayerUiController(videoFullScreenPlayer, youTubePlayer, customPlayerUi)
-                        defaultPlayerUiController.showUi(false)*/
-                        //videoFullScreenPlayer.setCustomPlayerUi(customPlayerUiController.rootView)
+                        
                         youTubePlayer.loadVideo(youtubeSelectedItem!!.id!!.videoId!!, 0f)
                     }
                 }
-
-                //videoFullScreenPlayer.addYouTubePlayerListener(this@NSYoutubeViewFragment)
-                videoFullScreenPlayer.addFullScreenListener(object :
-                    YouTubePlayerFullScreenListener {
-                    override fun onYouTubePlayerEnterFullScreen() {
+                
+                videoFullScreenPlayer.addFullscreenListener(object : FullscreenListener {
+                    override fun onEnterFullscreen(fullscreenView: View, exitFullscreen: () -> Unit, ) {
                         requireActivity().window.decorView.systemUiVisibility =
                             (View.SYSTEM_UI_FLAG_FULLSCREEN
                                     or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -108,8 +106,8 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
                         tvYoutubeVideoTitle.gone()
                         viewLine.gone()
                     }
-
-                    override fun onYouTubePlayerExitFullScreen() {
+                    
+                    override fun onExitFullscreen() {
                         requireActivity().window.decorView.systemUiVisibility =
                             View.SYSTEM_UI_FLAG_VISIBLE
                         requireActivity().requestedOrientation =
@@ -119,11 +117,10 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
                         tvYoutubeVideoTitle.visible()
                         viewLine.gone()
                     }
-
+                    
                 })
 
-
-                val options: IFramePlayerOptions = IFramePlayerOptions.Builder().controls(0).build()
+                val options: IFramePlayerOptions = IFramePlayerOptions.Builder(requireContext()).controls(0).build()
                 videoFullScreenPlayer.initialize(listener, options)
                 setYoutubeAdapter()
                 observeViewModel()
@@ -136,9 +133,9 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
         // Checks the orientation of the screen
         with(youtubeBinding) {
             if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                videoFullScreenPlayer.enterFullScreen()
+                videoFullScreenPlayer.matchParent()
             } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                videoFullScreenPlayer.exitFullScreen()
+                videoFullScreenPlayer.wrapContent()
             }
         }
     }
@@ -319,14 +316,14 @@ class NSYoutubeViewFragment : NSFragment(), YouTubePlayerListener {
 
     override fun onPlaybackQualityChange(
         youTubePlayer: YouTubePlayer,
-        playbackQuality: PlayerConstants.PlaybackQuality
+        playbackQuality: PlayerConstants.PlaybackQuality,
     ) {
 
     }
 
     override fun onPlaybackRateChange(
         youTubePlayer: YouTubePlayer,
-        playbackRate: PlayerConstants.PlaybackRate
+        playbackRate: PlayerConstants.PlaybackRate,
     ) {
 
     }

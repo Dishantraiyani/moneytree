@@ -12,7 +12,7 @@
 		android:id="@+id/cl_doctor_layout"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/_70sdp"
-		android:paddingHorizontal="@dimen/_5sdp">
+		android.paddingHorizontal="@dimen/_5sdp">
 
 		<ImageView
 			android:id="@+id/iv_doctor_img"
@@ -98,7 +98,7 @@
 			style="@style/LoginSubFontsWrap"
 			android:text="@string/gender"
 			android:textSize="@dimen/_10sdp"
-			android:gravity="start"
+			android.gravity="start"
 			app:guidelineUseRtl="true"
 			android:textColor="@color/gray_text"
 			android:paddingStart="@dimen/_10sdp"
@@ -162,7 +162,7 @@
 				android:lines="1"
 				android:textAllCaps="true"
 				android:paddingStart="@dimen/_10sdp"
-				android:paddingEnd="@dimen/_10sdp"
+				android.paddingEnd="@dimen/_10sdp"
 				android:includeFontPadding="false"
 				android:fontFamily="@font/inter_medium"
 				app:layout_constraintStart_toStartOf="parent"
@@ -178,7 +178,7 @@
 				android:padding="@dimen/_3sdp"
 				android:visibility="gone"
 				android:src="@drawable/arrow_right"
-				android:tint="@color/white"
+				app:tint="@color/white"
 				android:layout_marginEnd="@dimen/_2sdp"
 				android:layout_gravity="center_vertical"
 				tools:ignore="UseAppTint"

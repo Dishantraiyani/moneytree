@@ -52,11 +52,7 @@ open class ImagePicker {
         @JvmStatic
         fun getError(data: Intent?): String {
             val error = data?.getStringExtra(EXTRA_ERROR)
-            if (error != null) {
-                return error
-            } else {
-                return "Unknown Error!"
-            }
+            return error ?: "Unknown Error!"
         }
 
         /**

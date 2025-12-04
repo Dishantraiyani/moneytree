@@ -1,36 +1,18 @@
 package com.moneytree.app.ui.youtube.detail
 
-import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.util.Log
-import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.moneytree.app.R
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.menu.YouTubePlayerMenu
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.utils.FadeViewHelper
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
-
+/*
 class CustomPlayerUiController(private val youTubePlayerView: YouTubePlayerView, private val youTubePlayer: YouTubePlayer) : PlayerUiController {
 
     val rootView: View = View.inflate(youTubePlayerView.context, R.layout.custom_player_ui_youtube, null)
 
     private var youTubePlayerMenu: YouTubePlayerMenu? = null
 
-    /**
+    */
+/**
      * View used for for intercepting clicks and for drawing a black background.
      * Could have used controlsContainer, but in this way I'm able to hide all the control at once by hiding controlsContainer
-     */
+     *//*
+
     private val panel: View = rootView.findViewById(R.id.panel)
 
     private val controlsContainer: View = rootView.findViewById(R.id.controls_container)
@@ -256,3 +238,4 @@ class CustomPlayerUiController(private val youTubePlayerView: YouTubePlayerView,
         playPauseButton.setImageResource(drawable)
     }
 }
+*/

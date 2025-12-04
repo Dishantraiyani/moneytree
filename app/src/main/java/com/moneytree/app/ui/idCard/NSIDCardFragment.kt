@@ -1,17 +1,23 @@
 package com.moneytree.app.ui.idCard
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +27,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -109,7 +114,7 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
         }
 
     private fun checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val permission = Manifest.permission.READ_MEDIA_IMAGES
             if (ContextCompat.checkSelfPermission(requireContext(), permission)
                 != PackageManager.PERMISSION_GRANTED
@@ -120,7 +125,8 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
             }
         } else {
             generateAndDownloadIdCard(requireContext())
-        }
+        }*/
+        generateAndDownloadIdCard(requireContext())
     }
 
     override fun observeViewModel() {
@@ -153,11 +159,14 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
         }
     }
 
+    private var isGenerate: Boolean = false
     private fun generateAndDownloadIdCard(context: Context) {
+        isGenerate = false
         // Create a bitmap for the ID card
         val idCardBitmap = convertCardViewToBitmap(binding.viewId)
-
-        val dirPath = "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DOWNLOADS + "/" +NSConstants.DIRECTORY_PATH_ID}"
+        
+        saveBitmapToDownloads(context, idCardBitmap)
+        /*val dirPath = "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DOWNLOADS + "/" +NSConstants.DIRECTORY_PATH_ID}"
         val dir = File(dirPath)
         if (!dir.exists()) {
             dir.mkdir()
@@ -173,22 +182,87 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
             fos.close()
 
             // Trigger a download intent
-            /*val intent = Intent(Intent.ACTION_VIEW)
+            *//*val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(imageFile.toUri(), "image/jpeg")
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(intent)*/
+            context.startActivity(intent)*//*
             showDownloadCompleteNotification(requireContext(), imageFile)
         } catch (e: Exception) {
             e.printStackTrace()
             val dirPathNew = "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DOWNLOADS + "/" +NSConstants.DIRECTORY_PATH_ID}"
             val imageFileNew = File(dirPathNew)
             deleteDirectory(imageFileNew)
-            if (!imageFileNew.exists()) {
+            if (!imageFileNew.exists() && !isGenerate) {
+                isGenerate = true
                 generateAndDownloadIdCard(requireContext())
             }
+        }*/
+    }
+    
+    @SuppressLint("Recycle")
+    fun saveBitmapToDownloads(context: Context, bitmap: Bitmap) {
+        val folderName = NSConstants.DIRECTORY_PATH_ID
+        val fileName = "id_card.jpg"
+        val relativePath = "DCIM/$folderName"
+        val mimeType = "image/jpeg"
+        
+        try {
+            val resolver = context.contentResolver
+            
+            // Check if file already exists
+            val existingUri = resolver.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                arrayOf(MediaStore.Images.Media._ID),
+                "${MediaStore.Images.Media.DISPLAY_NAME}=? AND ${MediaStore.Images.Media.RELATIVE_PATH}=?",
+                arrayOf(fileName, "$relativePath/"),
+                null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    val id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID))
+                    ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                } else null
+            }
+            
+            val imageUri = existingUri ?: run {
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                    put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
+                    put(MediaStore.MediaColumns.IS_PENDING, 1)
+                }
+                resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            }
+            
+            imageUri?.let { uri ->
+                resolver.openOutputStream(uri)?.use { outputStream ->
+                    if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)) {
+                        Log.e("SaveBitmap", "Failed to compress bitmap")
+                    }
+                    outputStream.flush()
+                }
+                
+                // Mark as ready
+                val updateValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.IS_PENDING, 0)
+                }
+                resolver.update(uri, updateValues, null, null)
+                
+                // Notify / share using URI, not File
+                showDownloadCompleteNotification(context, uri, fileName)
+                
+                Log.d("SaveBitmap", "✅ Image saved successfully: $uri")
+            } ?: Log.e("SaveBitmap", "❌ Failed to create MediaStore entry")
+            
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("SaveBitmap", "❌ Error saving bitmap: ${e.localizedMessage}")
         }
     }
-
+    
+    
+    
+    
+    
     fun deleteDirectory(directory: File): Boolean {
         if (!directory.exists()) {
             return false
@@ -234,7 +308,7 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
         return bitmap
     }
 
-    private fun showDownloadCompleteNotification(context: Context, file: File) {
+    private fun showDownloadCompleteNotification(context: Context, file: Uri, fileName: String) {
         val channelId = "download_channel"
         val channelName = "Download Channel"
         val notificationId = 1
@@ -249,8 +323,8 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
 
         // Create an intent to open the file
         val openFileIntent = Intent(Intent.ACTION_VIEW)
-        val fileUri = FileProvider.getUriForFile(context,context.packageName + ".provider",file)
-        openFileIntent.setDataAndType(fileUri, "image/jpeg")
+        //val fileUri = FileProvider.getUriForFile(context,context.packageName + ".provider",file)
+        openFileIntent.setDataAndType(file, "image/jpeg")
         openFileIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION
 
         val pendingIntent = PendingIntent.getActivity(
@@ -263,7 +337,7 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(android.R.drawable.stat_sys_download_done)
             .setContentTitle("Download Complete")
-            .setContentText("File: ${file.name}")
+            .setContentText("File: $fileName")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

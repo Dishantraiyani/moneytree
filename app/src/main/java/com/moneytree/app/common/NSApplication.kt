@@ -15,6 +15,7 @@ import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.NSDiseasesData
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.onesignal.OneSignal
+import com.onesignal.debug.LogLevel
 
 /**
  * The MoneyTree application class containing Preference, network manager and functionality
@@ -39,9 +40,8 @@ class NSApplication : Application() {
 		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 		initInstance()
 
-		OneSignal.initWithContext(this)
-		OneSignal.setAppId(ONESIGNAL_APP_ID)
-		OneSignal.unsubscribeWhenNotificationsAreDisabled(true)
+		OneSignal.Debug.logLevel = LogLevel.VERBOSE
+		OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
 	}
 
     override fun attachBaseContext(base: Context?) {

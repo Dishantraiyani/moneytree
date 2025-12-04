@@ -37,7 +37,7 @@ class ImagePickerActivity : AppCompatActivity() {
         internal fun getCancelledIntent(context: Context): Intent {
             val intent = Intent()
             val message = context.getString(R.string.error_task_cancelled)
-            intent.putExtra(com.github.drjacky.imagepicker1.ImagePicker.EXTRA_ERROR, message)
+            intent.putExtra(ImagePicker.EXTRA_ERROR, message)
             return intent
         }
     }
@@ -104,7 +104,7 @@ class ImagePickerActivity : AppCompatActivity() {
 
         // Retrieve Image Provider
         val provider: ImageProvider? =
-            intent?.getSerializableExtra(com.github.drjacky.imagepicker1.ImagePicker.EXTRA_IMAGE_PROVIDER) as ImageProvider?
+            intent?.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PROVIDER) as ImageProvider?
 
         // Create Gallery/Camera Provider
         when (provider) {
@@ -231,8 +231,8 @@ class ImagePickerActivity : AppCompatActivity() {
     private fun setResult(uri: Uri) {
         val intent = Intent()
         intent.data = uri
-        intent.putExtra(com.github.drjacky.imagepicker1.ImagePicker.EXTRA_FILE_PATH, uri.path)
-        setResult(Activity.RESULT_OK, intent)
+        intent.putExtra(ImagePicker.EXTRA_FILE_PATH, uri.path)
+        setResult(RESULT_OK, intent)
         finish()
     }
 
@@ -240,7 +240,7 @@ class ImagePickerActivity : AppCompatActivity() {
      * User has cancelled the task
      */
     fun setResultCancel() {
-        setResult(Activity.RESULT_CANCELED, getCancelledIntent(this))
+        setResult(RESULT_CANCELED, getCancelledIntent(this))
         finish()
     }
 
@@ -251,8 +251,8 @@ class ImagePickerActivity : AppCompatActivity() {
      */
     fun setError(message: String) {
         val intent = Intent()
-        intent.putExtra(com.github.drjacky.imagepicker1.ImagePicker.EXTRA_ERROR, message)
-        setResult(com.github.drjacky.imagepicker1.ImagePicker.RESULT_ERROR, intent)
+        intent.putExtra(ImagePicker.EXTRA_ERROR, message)
+        setResult(ImagePicker.RESULT_ERROR, intent)
         finish()
     }
 }

@@ -34,4 +34,10 @@
     <external-path
         name="file"
         path="." />
+    <external-path
+        name="external_dcim"
+        path="DCIM/moneyTree/idCard" />
+    <external-path
+        name="external_downloads"
+        path="Download" />
 </paths>

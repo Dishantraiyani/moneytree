@@ -68,9 +68,9 @@ class TopupDetailFragment : NSFragment() {
                 switchActivity(PendingVoucherListActivity::class.java)
             }
             
-            layoutTotalSponsor.setSafeOnClickListener {
+            /*layoutTotalSponsor.setSafeOnClickListener {
                 switchActivity(SponsorListActivity::class.java)
-            }
+            }*/
         }
     }
 }

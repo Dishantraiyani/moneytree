@@ -182,7 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_18sdp"
             app:cardCornerRadius="@dimen/_5sdp"
-			android:visibility="visible"
+			android:visibility="gone"
 			app:cardBackgroundColor="@color/gray_background"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
