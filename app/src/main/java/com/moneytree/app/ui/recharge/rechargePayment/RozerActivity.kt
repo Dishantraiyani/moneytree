@@ -2,6 +2,7 @@ package com.moneytree.app.ui.recharge.rechargePayment
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import com.google.gson.Gson
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.callbacks.NSPaymentDetailCallback
@@ -17,8 +18,10 @@ class RozerActivity : NSActivity(), PaymentResultWithDataListener {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
 		binding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(binding.root)
+		initView(binding.root)
 		Checkout.preload(this)
 		loadInitialFragment(intent.extras!!)
 	}

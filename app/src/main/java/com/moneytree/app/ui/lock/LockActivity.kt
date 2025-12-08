@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import com.beautycoder.pflockscreen.PFFLockScreenConfiguration
 import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment
@@ -29,8 +32,11 @@ class LockActivity : NSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         activityLockBinding = ActivityLockBinding.inflate(layoutInflater)
         setContentView(activityLockBinding.root)
+        initView(activityLockBinding.root)
+        
         activity = this
         getIntentData()
         mainLockScreen()

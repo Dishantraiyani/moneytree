@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.enableEdgeToEdge
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -27,8 +28,10 @@ class WelcomeActivity : NSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+	    enableEdgeToEdge()
 		binding = ActivityWelcomeLayoutBinding.inflate(layoutInflater)
 		setContentView(binding.root)
+	    initView(binding.root)
 		loadInitialFragment()
 		setListener()
     }

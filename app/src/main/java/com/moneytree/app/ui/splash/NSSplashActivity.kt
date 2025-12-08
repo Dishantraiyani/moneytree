@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.Nullable
 import androidx.lifecycle.Observer
 import com.beautycoder.pflockscreen.PFFLockScreenConfiguration
@@ -38,8 +39,10 @@ class NSSplashActivity : NSActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
 		activitySplashBinding = NsActivitySplashBinding.inflate(layoutInflater)
 		setContentView(activitySplashBinding.root)
+		initView(activitySplashBinding.root)
 		activity = this
 	}
 

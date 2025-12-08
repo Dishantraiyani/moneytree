@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.offers
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.databinding.ActivityCommonBinding
@@ -13,8 +14,10 @@ class OfferDetailActivity : NSActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
 		offerBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(offerBinding.root)
+		initView(offerBinding.root)
 		loadInitialFragment(intent.extras)
 	}
 

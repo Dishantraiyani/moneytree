@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.activationForm
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
 
@@ -9,8 +10,10 @@ class NSActivationFormActivity : NSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         activateBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(activateBinding.root)
+        initView(activateBinding.root)
         loadInitialFragment(intent.extras)
     }
 

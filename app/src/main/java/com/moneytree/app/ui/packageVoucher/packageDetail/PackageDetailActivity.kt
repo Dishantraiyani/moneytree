@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.packageVoucher.packageDetail
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
 
@@ -9,8 +10,10 @@ class PackageDetailActivity : NSActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
 		packageDetailBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(packageDetailBinding.root)
+		initView(packageDetailBinding.root)
 		loadInitialFragment(intent.extras)
 	}
 

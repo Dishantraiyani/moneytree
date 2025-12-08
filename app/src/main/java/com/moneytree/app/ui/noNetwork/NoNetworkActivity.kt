@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.noNetwork
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
 import com.muddassir.connection_checker.ConnectionState
@@ -12,8 +13,10 @@ class NoNetworkActivity : NSActivity(), ConnectivityListener{
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
 		noNetworkBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(noNetworkBinding.root)
+		initView(noNetworkBinding.root)
 		isConnected = false
 		loadInitialFragment()
 	}

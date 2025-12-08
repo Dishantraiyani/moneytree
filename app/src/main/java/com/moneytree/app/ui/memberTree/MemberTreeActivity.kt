@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.memberTree
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
 
@@ -9,8 +10,10 @@ class MemberTreeActivity : NSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         memberTreeBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(memberTreeBinding.root)
+        initView(memberTreeBinding.root)
         loadInitialFragment(intent.extras!!)
     }
 

@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.R
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.common.NSConstants
@@ -24,8 +25,10 @@ class NSMainActivity : NSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+	    enableEdgeToEdge()
         mainBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
+	    initView(mainBinding.root, false)
 		loadInitialFragment()
 		locationPermission()
     }

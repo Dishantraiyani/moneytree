@@ -5,12 +5,16 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.moneytree.app.R
 import com.moneytree.app.common.callbacks.NSProgressCallback
@@ -24,6 +28,7 @@ import com.muddassir.connection_checker.checkConnection
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import androidx.core.graphics.toColorInt
 
 /**
  * The base class for all activities which holds the members and methods common to all activities
@@ -39,6 +44,11 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
 		super.onCreate(savedInstanceState)
 		checkConnection(this)
 	}
+    
+    fun initView(view: ViewGroup, isPaddingBottom: Boolean = true) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        StatusBarOverlayUtil.apply(this, view, R.color.orange, isPaddingBottom)
+    }
 
     override fun onStart() {
         super.onStart()
@@ -68,7 +78,7 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
      * @param containerId          The id of the layout which acts as a container for the fragments
      */
     override fun replaceCurrentFragment(
-        fragmentToReplace: Fragment, shouldAddToBackStack: Boolean, containerId: Int
+	    fragmentToReplace: Fragment, shouldAddToBackStack: Boolean, containerId: Int,
     ) {
         replaceFragment(fragmentToReplace, shouldAddToBackStack, containerId)
     }
@@ -94,7 +104,7 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
      * @param containerId       The frame layout containing the fragment
      */
     private fun replaceFragment(
-        fragmentToReplace: Fragment, addToBackStack: Boolean, containerId: Int
+	    fragmentToReplace: Fragment, addToBackStack: Boolean, containerId: Int,
     ) {
         val fragmentTransaction = this.supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(containerId, fragmentToReplace)
@@ -119,14 +129,15 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
             val progressBar = ProgressBar(this).apply { //don't set style with material design
                 isIndeterminate = true
             }
-            progressBar.indeterminateTintList = ColorStateList.valueOf(Color.parseColor(resources.getString(R.string.orange)))
+            progressBar.indeterminateTintList = ColorStateList.valueOf(
+	            resources.getString(R.string.orange).toColorInt())
             val paramsForProgressBar = RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
             paramsForProgressBar.addRule(RelativeLayout.CENTER_IN_PARENT)
             rlLayout.addView(progressBar, paramsForProgressBar)
            // rlLayout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
-            rlLayout.setBackgroundColor(Color.parseColor("#11000000"))
+            rlLayout.setBackgroundColor("#00000000".toColorInt())
             val paramsForRelativeLayout = RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
             ).apply {

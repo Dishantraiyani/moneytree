@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -68,8 +69,10 @@ class NSPlaceOrderActivity : NSActivity(), PaymentResultWithDataListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = NsActivityPlaceOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initView(binding.root)
         Checkout.preload(this)
         loadInitialFragment(intent.extras)
     }

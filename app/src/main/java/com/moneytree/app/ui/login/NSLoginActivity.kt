@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.login
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
 
@@ -9,7 +10,9 @@ class NSLoginActivity : NSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         loginBinding = ActivityCommonBinding.inflate(layoutInflater)
+        initView(loginBinding.root)
         setContentView(loginBinding.root)
         loadInitialFragment()
     }

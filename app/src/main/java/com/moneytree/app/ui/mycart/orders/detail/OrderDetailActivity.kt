@@ -1,6 +1,7 @@
 package com.moneytree.app.ui.mycart.orders.detail
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import com.moneytree.app.common.NSActivity
 import com.moneytree.app.databinding.ActivityCommonBinding
 
@@ -9,8 +10,10 @@ class OrderDetailActivity : NSActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		enableEdgeToEdge()
 		stockBinding = ActivityCommonBinding.inflate(layoutInflater)
 		setContentView(stockBinding.root)
+		initView(stockBinding.root)
 		loadInitialFragment(intent.extras)
 	}
 
