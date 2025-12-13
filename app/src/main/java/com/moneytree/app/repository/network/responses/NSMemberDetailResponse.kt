@@ -45,5 +45,7 @@ data class MemberDetailModel(
 	var email: String? = null,
 	@SerializedName("fullname")
 	@Expose
-	var fullname: String? = null
+	var fullname: String? = null,
+	@field:SerializedName("is_login")
+	var isLogin: String? = null
 )

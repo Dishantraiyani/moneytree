@@ -292,12 +292,16 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
 				hideProgress()
 				val user = data as NSUserResponse
 				val users = user.data?: NSDataUser()
-				MainDatabase.insertUserData(users, object : NSUserDataCallback {
+				if (!users.isLogin.equals("Y")) {
+					logoutData()
+				} else {
+					MainDatabase.insertUserData(users, object : NSUserDataCallback {
 						override fun onResponse(userDetail: NSDataUser) {
 						
 						}
 					})
-				callback.invoke(users)
+					callback.invoke(users)
+				}
 			}
 			
 			override fun onError(errors: List<Any>) {

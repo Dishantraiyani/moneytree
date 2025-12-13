@@ -109,5 +109,8 @@ data class NSDataUser(
     var dobValue: String? = null,
 
     @field:SerializedName("nominee_mobile")
-    var nomineeMobileValue: String? = null
+    var nomineeMobileValue: String? = null,
+    
+    @field:SerializedName("is_login")
+    var isLogin: String? = null
 )

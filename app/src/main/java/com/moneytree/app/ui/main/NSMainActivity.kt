@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -28,7 +29,13 @@ class NSMainActivity : NSActivity() {
 	    enableEdgeToEdge()
         mainBinding = ActivityCommonBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
-	    initView(mainBinding.root, false)
+	    
+	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+		    initView(mainBinding.root, false)
+	    } else {
+		    initView(mainBinding.root)
+	    }
+	    
 		loadInitialFragment()
 		locationPermission()
     }

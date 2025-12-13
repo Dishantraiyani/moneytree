@@ -71,7 +71,6 @@ import com.moneytree.app.ui.recharge.rechargePayment.RozerActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
-import com.moneytree.app.ui.vouchers.topup.TopUpVoucherActivity
 import com.moneytree.app.ui.vouchers.topup.list.TopUpVoucherListActivity
 import com.moneytree.app.ui.vouchers.topupact.list.TopUpVoucherActivationListActivity
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity

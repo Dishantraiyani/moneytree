@@ -2,6 +2,7 @@ package com.rajat.pdfviewer
 
 import android.Manifest.permission
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DownloadManager
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -20,12 +21,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
+import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import com.rajat.pdfviewer.databinding.ActivityPdfViewerBinding
 import java.io.File
 
@@ -94,8 +101,11 @@ class PdfViewerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         _binding = ActivityPdfViewerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        apply(this, binding.root, R.color.orange)
 
         setUpToolbar(
             intent.extras!!.getString(
@@ -131,7 +141,55 @@ class PdfViewerActivity : AppCompatActivity() {
             }
         }
     }
-
+    
+    fun apply(
+        activity: Activity,
+        views: ViewGroup,
+        @ColorRes colorRes: Int,
+        isPaddingBottom: Boolean = true
+    ) {
+        val window = activity.window
+        val decorView = window.decorView as ViewGroup
+        val color = ContextCompat.getColor(activity, colorRes)
+        
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        
+        val overlay = decorView.findViewWithTag<View>("TAG_PDF") ?: View(activity).apply {
+            tag = "TAG_PDF"
+            setBackgroundColor(color)
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                0
+            )
+            decorView.addView(this)   // ✅ now inside real system bar layer
+        }
+        
+        overlay.setBackgroundColor(color)
+        overlay.bringToFront()
+        
+        val contentRoot =
+            activity.findViewById<ViewGroup>(android.R.id.content)
+        
+        ViewCompat.setOnApplyWindowInsetsListener(decorView) { _, insets ->
+            
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            
+            val lp = overlay.layoutParams
+            if (lp.height != bars.top) {
+                lp.height = bars.top
+                overlay.layoutParams = lp
+            }
+            
+            contentRoot.setPadding(
+                bars.left,
+                bars.top,
+                bars.right,
+                if (isPaddingBottom) bars.bottom else 0
+            )
+            
+            insets
+        }
+    }
     private fun init() {
         if (intent.extras!!.containsKey(FILE_URL)) {
             fileUrl = intent.extras!!.getString(FILE_URL)

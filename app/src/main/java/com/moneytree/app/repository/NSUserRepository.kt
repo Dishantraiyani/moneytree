@@ -1,5 +1,6 @@
 package com.moneytree.app.repository
 
+import android.content.Intent
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
@@ -12,6 +13,7 @@ import com.moneytree.app.repository.network.responses.NSLogoutResponse
 import com.moneytree.app.repository.network.responses.NSMemberDetailResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
 import com.moneytree.app.repository.network.responses.StateResponse
+import com.moneytree.app.ui.login.NSLoginActivity
 import retrofit2.Response
 
 /**
@@ -111,7 +113,11 @@ object NSUserRepository {
 		) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSMemberDetailResponse
-				if (data.status) {
+                if (!data.data?.isLogin.equals("Y")) {
+                    val instance = NSApplication.getInstance()
+                    instance.getPrefs().clearPrefData()
+                    instance.startActivity(Intent(instance, NSLoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                } else if (data.status) {
 					viewModelCallback.onSuccess(response.body())
 				} else {
 					errorMessageList.clear()
