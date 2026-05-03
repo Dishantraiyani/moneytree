@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.wallets.transfer.NSTransferFragment">
+
+    <include android:id="@+id/layout_header"
+        layout="@layout/layout_header"/>
+
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/srl_refresh"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintBottom_toBottomOf="parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_activation_status"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/yellow_bg"
+				android:padding="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<TextView
+					android:id="@+id/tv_activation_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="start"
+					android:text="@string/my_activation_status"
+					android:textColor="@color/gray_text"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/tv_activation_status"
+					app:layout_constraintTop_toTopOf="parent"/>
+
+				<TextView
+					android:id="@+id/tv_activation_status"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_11sdp"
+					android:gravity="center"
+					android:text="Not Activated"
+					android:textColor="@color/orange"
+					android:paddingVertical="@dimen/_5sdp"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toBottomOf="parent"/>
+
+				<TextView
+					android:id="@+id/tv_activation_sub_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_regular"
+					android:textSize="@dimen/_9sdp"
+					android:gravity="start"
+					android:text=""
+					android:textColor="@color/gray_text"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toStartOf="@+id/tv_activation_status"
+					app:layout_constraintTop_toBottomOf="@+id/tv_activation_title"/>
+
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_available_pins"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:background="@drawable/sky_bg"
+				android:padding="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/cl_downline_summary"
+				app:layout_constraintTop_toBottomOf="@id/cl_activation_status"
+				app:layout_constraintBottom_toBottomOf="@id/cl_downline_summary">
+
+				<TextView
+					android:id="@+id/tv_pins_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="center"
+					android:text="@string/available_pins"
+					android:textColor="@color/gray_text"
+					app:layout_constraintVertical_chainStyle="packed"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					app:layout_constraintBottom_toTopOf="@id/tv_pins_value"/>
+
+				<TextView
+					android:id="@+id/tv_pins_value"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_12sdp"
+					android:gravity="center"
+					android:text="0"
+					android:textColor="@color/sky_text"
+					android:paddingVertical="@dimen/_5sdp"
+					app:layout_constraintVertical_chainStyle="packed"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tv_pins_title"
+					app:layout_constraintBottom_toTopOf="@id/tv_pins_sub_title"/>
+
+				<TextView
+					android:id="@+id/tv_pins_sub_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_regular"
+					android:textSize="@dimen/_9sdp"
+					android:gravity="center"
+					android:text="Pending pins in your account"
+					app:layout_constraintVertical_chainStyle="packed"
+					android:textColor="@color/gray_text"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tv_pins_value"
+					app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_downline_summary"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:background="@drawable/purple_bg"
+				android:padding="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:layout_marginEnd="@dimen/_10sdp"
+				app:layout_constraintStart_toEndOf="@+id/cl_available_pins"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/cl_activation_status"
+				app:layout_constraintBottom_toBottomOf="@id/cl_available_pins">
+
+				<TextView
+					android:id="@+id/tv_downline_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="center"
+					android:text="@string/downline_summary"
+					android:textColor="@color/gray_text"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"/>
+
+				<LinearLayout
+					android:id="@+id/ll_total_downline"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:gravity="center"
+					android:paddingVertical="@dimen/_3sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_downline_title">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="center"
+						android:text="@string/total_downline"
+						android:textColor="@color/gray_text"
+						android:paddingHorizontal="@dimen/_2sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
+
+					<TextView
+						android:id="@+id/tv_total_downline_value"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="center"
+						android:text="100"
+						android:textColor="@color/gray_text"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
+
+				</LinearLayout>
+
+				<TextView
+					android:id="@+id/tv_downline_activated"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="center"
+					android:text="Activated: 2000"
+					android:textColor="@color/sky_text"
+					android:paddingVertical="@dimen/_3sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/ll_total_downline"/>
+
+				<TextView
+					android:id="@+id/tv_downline_not_activated"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_regular"
+					android:textSize="@dimen/_9sdp"
+					android:gravity="center"
+					android:text="Not Activated: 1000"
+					android:textColor="@color/orange"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/tv_downline_activated"/>
+
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<Button
+				android:id="@+id/btn_submit"
+				android:layout_width="match_parent"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:background="@drawable/login_button_border"
+				android:text="@string/downline_members"
+				android:textColor="@color/white"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_20sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/cl_downline_summary" />
+
+			<Button
+				android:id="@+id/btn_new_create"
+				android:layout_width="match_parent"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:background="@drawable/orange_border"
+				android:text="@string/new_activation"
+				android:textColor="@color/orange"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_12sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/btn_submit" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

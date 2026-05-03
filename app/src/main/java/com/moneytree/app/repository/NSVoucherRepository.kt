@@ -12,6 +12,8 @@ import com.moneytree.app.repository.network.responses.NSPackageVoucherQntRespons
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 import com.moneytree.app.repository.network.responses.PendingVoucherListResponse
+import com.moneytree.app.repository.network.responses.TopUp8888MemberListResponse
+import com.moneytree.app.repository.network.responses.TopUp8888Response
 import com.moneytree.app.repository.network.responses.TopUpDashboardResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherAvailableListResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherListResponse
@@ -298,6 +300,54 @@ object NSVoucherRepository {
 				} else {
 					errorMessageList.clear()
 					errorMessageList.add(data?.message?:"")
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getTopUpVoucher8888Dashboard(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getTopUpVoucher8888Dashboard(object :
+			NSRetrofitCallback<TopUp8888Response>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as TopUp8888Response
+				if (data.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getTopUpVoucher8888MemberList(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getTopUpVoucher8888MemberList(object :
+			NSRetrofitCallback<TopUp8888MemberListResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as TopUp8888MemberListResponse
+				if (data.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun saveTopUpVoucher8888(membered: String, sponsorId: String, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.topUp8888ActivationSave(membered, sponsorId, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
 					viewModelCallback.onError(errorMessageList)
 				}
 			}

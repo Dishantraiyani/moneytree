@@ -74,6 +74,7 @@
     <string name="email_title">Email :</string>
     <string name="username_title">UserName :</string>
     <string name="mobile_title">Mobile :</string>
+    <string name="mobile_value">Mobile : %1$s</string>
     <string name="password_title">Password</string>
     <string name="notification_title">Notifications</string>
     <string name="transactions_title">Transactions</string>
@@ -321,6 +322,8 @@
 
     <string-array name="register_filter">
         <item>All</item>
+        <item>Active</item>
+        <item>InActive</item>
         <item>Activation</item>
         <item>Upgradation</item>
     </string-array>
@@ -370,7 +373,7 @@
     </string-array>
 
     <string-array name="registration_type_voucher">
-        <item>Select Register Type</item>
+        <!--<item>Select Register Type</item>-->
         <item>Voucher Register</item>
     </string-array>
 
@@ -409,8 +412,11 @@
     <string name="rate_title">-₹%1$s</string>
     <string name="percentage_title">Percentage: %1$s</string>
     <string name="member_id">Member Id: %1$s</string>
+    <string name="member_name_value">Member Name: %1$s</string>
+    <string name="sponsor_id_value">Sponsor Id: %1$s</string>
     <string name="member_type">Member Type: %1$s</string>
     <string name="voucher_date">Date: %1$s</string>
+    <string name="activated_on">Activated On: %1$s</string>
     <string name="voucher_claim_date">Claim Month: %1$s</string>
     <string name="voucher_status_value">(%1$s)</string>
     <string name="remark_value">Remark: %1$s</string>
@@ -868,4 +874,21 @@
     <string name="claim">Claim</string>
     <string name="no_sponsors_available">No Sponsors Available</string>
     <string name="choose_product_option">Choose an Product Option</string>
+    <string name="topup_8888_activation">Topup 8888 Activation</string>
+    <string name="my_activation_status">My Activation Status</string>
+    <string name="available_pins">Available Pins</string>
+    <string name="downline_summary">Downline Summary</string>
+    <string name="total_downline">Total Downline:</string>
+    <string name="downline_members">Downline Members</string>
+    <string name="you_are_not_yet_activated_via_8888_pro">You are not yet activated via 8888 Pro.</string>
+    <string name="you_are_activated_via_8888_pro">You are activated via 8888 Pro.</string>
+    <string name="not_activated">Not Activated</string>
+    <string name="activated">Activated</string>
+    <string name="downline_members_active_status">Downline members - Activation status</string>
+    <string name="new_activation">New Activation</string>
+    <string name="select_member">Select Member</string>
+    <string name="dash">-</string>
+    <string name="sponsor_name">Sponsor Name</string>
+    <string name="no_available_pins_please_get_pins_first">No Available pins. Please get pins first</string>
+    <string name="please_select_sponsor_member">Please Select Sponsor Member</string>
 </resources>

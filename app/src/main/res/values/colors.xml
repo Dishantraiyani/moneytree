@@ -7,6 +7,7 @@
     <color name="teal_700">#eba94a</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="sky_text">#71CCCF</color>
     <string name="white">#FFFFFFFF</string>
 
     <color name="orange">#eba94a</color>
@@ -17,6 +18,8 @@
     <color name="phone_background">#E5E5EA</color>
     <color name="gray_text">#858585</color>
     <color name="light_yellow">#eba94a</color>
+    <color name="sky_bg">#97bec2</color>
+    <color name="purple_bg">#8285B7</color>
     <color name="line_color">#E5E5E5</color>
 
     <color name="light_gray">#FEFAEF</color>

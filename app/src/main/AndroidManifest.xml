@@ -66,6 +66,18 @@
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
+            android:name=".ui.vouchers.topup8888.TopUpVoucher8888Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.vouchers.topup8888.newactive.TopUp8888CreateActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
             android:name=".ui.vouchers.topup.TopUpVoucherActivity"
             android:exported="false"
             android:screenOrientation="portrait"

@@ -1472,6 +1472,17 @@ class NSApiManager {
 		request(unAuthorised3020Client.getTopUpVoucherAvailableList(NSUserManager.getAuthToken()), callback)
 	}
 	
+	fun getTopUpVoucher8888Dashboard(callback: NSRetrofitCallback<TopUp8888Response>) {
+		request(unAuthorised3020Client.topUp8888Dashboard(NSUserManager.getAuthToken()), callback)
+	}
+	
+	fun getTopUpVoucher8888MemberList(callback: NSRetrofitCallback<TopUp8888MemberListResponse>) {
+		request(unAuthorised3020Client.topUp8888MemberList(NSUserManager.getAuthToken()), callback)
+	}
+	fun topUp8888ActivationSave(membered: String, sponsorId: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.topUp8888ActivationSave(NSUserManager.getAuthToken(), membered, sponsorId), callback)
+	}
+	
 	fun checkDspAndSponsor(memberType: String, memberCode: String, callback: NSRetrofitCallback<DspAndSponsorModel>) {
 		request(unAuthorised3020Client.checkDspAndSponsor(NSUserManager.getAuthToken(), memberType.trim(), memberCode), callback)
 	}
@@ -2259,4 +2270,26 @@ interface RTApiInterface {
 		@Field("delivery_type") deliveryType: String,
 		@Field("product_option") productOption: String
 	): Call<NSSuccessResponse>
+	
+	@FormUrlEncoded
+	@POST("topup8888-dashboard")
+	fun topUp8888Dashboard(
+		@Field("token_id") token: String
+	): Call<TopUp8888Response>
+	
+	@FormUrlEncoded
+	@POST("topup8888-member-list")
+	fun topUp8888MemberList(
+		@Field("token_id") token: String
+	): Call<TopUp8888MemberListResponse>
+	
+	@FormUrlEncoded
+	@POST("topup8888-activation-save")
+	fun topUp8888ActivationSave(
+		@Field("token_id") token: String,
+		@Field("memberid") membered: String,
+		@Field("sponsor_id") sponsorId: String
+	): Call<NSSuccessResponse>
+	
+	
 }

@@ -114,6 +114,11 @@ open class NSFragment : Fragment() {
 		val errorMessage: String = message ?: getString(R.string.something_went_wrong)
 		NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey, positiveButtonText = positiveButton, negativeButtonText = negativeButton, isCancelNeeded = true, callback = callback)
 	}
+    
+    protected fun showOnlyCommonDialog(title: String?, message: String?, positiveButton: String, alertKey: String = NSConstants.COMMON_CLICK, callback: NSDialogClickCallback? = null) {
+        val errorMessage: String = message ?: getString(R.string.something_went_wrong)
+        NSAlertUtils.showAlertDialog(mContext as FragmentActivity, errorMessage, title, alertKey = alertKey, positiveButtonText = positiveButton, isCancelNeeded = false, callback = callback)
+    }
 
     /**
      * To display the no network dialog

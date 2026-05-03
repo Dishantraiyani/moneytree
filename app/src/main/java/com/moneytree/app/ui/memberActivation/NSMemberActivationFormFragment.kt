@@ -92,7 +92,7 @@ class NSMemberActivationFormFragment : NSFragment() {
 				btnSubmit.setOnClickListener(object : OnSingleClickListener() {
 					override fun onSingleClick(v: View?) {
 
-						if (spinnerRegisterType.selectedItemPosition != 0) {
+						//if (spinnerRegisterType.selectedItemPosition != 0) {
 							var registerType = registrationType[spinnerRegisterType.selectedItemPosition]
 							registerType = if (registerType == "Wallet Register") {
 								"W"
@@ -100,9 +100,8 @@ class NSMemberActivationFormFragment : NSFragment() {
 								"V"
 							}
 
-							if (spinnerPackageType.selectedItemPosition != 0) {
-								val packageType =
-									packageList[spinnerPackageType.selectedItemPosition - 1]
+							if (spinnerPackageType.selectedItemPosition != 0 || packageList.size == 1) {
+								val packageType = packageList[spinnerPackageType.selectedItemPosition]
 								val packageId = packageType.packageId
 
 								if (cbChecked.isChecked) {
@@ -138,13 +137,13 @@ class NSMemberActivationFormFragment : NSFragment() {
 									Toast.LENGTH_SHORT
 								).show()
 							}
-						} else {
+						/*} else {
 							Toast.makeText(
 								activity,
 								activity.resources.getString(R.string.please_select_activation_type),
 								Toast.LENGTH_SHORT
 							).show()
-						}
+						}*/
 					}
 				})
             }

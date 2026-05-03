@@ -15,5 +15,9 @@ data class NSSuccessResponse(
     var message: String? = null,
     @SerializedName("is_payment_mode")
     @Expose
-    var isPaymentMode: Boolean = false
+    var isPaymentMode: Boolean = false,
+    @SerializedName("data")
+    @Expose
+    var data: Any? = null
+    
 )

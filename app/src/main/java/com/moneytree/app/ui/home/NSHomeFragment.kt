@@ -72,6 +72,7 @@ import com.moneytree.app.ui.reports.NSReportsActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import com.moneytree.app.ui.vouchers.topup.list.TopUpVoucherListActivity
+import com.moneytree.app.ui.vouchers.topup8888.TopUpVoucher8888Activity
 import com.moneytree.app.ui.vouchers.topupact.list.TopUpVoucherActivationListActivity
 import com.moneytree.app.ui.wallets.redeemForm.NSAddRedeemActivity
 import com.moneytree.app.ui.wallets.transfer.NSTransferActivity
@@ -397,6 +398,11 @@ class NSHomeFragment : NSFragment() {
 	                    llTopupVouchers.setOnClickListener {
 		                    drawer.closeDrawer(GravityCompat.START)
 		                    switchActivity(TopUpVoucherListActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to true))
+	                    }
+	                    
+	                    llTopup8888Activation.setOnClickListener {
+		                    drawer.closeDrawer(GravityCompat.START)
+		                    switchActivity(TopUpVoucher8888Activity::class.java)
 	                    }
 	                    
 	                    llTopupVouchersActivation.setOnClickListener {

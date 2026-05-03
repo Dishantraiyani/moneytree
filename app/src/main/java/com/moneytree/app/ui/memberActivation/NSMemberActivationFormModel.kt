@@ -41,7 +41,10 @@ class NSMemberActivationFormModel(application: Application) : NSViewModel(applic
 			strPackageList.clear()
 			strPackageList.add("Select Package")
 			if (activationPackageResponse != null) {
-				packageList.addAll(activationPackageResponse!!.data)
+				packageList.addAll(activationPackageResponse?.data?: arrayListOf())
+				if (packageList.size == 1) {
+					strPackageList.remove("Select Package")
+				}
 				for (dt in activationPackageResponse!!.data) {
 					strPackageList.add(dt.packageName!!)
 				}
