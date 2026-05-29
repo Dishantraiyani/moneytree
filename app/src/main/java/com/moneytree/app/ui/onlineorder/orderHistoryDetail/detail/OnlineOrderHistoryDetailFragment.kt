@@ -1,37 +1,33 @@
-package com.moneytree.app.ui.mycart.orders.history
+package com.moneytree.app.ui.onlineorder.orderHistoryDetail.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.callbacks.NSSearchCallback
-import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.switchActivity
-import com.moneytree.app.databinding.NsFragmentRsHistoryBinding
-import com.moneytree.app.ui.mycart.orders.detail.OrderDetailActivity
-import com.moneytree.app.ui.onlineorder.orderHistoryDetail.detail.OnlineOrderHistoryDetailActivity
+import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.expandCollapse
+import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.visible
+import com.moneytree.app.databinding.FragmentOnlineOrderDetailInfoBinding
 
-class OrderHistoryFragment : NSFragment(), NSSearchCallback {
-    private val historyModel: OrderHistoryViewModel by lazy {
-		ViewModelProvider(this)[OrderHistoryViewModel::class.java]
+class OnlineOrderHistoryDetailFragment : NSFragment() {
+    private val historyModel: OnlineOrderInfoViewModel by lazy {
+		ViewModelProvider(this)[OnlineOrderInfoViewModel::class.java]
     }
-    private var _binding: NsFragmentRsHistoryBinding? = null
+    private var _binding: FragmentOnlineOrderDetailInfoBinding? = null
 
     private val stockBinding get() = _binding!!
-    private var stockListAdapter: OrderHistoryRecycleAdapter? = null
-
+    private var stockListAdapter: OnlineOrderHistoryDetailAdapter? = null
+    private var isExpand = true
 
 	companion object {
-		fun newInstance(bundle: Bundle?) = OrderHistoryFragment().apply {
+		fun newInstance(bundle: Bundle?) = OnlineOrderHistoryDetailFragment().apply {
 			arguments = bundle
 		}
 	}
@@ -40,7 +36,8 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
 		super.onCreate(savedInstanceState)
 		arguments?.let {
 			with(historyModel) {
-				isFromOnlineOrder = it.getBoolean(NSConstants.KEY_IS_FROM_ONLINE_ORDER)
+                orderDirectId = it.getString(NSConstants.ORDER_DETAIL_ID)
+                orderDirectDetail = it.getString(NSConstants.ORDER_DETAIL_ID_DETAIL)
 			}
 		}
 	}
@@ -49,9 +46,9 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = NsFragmentRsHistoryBinding.inflate(inflater, container, false)
+        _binding = FragmentOnlineOrderDetailInfoBinding.inflate(inflater, container, false)
         viewCreated()
-        setListener()
+		setListener()
         return stockBinding.root
     }
 
@@ -61,9 +58,12 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
     private fun viewCreated() {
         with(stockBinding) {
             with(historyModel) {
-                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle =  resources.getString(R.string.order_history), isSearch = true, searchCallback = this@OrderHistoryFragment)
+                HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle =  resources.getString(R.string.online_order_info))
                 setVoucherAdapter()
             }
+            
+            //
+            //                        tvAddress.text = addressStr
         }
         observeViewModel()
     }
@@ -75,26 +75,20 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
         with(historyModel) {
             with(stockBinding) {
                 srlRefresh.setOnRefreshListener {
-                    pageIndex = "1"
-                    getProductListData(pageIndex, layoutHeader.etSearch.text.toString(), false, isBottomProgress = false)
+                    getProductListData(false)
                 }
-
-				with(layoutHeader) {
-					ivClose.setOnClickListener {
-						cardSearch.visibility = View.GONE
-						etSearch.setText("")
-						hideKeyboard(cardSearch)
-						with(historyModel) {
-							pageIndex = "1"
-							if (tempProductList.isValidList()) {
-								productList.clear()
-								productList.addAll(tempProductList)
-								tempProductList.clear()
-								setVoucherData(productList.isValidList())
-							}
-						}
-					}
-				}
+                
+                ivExpandCollapse.setOnClickListener {
+                    
+                    isExpand = !isExpand
+                    
+                    clExpandCollapse.expandCollapse(isExpand)
+                    
+                    ivExpandCollapse.animate()
+                        .rotation(if (!isExpand) 180f else 0f)
+                        .setDuration(300)
+                        .start()
+                }
             }
         }
     }
@@ -107,38 +101,9 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
             with(historyModel) {
 				rvHistoryList.layoutManager = LinearLayoutManager(activity)
                 stockListAdapter =
-                    OrderHistoryRecycleAdapter(activity, isFromOnlineOrder, object : NSPageChangeCallback{
-                        override fun onPageChange(pageNo: Int) {
-                            if (productResponse!!.nextPage) {
-                                val page: Int = productList.size/NSConstants.PAGINATION + 1
-                                pageIndex = page.toString()
-                                getProductListData(pageIndex,  layoutHeader.etSearch.text.toString(), true, isBottomProgress = true)
-                            }
-                        }
-                    }) {
-                        if (isFromOnlineOrder) {
-                            switchActivity(
-                                OnlineOrderHistoryDetailActivity::class.java,
-                                bundleOf(
-                                    NSConstants.ORDER_DETAIL_ID to it.directOrderId,
-                                    NSConstants.ORDER_DETAIL_ID_DETAIL to Gson().toJson(it),
-                                    NSConstants.KEY_IS_FROM_ONLINE_ORDER to isFromOnlineOrder
-                                )
-                            )
-                        } else {
-                            switchActivity(
-                                OrderDetailActivity::class.java,
-                                bundleOf(
-                                    NSConstants.ORDER_DETAIL_ID to it.directOrderId,
-                                    NSConstants.ORDER_DETAIL_ID_DETAIL to Gson().toJson(it),
-                                    NSConstants.KEY_IS_FROM_ONLINE_ORDER to isFromOnlineOrder
-                                )
-                            )
-                        }
-                    }
+                    OnlineOrderHistoryDetailAdapter(activity)
                 rvHistoryList.adapter = stockListAdapter
-                pageIndex = "1"
-                getProductListData(pageIndex, layoutHeader.etSearch.text.toString(), true, isBottomProgress = false)
+                getProductListData(true)
             }
         }
     }
@@ -156,6 +121,37 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
      */
     private fun setVoucherData(isVoucher: Boolean) {
         with(historyModel) {
+            historyModel.orderHistoryDataItem?.apply {
+                val addressStr = address1 + ", " + city + ", " + district + ", " + state + if(country.isNullOrEmpty()) "" else ", $country"
+                
+                stockBinding.apply {
+                    tvAddress.text = addressStr
+                    tvOrderId.text = directOrderId
+                    tvOrderNo.text = orderNo
+                    tvMemberId.text = memberid
+                    tvDate.text = createdAt
+                    tvOrderStatus.text = orderStatus
+                    tvTotal.text = total
+                    tvFullName.text = fullName
+                    tvMobile.text = mobileNo
+                    tvEmail.text = email
+                    llDate.setVisibility(!createdAt.isNullOrEmpty())
+                    llOrderStatus.setVisibility(!orderStatus.isNullOrEmpty())
+                    llFullName.setVisibility(!fullName.isNullOrEmpty())
+                    llMobile.setVisibility(!mobileNo.isNullOrEmpty())
+                    llEmail.setVisibility(!email.isNullOrEmpty())
+                    
+                    if (mtCoinStatus?.isNotEmpty() == true) {
+                        llMtCoin.visible()
+                        tvMtCoin.text = mtCoinStatus
+                    }
+                    if (mtCoinTotal?.isNotEmpty() == true) {
+                        llMtCoinTotal.visible()
+                        tvMtCoinTotal.text = mtCoinTotal.let { addText(activity, R.string.price_value, it) }
+                    }
+                }
+            }
+            
             voucherDataManage(isVoucher)
             if (isVoucher) {
                 stockListAdapter!!.clearData()
@@ -223,18 +219,6 @@ class OrderHistoryFragment : NSFragment(), NSSearchCallback {
                     showAlertDialog(getString(errorId))
                 }
             }
-        }
-    }
-
-    override fun onSearch(search: String) {
-        with(historyModel) {
-            tempProductList.addAll(productList)
-            getProductListData(
-                pageIndex,
-                search,
-                true,
-                isBottomProgress = false
-            )
         }
     }
 }

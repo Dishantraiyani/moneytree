@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
+import com.moneytree.app.repository.network.responses.PlaceOrderAddressCreateResponse
 
 /**
  * Class to maintain shared preference
@@ -23,6 +24,7 @@ class NSPreferences(context: Context) {
         private const val KEY_IS_ACTIVE_USER = "key_is_active_user"
         private const val KEY_DISPLAY_POPUP = "key_is_display_popup"
         private const val KEY_SELECTED_ADDRESS = "key_is_selected_address"
+        private const val KEY_PLACE_ORDER_ADDRESS = "key_is_place_order_address"
         private const val KEY_KYC_VERIFIED = "key_is_kyc_verified"
         private const val KEY_KYC_VERIFIED_SKIP = "key_is_kyc_verified_skip"
         private const val KEY_REWARD_COIN_PERIOD = "key_is_reward_coin_period"
@@ -77,6 +79,16 @@ class NSPreferences(context: Context) {
         set(loginResponse) {
             val json: String = Gson().toJson(loginResponse)
             prefEdit.putString(KEY_SELECTED_ADDRESS, json).apply()
+        }
+    
+    var placeOrderAddress: PlaceOrderAddressCreateResponse?
+        get() {
+            val json: String? = preference.getString(KEY_PLACE_ORDER_ADDRESS, null)
+            return Gson().fromJson(json, PlaceOrderAddressCreateResponse::class.java)
+        }
+        set(loginResponse) {
+            val json: String = Gson().toJson(loginResponse)
+            prefEdit.putString(KEY_PLACE_ORDER_ADDRESS, json).apply()
         }
 
     /**

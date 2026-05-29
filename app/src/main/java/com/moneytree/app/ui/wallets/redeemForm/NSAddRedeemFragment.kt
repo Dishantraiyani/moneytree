@@ -162,7 +162,7 @@ class NSAddRedeemFragment : NSFragment() {
 	private fun calculateCutAmount(amountStr: String) {
 		if (amountStr.isNotEmpty()) {
 			val amount = amountStr.toDouble()
-			val cutAmount = amount * 0.95 // 5% cut
+			val cutAmount = amount * 0.98 // 2% cut
 			val received = "$cutAmount"
 			adBinding.tvReceivableAmount.text = received
 		} else {

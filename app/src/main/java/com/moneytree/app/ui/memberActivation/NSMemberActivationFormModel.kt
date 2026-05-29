@@ -9,7 +9,10 @@ import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.responses.NSActivationPackageData
+import com.moneytree.app.repository.network.responses.NSActivationPackageResponse
+import com.moneytree.app.repository.network.responses.NSRegisterListData
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
 
 
 /**

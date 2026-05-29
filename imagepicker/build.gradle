@@ -6,7 +6,6 @@ android {
     defaultConfig {
         multiDexEnabled true
         minSdkVersion 23
-        targetSdk 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,8 +34,12 @@ android {
     }
     lint {
         disable 'MissingTranslation'
+        targetSdk 36
     }
     namespace 'com.github.drjacky.imagepicker1'
+    testOptions {
+        targetSdk 36
+    }
 }
 
 dependencies {

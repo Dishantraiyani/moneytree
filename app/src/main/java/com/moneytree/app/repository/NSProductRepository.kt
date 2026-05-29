@@ -383,4 +383,38 @@ object NSProductRepository {
 			}
 		})
 	}
+	
+	fun saveOnlineOrderCart(map: HashMap<String, Any>, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.saveOnlineOrderCart(map, object :
+			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_SEND_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as NSSuccessResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+	
+	fun getOnlineOrderHistoryList(pageIndex: String, search: String,
+	                               viewModelCallback: NSGenericViewModelCallback
+	) {
+		apiManager.getOnlineOrderHistoryList(pageIndex, search, object :
+			NSRetrofitCallback<OrderHistoryResponse>(viewModelCallback, NSApiErrorHandler.ERROR_STOCK_TRANSFER_DATA) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as OrderHistoryResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 }

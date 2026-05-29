@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	tools:context=".ui.vouchers.joining.NSPendingVoucherFragment">
+
+	<include android:id="@+id/layout_header"
+		layout="@layout/layout_header"/>
+
+	<androidx.cardview.widget.CardView android:id="@+id/cl_order_detail"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:cardCornerRadius="@dimen/_5sdp"
+		app:cardUseCompatPadding="true"
+		android:layout_marginTop="@dimen/_10sdp"
+		android:layout_marginHorizontal="@dimen/_10sdp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/cl_product_layout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="0dp"
+			android:paddingBottom="@dimen/_10sdp">
+
+			<TextView
+				android:id="@+id/tv_repurchase_no"
+				style="@style/LoginSubFontsZeroWrap"
+				android:text="@string/order_summary"
+				android:gravity="start"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/white"
+				android:paddingVertical="@dimen/_8sdp"
+				android:paddingStart="@dimen/_10sdp"
+				android:maxLines="2"
+				android:textStyle="bold"
+				android:textSize="@dimen/_12sdp"
+				android:fontFamily="@font/inter_semi_bold"
+				android:background="@drawable/half_top_corners_five"
+				android:backgroundTint="@color/orange"
+				android:paddingEnd="@dimen/_5sdp"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+
+			<RelativeLayout
+				android:id="@+id/rl_bg"
+				android:layout_width="@dimen/_18sdp"
+				android:layout_height="@dimen/_18sdp"
+				android:layout_marginEnd="@dimen/_10sdp"
+				android:background="@drawable/circle"
+				android:backgroundTint="@color/white"
+				android:alpha="0.7"
+				app:layout_constraintEnd_toEndOf="@id/tv_repurchase_no"
+				app:layout_constraintTop_toTopOf="@id/tv_repurchase_no"
+				app:layout_constraintBottom_toBottomOf="@id/tv_repurchase_no"/>
+
+			<ImageView
+				android:id="@+id/iv_expand_collapse"
+				android:layout_width="@dimen/_18sdp"
+				android:layout_height="@dimen/_18sdp"
+				android:src="@drawable/ic_arrow_expand_collapse"
+				android:padding="@dimen/_3sdp"
+				app:layout_constraintStart_toStartOf="@id/rl_bg"
+				app:layout_constraintEnd_toEndOf="@id/rl_bg"
+				app:layout_constraintTop_toTopOf="@id/rl_bg"
+				app:layout_constraintBottom_toBottomOf="@id/rl_bg"/>
+
+			<View
+				android:id="@+id/view_line"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@color/line_color"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/tv_repurchase_no"/>
+
+			<LinearLayout
+				android:id="@+id/ll_stock"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="@dimen/_5sdp"
+				android:paddingHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/view_line">
+
+				<TextView
+					style="@style/LoginSubFontsWrap"
+					android:text="@string/order_id"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="start"
+					app:guidelineUseRtl="true"
+					android:textColor="@color/gray_text"
+					android:paddingStart="@dimen/_10sdp"
+					android:lines="1"
+					android:fontFamily="@font/inter_medium"
+					android:paddingEnd="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				<TextView
+					android:id="@+id/tv_order_id"
+					style="@style/LoginSubFontsWrap"
+					android:layout_width="0dp"
+					tools:text="@string/stockiest_title"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="end"
+					app:guidelineUseRtl="true"
+					android:textColor="@color/black"
+					android:paddingStart="@dimen/_5sdp"
+					android:lines="1"
+					android:layout_weight="1"
+					android:fontFamily="@font/inter_medium"
+					android:paddingEnd="@dimen/_10sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/ll_order_no"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:layout_marginTop="@dimen/_5sdp"
+				android:paddingHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/ll_stock">
+
+				<TextView
+					style="@style/LoginSubFontsWrap"
+					android:text="@string/order_no_title"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="start"
+					app:guidelineUseRtl="true"
+					android:textColor="@color/gray_text"
+					android:paddingStart="@dimen/_10sdp"
+					android:lines="1"
+					android:fontFamily="@font/inter_medium"
+					android:paddingEnd="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				<TextView
+					android:id="@+id/tv_order_no"
+					style="@style/LoginSubFontsWrap"
+					android:layout_width="0dp"
+					android:textSize="@dimen/_10sdp"
+					android:gravity="end"
+					app:guidelineUseRtl="true"
+					android:textColor="@color/orange"
+					android:paddingStart="@dimen/_5sdp"
+					android:lines="1"
+					android:layout_weight="1"
+					android:fontFamily="@font/inter_medium"
+					android:paddingEnd="@dimen/_10sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+			</LinearLayout>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_expand_collapse"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingHorizontal="@dimen/_5sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/ll_order_no">
+
+				<LinearLayout
+					android:id="@+id/ll_member_id"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent">
+
+					<TextView
+						android:id="@+id/tv_member_id_title"
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/member_id_title_"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_member_id"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/member_id_title_"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_date"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_member_id">
+
+					<TextView
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/date_title"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_date"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/date_title"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_order_status"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_date">
+
+					<TextView
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/order_status"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_order_status"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/remark"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/orange"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_full_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_order_status">
+
+					<TextView
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/full_name"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_full_name"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/remark"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_mobile"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_full_name">
+
+					<TextView
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/mobile"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_mobile"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/remark"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_email"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_mobile">
+
+					<TextView
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/email"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_email"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/remark"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_address"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_email">
+
+					<TextView
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/address"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_address"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/remark"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_25sdp"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+
+				<LinearLayout
+					android:id="@+id/ll_mt_coin"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:visibility="gone"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_address">
+
+					<TextView
+						android:id="@+id/tv_mt_coin_title"
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/mt_coin_status"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_mt_coin"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/total_"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/orange"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_mt_coin_total"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					android:visibility="gone"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_mt_coin">
+
+					<TextView
+						android:id="@+id/tv_mt_coin_total_title"
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/mt_coin_total"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_mt_coin_total"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/total_"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/black"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					android:id="@+id/ll_total"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:layout_marginTop="@dimen/_5sdp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/ll_mt_coin_total">
+
+					<TextView
+						android:id="@+id/tv_total_title"
+						style="@style/LoginSubFontsWrap"
+						android:text="@string/total_"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="start"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/gray_text"
+						android:paddingStart="@dimen/_10sdp"
+						android:lines="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_5sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+					<TextView
+						android:id="@+id/tv_total"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						tools:text="@string/total_"
+						android:textSize="@dimen/_10sdp"
+						android:gravity="end"
+						app:guidelineUseRtl="true"
+						android:textColor="@color/orange"
+						android:paddingStart="@dimen/_5sdp"
+						android:lines="1"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_medium"
+						android:paddingEnd="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+				</LinearLayout>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.cardview.widget.CardView>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/cl_product_not_found"
+		style="@style/LayoutWidthHeightZero"
+		app:layout_constraintBottom_toTopOf="@id/cv_progress"
+		app:layout_constraintTop_toBottomOf="@id/cl_order_detail"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/tv_product_not_found"
+			style="@style/LayoutWidthHeightZero"
+			android:paddingVertical="@dimen/_6sdp"
+			android:clipToPadding="false"
+			android:text="@string/no_item"
+			android:textColor="@color/black"
+			android:gravity="center|bottom"
+			android:textSize="@dimen/_18sdp"
+			android:textStyle="bold"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintBottom_toTopOf="@+id/tv_product_not_found_sub"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"/>
+
+		<TextView
+			android:id="@+id/tv_product_not_found_sub"
+			style="@style/LayoutWidthHeightZero"
+			android:clipToPadding="false"
+			android:text="@string/no_products_available"
+			android:textColor="@color/gray_text"
+			android:gravity="center|top"
+			android:textSize="@dimen/_14sdp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/tv_product_not_found"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"/>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/srl_refresh"
+		style="@style/LayoutWidthHeightZero"
+		app:layout_constraintBottom_toTopOf="@id/cv_progress"
+		app:layout_constraintTop_toBottomOf="@id/cl_order_detail"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent">
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/rv_history_list"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:paddingTop="@dimen/_10sdp"
+			android:paddingBottom="0dp"
+			android:paddingHorizontal="@dimen/_10sdp"
+			android:clipToPadding="false"
+			android:visibility="gone"/>
+
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+	<RelativeLayout
+		android:id="@+id/cv_progress"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/_40sdp"
+		android:visibility="gone"
+		android:background="@color/white"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent">
+
+		<ProgressBar
+			android:layout_width="@dimen/_22sdp"
+			android:layout_height="@dimen/_22sdp"
+			android:layout_centerInParent="true" />
+
+	</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

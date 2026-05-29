@@ -8,7 +8,6 @@ android {
 
     defaultConfig {
         minSdkVersion 23
-        targetSdk 36
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -32,6 +31,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    lint {
+        targetSdk 36
+    }
+    testOptions {
+        targetSdk 36
     }
 }
 

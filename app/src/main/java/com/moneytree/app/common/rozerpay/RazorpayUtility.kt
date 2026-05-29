@@ -14,7 +14,7 @@ class RazorpayUtility(private val context: Activity) {
 
     fun startPayment(rozerModel: RozerModel) {
         val checkout = Checkout()
-        checkout.setKeyID("rzp_live_2hfV6yS6Cv9ri8")
+        checkout.setKeyID("rzp_live_Sv4f2OIESZAUlj")
 
         val options = JSONObject()
         rozerModel.apply {
@@ -25,7 +25,7 @@ class RazorpayUtility(private val context: Activity) {
             options.put(bidDetails.allowRotation, false)
             options.put(bidDetails.image, image)
             options.put(bidDetails.currency, bidDetails.currencyValue)
-            options.put(bidDetails.amount, price!!.toInt() * 100)
+            options.put(bidDetails.amount, (price?.toInt()?:0) * 100)
             val preFill = JSONObject()
             preFill.put(bidDetails.email, email)
             preFill.put(bidDetails.contact, mobile)

@@ -195,7 +195,7 @@ class NomineeDetailFragment :
                             cardRelationOther.gone()
                         }
 
-                        val aPosition = aFilter.indexOf(nomineeDobValue)
+                        val aPosition = aFilter.indexOf(nomineeGenderValue)
                         ageTypeSpinner.setSelection(aPosition)
                     }
                 }

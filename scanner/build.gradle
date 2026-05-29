@@ -7,7 +7,6 @@ android {
 
     defaultConfig {
         minSdkVersion 23
-        targetSdk 36
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,6 +31,12 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+    lint {
+        targetSdk 36
+    }
+    testOptions {
+        targetSdk 36
     }
 }
 

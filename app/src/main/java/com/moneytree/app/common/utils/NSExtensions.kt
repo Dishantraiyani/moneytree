@@ -1,6 +1,7 @@
 package com.moneytree.app.common.utils
 
 import android.Manifest
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -26,6 +27,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.core.animation.doOnEnd
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -588,3 +590,67 @@ fun AppCompatActivity.requestLocationPermissions(requestCode: Int) {
     )
 }
 
+fun View.expand(
+    duration: Long = 300
+) {
+    measure(
+        View.MeasureSpec.makeMeasureSpec(
+            (parent as View).width,
+            View.MeasureSpec.EXACTLY
+        ),
+        View.MeasureSpec.UNSPECIFIED
+    )
+    
+    val targetHeight = measuredHeight
+    
+    layoutParams.height = 0
+    visibility = View.VISIBLE
+    
+    ValueAnimator.ofInt(0, targetHeight).apply {
+        this.duration = duration
+        
+        addUpdateListener {
+            layoutParams.height = it.animatedValue as Int
+            requestLayout()
+        }
+        
+        doOnEnd {
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+        
+        start()
+    }
+}
+
+fun View.collapse(
+    duration: Long = 300
+) {
+    val initialHeight = measuredHeight
+    
+    ValueAnimator.ofInt(initialHeight, 0).apply {
+        this.duration = duration
+        
+        addUpdateListener {
+            layoutParams.height = it.animatedValue as Int
+            requestLayout()
+        }
+        
+        doOnEnd {
+            visibility = View.GONE
+            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+        
+        start()
+    }
+}
+
+fun View.expandCollapse(
+    isExpanded: Boolean,
+    duration: Long = 300
+) {
+    if (isExpanded) {
+        expand(duration)
+    } else {
+        collapse(duration)
+    }
+}

@@ -427,6 +427,18 @@ class NSApiManager {
 			), callback
 		)
 	}
+	
+	fun onlineOrderHistoryDetail(
+		rePurchaseId: String,
+		callback: NSRetrofitCallback<OnlineOrderInfoResponse>
+	) {
+		request(
+			unAuthorised3020Client.onlineOrderHistoryDetail(
+				NSUserManager.getAuthToken(),
+				rePurchaseId
+			), callback
+		)
+	}
 
 	/**
 	 * To call the user detail data API
@@ -1134,6 +1146,13 @@ class NSApiManager {
 			callback
 		)
 	}
+	
+	fun getOnlineOrderHistoryList(pageIndex: String, search: String, callback: NSRetrofitCallback<OrderHistoryResponse>) {
+		request(
+			unAuthorised3020Client.onlineOrderHistoryList(NSUserManager.getAuthToken(), pageIndex, search),
+			callback
+		)
+	}
 
 	/**
 	 * To call the user detail data API
@@ -1485,6 +1504,10 @@ class NSApiManager {
 	
 	fun checkDspAndSponsor(memberType: String, memberCode: String, callback: NSRetrofitCallback<DspAndSponsorModel>) {
 		request(unAuthorised3020Client.checkDspAndSponsor(NSUserManager.getAuthToken(), memberType.trim(), memberCode), callback)
+	}
+	
+	fun saveOnlineOrderCart(map: HashMap<String, Any>, callback: NSRetrofitCallback<NSSuccessResponse>) {
+		request(unAuthorised3020Client.saveOnlineOrderCart(NSUserManager.getAuthToken(), map), callback)
 	}
 	
 	fun saveTopUpActiveVoucher(model: VoucherActiveSaveModel, callback: NSRetrofitCallback<NSSuccessResponse>) {
@@ -2291,5 +2314,25 @@ interface RTApiInterface {
 		@Field("sponsor_id") sponsorId: String
 	): Call<NSSuccessResponse>
 	
+	@FormUrlEncoded
+	@POST("save-online-order-cart")
+	fun saveOnlineOrderCart(
+		@Field("token_id") token: String,
+		@FieldMap map: HashMap<String, Any>
+	): Call<NSSuccessResponse>
 	
+	@FormUrlEncoded
+	@POST("online-order-list")
+	fun onlineOrderHistoryList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String
+	): Call<OrderHistoryResponse>
+	
+	@FormUrlEncoded
+	@POST("online-order-detail")
+	fun onlineOrderHistoryDetail(
+		@Field("token_id") token: String,
+		@Field("direct_order_id") repurchaseInfo: String
+	): Call<OnlineOrderInfoResponse>
 }

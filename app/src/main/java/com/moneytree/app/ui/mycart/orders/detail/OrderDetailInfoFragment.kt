@@ -122,7 +122,7 @@ class OrderDetailInfoFragment : NSFragment(), NSSearchCallback {
                 stockListAdapter =
                     OrderDetailRecycleAdapter(activity, object : NSPageChangeCallback{
                         override fun onPageChange(pageNo: Int) {
-                            if (productResponse!!.nextPage) {
+                            if (productResponse?.nextPage == true) {
                                 val page: Int = productList.size/NSConstants.PAGINATION + 1
                                 pageIndex = page.toString()
                                 getProductListData(pageIndex,  layoutHeader.etSearch.text.toString(), true, isBottomProgress = true)

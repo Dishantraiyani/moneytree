@@ -11,6 +11,7 @@ class NSConstants {
         const val KEY_IS_SELECTED_ADDRESS = "key_is_selected_address"
         const val KEY_IS_SELECTED_MEETING = "key_is_selected_meeting"
         const val KEY_IS_FROM_ORDER = "key_is_from_order"
+        const val KEY_IS_FROM_ONLINE_ORDER = "key_is_from_online_order"
         const val KEY_IS_DEFAULT_ADDRESS = "key_is_default_address"
         const val KEY_IS_ADD_ADDRESS = "key_is_add_address"
         const val KEY_IS_ADD_MEETING = "key_is_add_meeting"
@@ -60,6 +61,7 @@ class NSConstants {
         const val COMMON_CLICK = "common_button_click"
         const val SIGNUP_CLICK = "sign_up_common_button_click"
 		const val PRODUCT_SEND_CLICK = "product_send_button_click"
+		const val PRODUCT_ONLINE_ORDER_SEND_CLICK = "product_online_order_send_button_click"
 
 		const val KEY_RECHARGE_VERIFY = "key_recharge_verify"
 		const val KEY_RECHARGE_TYPE = "key_recharge_type_selected"

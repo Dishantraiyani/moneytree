@@ -59,6 +59,7 @@ import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.meeting.MeetingActivity
 import com.moneytree.app.ui.mycart.orders.NSOrderActivity
+import com.moneytree.app.ui.onlineorder.OnlineOrderActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.paymentSummary.PaymentSummaryActivity
@@ -383,6 +384,13 @@ class NSHomeFragment : NSFragment() {
 								NSOrderActivity::class.java
 							)
 						}
+	                    
+	                    llOnlineOrder.setOnClickListener {
+		                    drawer.closeDrawer(GravityCompat.START)
+		                    switchActivity(
+			                    OnlineOrderActivity::class.java
+		                    )
+	                    }
 
 						llRegisterSeller.setOnClickListener {
 							NSUtilities.openBrowser(activity, "https://moneytree.biz/Seller/Login")

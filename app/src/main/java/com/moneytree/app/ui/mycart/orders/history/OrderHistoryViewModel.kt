@@ -2,18 +2,12 @@ package com.moneytree.app.ui.mycart.orders.history
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
-import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
-import com.moneytree.app.repository.network.responses.NSProductListResponse
-import com.moneytree.app.repository.network.responses.NSRepurchaseStockModel
 import com.moneytree.app.repository.network.responses.OrderHistoryDataItem
 import com.moneytree.app.repository.network.responses.OrderHistoryResponse
-import com.moneytree.app.repository.network.responses.ProductDataDTO
-import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 
 
 /**
@@ -28,7 +22,7 @@ class OrderHistoryViewModel(application: Application) : NSViewModel(application)
     var productResponse: OrderHistoryResponse? = null
     private var isBottomProgressShow: Boolean = false
     private var searchData: String = ""
-    var isFromOrderTab: Boolean = false
+    var isFromOnlineOrder: Boolean = false
 
     /**
      * Get voucher list data
@@ -46,7 +40,12 @@ class OrderHistoryViewModel(application: Application) : NSViewModel(application)
         }
         isBottomProgressShow = isBottomProgress
         searchData = search
-        NSProductRepository.getPlaceMyOrderHistoryList(pageIndex, search, this)
+        
+        if (isFromOnlineOrder) {
+            NSProductRepository.getOnlineOrderHistoryList(pageIndex, search, this)
+        } else {
+            NSProductRepository.getPlaceMyOrderHistoryList(pageIndex, search, this)
+        }
     }
 
     override fun <T> onSuccess(data: T) {

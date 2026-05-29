@@ -101,7 +101,12 @@ class NSMemberActivationFormFragment : NSFragment() {
 							}
 
 							if (spinnerPackageType.selectedItemPosition != 0 || packageList.size == 1) {
-								val packageType = packageList[spinnerPackageType.selectedItemPosition]
+								val selectedPosition = if (strPackageList.contains("Select Package")) {
+									spinnerPackageType.selectedItemPosition - 1
+								} else {
+									spinnerPackageType.selectedItemPosition
+								}
+								val packageType = packageList[selectedPosition]
 								val packageId = packageType.packageId
 
 								if (cbChecked.isChecked) {

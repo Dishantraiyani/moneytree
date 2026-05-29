@@ -14,6 +14,7 @@ import com.moneytree.app.common.callbacks.NSStockHistoryDetailCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutOrderHistoryItemBinding
 import com.moneytree.app.databinding.LayoutRepurchaseStockItemBinding
@@ -24,6 +25,7 @@ import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 
 class OrderHistoryRecycleAdapter(
 	activityNS: Activity,
+    val isFromOnlineOrder: Boolean,
 	onPageChange: NSPageChangeCallback,
 	val stockItemCallback: (OrderHistoryDataItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -91,6 +93,10 @@ class OrderHistoryRecycleAdapter(
                     tvRemark.text = response.walletType
                     tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
                     tvAddress.text = response.address1
+                    if (isFromOnlineOrder) {
+                        llRemark.setVisibility(!response.walletType.isNullOrEmpty())
+                    }
+                    
                     if (response.mtCoin?.isNotEmpty() == true) {
                         llMtCoin.visible()
                         tvMtCoin.text = response.mtCoin

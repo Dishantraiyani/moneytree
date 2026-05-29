@@ -36,6 +36,37 @@
         tools:targetApi="n">
 
         <activity
+            android:name=".ui.onlineorder.orderHistoryDetail.detail.OnlineOrderHistoryDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.onlineorder.productDetail.OnlineOrderProductsDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.onlineorder.placeorder.PlaceOrderAddressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+
+        <activity
+            android:name=".ui.onlineorder.cart.OnlineCartActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.onlineorder.OnlineOrderActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
             android:name=".ui.vouchers.topupact.sponsorList.SponsorListActivity"
             android:exported="false"
             android:screenOrientation="portrait"

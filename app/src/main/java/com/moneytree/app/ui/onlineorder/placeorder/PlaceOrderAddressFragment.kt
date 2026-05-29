@@ -1,0 +1,325 @@
+package com.moneytree.app.ui.onlineorder.placeorder
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
+import com.moneytree.app.R
+import com.moneytree.app.base.fragment.BaseViewModelFragment
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSAlertButtonClickEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSRequestCodes
+import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.callbacks.NSPaymentDetailCallback
+import com.moneytree.app.common.callbacks.NSPaymentFragmentCallback
+import com.moneytree.app.common.rozerpay.RazorpayUtility
+import com.moneytree.app.common.utils.NSUtilities
+import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.gone
+import com.moneytree.app.databinding.FragmentPlaceOrderAddressBinding
+import com.moneytree.app.databinding.LayoutPlaceOrderOptionsBinding
+import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import com.moneytree.app.repository.network.responses.PlaceOrderAddressCreateResponse
+import com.moneytree.app.repository.network.responses.RozerModel
+import com.moneytree.app.ui.onlineorder.OnlineOrderHelper
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
+
+
+class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewModel, FragmentPlaceOrderAddressBinding>() {
+
+	override val viewModel: PlaceOrderAddressViewModel by lazy {
+		ViewModelProvider(this)[PlaceOrderAddressViewModel::class.java]
+	}
+	private var selectedAddress: PlaceOrderAddressCreateResponse? = null
+	private var paymentOptionBottomSheet: BottomSheetDialog? = null
+	
+	companion object {
+		private var callback: NSPaymentFragmentCallback? = null
+		fun newInstance(bundle: Bundle?, paymentCallback: NSPaymentFragmentCallback?) = PlaceOrderAddressFragment().apply {
+			arguments = bundle
+			callback = paymentCallback
+		}
+	}
+
+	override fun getFragmentBinding(
+		inflater: LayoutInflater,
+		container: ViewGroup?
+	): FragmentPlaceOrderAddressBinding {
+		return FragmentPlaceOrderAddressBinding.inflate(inflater, container, false)
+	}
+
+	override fun setupViews() {
+		super.setupViews()
+		setPaymentCallback()
+		viewCreated()
+		setListener()
+	}
+	
+	override fun observeViewModel() {
+		super.observeViewModel()
+		baseObserveViewModel(viewModel)
+		
+		viewModel.apply {
+			isProductSendDataAvailable.observe(
+				viewLifecycleOwner
+			) { isProductSend ->
+				if (isProductSend) {
+					if (successResponse?.status == true) {
+						showSuccessDialog(
+							activity.resources.getString(R.string.app_name),
+							successResponse?.message,
+							NSConstants.PRODUCT_ONLINE_ORDER_SEND_CLICK
+						)
+					} else {
+						showSuccessDialog(
+							activity.resources.getString(R.string.app_name),
+							successResponse?.message,
+							""
+						)
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * View created
+	 */
+	private fun viewCreated() {
+		with(binding) {
+			selectedAddress = pref.placeOrderAddress//arguments?.getString(NSConstants.KEY_IS_SELECTED_ADDRESS)
+			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.checkout_details))
+			setAddress()
+			setTotalAmount()
+		}
+	}
+
+	/**
+	 * Set listener
+	 */
+	private fun setListener() {
+		with(binding) {
+			with(layoutHeader) {
+
+				btnSubmit.setOnClickListener(object : SingleClickListener() {
+					override fun performClick(v: View?) {
+						showPaymentOption { type ->
+							if (type == NSConstants.PAYMENT_WALLET) {
+								placeOrder()
+							} else if (type == NSConstants.PAYMENT_GATEWAY) {
+								val razorpayUtility = RazorpayUtility(requireActivity())
+								val model = RozerModel()
+								model.productName = "${OnlineOrderHelper.getOrderList().size} Products Selected"
+								model.price = viewModel.finalPayoutAmount.toString()
+								model.email = etEmail.text.toString()
+								model.mobile = etMobile.text.toString()
+								
+								razorpayUtility.startPayment(model)
+							}
+						}
+					}
+				})
+			}
+		}
+	}
+
+	private fun placeOrder(paymentId: String? = null, paymentData: String? = null) {
+		binding.apply {
+			val memberId = pref.userData?.data?.userName
+			val fullName = etFullName.text.toString().trim()
+			val mobile = etMobile.text.toString().trim()
+			val email = etEmail.text.toString().trim()
+			val address = etAddress.text.toString().trim()
+			val pinCode = etPinCode.text.toString().trim()
+			val city = etCity.text.toString().trim()
+			val state = etState.text.toString().trim()
+			val district = etDistrict.text.toString().trim()
+			
+			if (fullName.isEmpty()) {
+				etFullName.error = "Enter Full Name"
+				return
+			} else if (mobile.isEmpty()) {
+				etMobile.error = "Enter Mobile No."
+				return
+			} else if (mobile.isEmpty() || mobile.length < 10 || !NSUtilities.isValidMobile(mobile)) {
+				etMobile.error = getString(R.string.please_enter_valid_mobile_no)
+				return
+			} else if (email.isEmpty()) {
+				etEmail.error = "Enter Email Address."
+				return
+			} else if (address.isEmpty()) {
+				etAddress.error = "Enter Address."
+				return
+			} else if (pinCode.isEmpty()) {
+				etPinCode.error = "Enter PinCode"
+				return
+			} else if (city.isEmpty()) {
+				etCity.error = "Enter City"
+				return
+			} else if (state.isEmpty()) {
+				etState.error = "Enter State"
+				return
+			} else if (district.isEmpty()) {
+				etDistrict.error = "Enter District"
+				return
+			}
+			
+			if (cbChecked.isChecked) {
+				val model = PlaceOrderAddressCreateResponse(fullName, mobile, email, address, pinCode, city, district, state)
+				pref.placeOrderAddress = model
+			}
+			
+			val map: HashMap<String, Any> = hashMapOf()
+			map["member_id"] = memberId?:""
+			map["full_name"] = fullName
+			map["mobile"] = mobile
+			map["email"] = email
+			map["address"] = address
+			map["pin_code"] = pinCode
+			map["city"] = city
+			map["district"] = district
+			map["state"] = state
+			
+			if (!paymentId.isNullOrEmpty()) {
+				map["order_id"] = paymentId
+			}
+			
+			if (!paymentData.isNullOrEmpty()) {
+				map["payment_data"] = paymentData
+			}
+			
+			val productList = OnlineOrderHelper.getOrderList()
+			if (productList.isNotEmpty()) {
+				map["product_list"] = Gson().toJson(productList)
+				viewModel.saveOnlineOrderCart(map, true)
+			} else {
+				Toast.makeText(activity, "Please Select Products", Toast.LENGTH_SHORT).show()
+			}
+		}
+	}
+	
+	private fun setAddress() {
+		binding.apply {
+			tvWalletAmount.text = NSConstants.WALLET_BALANCE
+			tvMemberId.text = pref.userData?.data?.userName
+			val userModel = pref.userData?.data
+			if (selectedAddress != null && !selectedAddress?.fullName.isNullOrEmpty()) {
+				val model: PlaceOrderAddressCreateResponse? = selectedAddress
+				viewModel.selectedAddressModel = model
+				etFullName.setText(model?.fullName?.ifEmpty { userModel?.fullName })
+				etMobile.setText(model?.mobile?.ifEmpty { userModel?.mobile })
+				etEmail.setText(model?.email?.ifEmpty { userModel?.email })
+				etAddress.setText(model?.address?.ifEmpty { userModel?.address })
+				etPinCode.setText(model?.pinCode?.ifEmpty { userModel?.pinCodeValue })
+				etCity.setText(model?.city?.ifEmpty { userModel?.cityNameValue })
+				etDistrict.setText(model?.district?.ifEmpty { userModel?.districtNameValue })
+				etState.setText(model?.state?.ifEmpty { userModel?.stateNameValue })
+				//etCountryName.setText(model?.country)
+			} else if (pref.userData?.data != null) {
+				val model = pref.userData?.data
+				etFullName.setText(model?.fullName)
+				etMobile.setText(model?.mobile)
+				etEmail.setText(model?.email)
+				etAddress.setText(model?.address)
+				etPinCode.setText(model?.pinCodeValue)
+				etCity.setText(model?.cityNameValue)
+				etDistrict.setText(model?.districtNameValue)
+				etState.setText(model?.stateNameValue)
+			}
+		}
+	}
+	
+	private fun setTotalAmount() {
+		binding.apply {
+			var totalAmountValue = 0
+			for (data in OnlineOrderHelper.getOrderList()) {
+				val amount1: Int = data.rate?.toInt() ?: 0
+				val finalAmount1 = data.itemQty * amount1
+				totalAmountValue += finalAmount1
+			}
+			tvProductTitle.text = "${OnlineOrderHelper.getOrderList().size} Item Selected"
+			tvAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+			viewModel.finalPayoutAmount = totalAmountValue
+		}
+	}
+	
+	private fun showPaymentOption(callback: (String) -> Unit) {
+		try {
+			val sheetView: View = activity.layoutInflater
+				.inflate(R.layout.layout_place_order_options, null)
+			paymentOptionBottomSheet = BottomSheetDialog(activity, R.style.MyBottomSheetDialogTheme)
+			paymentOptionBottomSheet?.setContentView(sheetView)
+			paymentOptionBottomSheet?.setCanceledOnTouchOutside(false)
+			paymentOptionBottomSheet?.show()
+			val bind = LayoutPlaceOrderOptionsBinding.bind(sheetView)
+			bind.btnMtCoin.gone()
+			
+			bind.tvCancel.setOnClickListener {
+				paymentOptionBottomSheet?.dismiss()
+			}
+			
+			bind.btnWallet.setOnClickListener {
+				paymentOptionBottomSheet?.dismiss()
+				callback.invoke(NSConstants.PAYMENT_WALLET)
+			}
+			
+			bind.btnPaymentGateway.setOnClickListener {
+				paymentOptionBottomSheet?.dismiss()
+				callback.invoke(NSConstants.PAYMENT_GATEWAY)
+			}
+			
+			bind.btnMtCoin.setOnClickListener {
+				paymentOptionBottomSheet?.dismiss()
+				callback.invoke(NSConstants.PAYMENT_MT_COIN)
+			}
+		} catch (e: Exception) {
+			e.printStackTrace()
+		}
+	}
+	
+	private fun setPaymentCallback() {
+		binding.apply {
+			viewModel.apply {
+				callback?.onResponse(object : NSPaymentDetailCallback {
+					override fun onResponse(
+						paymentId: String,
+						paymentData: String,
+						isSuccess: Boolean
+					) {
+						if (isSuccess) {
+							placeOrder(paymentId, paymentData)
+						} else {
+							successResponse = if (paymentId.contains("description")) {
+								val gson = Gson().fromJson(paymentId, NSErrorPaymentResponse::class.java)
+								NSSuccessResponse(false, gson.error?.description)
+							} else {
+								NSSuccessResponse(false, paymentId)
+							}
+							
+							if (!successResponse?.message.isNullOrEmpty()) {
+								showError(successResponse?.message?:"")
+							}
+						}
+					}
+				})
+			}
+		}
+	}
+	
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	fun onPositiveButtonClickEvent(event: NSAlertButtonClickEvent) {
+		if (event.buttonType == NSConstants.KEY_ALERT_BUTTON_POSITIVE && event.alertKey == NSConstants.PRODUCT_ONLINE_ORDER_SEND_CLICK) {
+			val intent = Intent()
+			activity.setResult(NSRequestCodes.REQUEST_PRODUCT_STOCK_UPDATE_DETAIL, intent)
+			finish()
+		}
+	}
+}
