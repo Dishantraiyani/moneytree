@@ -29,6 +29,7 @@ class NSPreferences(context: Context) {
         private const val KEY_KYC_VERIFIED_SKIP = "key_is_kyc_verified_skip"
         private const val KEY_REWARD_COIN_PERIOD = "key_is_reward_coin_period"
         private const val KEY_RECHARGE_DISPLAY = "key_is_recharge_display"
+        private const val KEY_CHARGE_PERCENTAGE = "key_is_charge_percentage"
     }
 
     /**
@@ -100,6 +101,14 @@ class NSPreferences(context: Context) {
         }
         set(language) {
             prefEdit.putInt(KEY_OFFER_TAB_POSITION, language!!).apply()
+        }
+    
+    var onlineOrderChargePercentage: Int
+        get() {
+            return preference.getInt(KEY_CHARGE_PERCENTAGE, -1)
+        }
+        set(language) {
+            prefEdit.putInt(KEY_CHARGE_PERCENTAGE, language).apply()
         }
 
     var rewardCoinPeriod: String?

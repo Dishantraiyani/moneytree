@@ -64,7 +64,7 @@ class MainFragment : NSFragment() {
             NSConstants.IS_LOGIN_SUCCESS = false
             showSuccessDialog(
                 requireActivity().resources.getString(R.string.app_name),
-                "Welcome to MoneyTree"
+                "Welcome to Onlyveda"
             )
         }
     }

@@ -39,11 +39,9 @@ class NSActivationViewModel(application: Application) : NSViewModel(application)
 					isBottomProgressShowing.value = false
 				}
 				val activationListData = data as NSActivationPackageResponse
-				if (activationListData.data != null) {
-					activationPackageResponse = activationListData
-					if (activationListData.data.isValidList()) {
-						activationPackageList.addAll(activationListData.data)
-					}
+				activationPackageResponse = activationListData
+				if (activationListData.data.isValidList()) {
+					activationPackageList.addAll(activationListData.data)
 				}
 				isActivationPackageDataAvailable.value = activationPackageList.isValidList()
 			}

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
+import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -59,9 +60,11 @@ import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.meeting.MeetingActivity
 import com.moneytree.app.ui.mycart.orders.NSOrderActivity
-import com.moneytree.app.ui.onlineorder.OnlineOrderActivity
+import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
+import com.moneytree.app.ui.onlineorder.OnlineOrderActivity
+import com.moneytree.app.ui.onlineorder.cart.OnlineCartActivity
 import com.moneytree.app.ui.paymentSummary.PaymentSummaryActivity
 import com.moneytree.app.ui.productCategory.MTProductsCategoryActivity
 import com.moneytree.app.ui.products.MTProductsActivity
@@ -83,6 +86,7 @@ import maulik.barcodescanner.ui.BarcodeScanningActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import androidx.core.graphics.toColorInt
 
 
 class NSHomeFragment : NSFragment() {
@@ -102,9 +106,9 @@ class NSHomeFragment : NSFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+	    inflater: LayoutInflater,
+	    container: ViewGroup?,
+	    savedInstanceState: Bundle?,
     ): View {
         _binding = NsFragmentHomeBinding.inflate(inflater, container, false)
         viewCreated()
@@ -124,6 +128,7 @@ class NSHomeFragment : NSFragment() {
 			getDashboardData(true)
 			addRechargeItems()
 			setRechargeLayout()
+			setOnlineOrderLayout()
 			getKycKey()
 		}
         observeViewModel()
@@ -168,7 +173,7 @@ class NSHomeFragment : NSFragment() {
 				}
 			})
 
-			llHistory.setSafeOnClickListener {
+			llHistoryData.setOnClickListener {
 				switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
 			}
 		}
@@ -270,6 +275,34 @@ class NSHomeFragment : NSFragment() {
 						NSConstants.KEY_AVAILABLE_BALANCE to homeModel.dashboardData?.data?.wltAmt?.get(0)?.amount
 					)
 				)
+			}
+		}
+	}
+	
+	private fun setOnlineOrderLayout() {
+		homeBinding.layoutOnlineOrder.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_home_online_order)
+			tvFieldName.text = activity.resources.getString(R.string.online_order)
+			llRecharge.setOnClickListener {
+				switchActivity(
+					OnlineOrderActivity::class.java
+				)
+			}
+		}
+		
+		homeBinding.layoutOnlineOrderCart.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_home_cart)
+			tvFieldName.text = activity.resources.getString(R.string.view_cart)
+			llRecharge.setOnClickListener {
+				switchActivity(OnlineCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to true))
+			}
+		}
+		
+		homeBinding.layoutOnlineOrderHistory.apply {
+			ivFieldImage.setImageResource(R.drawable.ic_history_home)
+			tvFieldName.text = activity.resources.getString(R.string.history)
+			llRecharge.setOnClickListener {
+				switchActivity(NSOrderHistoryActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ONLINE_ORDER to true))
 			}
 		}
 	}
@@ -652,13 +685,20 @@ class NSHomeFragment : NSFragment() {
 		if (isSuccess) {
 			switchActivity(QRCodeActivity::class.java, bundleOf(NSConstants.KEY_QR_CODE_ID to value, NSConstants.KEY_WALLET_AMOUNT to homeModel.setWallet()))
 		} else {
-			Snackbar.make(homeBinding.root, "User canceled", Snackbar.LENGTH_INDEFINITE).apply {
-				view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.run {
+			Snackbar.make(
+				homeBinding.root,
+				"User canceled",
+				Snackbar.LENGTH_INDEFINITE
+			).apply {
+				view.findViewById<TextView>(android.R.id.message)?.apply {
 					maxLines = 5
 					setTextIsSelectable(true)
 				}
+				
 				setAction(R.string.ok) { }
-				setActionTextColor(Color.parseColor(activity.resources.getString(R.string.orange)))
+				setActionTextColor(
+					activity.getString(R.string.orange).toColorInt()
+				)
 			}.show()
 		}
 	}

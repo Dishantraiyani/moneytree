@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
-import com.moneytree.app.common.NSLoginRegisterEvent
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.common.utils.NSUtilities
@@ -18,7 +17,6 @@ import com.moneytree.app.repository.NSKycRepository
 import com.moneytree.app.repository.NSUserRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.*
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -74,7 +72,10 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
                 dashboardData = dashboardMainData
 
                 val pref = NSApplication.getInstance().getPrefs()
-                pref.isRechargeDisplay = dashboardData?.data?.isRechargeDisplay
+	            val dsData = dashboardData?.data
+                pref.isRechargeDisplay = dsData?.isRechargeDisplay
+                pref.onlineOrderChargePercentage = if (dsData?.onlineOrderChargePercentage.isNullOrEmpty()) -1 else dsData.onlineOrderChargePercentage.toInt()
+	            
                 setFragmentData()
             }
 

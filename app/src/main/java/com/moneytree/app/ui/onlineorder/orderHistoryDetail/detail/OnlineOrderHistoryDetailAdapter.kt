@@ -10,6 +10,7 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutOnlineOrderHistoryInfoItemBinding
 import com.moneytree.app.databinding.LayoutOrderHistoryInfoItemBinding
@@ -84,6 +85,7 @@ class OnlineOrderHistoryDetailAdapter(
 					tvTotal.text = amount?.let { addText(activity, R.string.price_value, it) }
 
 					tvDate.text = createdAt
+                    llDate.setVisibility(!createdAt.isNullOrEmpty())
 
 					llRemark.gone()
 

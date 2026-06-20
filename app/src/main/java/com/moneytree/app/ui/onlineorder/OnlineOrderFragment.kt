@@ -93,7 +93,7 @@ class OnlineOrderFragment : NSFragment(), NSSearchCallback {
      */
     private fun viewCreated() {
         with(productBinding) {
-            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.orders), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@OnlineOrderFragment)
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.online_order), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@OnlineOrderFragment)
 			with(layoutHeader) {
 				NSConstants.tabName = this@OnlineOrderFragment.javaClass
 				tvCategories.visible()

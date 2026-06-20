@@ -22,6 +22,8 @@ import com.moneytree.app.common.rozerpay.RazorpayUtility
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.increaseByPercent
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.FragmentPlaceOrderAddressBinding
 import com.moneytree.app.databinding.LayoutPlaceOrderOptionsBinding
 import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
@@ -40,6 +42,7 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 	}
 	private var selectedAddress: PlaceOrderAddressCreateResponse? = null
 	private var paymentOptionBottomSheet: BottomSheetDialog? = null
+	private var selectedPaymentType: String = NSConstants.PAYMENT_WALLET
 	
 	companion object {
 		private var callback: NSPaymentFragmentCallback? = null
@@ -108,22 +111,27 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 	private fun setListener() {
 		with(binding) {
 			with(layoutHeader) {
+				
+				rbWallet.setOnCheckedChangeListener { button, isChecked ->
+					selectedPaymentType = if(isChecked) NSConstants.PAYMENT_WALLET else NSConstants.PAYMENT_GATEWAY
+					tvNotes.setVisibility(!isChecked && pref.onlineOrderChargePercentage != -1)
+					tvWalletTitle.text = resources.getString(if (isChecked) R.string.available_wallet_amount else R.string.total_paid_amount)
+					tvWalletAmount.text = if (isChecked) NSConstants.WALLET_BALANCE else viewModel.paymentAmountWithCharge.toString()
+				}
 
 				btnSubmit.setOnClickListener(object : SingleClickListener() {
 					override fun performClick(v: View?) {
-						showPaymentOption { type ->
-							if (type == NSConstants.PAYMENT_WALLET) {
-								placeOrder()
-							} else if (type == NSConstants.PAYMENT_GATEWAY) {
-								val razorpayUtility = RazorpayUtility(requireActivity())
-								val model = RozerModel()
-								model.productName = "${OnlineOrderHelper.getOrderList().size} Products Selected"
-								model.price = viewModel.finalPayoutAmount.toString()
-								model.email = etEmail.text.toString()
-								model.mobile = etMobile.text.toString()
-								
-								razorpayUtility.startPayment(model)
-							}
+						if (selectedPaymentType == NSConstants.PAYMENT_WALLET) {
+							placeOrder()
+						} else if (selectedPaymentType == NSConstants.PAYMENT_GATEWAY) {
+							val razorpayUtility = RazorpayUtility(requireActivity())
+							val model = RozerModel()
+							model.productName = "${OnlineOrderHelper.getOrderList().size} Products Selected"
+							model.price = viewModel.finalPayoutAmount.toString()
+							model.email = etEmail.text.toString()
+							model.mobile = etMobile.text.toString()
+							
+							razorpayUtility.startPayment(model)
 						}
 					}
 				})
@@ -194,6 +202,8 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 			
 			if (!paymentData.isNullOrEmpty()) {
 				map["payment_data"] = paymentData
+				map["payment_charge_percentage"] = pref.onlineOrderChargePercentage
+				map["payment_with_charge_amount"] = viewModel.paymentAmountWithCharge.toString()
 			}
 			
 			val productList = OnlineOrderHelper.getOrderList()
@@ -208,6 +218,9 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 	
 	private fun setAddress() {
 		binding.apply {
+			val note = "Note: ${pref.onlineOrderChargePercentage}% Tds charges will be deducted"
+			tvNotes.text = note
+			
 			tvWalletAmount.text = NSConstants.WALLET_BALANCE
 			tvMemberId.text = pref.userData?.data?.userName
 			val userModel = pref.userData?.data
@@ -248,6 +261,7 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 			tvProductTitle.text = "${OnlineOrderHelper.getOrderList().size} Item Selected"
 			tvAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
 			viewModel.finalPayoutAmount = totalAmountValue
+			viewModel.paymentAmountWithCharge = totalAmountValue.increaseByPercent(if(pref.onlineOrderChargePercentage == -1) 0 else pref.onlineOrderChargePercentage)
 		}
 	}
 	

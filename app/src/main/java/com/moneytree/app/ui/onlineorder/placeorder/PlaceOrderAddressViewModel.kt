@@ -22,6 +22,7 @@ class PlaceOrderAddressViewModel(application: Application) : NSViewModel(applica
     var finalPayoutAmount: Int = 0
     var isProductSendDataAvailable = MutableLiveData<Boolean>()
     var successResponse: NSSuccessResponse? = null
+    var paymentAmountWithCharge: Double = 0.0
     
     fun saveOnlineOrderCart(map: HashMap<String, Any>, isShowProgress: Boolean) {
         if (isShowProgress) {

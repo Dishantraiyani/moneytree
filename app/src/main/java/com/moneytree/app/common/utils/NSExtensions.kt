@@ -45,6 +45,7 @@ import com.moneytree.app.common.NSLog
 import com.moneytree.app.databinding.LayoutSpinnerItemBinding
 import com.moneytree.app.databinding.LayoutSpinnerItemDropDownBinding
 import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 
 /**
@@ -653,4 +654,8 @@ fun View.expandCollapse(
     } else {
         collapse(duration)
     }
+}
+
+fun Int.increaseByPercent(percent: Int): Double {
+    return this + (this * percent / 100.0)
 }

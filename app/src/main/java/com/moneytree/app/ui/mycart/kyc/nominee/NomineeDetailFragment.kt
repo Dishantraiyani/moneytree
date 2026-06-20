@@ -194,7 +194,7 @@ class NomineeDetailFragment :
                             spinnerRelation.setSelection(defaultPosition)
                             cardRelationOther.gone()
                         }
-
+                        
                         val aPosition = aFilter.indexOf(nomineeGenderValue)
                         ageTypeSpinner.setSelection(aPosition)
                     }

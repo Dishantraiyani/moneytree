@@ -59,7 +59,9 @@ data class NSDashboardData(
     @SerializedName("kyc_status")
     val kycStatus: String? = null,
     @SerializedName("is_recharge_display")
-    val isRechargeDisplay: String? = null
+    val isRechargeDisplay: String? = null,
+    @SerializedName("online_order_charge_percentage")
+    val onlineOrderChargePercentage: String? = "-1"
 )
 
 /**

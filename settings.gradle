@@ -18,7 +18,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MoneyTree"
+rootProject.name = "Onlyveda"
 include ':app'
 include ':scanner'
 include ':pdfViewer'

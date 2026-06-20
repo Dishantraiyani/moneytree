@@ -398,6 +398,7 @@
 				android:layout_height="wrap_content"
 				android:orientation="horizontal"
 				android:fontFamily="@font/inter_regular"
+				android:visibility="gone"
 				android:paddingHorizontal="@dimen/_15sdp"
 				android:paddingVertical="@dimen/_15sdp"
 				tools:ignore="UseCompoundDrawables">
@@ -430,6 +431,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="horizontal"
+				android:visibility="gone"
 				android:fontFamily="@font/inter_regular"
 				android:paddingHorizontal="@dimen/_15sdp"
 				android:paddingVertical="@dimen/_15sdp"

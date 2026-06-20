@@ -34,7 +34,7 @@
 		<TextView
 			android:id="@+id/tv_ac_date"
 			style="@style/LoginSubFontsZeroWrap"
-			tools:text="MoneyTree"
+			tools:text="Onlyveda"
 			android:textSize="@dimen/_10sdp"
 			android:gravity="start"
 			app:guidelineUseRtl="true"

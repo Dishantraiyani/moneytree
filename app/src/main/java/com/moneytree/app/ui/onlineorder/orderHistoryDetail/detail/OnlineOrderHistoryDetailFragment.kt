@@ -131,15 +131,23 @@ class OnlineOrderHistoryDetailFragment : NSFragment() {
                     tvMemberId.text = memberid
                     tvDate.text = createdAt
                     tvOrderStatus.text = orderStatus
+                    tvPaymentType.text = paymentType
                     tvTotal.text = total
                     tvFullName.text = fullName
                     tvMobile.text = mobileNo
                     tvEmail.text = email
+                    llPaymentType.setVisibility(!paymentType.isNullOrEmpty())
                     llDate.setVisibility(!createdAt.isNullOrEmpty())
                     llOrderStatus.setVisibility(!orderStatus.isNullOrEmpty())
                     llFullName.setVisibility(!fullName.isNullOrEmpty())
                     llMobile.setVisibility(!mobileNo.isNullOrEmpty())
                     llEmail.setVisibility(!email.isNullOrEmpty())
+                    llPaymentCharges.setVisibility(!paymentChargePercentage.isNullOrEmpty())
+                    
+                    if (!paymentChargePercentage.isNullOrEmpty()) {
+                        val charge = "$paymentChargePercentage%"
+                        tvPaymentCharge.text = charge
+                    }
                     
                     if (mtCoinStatus?.isNotEmpty() == true) {
                         llMtCoin.visible()

@@ -148,5 +148,8 @@ data class OnlineOrderHistoryData(
 	val walletType: Any? = null,
 	
 	@field:SerializedName("memberid")
-	val memberid: String? = null
+	val memberid: String? = null,
+	
+	@field:SerializedName("payment_charge_percentage")
+	val paymentChargePercentage: String? = null
 )

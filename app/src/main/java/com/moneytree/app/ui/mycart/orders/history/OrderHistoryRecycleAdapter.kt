@@ -93,6 +93,7 @@ class OrderHistoryRecycleAdapter(
                     tvRemark.text = response.walletType
                     tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
                     tvAddress.text = response.address1
+                    llDate.setVisibility(!createdAt.isNullOrEmpty())
                     if (isFromOnlineOrder) {
                         llRemark.setVisibility(!response.walletType.isNullOrEmpty())
                     }
