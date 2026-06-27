@@ -21,7 +21,7 @@ class CategoryRecycleAdapter(
                 tvCategoryName.text = response
 
                 if (plansSelectedPosition == position) {
-                    tvCategoryName.setTextColor(Color.parseColor("#eba94a") )
+                    tvCategoryName.setTextColor(Color.parseColor("#52965B") )
                     viewLine.setBackgroundResource(R.drawable.background_line)
                     callback.invoke(response, position, true)
                 } else {

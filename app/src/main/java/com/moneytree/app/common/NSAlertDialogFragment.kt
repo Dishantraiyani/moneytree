@@ -71,7 +71,7 @@ class NSAlertDialogFragment : DialogFragment() {
             if (title.isNotEmpty()) {
                 bind.tvTitle.visibility = View.VISIBLE
                 if (title.equals(requireActivity().resources.getString(R.string.app_name))) {
-                    bind.tvTitle.setTextColor(Color.parseColor("#eba94a"))
+                    bind.tvTitle.setTextColor(Color.parseColor("#52965B"))
                 }
             }
 

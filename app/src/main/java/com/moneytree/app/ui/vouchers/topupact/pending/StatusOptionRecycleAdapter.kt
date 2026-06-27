@@ -21,7 +21,7 @@ class StatusOptionRecycleAdapter(
                 rbLanguage.text = title
                 
                 val singleStates = arrayOf(intArrayOf())
-                val colors = intArrayOf(Color.parseColor("#eba94a"))
+                val colors = intArrayOf(Color.parseColor("#52965B"))
                 
                 rbLanguage.buttonTintList = ColorStateList(singleStates, colors)
                 rbLanguage.isChecked = isChecked

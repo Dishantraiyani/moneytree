@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoneyTree</string>
+    <string name="app_name">Onlyveda</string>
     <string name="something_went_wrong">Internal Server Error, Please Try Again Later</string>
     <string name="login_title">Login</string>
     <string name="sign_title">Sign In</string>

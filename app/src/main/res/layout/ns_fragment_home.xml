@@ -288,11 +288,13 @@
 							android:layout_gravity="center"
 							android:includeFontPadding="false"
 							android:visibility="visible"
+							android:tint="@color/orange"
 							app:layout_constraintVertical_chainStyle="packed"
 							app:layout_constraintStart_toStartOf="parent"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintBottom_toTopOf="@id/tv_vouchers_title"
-							app:layout_constraintTop_toTopOf="parent"/>
+							app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="UseAppTint" />
 
 						<TextView
 							android:id="@+id/tv_vouchers_title"
@@ -331,11 +333,13 @@
 							android:layout_gravity="center"
 							android:includeFontPadding="false"
 							android:visibility="visible"
+							android:tint="@color/orange"
 							app:layout_constraintVertical_chainStyle="packed"
 							app:layout_constraintStart_toStartOf="parent"
 							app:layout_constraintEnd_toEndOf="parent"
 							app:layout_constraintBottom_toTopOf="@id/tv_slots_title"
-							app:layout_constraintTop_toTopOf="parent"/>
+							app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="UseAppTint" />
 
 						<TextView
 							android:id="@+id/tv_slots_title"
