@@ -1,15 +1,15 @@
-package com.moneytree.app.ui.mycart.products
+package com.moneytree.app.ui.home
 
 import android.app.Activity
+import android.content.res.ColorStateList
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
@@ -17,20 +17,19 @@ import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
-import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
+import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isValidList
-import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.setGrayScale
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.config.ApiConfig
-import com.moneytree.app.databinding.LayoutProductItemBinding
-import com.moneytree.app.databinding.LayoutShopProductItemBinding
+import com.moneytree.app.databinding.LayoutHomeProductItemBinding
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 
 
-class NSProductListRecycleAdapter(
+class ProductHomeListRecycleAdapter(
 	activityNS: Activity,
-	val isGrid: Boolean,
 	onPageChange: NSPageChangeCallback,
 	val onProductClick: NSProductDetailCallback,
 	val onCartTotalClick: NSCartTotalAmountCallback
@@ -55,7 +54,7 @@ class NSProductListRecycleAdapter(
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 		val voucherView =
-			LayoutShopProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+			LayoutHomeProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 		return NSProductViewHolder(voucherView)
 	}
 
@@ -81,7 +80,7 @@ class NSProductListRecycleAdapter(
 	 *
 	 * @property productBinding The voucher list view binding
 	 */
-	inner class NSProductViewHolder(private val productBinding: LayoutShopProductItemBinding) :
+	inner class NSProductViewHolder(private val productBinding: LayoutHomeProductItemBinding) :
 		RecyclerView.ViewHolder(productBinding.root) {
 
 		/**
@@ -92,42 +91,23 @@ class NSProductListRecycleAdapter(
 		fun bind(response: ProductDataDTO) {
 			with(productBinding) {
 				with(response) {
-					clProductLayout.setVisibility(!isGrid)
-					clProductLayoutGrid.setVisibility(isGrid)
+					
 					val url = ApiConfig.baseUrlImage + productImage
-					Glide.with(activity.applicationContext).load(url).error(R.drawable.placeholder).into(ivProductImg)
-					tvProductName.text = productName
-					tvStockQty.text = stockQty
 					tvStockQtyGrid.text = stockQty
-					tvRate.text = addText(activity, R.string.rate_title, sdPrice!!)
-					tvRate.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 
-					val selectedItem = NSApplication.getInstance().getProduct(response)
+					val instance = NSApplication.getInstance()
+					val selectedItem = instance.getProduct(response)
 					if (selectedItem != null) {
 						itemQty = selectedItem.itemQty
 					}
 
-					tvQty.text = itemQty.toString()
 					tvQtyGrid.text = itemQty.toString()
 					val amount: Int = rate?.toInt() ?: 0
 					val finalAmount = itemQty * amount
 					isProductValid = finalAmount > 0
 
 					if (sdPrice == rate) {
-						tvRate.gone()
 						tvRateGrid.gone()
-					}
-
-					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
-					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
-
-					add.setOnClickListener {
-						addCart(response, finalAmount)
-					}
-
-					remove.setOnClickListener {
-						removeCart(response, finalAmount)
 					}
 
 					addGrid.setOnClickListener {
@@ -136,27 +116,52 @@ class NSProductListRecycleAdapter(
 
 					removeGrid.setOnClickListener {
 						removeCart(response, finalAmount)
+						
+						if (itemQty <= 0) {
+							tvAddToCart.visible()
+							qutGrid.invisible()
+						}
 					}
-
-					ivDetail.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onProductClick.onResponse(response)
-						}
-					})
-
-					ivProductImg.setOnClickListener(object : SingleClickListener() {
-						override fun performClick(v: View?) {
-							onProductClick.onResponse(response)
-						}
-					})
+					
+					tvAddToCart.setOnClickListener {
+						addCart(response, finalAmount)
+						qutGrid.visible()
+						tvAddToCart.gone()
+					}
+					
+					val isStockAvailable = (stockQty?:"0").toInt() > 0
+					ivProductImgGrid.setGrayScale(!isStockAvailable)
+					
+					val grayColor = ContextCompat.getColor(activity, R.color.hint_color)
+					val blackColor = ContextCompat.getColor(activity, R.color.black)
+					val grayC = ContextCompat.getColor(activity, R.color.gray_text)
+					val white = ContextCompat.getColor(activity, R.color.white)
+					
+					if (!isStockAvailable) {
+						tvProductNameGrid.setTextColor(grayColor)
+					} else {
+						tvProductNameGrid.setTextColor(blackColor)
+					}
+					
+					if (!isStockAvailable) {
+						tvPriceGrid.setTextColor(grayColor)
+					} else {
+						tvPriceGrid.setTextColor(blackColor)
+					}
+					
+					tvAddToCart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(tvAddToCart.context, if(isStockAvailable) R.color.orange else R.color.image_background))
+					tvAddToCart.setText(if (isStockAvailable) R.string.add_to_cart else R.string.out_of_stock)
+					tvAddToCart.setTextColor(if (!isStockAvailable) grayC else white)
+					
 
 					//Grid
 					Glide.with(activity).load(url).error(R.drawable.placeholder)
 						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
 					tvProductNameGrid.isSelected = true
+					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvPriceGrid.text = rate?.let { addText(activity, R.string.price_value, it) }
-					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
+					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice?:"")
 					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)
@@ -170,26 +175,23 @@ class NSProductListRecycleAdapter(
 			with(productBinding) {
 				with(response) {
 					var stock = 0
-					stock = try {
-						stockQty?.toInt() ?: 0
+					stock = try { stockQty?.toInt() ?: 0
 					} catch (e: Exception) {
 						0
 					}
-					if (itemQty < stock && stock != 0) {
+					if ((itemQty < stock && stock != 0)) {
 						if (itemQty == 0) {
-							NSApplication.getInstance().setProductList(response)
+							val instance = NSApplication.getInstance()
+							instance.setProductList(response)
 						}
 						itemQty += 1
-						tvQty.text = itemQty.toString()
 						tvQtyGrid.text = itemQty.toString()
 
 						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						/*tvPrice.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
-						tvPriceGrid.text =
+						/*tvPriceGrid.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					} else {
@@ -205,18 +207,16 @@ class NSProductListRecycleAdapter(
 					if (itemQty > 0) {
 						itemQty -= 1
 						if (itemQty == 0) {
-							NSApplication.getInstance().removeProduct(response)
+							val instance = NSApplication.getInstance()
+							instance.removeProduct(response)
 						}
-						tvQty.text = itemQty.toString()
 						tvQtyGrid.text = itemQty.toString()
 
 						val amount1: Int = rate?.toInt() ?: 0
 						val finalAmount1 = itemQty * amount1
 						isProductValid = finalAmount > 0
 
-						/*tvPrice.text =
-							addText(activity, R.string.price_value, finalAmount1.toString())
-						tvPriceGrid.text =
+						/*tvPriceGrid.text =
 							addText(activity, R.string.price_value, finalAmount1.toString())*/
 						onCartTotalClick.onResponse()
 					}

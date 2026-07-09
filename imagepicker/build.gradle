@@ -1,8 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 36
+    compileSdk 37
     defaultConfig {
         multiDexEnabled true
         minSdkVersion 23
@@ -26,20 +25,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
-    }
+
     buildFeatures {
         viewBinding true
     }
-    lint {
-        disable 'MissingTranslation'
-        targetSdk 36
-    }
     namespace 'com.github.drjacky.imagepicker1'
-    testOptions {
-        targetSdk 36
-    }
+
 }
 
 dependencies {

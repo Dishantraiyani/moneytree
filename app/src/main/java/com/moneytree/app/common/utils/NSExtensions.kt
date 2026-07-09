@@ -10,6 +10,8 @@ import android.content.Intent
 import android.content.Intent.getIntent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
@@ -658,4 +660,16 @@ fun View.expandCollapse(
 
 fun Int.increaseByPercent(percent: Int): Double {
     return this + (this * percent / 100.0)
+}
+
+fun ImageView.setGrayScale(isGray: Boolean = true) {
+    if (isGray) {
+        val colorMatrix = ColorMatrix().apply {
+            setSaturation(0f)
+        }
+        
+        colorFilter = ColorMatrixColorFilter(colorMatrix)
+    } else {
+        clearColorFilter()
+    }
 }

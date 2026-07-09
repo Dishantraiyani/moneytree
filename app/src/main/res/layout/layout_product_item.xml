@@ -118,6 +118,54 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"/>
 
+		<LinearLayout
+			android:id="@+id/qut"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:background="@drawable/gray_round_second"
+			android:paddingVertical="@dimen/_1sdp"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintBottom_toBottomOf="parent"
+			android:paddingHorizontal="@dimen/_5sdp"
+			android:layout_marginBottom="@dimen/_10sdp"
+			android:layout_marginEnd="@dimen/_5sdp">
+
+			<ImageView
+				android:id="@+id/add"
+				android:layout_width="@dimen/_20sdp"
+				android:layout_height="@dimen/_20sdp"
+				android:padding="@dimen/_3sdp"
+				android:src="@drawable/ic_add"
+				android:tint="@color/black"
+				android:layout_marginEnd="@dimen/_5sdp"
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint" />
+
+			<TextView
+				android:id="@+id/tv_qty"
+				style="@style/LoginSubFontsWrap"
+				tools:text="1"
+				android:textSize="@dimen/_12sdp"
+				android:gravity="center"
+				app:guidelineUseRtl="true"
+				android:textColor="@color/orange"
+				android:layout_gravity="center"
+				android:lines="1"
+				android:fontFamily="@font/inter_medium" />
+
+			<ImageView
+				android:id="@+id/remove"
+				android:layout_width="@dimen/_20sdp"
+				android:layout_height="@dimen/_20sdp"
+				android:padding="@dimen/_3sdp"
+				android:tint="@color/black"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:src="@drawable/ic_minus_black"
+				android:layout_gravity="center_vertical"
+				tools:ignore="UseAppTint" />
+		</LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -217,7 +265,6 @@
 			app:layout_constraintStart_toEndOf="@+id/tv_price_grid"
 			app:layout_constraintTop_toTopOf="@id/tv_price_grid"
 			app:layout_constraintBottom_toBottomOf="@id/tv_price_grid" />
-
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rl_category_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_black"
+        android:backgroundTint="@color/icon_bg_color"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_category_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_category_name">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_category_product"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            app:shapeAppearanceOverlay="@style/ImageRound"
+            android:layout_margin="@dimen/_3sdp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_13sdp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:textStyle="normal"
+        android:textColor="@color/black"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="@string/products"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toEndOf="@+id/rl_category_image"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_view_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_10sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textStyle="normal"
+        android:textColor="@color/gray"
+        android:paddingVertical="@dimen/_10sdp"
+        android:text="@string/view_all"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_category_name"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_category_name"/>
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:background="#eef0f1"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/tv_category_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_products"
+        android:paddingBottom="5dp"
+        android:nestedScrollingEnabled="false"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:clipToPadding="false"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/view_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,11 @@
         <item name="pf_delete_button">@style/MyLockScreenDeleteButtonStyle</item>
     </style>
 
+    <style name="ImageRound">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/purple_200</item>
     </style>

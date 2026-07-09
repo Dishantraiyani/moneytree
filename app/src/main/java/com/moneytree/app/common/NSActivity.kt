@@ -47,7 +47,7 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
     
     fun initView(view: ViewGroup, isPaddingBottom: Boolean = true) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        StatusBarOverlayUtil.apply(this, view, R.color.orange, isPaddingBottom)
+        StatusBarOverlayUtil.apply(this, view, R.color.background_color, isPaddingBottom)
     }
 
     override fun onStart() {

@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#52965B</color>
-    <color name="purple_500">#52965B</color>
-    <color name="purple_700">#52965B</color>
-    <color name="teal_200">#52965B</color>
-    <color name="teal_700">#52965B</color>
+    <color name="purple_200">#FCF7F1</color>
+    <color name="purple_500">#FCF7F1</color>
+    <color name="purple_700">#FCF7F1</color>
+    <color name="teal_200">#FCF7F1</color>
+    <color name="teal_700">#FCF7F1</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sky_text">#71CCCF</color>
     <string name="white">#FFFFFFFF</string>
+    <color name="background_color">#FCF7F1</color>
+    <color name="icon_bg_color">#88F8E3C8</color>
+    <color name="second_color">#50574F</color>
 
     <color name="orange">#52965B</color>
+    <color name="button_color">#52965B</color>
     <color name="orange_alpha">#2052965B</color>
     <string name="orange">#52965B</string>
     <color name="gray">#555555</color>

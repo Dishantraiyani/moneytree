@@ -27,5 +27,8 @@ data class NSCategoryData(
     var categoryName: String? = null,
     @SerializedName("category_img")
     @Expose
-    var categoryImg: String? = null
+    var categoryImg: String? = null,
+    
+    @field:SerializedName("products")
+    val products: MutableList<ProductDataDTO> = arrayListOf()
 )

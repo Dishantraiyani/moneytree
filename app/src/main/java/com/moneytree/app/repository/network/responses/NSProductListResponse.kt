@@ -74,7 +74,7 @@ data class ProductDataDTO(
 	val productSlug: String? = null,
 
 	@field:SerializedName("stock_qty")
-	val stockQty: String? = null,
+	var stockQty: String? = null,
 
 	@field:SerializedName("max_order_qty")
 	val maxOrderQty: String? = null,

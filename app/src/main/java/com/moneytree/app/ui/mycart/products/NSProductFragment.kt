@@ -62,9 +62,13 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
     private val productBinding get() = _binding!!
     private var productListAdapter: NSProductListRecycleAdapter? = null
 	private var isSearchClick = false
+	private var selectedCategoryIdFromHome: String? = null
+	private var selectedCategoryNameFromHome: String? = null
 
 	companion object {
-		fun newInstance() = NSProductFragment()
+		fun newInstance(bundle: Bundle? = null) = NSProductFragment().apply {
+			arguments = bundle
+		}
 	}
 
 	override fun onCreateView(
@@ -82,19 +86,27 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
      * View created
      */
     private fun viewCreated() {
-        with(productBinding) {
-            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.shop), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSProductFragment)
+	    //From Home View All
+	    selectedCategoryIdFromHome = arguments?.getString(NSConstants.KEY_PRODUCT_CATEGORY)
+	    selectedCategoryNameFromHome = arguments?.getString(NSConstants.KEY_PRODUCT_CATEGORY_NAME)
+	    
+        productBinding.apply {
+            HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = selectedCategoryNameFromHome?:resources.getString( R.string.shop), isCart = true, isSearch = true, isAddNew = true, isHistoryBtn = true, searchCallback = this@NSProductFragment)
 			with(layoutHeader) {
 				NSConstants.tabName = this@NSProductFragment.javaClass
 				tvCategories.visible()
 				tvDiseases.visible()
 				tvCartCount.visible()
-				cardCategoriesType.visible()
+				cardCategoriesType.setVisibility(selectedCategoryIdFromHome.isNullOrEmpty())
 				cardDiseasesType.visible()
 				setCartCount()
 				setTotalAmount()
 				ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
 			}
+	  
+	  
+	  
+	  
 			//setProductStockAdapter()
 			setCategory()
 			//Spinner Product Category
@@ -622,7 +634,7 @@ class NSProductFragment : NSFragment(), NSSearchCallback {
 			}
 
 			setFirstPage()
-			categoryId = ""
+			categoryId = selectedCategoryIdFromHome?:""
 			diseasesId = ""
 			//var tempCategoryId = ""
 			for (dat in data) {

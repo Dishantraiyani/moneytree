@@ -87,15 +87,17 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import androidx.core.graphics.toColorInt
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.ui.mycart.products.NSProductsActivity
+import kotlin.jvm.java
 
 
 class NSHomeFragment : NSFragment() {
     private val homeModel: NSHomeViewModel by lazy {
         ViewModelProvider(this)[NSHomeViewModel::class.java]
     }
-	private val productCategoryModel: ProductCategoryViewModel by lazy {
-		ViewModelProvider(this)[ProductCategoryViewModel::class.java]
-	}
+	
     private var _binding: NsFragmentHomeBinding? = null
     private val homeBinding get() = _binding!!
     private var homeListModelClassArrayList1: ArrayList<GridModel>? = null
@@ -183,10 +185,11 @@ class NSHomeFragment : NSFragment() {
 		homeBinding.layoutHeader.apply {
 			NSConstants.tabName = this@NSHomeFragment.javaClass
 			clBack.visible()
-			tvHeaderBack.text = activity.resources.getString(R.string.app_name)
+			//tvHeaderBack.text = activity.resources.getString(R.string.app_name)
 			ivBack.invisible()
 			ivMenu.visible()
-			tvAmountData.visible()
+			tvHeaderBack.gone()
+			//tvAmountData.visible()
 		}
 	}
 
@@ -323,7 +326,7 @@ class NSHomeFragment : NSFragment() {
 					} else {
 						pref.isActive = false
 						tvActive.text = activity.resources.getString(R.string.deActive)
-						clActivePlanCheck.visible()
+						//clActivePlanCheck.visible()
 						
 						tvPlanActive.setSafeOnClickListener {
 							switchActivity(NSActivateActivity::class.java)
@@ -361,13 +364,16 @@ class NSHomeFragment : NSFragment() {
                     NSApplication.getInstance().setWalletBalance(setWallet())
                     tvStatusRoyalty.text =
                         addText(activity, R.string.status_royalty, setRoyaltyStatus())
-                    layoutHeader.tvAmountData.text =
-                        addText(activity, R.string.my_earning, setEarningAmount())
+	                
+	                tvMyEarningTitle.text = resources.getString(R.string.my_earning_title)
+	                tvMyEarning.text = addText(activity, R.string.my_earning_value, setEarningAmount())
+	                
+	                
 					clQrCode.setVisibility(dashboardData?.data?.qrStatus.equals("Active"))
 					HomeRepository.setupViewPager(activity, homeBinding, homeModel, viewPager)
 					showPopup(getPopUpImage())
 					EventBus.getDefault().post(NSChangeNavigationMenuNameEvent())
-					productCategoryModel.getProductCategory(true, isFromHome = true)
+	                setDashboardCategoryData(dashboardData?.data?.categoryProducts?: arrayListOf())
                 }
             }
         }
@@ -555,21 +561,21 @@ class NSHomeFragment : NSFragment() {
 			openCameraWithScanner()
 		}
 	}
-
-	private fun setCategoryData(categoryResponse: NSJointCategoryDiseasesResponse) {
+	
+	private fun setDashboardCategoryData(categories: MutableList<NSCategoryData>) {
 		homeBinding.apply {
-			val layoutManager = GridLayoutManager(activity, 4)
+			val layoutManager = LinearLayoutManager(activity)
 			rvProducts.layoutManager = layoutManager
 			rvProducts.itemAnimator = DefaultItemAnimator()
-
-			val categoryListAdapter = MTCategoryHomeRecycleAdapter(requireContext(), object : NSProductCategoryCallback {
+			
+			val categoryListAdapter = CategoriesProductRecycleAdapter(requireActivity(), object : NSProductCategoryCallback {
 				override fun onResponse(categoryData: NSCategoryData) {
-					switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
+					switchActivity(NSProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
 				}
 			})
 			rvProducts.adapter = categoryListAdapter
 			categoryListAdapter.clearData()
-			categoryListAdapter.updateData(categoryResponse.categoryList)
+			categoryListAdapter.updateData(categories.filter { it.products.isValidList() })
 		}
 	}
 
@@ -583,10 +589,6 @@ class NSHomeFragment : NSFragment() {
             ) { shouldShowProgress ->
                 updateProgress(shouldShowProgress)
             }
-
-			productCategoryModel.isCategoryDataAvailable.observe(viewLifecycleOwner) {
-				setCategoryData(it)
-			}
 
             isUserDataAvailable.observe(
                 viewLifecycleOwner

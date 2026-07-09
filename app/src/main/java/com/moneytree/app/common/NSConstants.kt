@@ -11,6 +11,7 @@ class NSConstants {
         const val KEY_IS_SELECTED_ADDRESS = "key_is_selected_address"
         const val KEY_IS_SELECTED_MEETING = "key_is_selected_meeting"
         const val KEY_IS_FROM_ORDER = "key_is_from_order"
+        const val KEY_IS_FROM_HOME_VIEW_ALL = "key_is_from_home_view_all"
         const val KEY_IS_FROM_ONLINE_ORDER = "key_is_from_online_order"
         const val KEY_IS_DEFAULT_ADDRESS = "key_is_default_address"
         const val KEY_IS_ADD_ADDRESS = "key_is_add_address"

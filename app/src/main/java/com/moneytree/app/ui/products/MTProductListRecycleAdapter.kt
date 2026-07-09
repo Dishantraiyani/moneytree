@@ -123,6 +123,7 @@ class MTProductListRecycleAdapter(
 					tvProductNameGrid.isSelected = true
 					tvPriceGrid.text = addText(activity, R.string.price_value, rate)
 					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
+	    
 					clProductLayoutGrid.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							onProductClick.onResponse(response)

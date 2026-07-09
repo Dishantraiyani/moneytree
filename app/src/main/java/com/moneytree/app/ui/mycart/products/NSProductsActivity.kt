@@ -22,6 +22,6 @@ class NSProductsActivity : NSActivity() {
      *
      */
     private fun loadInitialFragment(bundle: Bundle?) {
-        replaceCurrentFragment(NSProductFragment.newInstance(), false, productsBinding.commonContainer.id)
+        replaceCurrentFragment(NSProductFragment.newInstance(bundle), false, productsBinding.commonContainer.id)
     }
 }

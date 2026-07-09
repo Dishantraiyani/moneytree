@@ -83,19 +83,20 @@ class MainFragment : NSFragment() {
                         replaceFragment(NSRegisterFragment.newInstance(), false, fragmentMainContainer.id)
 					}
                     R.id.tb_shop -> {
-						if (NSConstants.SOCKET_TYPE == null) {
+	                    replaceFragment(
+		                    NSProductFragment.newInstance(),
+		                    false,
+		                    fragmentMainContainer.id
+	                    )
+						/*if (NSConstants.SOCKET_TYPE == null) {
 							replaceFragment(
 								MTProductCategoryFragment.newInstance(),
 								false,
 								fragmentMainContainer.id
 							)
 						} else {
-							replaceFragment(
-								NSProductFragment.newInstance(),
-								false,
-								fragmentMainContainer.id
-							)
-						}
+						
+						}*/
                     }
                     R.id.tb_wallets -> {
                         replaceFragment(NSWalletFragment.newInstance(), false, fragmentMainContainer.id)
