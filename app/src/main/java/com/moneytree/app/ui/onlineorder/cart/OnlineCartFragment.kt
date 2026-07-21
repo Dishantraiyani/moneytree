@@ -1,27 +1,25 @@
 package com.moneytree.app.ui.onlineorder.cart
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.HeaderUtils
+import com.moneytree.app.common.NSActivityEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
-import com.moneytree.app.common.utils.*
+import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentMyCartBinding
 import com.moneytree.app.ui.mycart.address.selectAddress.NSSelectAddressActivity
-import com.moneytree.app.ui.mycart.cart.NSCartListRecycleAdapter
-import com.moneytree.app.ui.mycart.cart.NSCartViewModel
-import com.moneytree.app.ui.mycart.placeOrder.NSPlaceOrderActivity
-import com.moneytree.app.ui.mycart.purchaseComplete.PurchaseCompleteActivity
-import com.moneytree.app.ui.mycart.stockComplete.StockCompleteActivity
 import com.moneytree.app.ui.onlineorder.OnlineOrderHelper
 import com.moneytree.app.ui.onlineorder.placeorder.PlaceOrderAddressActivity
 import org.greenrobot.eventbus.Subscribe
@@ -75,7 +73,7 @@ class OnlineCartFragment : NSFragment() {
 					
 					proceed.setOnClickListener {
 						if (productList.isValidList()) {
-							switchResultActivity(dataResult, PlaceOrderAddressActivity::class.java)
+							switchResultActivity(dataResult, NSSelectAddressActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ONLINE_ORDER to true))
 						}
 					}
 				}

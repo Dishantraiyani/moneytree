@@ -25,7 +25,7 @@ class NSDoctorHistoryDetailViewModel(application: Application) : NSViewModel(app
         val imageList = list?.split(",")
 
         for (image in imageList?: arrayListOf()) {
-            val base = "https://moneytree.biz/upload/appointment/"
+            val base = "https://onlyvedaa.com/upload/appointment/"
             mFragmentList.add(base + image)
         }
 

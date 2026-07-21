@@ -32,19 +32,19 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
     var fieldName: Array<String> = arrayOf()
 	var isLogout = MutableLiveData<Boolean>()
     var fieldImage = arrayOf(
-        R.drawable.ic_mobile_ico,
-        R.drawable.ic_dth,
-        R.drawable.ic_cable,
-        R.drawable.ic_fast_tag,
-        R.drawable.ic_broadband,
-        R.drawable.ic_gas,
-        R.drawable.ic_electricity,
-        R.drawable.ic_emi,
-        R.drawable.ic_insurance_ico,
-        R.drawable.ic_lic_ico,
-		R.drawable.ic_landline,
-		R.drawable.ic_lpg,
-		R.drawable.ic_water
+        R.drawable.ic_mobile_ico_home,
+        R.drawable.ic_dth_home,
+        R.drawable.ic_cable_home,
+        R.drawable.ic_fast_tag_home,
+        R.drawable.ic_broadband_home,
+        R.drawable.ic_gas_home,
+        R.drawable.ic_electricity_home,
+        R.drawable.ic_emi_home,
+        R.drawable.ic_insurance_home,
+        R.drawable.ic_lic_home,
+		R.drawable.ic_landline_home,
+		R.drawable.ic_lpg_home,
+		R.drawable.ic_water_home
     )
 
 

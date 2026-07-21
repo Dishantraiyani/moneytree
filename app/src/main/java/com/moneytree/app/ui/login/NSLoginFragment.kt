@@ -1,11 +1,19 @@
 package com.moneytree.app.ui.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.LinkMovementMethod
 import android.text.method.PasswordTransformationMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,9 +39,9 @@ class NSLoginFragment : NSFragment() {
 	}
 	private var _binding: NsFragmentLoginBinding? = null
 
-	private val loginBinding get() = _binding!!
+	private val binding get() = _binding!!
 	private var loginPref: NSLoginPreferences? = null
-
+	private var isPasswordVisible = false
 
 	companion object {
 		fun newInstance() = NSLoginFragment()
@@ -46,9 +54,12 @@ class NSLoginFragment : NSFragment() {
 	): View {
 		_binding = NsFragmentLoginBinding.inflate(inflater, container, false)
 		loginPref = NSLoginPreferences(activity)
+		setupInputFocus()
+		setupPasswordToggle()
+		setupSignupText()
 		viewCreated()
 		setListener()
-		return loginBinding.root
+		return binding.root
 	}
 
 	/**
@@ -56,7 +67,7 @@ class NSLoginFragment : NSFragment() {
 	 */
 	private fun viewCreated() {
 		observeViewModel()
-		with(loginBinding) {
+		with(binding) {
 			with(loginViewModel) {
 				getNotificationToken()
 				if (!loginPref!!.prefUserName.isNullOrEmpty()) {
@@ -69,12 +80,75 @@ class NSLoginFragment : NSFragment() {
 			}
 		}
 	}
+	
+	private fun setupInputFocus() {
+		binding.etUserName.setOnFocusChangeListener { _, hasFocus ->
+			binding.userNameContainer.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etPassword.setOnFocusChangeListener { _, hasFocus ->
+			binding.passwordContainer.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etUserName.requestFocus()
+	}
+	
+	private fun setupPasswordToggle() {
+		binding.btnTogglePassword.setOnClickListener {
+			isPasswordVisible = !isPasswordVisible
+			
+			binding.etPassword.transformationMethod = if (isPasswordVisible) {
+				HideReturnsTransformationMethod.getInstance()
+			} else {
+				PasswordTransformationMethod.getInstance()
+			}
+			
+			binding.btnTogglePassword.setImageResource(
+				if (isPasswordVisible) R.drawable.ic_eye_off else R.drawable.ic_eye
+			)
+			binding.btnTogglePassword.contentDescription = getString(
+				if (isPasswordVisible) R.string.hide_password else R.string.show_password
+			)
+			binding.etPassword.setSelection(binding.etPassword.text?.length ?: 0)
+		}
+	}
+	
+	private fun setupSignupText() {
+		val fullText = getString(R.string.signup_text)
+		val signUpStart = fullText.indexOf("SignUp")
+		val spannable = SpannableString(fullText)
+		
+		if (signUpStart >= 0) {
+			spannable.setSpan(object : ClickableSpan() {
+				override fun onClick(widget: View) {
+					switchActivity(
+						SignUpActivity::class.java
+					)
+				}
+				
+				override fun updateDrawState(ds: TextPaint) {
+					super.updateDrawState(ds)
+					ds.color = ContextCompat.getColor(requireContext(), R.color.green_mid)
+					ds.isUnderlineText = false
+					ds.isFakeBoldText = true
+				}
+			}, signUpStart, fullText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+		}
+		
+		binding.tvSignup.text = spannable
+		binding.tvSignup.highlightColor = Color.TRANSPARENT
+		binding.tvSignup.movementMethod = LinkMovementMethod.getInstance()
+	}
 
 	/**
 	 * Set listener
 	 */
 	private fun setListener() {
-		with(loginBinding) {
+		with(binding) {
 			with(loginViewModel) {
 				btnLogin.setOnClickListener (
 					object : OnSingleClickListener() {
@@ -86,13 +160,13 @@ class NSLoginFragment : NSFragment() {
 					})
 				}
 
-				tvSignup.setOnClickListener(object : OnSingleClickListener() {
+				/*tvSignup.setOnClickListener(object : OnSingleClickListener() {
 					override fun onSingleClick(v: View?) {
 						switchActivity(
 							SignUpActivity::class.java
 						)
 					}
-				})
+				})*/
 			}
 	}
 
@@ -131,7 +205,7 @@ class NSLoginFragment : NSFragment() {
 	@Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
 	fun onLoginRegisterEvent(loginEvent: NSLoginRegisterEvent) {
 		NSConstants.IS_LOGIN_SUCCESS = true
-		with(loginBinding) {
+		with(binding) {
 			with(loginViewModel) {
 				if (cbRememberPassword.isChecked) {
 					if (strUserName!!.isNotEmpty() && strPassword!!.isNotEmpty()) {

@@ -25,7 +25,7 @@ class RazorpayUtility(private val context: Activity) {
             options.put(bidDetails.allowRotation, false)
             options.put(bidDetails.image, image)
             options.put(bidDetails.currency, bidDetails.currencyValue)
-            options.put(bidDetails.amount, (price?.toInt()?:0) * 100)
+            options.put(bidDetails.amount, ((price?:"0").toDouble()) * 100)
             val preFill = JSONObject()
             preFill.put(bidDetails.email, email)
             preFill.put(bidDetails.contact, mobile)

@@ -4,7 +4,7 @@ object ApiConfig {
 
     val key = "poOtBNUmOwydFoDBVnHWlknxz8DjxCrr2CZzeXgF04E="
     val baseUrl : String
-        get() = Security.decrypt("bRgWk0yhw59EGSDZ7zqyn8lCMmsFqK9DVgAZEVQDtfim74CKh2EMwl+/Pgk7IPiX", Security.stringToSecretKey(key))
+        get() = "https://onlyvedaa.com/"//Security.decrypt("bRgWk0yhw59EGSDZ7zqyn8lCMmsFqK9DVgAZEVQDtfim74CKh2EMwl+/Pgk7IPiX", Security.stringToSecretKey(key))
 
     val baseUrlImage : String
         get() = baseUrl + Security.decrypt("LQsyERBezv7WOAmdvOOr0I6RMFx2Hp+Qt8j2QQE6f+M=", Security.stringToSecretKey(key))

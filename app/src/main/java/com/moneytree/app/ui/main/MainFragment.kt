@@ -6,7 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
 import com.moneytree.app.R
-import com.moneytree.app.common.*
+import com.moneytree.app.common.BackPressEvent
+import com.moneytree.app.common.NSChangeNavigationMenuNameEvent
+import com.moneytree.app.common.NSConstants
+import com.moneytree.app.common.NSFragment
+import com.moneytree.app.common.NSFragmentChange
+import com.moneytree.app.common.NSLog
+import com.moneytree.app.common.NSTabChange
 import com.moneytree.app.common.callbacks.NSUserDataCallback
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.databinding.FragmentMainBinding
@@ -83,20 +89,19 @@ class MainFragment : NSFragment() {
                         replaceFragment(NSRegisterFragment.newInstance(), false, fragmentMainContainer.id)
 					}
                     R.id.tb_shop -> {
-	                    replaceFragment(
-		                    NSProductFragment.newInstance(),
-		                    false,
-		                    fragmentMainContainer.id
-	                    )
-						/*if (NSConstants.SOCKET_TYPE == null) {
-							replaceFragment(
-								MTProductCategoryFragment.newInstance(),
-								false,
-								fragmentMainContainer.id
-							)
-						} else {
-						
-						}*/
+	                    if (NSConstants.SOCKET_TYPE == null) {
+		                    replaceFragment(
+			                    MTProductCategoryFragment.newInstance(),
+			                    false,
+			                    fragmentMainContainer.id
+		                    )
+	                    } else {
+		                    replaceFragment(
+			                    NSProductFragment.newInstance(),
+			                    false,
+			                    fragmentMainContainer.id
+		                    )
+	                    }
                     }
                     R.id.tb_wallets -> {
                         replaceFragment(NSWalletFragment.newInstance(), false, fragmentMainContainer.id)

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/_8sdp">
+
+    <LinearLayout
+        android:id="@+id/ll_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@drawable/gray_border">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_fieldImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_gravity="center_horizontal|top"
+            android:contentDescription="@string/mobile_title"
+            android:src="@drawable/mobile"
+            android:scaleType="centerCrop"
+            android:background="@drawable/gradient_bg"
+            app:shapeAppearanceOverlay="@style/TopRoundedImage"/>
+
+        <TextView
+            android:id="@+id/tv_fieldName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            android:text=""
+            android:lines="2"
+            android:textStyle="normal"
+            android:paddingHorizontal="@dimen/_3sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingTop="0dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+

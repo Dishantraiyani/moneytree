@@ -85,7 +85,7 @@ class NSIDCardFragment : BaseViewModelFragment<NSIDCardViewModel, NsFragmentIdCa
                     }
                 }
             }
-            Glide.with(requireContext()).load("https://moneytree.biz/upload/gallery/Moneytree.jpg").into(binding.ivQr)
+            Glide.with(requireContext()).load("https://onlyvedaa.com/upload/gallery/Moneytree.jpg").into(binding.ivQr)
         }
     }
 

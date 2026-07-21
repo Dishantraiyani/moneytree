@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSUserResponse
-import com.moneytree.app.repository.network.responses.PlaceOrderAddressCreateResponse
 
 /**
  * Class to maintain shared preference
@@ -80,16 +79,6 @@ class NSPreferences(context: Context) {
         set(loginResponse) {
             val json: String = Gson().toJson(loginResponse)
             prefEdit.putString(KEY_SELECTED_ADDRESS, json).apply()
-        }
-    
-    var placeOrderAddress: PlaceOrderAddressCreateResponse?
-        get() {
-            val json: String? = preference.getString(KEY_PLACE_ORDER_ADDRESS, null)
-            return Gson().fromJson(json, PlaceOrderAddressCreateResponse::class.java)
-        }
-        set(loginResponse) {
-            val json: String = Gson().toJson(loginResponse)
-            prefEdit.putString(KEY_PLACE_ORDER_ADDRESS, json).apply()
         }
 
     /**

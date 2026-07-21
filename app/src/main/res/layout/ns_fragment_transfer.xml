@@ -120,10 +120,7 @@
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
 					app:guidelineUseRtl="true"
-					app:chainUseRtl="true"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+					app:chainUseRtl="true">
 
 					<ImageView
 						android:id="@+id/iv_available_amount"
@@ -186,10 +183,7 @@
 						android:layout_height="wrap_content"
 						android:padding="@dimen/_1sdp"
 						app:guidelineUseRtl="true"
-						app:chainUseRtl="true"
-						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+						app:chainUseRtl="true">
 
 						<ImageView
 							android:id="@+id/iv_wallet_amount"
@@ -271,10 +265,7 @@
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
 					app:guidelineUseRtl="true"
-					app:chainUseRtl="true"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+					app:chainUseRtl="true">
 
 					<ImageView
 						android:id="@+id/iv_member"
@@ -365,10 +356,7 @@
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
 					app:guidelineUseRtl="true"
-					app:chainUseRtl="true"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+					app:chainUseRtl="true">
 
 					<ImageView
 						android:id="@+id/iv_amount"
@@ -438,10 +426,7 @@
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
 					app:guidelineUseRtl="true"
-					app:chainUseRtl="true"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+					app:chainUseRtl="true">
 
 					<ImageView
 						android:id="@+id/iv_remark"
@@ -500,10 +485,7 @@
 					android:layout_height="wrap_content"
 					android:padding="@dimen/_1sdp"
 					app:guidelineUseRtl="true"
-					app:chainUseRtl="true"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+					app:chainUseRtl="true">
 
 					<ImageView
 						android:id="@+id/iv_transaction_password"

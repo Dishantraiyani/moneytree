@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.multidex.MultiDex
 import com.moneytree.app.database.MainDatabase
 import com.moneytree.app.repository.network.manager.NSApiManager
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
@@ -43,11 +42,6 @@ class NSApplication : Application() {
 		OneSignal.Debug.logLevel = LogLevel.VERBOSE
 		OneSignal.initWithContext(this, ONESIGNAL_APP_ID)
 	}
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        MultiDex.install(this)
-    }
 
     /**
      * To initialize global instances that be used across modules

@@ -1,6 +1,5 @@
 package com.moneytree.app.ui.signup
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.RemoteException
 import android.text.method.LinkMovementMethod
@@ -17,16 +16,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.beautycoder.pflockscreen.security.PFResult
-import com.beautycoder.pflockscreen.security.PFSecurityManager
-import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback
 import com.beautycoder.pflockscreen.viewmodels.PFPinCodeViewModel
-import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSAlertButtonClickEvent
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
-import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.OnSingleClickListener
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.TAG
@@ -43,7 +38,7 @@ class NSSignUpFragment : NSFragment() {
 		ViewModelProvider(this)[NSSignUpViewModel::class.java]
 	}
 	private var _binding: NsFragmentSignupBinding? = null
-	private val signUpBinding get() = _binding!!
+	private val binding get() = _binding!!
 	private var referrerClient: InstallReferrerClient? = null
 	private var referCode: String? = ""
 
@@ -58,15 +53,16 @@ class NSSignUpFragment : NSFragment() {
 		_binding = NsFragmentSignupBinding.inflate(inflater, container, false)
 		viewCreated()
 		setListener()
-		return signUpBinding.root
+		return binding.root
 	}
 
 	/**
 	 * View created
 	 */
 	private fun viewCreated() {
-		with(signUpBinding) {
+		with(binding) {
 			with(signUpModel) {
+				setupInputFocus()
 				getNotificationToken()
 				HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.sign_up))
 				setTerms()
@@ -74,12 +70,52 @@ class NSSignUpFragment : NSFragment() {
 		}
 		observeViewModel()
 	}
+	
+	private fun setupInputFocus() {
+		binding.etRefer.setOnFocusChangeListener { _, hasFocus ->
+			binding.clRefer.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etFullName.setOnFocusChangeListener { _, hasFocus ->
+			binding.clFullName.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etPhone.setOnFocusChangeListener { _, hasFocus ->
+			binding.clMobile.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etEmail.setOnFocusChangeListener { _, hasFocus ->
+			binding.clEmail.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etPassword.setOnFocusChangeListener { _, hasFocus ->
+			binding.clPassword.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etConfirmPassword.setOnFocusChangeListener { _, hasFocus ->
+			binding.clConfirmPassword.setBackgroundResource(
+				if (hasFocus) R.drawable.bg_input_active else R.drawable.bg_input_normal
+			)
+		}
+		
+		binding.etRefer.requestFocus()
+	}
 
 	/**
 	 * Set listener
 	 */
 	private fun setListener() {
-		with(signUpBinding) {
+		with(binding) {
 			etPassword.transformationMethod = PasswordTransformationMethod()
 			etConfirmPassword.transformationMethod = PasswordTransformationMethod()
 			btnSubmit.setOnClickListener(object : OnSingleClickListener() {
@@ -93,7 +129,7 @@ class NSSignUpFragment : NSFragment() {
 	}
 
 	private fun registerUser(isReferal: Boolean) {
-		signUpBinding.apply {
+		binding.apply {
 			signUpModel.apply {
 				val referral = etRefer.text.toString()
 				val fullName = etFullName.text.toString()
@@ -139,7 +175,7 @@ class NSSignUpFragment : NSFragment() {
 	}
 
 	private fun setTerms() {
-		with(signUpBinding) {
+		with(binding) {
 			val html = "I agree to the <a href=${ApiConfig.terms}>Terms & Conditions</a> and <a href=${ApiConfig.policy}>Privacy Policy</a>"
 			tvTermsConditions.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 			tvTermsConditions.movementMethod = LinkMovementMethod.getInstance()
@@ -151,7 +187,7 @@ class NSSignUpFragment : NSFragment() {
 	 */
 	private fun observeViewModel() {
 		with(signUpModel) {
-			with(signUpBinding) {
+			with(binding) {
 				isProgressShowing.observe(
 					viewLifecycleOwner
 				) { shouldShowProgress ->
@@ -226,7 +262,7 @@ class NSSignUpFragment : NSFragment() {
 						val referrerDetails = referrerClient?.installReferrer
 						if (!referrerDetails?.installReferrer?.contains("utm_source")!!) {
 							referCode = referrerDetails.installReferrer
-							signUpBinding.etRefer.setText(referCode)
+							binding.etRefer.setText(referCode)
 						}
 						referrerClient?.endConnection()
 					} catch (e: RemoteException) {

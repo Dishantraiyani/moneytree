@@ -13,6 +13,7 @@ import com.moneytree.app.R
 import com.moneytree.app.base.fragment.BaseViewModelFragment
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSAlertButtonClickEvent
+import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.SingleClickListener
@@ -26,6 +27,7 @@ import com.moneytree.app.common.utils.increaseByPercent
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.FragmentPlaceOrderAddressBinding
 import com.moneytree.app.databinding.LayoutPlaceOrderOptionsBinding
+import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.repository.network.responses.NSErrorPaymentResponse
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.PlaceOrderAddressCreateResponse
@@ -33,6 +35,7 @@ import com.moneytree.app.repository.network.responses.RozerModel
 import com.moneytree.app.ui.onlineorder.OnlineOrderHelper
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.plus
 
 
 class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewModel, FragmentPlaceOrderAddressBinding>() {
@@ -40,7 +43,7 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 	override val viewModel: PlaceOrderAddressViewModel by lazy {
 		ViewModelProvider(this)[PlaceOrderAddressViewModel::class.java]
 	}
-	private var selectedAddress: PlaceOrderAddressCreateResponse? = null
+	private var selectedAddress: NSAddressCreateResponse? = null
 	private var paymentOptionBottomSheet: BottomSheetDialog? = null
 	private var selectedPaymentType: String = NSConstants.PAYMENT_WALLET
 	
@@ -98,7 +101,7 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 	 */
 	private fun viewCreated() {
 		with(binding) {
-			selectedAddress = pref.placeOrderAddress//arguments?.getString(NSConstants.KEY_IS_SELECTED_ADDRESS)
+			selectedAddress = NSApplication.getInstance().getSelectedAddress()//pref.placeOrderAddress//arguments?.getString(NSConstants.KEY_IS_SELECTED_ADDRESS)
 			HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString(R.string.checkout_details))
 			setAddress()
 			setTotalAmount()
@@ -127,7 +130,7 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 							val razorpayUtility = RazorpayUtility(requireActivity())
 							val model = RozerModel()
 							model.productName = "${OnlineOrderHelper.getOrderList().size} Products Selected"
-							model.price = viewModel.finalPayoutAmount.toString()
+							model.price = viewModel.paymentAmountWithCharge.toString()
 							model.email = etEmail.text.toString()
 							model.mobile = etMobile.text.toString()
 							
@@ -180,11 +183,6 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 				return
 			}
 			
-			if (cbChecked.isChecked) {
-				val model = PlaceOrderAddressCreateResponse(fullName, mobile, email, address, pinCode, city, district, state)
-				pref.placeOrderAddress = model
-			}
-			
 			val map: HashMap<String, Any> = hashMapOf()
 			map["member_id"] = memberId?:""
 			map["full_name"] = fullName
@@ -218,22 +216,26 @@ class PlaceOrderAddressFragment : BaseViewModelFragment<PlaceOrderAddressViewMod
 	
 	private fun setAddress() {
 		binding.apply {
-			val note = "Note: ${pref.onlineOrderChargePercentage}% Tds charges will be deducted"
+			val note = "Note: ${pref.onlineOrderChargePercentage}% Service charges will be deducted"
 			tvNotes.text = note
 			
 			tvWalletAmount.text = NSConstants.WALLET_BALANCE
 			tvMemberId.text = pref.userData?.data?.userName
 			val userModel = pref.userData?.data
 			if (selectedAddress != null && !selectedAddress?.fullName.isNullOrEmpty()) {
-				val model: PlaceOrderAddressCreateResponse? = selectedAddress
+				val model: NSAddressCreateResponse? = selectedAddress
+				
+				val flatHouse = model?.flatHouse?.ifEmpty { "" }
+				val addressStr =  if (!flatHouse.isNullOrEmpty()) flatHouse + ", " + model.area else model?.area?:""
+				
 				viewModel.selectedAddressModel = model
 				etFullName.setText(model?.fullName?.ifEmpty { userModel?.fullName })
 				etMobile.setText(model?.mobile?.ifEmpty { userModel?.mobile })
-				etEmail.setText(model?.email?.ifEmpty { userModel?.email })
-				etAddress.setText(model?.address?.ifEmpty { userModel?.address })
+				etEmail.setText(userModel?.email?.ifEmpty { userModel.email })
+				etAddress.setText(addressStr.ifEmpty { userModel?.address })
 				etPinCode.setText(model?.pinCode?.ifEmpty { userModel?.pinCodeValue })
 				etCity.setText(model?.city?.ifEmpty { userModel?.cityNameValue })
-				etDistrict.setText(model?.district?.ifEmpty { userModel?.districtNameValue })
+				etDistrict.setText(userModel?.districtNameValue?.ifEmpty { userModel.districtNameValue })
 				etState.setText(model?.state?.ifEmpty { userModel?.stateNameValue })
 				//etCountryName.setText(model?.country)
 			} else if (pref.userData?.data != null) {

@@ -93,7 +93,7 @@ class NSKycFragment : BaseViewModelFragment<NSKycViewModel, NsFragmentKycDetailB
 		}
 		viewModel.checkKycStatus(type) { model, isSuccess ->
 			if (isSuccess) {
-				Glide.with(activity.applicationContext).load("https://moneytree.biz/upload/kyc_verification/${model?.img}").into(binding.ivKycImg)
+				Glide.with(activity.applicationContext).load("https://onlyvedaa.com/upload/kyc_verification/${model?.img}").into(binding.ivKycImg)
 
 				if (model?.responseData?.isNotEmpty() == true) {
 					val innerMap = Gson().fromJson(model.responseData, HashMap::class.java)

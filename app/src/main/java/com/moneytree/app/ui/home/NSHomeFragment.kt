@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -98,6 +99,10 @@ class NSHomeFragment : NSFragment() {
         ViewModelProvider(this)[NSHomeViewModel::class.java]
     }
 	
+	private val productCategoryModel: ProductCategoryViewModel by lazy {
+		ViewModelProvider(this)[ProductCategoryViewModel::class.java]
+	}
+	
     private var _binding: NsFragmentHomeBinding? = null
     private val homeBinding get() = _binding!!
     private var homeListModelClassArrayList1: ArrayList<GridModel>? = null
@@ -110,7 +115,7 @@ class NSHomeFragment : NSFragment() {
     override fun onCreateView(
 	    inflater: LayoutInflater,
 	    container: ViewGroup?,
-	    savedInstanceState: Bundle?,
+	    savedInstanceState: Bundle?
     ): View {
         _binding = NsFragmentHomeBinding.inflate(inflater, container, false)
         viewCreated()
@@ -178,6 +183,14 @@ class NSHomeFragment : NSFragment() {
 			llHistoryData.setOnClickListener {
 				switchActivity(NSRechargeHistoryActivity::class.java, bundleOf(NSConstants.KEY_RECHARGE_TYPE to "All"))
 			}
+
+			tvAccountViewAll.setOnClickListener {
+				BankDetailDialogFragment.newInstance().show(childFragmentManager, "BankDetailDialog")
+			}
+			
+			clTopup8888.setOnClickListener {
+				switchActivity(TopUpVoucher8888Activity::class.java)
+			}
 		}
 	}
 
@@ -189,7 +202,8 @@ class NSHomeFragment : NSFragment() {
 			ivBack.invisible()
 			ivMenu.visible()
 			tvHeaderBack.gone()
-			//tvAmountData.visible()
+			homeBinding.tvAccountViewAll.paintFlags = homeBinding.tvAccountViewAll.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+			homeBinding.viewPager.setIndicatorVisibility(false)
 		}
 	}
 
@@ -239,7 +253,7 @@ class NSHomeFragment : NSFragment() {
 
 	private fun setRechargeLayout() {
 		homeBinding.layoutWalletRecharge.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_wallet_recharge)
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_home)
 			tvFieldName.text = activity.resources.getString(R.string.recharge)
 			llRecharge.setOnClickListener {
 				switchActivity(
@@ -250,7 +264,7 @@ class NSHomeFragment : NSFragment() {
 		}
 
 		homeBinding.layoutWalletReport.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_wallet_report)
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_report_home)
 			tvFieldName.text = activity.resources.getString(R.string.reports)
 			llRecharge.setOnClickListener {
 				EventBus.getDefault().post(NSTabChange(R.id.tb_wallets))
@@ -261,7 +275,7 @@ class NSHomeFragment : NSFragment() {
 		}
 
 		homeBinding.layoutWalletTransfer.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_wallet_transfer)
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_transfer_home)
 			tvFieldName.text = activity.resources.getString(R.string.transfer)
 			llRecharge.setOnClickListener {
 				switchActivity(NSTransferActivity::class.java, bundleOf(NSConstants.KEY_IS_VOUCHER_FROM_TRANSFER to false, NSConstants.KEY_AVAILABLE_BALANCE to homeModel.dashboardData?.data?.wltAmt?.get(0)?.amount))
@@ -269,7 +283,7 @@ class NSHomeFragment : NSFragment() {
 		}
 
 		homeBinding.layoutWalletRedemption.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_wallet_redeam)
+			ivFieldImage.setImageResource(R.drawable.ic_wallet_home)
 			tvFieldName.text = activity.resources.getString(R.string.redemption)
 			llRecharge.setOnClickListener {
 				switchResultActivity(
@@ -284,7 +298,7 @@ class NSHomeFragment : NSFragment() {
 	
 	private fun setOnlineOrderLayout() {
 		homeBinding.layoutOnlineOrder.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_home_online_order)
+			ivFieldImage.setImageResource(R.drawable.ic_online_order_home)
 			tvFieldName.text = activity.resources.getString(R.string.online_order)
 			llRecharge.setOnClickListener {
 				switchActivity(
@@ -294,7 +308,7 @@ class NSHomeFragment : NSFragment() {
 		}
 		
 		homeBinding.layoutOnlineOrderCart.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_home_cart)
+			ivFieldImage.setImageResource(R.drawable.ic_home_view_cart)
 			tvFieldName.text = activity.resources.getString(R.string.view_cart)
 			llRecharge.setOnClickListener {
 				switchActivity(OnlineCartActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ORDER to true))
@@ -302,7 +316,7 @@ class NSHomeFragment : NSFragment() {
 		}
 		
 		homeBinding.layoutOnlineOrderHistory.apply {
-			ivFieldImage.setImageResource(R.drawable.ic_history_home)
+			ivFieldImage.setImageResource(R.drawable.ic_home_history)
 			tvFieldName.text = activity.resources.getString(R.string.history)
 			llRecharge.setOnClickListener {
 				switchActivity(NSOrderHistoryActivity::class.java, bundleOf(NSConstants.KEY_IS_FROM_ONLINE_ORDER to true))
@@ -320,7 +334,7 @@ class NSHomeFragment : NSFragment() {
 
 					if (activeValue.equals("Y")) {
 						pref.isActive = true
-						tvActive.text = "${packageName?.uppercase()} (${activity.resources.getString(R.string.active)})"
+						tvActive.text = "${packageName?.uppercase()}\n(${activity.resources.getString(R.string.active)})"
 						clActivePlanCheck.gone()
 						
 					} else {
@@ -362,8 +376,7 @@ class NSHomeFragment : NSFragment() {
 
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
                     NSApplication.getInstance().setWalletBalance(setWallet())
-                    tvStatusRoyalty.text =
-                        addText(activity, R.string.status_royalty, setRoyaltyStatus())
+                    tvStatusRoyalty.text = setRoyaltyStatus()//addText(activity, R.string.status_royalty, setRoyaltyStatus())
 	                
 	                tvMyEarningTitle.text = resources.getString(R.string.my_earning_title)
 	                tvMyEarning.text = addText(activity, R.string.my_earning_value, setEarningAmount())
@@ -373,7 +386,8 @@ class NSHomeFragment : NSFragment() {
 					HomeRepository.setupViewPager(activity, homeBinding, homeModel, viewPager)
 					showPopup(getPopUpImage())
 					EventBus.getDefault().post(NSChangeNavigationMenuNameEvent())
-	                setDashboardCategoryData(dashboardData?.data?.categoryProducts?: arrayListOf())
+	                productCategoryModel.getProductCategory(true, isFromHome = true)
+	                //setDashboardCategoryData(dashboardData?.data?.categoryProducts?: arrayListOf())
                 }
             }
         }
@@ -432,7 +446,7 @@ class NSHomeFragment : NSFragment() {
 	                    }
 
 						llRegisterSeller.setOnClickListener {
-							NSUtilities.openBrowser(activity, "https://moneytree.biz/Seller/Login")
+							NSUtilities.openBrowser(activity, "https://onlyvedaa.com/Seller/Login")
 						}
 
                         llVouchers.setOnClickListener {
@@ -562,6 +576,23 @@ class NSHomeFragment : NSFragment() {
 		}
 	}
 	
+	private fun setCategoryData(categoryResponse: NSJointCategoryDiseasesResponse) {
+		homeBinding.apply {
+			val layoutManager = GridLayoutManager(activity, 4)
+			rvProducts.layoutManager = layoutManager
+			rvProducts.itemAnimator = DefaultItemAnimator()
+			
+			val categoryListAdapter = MTCategoryHomeRecycleAdapter(requireContext(), object : NSProductCategoryCallback {
+				override fun onResponse(categoryData: NSCategoryData) {
+					switchActivity(MTProductsActivity::class.java, bundleOf(NSConstants.KEY_PRODUCT_CATEGORY to categoryData.categoryId, NSConstants.KEY_PRODUCT_CATEGORY_NAME to categoryData.categoryName))
+				}
+			})
+			rvProducts.adapter = categoryListAdapter
+			categoryListAdapter.clearData()
+			categoryListAdapter.updateData(categoryResponse.categoryList)
+		}
+	}
+	
 	private fun setDashboardCategoryData(categories: MutableList<NSCategoryData>) {
 		homeBinding.apply {
 			val layoutManager = LinearLayoutManager(activity)
@@ -589,7 +620,11 @@ class NSHomeFragment : NSFragment() {
             ) { shouldShowProgress ->
                 updateProgress(shouldShowProgress)
             }
-
+	        
+	        productCategoryModel.isCategoryDataAvailable.observe(viewLifecycleOwner) {
+		        setCategoryData(it)
+	        }
+	        
             isUserDataAvailable.observe(
                 viewLifecycleOwner
             ) { userDetail ->

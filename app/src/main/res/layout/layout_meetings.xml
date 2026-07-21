@@ -24,10 +24,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
             app:guidelineUseRtl="true"
-            app:chainUseRtl="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_login_sub_title">
+            app:chainUseRtl="true">
 
             <TextView
                 android:id="@+id/et_meeting_name"

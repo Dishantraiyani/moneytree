@@ -125,6 +125,7 @@
 			android:orientation="horizontal"
 			android:background="@drawable/gray_round_second"
 			android:paddingVertical="@dimen/_1sdp"
+			android:visibility="gone"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
 			android:paddingHorizontal="@dimen/_5sdp"

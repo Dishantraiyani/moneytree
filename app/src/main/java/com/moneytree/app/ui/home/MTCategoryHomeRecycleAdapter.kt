@@ -15,9 +15,25 @@ import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutItemRechargesBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.BuildConfig
+import com.moneytree.app.R
+import com.moneytree.app.databinding.LayoutItemCategoryProductBinding
 
 class MTCategoryHomeRecycleAdapter(private val context: Context, private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private val categoryData: MutableList<NSCategoryData> = arrayListOf()
+    
+    private val iconMap = mapOf(
+        "ayurvedic" to R.drawable.ic_ayurvedic,
+        "cosmetic" to R.drawable.ic_cosmetic,
+        "fmcg" to R.drawable.ic_fmcg,
+        "herbo_nutraceuticals" to R.drawable.ic_herbo_nutraceuticals,
+        "otc" to R.drawable.ic_otc,
+        "protein_powder" to R.drawable.ic_protein_powder,
+        "spray" to R.drawable.ic_spray,
+        "home_care" to R.drawable.ic_home_care,
+        "agriculture_product" to R.drawable.ic_agriculture_product,
+        "personal_care" to R.drawable.ic_personal_care,
+        "gym_supplement" to R.drawable.ic_gym_supplement
+    )
 
     fun updateData(voucherList: MutableList<NSCategoryData>) {
         categoryData.addAll(voucherList)
@@ -34,7 +50,7 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val voucherView = LayoutItemRechargesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val voucherView = LayoutItemCategoryProductBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NSCategoryViewHolder(voucherView)
     }
 
@@ -54,7 +70,7 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
      *
      * @property voucherBinding The voucher list view binding
      */
-    inner class NSCategoryViewHolder(private val voucherBinding: LayoutItemRechargesBinding) :
+    inner class NSCategoryViewHolder(private val voucherBinding: LayoutItemCategoryProductBinding) :
         RecyclerView.ViewHolder(voucherBinding.root) {
 
         /**
@@ -65,18 +81,9 @@ class MTCategoryHomeRecycleAdapter(private val context: Context, private val onC
         fun bind(response: NSCategoryData) {
             with(voucherBinding) {
                 with(response) {
-
-                    /*if (response.categoryImg?.isNotEmpty() == true) {
-                        val url = NSUtilities.decrypt(BuildConfig.BASE_URL_IMAGE_CATEGORY) + response.categoryImg
-                        Glide.with(context).load(url).into(ivFieldImage)
-                    } else {*/
-                        try {
-                            val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
-                            ivFieldImage.setImageDrawable(drawable)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                   // }
+                    
+                    val resId = iconMap[categoryName?.replace(" ", "_")?.lowercase()] ?: R.drawable.placeholder
+                    ivFieldImage.setImageResource(resId)
 
                     tvFieldName.text = categoryName?.replace(" ", "\n")
 					llRecharge.setOnClickListener(object : SingleClickListener() {

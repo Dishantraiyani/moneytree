@@ -122,12 +122,15 @@ class OnlineOrderListRecycleAdapter(
 
 					//tvPrice.text = addText(activity, R.string.price_value, finalAmount.toString())
 					tvPrice.text = addText(activity, R.string.price_value, amount.toString())
-					if (rewardCoin?.isNotEmpty() == true) {
+					llReward.gone()
+					llRewardGrid.gone()
+					
+					/*if (rewardCoin?.isNotEmpty() == true) {
 						llReward.visible()
 						tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
 						llRewardGrid.visible()
 						tvRewardPointGrid.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
-					}
+					}*/
 
 					if (sdPrice == rate) {
 						tvRate.gone()

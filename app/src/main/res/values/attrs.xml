@@ -101,5 +101,13 @@
             <enum name="back_and_forth" value="2" />
         </attr>
 
+        <attr name="sliderArrowsEnabled" format="boolean" />
+        <attr name="sliderLeftArrowIcon" format="reference" />
+        <attr name="sliderRightArrowIcon" format="reference" />
+        <attr name="sliderArrowSize" format="dimension" />
+        <attr name="sliderArrowMargin" format="dimension" />
+        <attr name="sliderArrowTintColor" format="color" />
+        <attr name="sliderArrowBackground" format="reference" />
+
     </declare-styleable>
 </resources>

@@ -85,8 +85,8 @@ class OnlineCartListRecycleAdapter(
 					productDel.gone()
 					productDelOrder.visible()
 					if (rewardCoin?.isNotEmpty() == true) {
-						llReward.visible()
-						tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
+						llReward.gone()
+						//tvRewardPoint.text = ""+addAmount(activity, R.string.price_value, rewardCoin.toString())
 					}
 					
 					clProductLayout.setVisibility(!isGrid)

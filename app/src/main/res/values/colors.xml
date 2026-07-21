@@ -11,6 +11,7 @@
     <string name="white">#FFFFFFFF</string>
     <color name="background_color">#FCF7F1</color>
     <color name="icon_bg_color">#88F8E3C8</color>
+    <color name="icon_bg_color_alpha">#44F8E3C8</color>
     <color name="second_color">#50574F</color>
 
     <color name="orange">#52965B</color>
@@ -46,7 +47,6 @@
     <color name="red_03">#F51D46</color>
     <color name="gray_background">#E9ECEF</color>
     <color name="dark_black_sec">#444445</color>
-    <color name="green_light">#13c600</color>
     <color name="icon_tint_gray">#C4C4C6</color>
 
 
@@ -54,4 +54,16 @@
 	<color name="holo_red_dark">#ff0000</color>
 	<color name="icon_gray_color">#C5C5C7</color>
     <color name="rack_month_picker_title_text_color">@color/white</color>
+
+    <color name="green_light">#7CC843</color>
+    <color name="green_mid">#3D9350</color>
+    <color name="green_deep">#075C30</color>
+    <color name="green_button_end">#156834</color>
+    <color name="text_dark">#06180F</color>
+    <color name="text_muted">#5E6862</color>
+    <color name="hint_gray">#849590</color>
+    <color name="border_normal">#E2E0DA</color>
+    <color name="field_fill">#FEFEFD</color>
+    <color name="icon_gray">#A7B2AD</color>
+    <color name="shadow_green">#337C46</color>
 </resources>

@@ -17,6 +17,7 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
  */
 class NSSelectAddressViewModel(application: Application) : NSViewModel(application) {
     var isFromOrder: Boolean = false
+    var isFromOnlineOrder: Boolean = false
 
     /**
      * Get voucher list data

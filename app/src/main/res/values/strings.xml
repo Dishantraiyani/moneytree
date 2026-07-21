@@ -879,6 +879,7 @@
     <string name="no_sponsors_available">No Sponsors Available</string>
     <string name="choose_product_option">Choose an Product Option</string>
     <string name="topup_8888_activation">Topup 8888 Activation</string>
+    <string name="topup_8888_title">Topup 8888</string>
     <string name="my_activation_status">My Activation Status</string>
     <string name="available_pins">Available Pins</string>
     <string name="downline_summary">Downline Summary</string>
@@ -907,4 +908,17 @@
     <string name="payment_charges">Payment Charge</string>
     <string name="member_dashboard">Member Dashboard</string>
     <string name="out_of_stock">Out Of Stock</string>
+
+    <string name="login_subtitle">Please Sign in to continue.</string>
+    <string name="user_name_hint">UserName</string>
+    <string name="password_hint">Password</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="signup_text">Don\'t have an account? SignUp</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="wallet_balance">Wallet Balance</string>
+    <string name="royalty_status">Royalty Status</string>
+    <string name="activation_status">Activation Status</string>
+    <string name="account_detail">Account Details</string>
+
 </resources>

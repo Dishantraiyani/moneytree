@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
@@ -54,6 +55,10 @@ public class SliderView extends FrameLayout
     private boolean mIsIndicatorEnabled = true;
     private int mPreviousPosition = -1;
 
+    private boolean mIsArrowsEnabled = false;
+    private ImageView mLeftArrow;
+    private ImageView mRightArrow;
+
     /*Constructor*/
     public SliderView(Context context) {
         super(context);
@@ -89,12 +94,25 @@ public class SliderView extends FrameLayout
         boolean sliderStartAutoCycle = typedArray.getBoolean(R.styleable.SliderView_sliderStartAutoCycle, false);
         int sliderAutoCycleDirection = typedArray.getInt(R.styleable.SliderView_sliderAutoCycleDirection, AUTO_CYCLE_DIRECTION_RIGHT);
 
+        boolean sliderArrowsEnabled = typedArray.getBoolean(R.styleable.SliderView_sliderArrowsEnabled, false);
+        int sliderLeftArrowIcon = typedArray.getResourceId(R.styleable.SliderView_sliderLeftArrowIcon, R.drawable.ic_baseline_arrow_back_ios_24);
+        int sliderRightArrowIcon = typedArray.getResourceId(R.styleable.SliderView_sliderRightArrowIcon, R.drawable.ic_baseline_arrow_forward_ios_24);
+        int sliderArrowSize = (int) typedArray.getDimension(R.styleable.SliderView_sliderArrowSize, DensityUtils.dpToPx(30));
+        int sliderArrowMargin = (int) typedArray.getDimension(R.styleable.SliderView_sliderArrowMargin, DensityUtils.dpToPx(10));
+        int sliderArrowTintColor = typedArray.getColor(R.styleable.SliderView_sliderArrowTintColor, Color.WHITE);
+        int sliderArrowBackground = typedArray.getResourceId(R.styleable.SliderView_sliderArrowBackground, 0);
+
         setSliderAnimationDuration(sliderAnimationDuration);
         setScrollTimeInSec(sliderScrollTimeInSec);
         setAutoCycle(sliderAutoCycleEnabled);
         setAutoCycleDirection(sliderAutoCycleDirection);
         setAutoCycle(sliderStartAutoCycle);
         setIndicatorEnabled(indicatorEnabled);
+        setArrowsEnabled(sliderArrowsEnabled);
+
+        if (mIsArrowsEnabled) {
+            initArrows(sliderLeftArrowIcon, sliderRightArrowIcon, sliderArrowSize, sliderArrowMargin, sliderArrowTintColor, sliderArrowBackground);
+        }
 
         /*start indicator configs*/
         if (mIsIndicatorEnabled) {
@@ -135,6 +153,76 @@ public class SliderView extends FrameLayout
         /*end indicator configs*/
 
         typedArray.recycle();
+    }
+
+    /**
+     * This method will be called only if {@link #mIsArrowsEnabled} is true.
+     * so initializes arrows if its active.
+     */
+    private void initArrows(int leftIcon, int rightIcon, int size, int margin, int tintColor, int background) {
+        if (mLeftArrow == null) {
+            mLeftArrow = new ImageView(getContext());
+            mLeftArrow.setImageResource(leftIcon);
+            mLeftArrow.setColorFilter(tintColor);
+            if (background != 0) {
+                mLeftArrow.setBackgroundResource(background);
+            }
+            LayoutParams leftParams = new LayoutParams(size, size);
+            leftParams.gravity = Gravity.CENTER_VERTICAL | Gravity.START;
+            leftParams.setMargins(margin, 0, 0, 0);
+            addView(mLeftArrow, leftParams);
+
+            mLeftArrow.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    slideToPreviousPosition();
+                    restartAutoCycle();
+                }
+            });
+        }
+
+        if (mRightArrow == null) {
+            mRightArrow = new ImageView(getContext());
+            mRightArrow.setImageResource(rightIcon);
+            mRightArrow.setColorFilter(tintColor);
+            if (background != 0) {
+                mRightArrow.setBackgroundResource(background);
+            }
+            LayoutParams rightParams = new LayoutParams(size, size);
+            rightParams.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
+            rightParams.setMargins(0, 0, margin, 0);
+            addView(mRightArrow, rightParams);
+
+            mRightArrow.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    slideToNextPosition();
+                    restartAutoCycle();
+                }
+            });
+        }
+    }
+
+    private void restartAutoCycle() {
+        if (mIsAutoCycle) {
+            stopAutoCycle();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startAutoCycle();
+                }
+            }, 2000);
+        }
+    }
+
+    public void setArrowsEnabled(boolean enabled) {
+        this.mIsArrowsEnabled = enabled;
+        if (mLeftArrow != null) {
+            mLeftArrow.setVisibility(enabled ? VISIBLE : GONE);
+        }
+        if (mRightArrow != null) {
+            mRightArrow.setVisibility(enabled ? VISIBLE : GONE);
+        }
     }
 
     /**
@@ -304,10 +392,6 @@ public class SliderView extends FrameLayout
         return false;
     }
 
-    /**
-     * @param animation set slider animation manually .
-     *                  it accepts {@link ##PageTransformer} animation classes.
-     */
     public void setCustomSliderTransformAnimation(SliderPager.PageTransformer animation) {
         mSliderPager.setPageTransformer(false, animation);
     }

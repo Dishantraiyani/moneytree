@@ -21,6 +21,8 @@ import com.moneytree.app.databinding.NsFragmentSelectAddressBinding
 import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
 import com.moneytree.app.ui.mycart.address.NSAddressActivity
 import com.moneytree.app.ui.mycart.placeOrder.NSPlaceOrderActivity
+import com.moneytree.app.ui.onlineorder.placeorder.PlaceOrderAddressActivity
+import kotlin.jvm.java
 
 class NSSelectAddressFragment : BaseViewModelFragment<NSSelectAddressViewModel, NsFragmentSelectAddressBinding>() {
 
@@ -54,6 +56,7 @@ class NSSelectAddressFragment : BaseViewModelFragment<NSSelectAddressViewModel, 
     override fun setupViews() {
         super.setupViews()
         viewModel.isFromOrder = arguments?.getBoolean(NSConstants.KEY_IS_FROM_ORDER)?:false
+        viewModel.isFromOnlineOrder = arguments?.getBoolean(NSConstants.KEY_IS_FROM_ONLINE_ORDER)?:false
         viewCreated()
         setListener()
     }
@@ -76,7 +79,7 @@ class NSSelectAddressFragment : BaseViewModelFragment<NSSelectAddressViewModel, 
                 layoutHeader.ivAddNew.setSafeOnClickListener {
                     switchResultActivity(cartAddressResult,
                         NSAddressActivity::class.java,
-                        bundleOf(NSConstants.KEY_IS_FROM_ORDER to isFromOrder, NSConstants.KEY_IS_ADD_ADDRESS to true)
+                        bundleOf(NSConstants.KEY_IS_FROM_ORDER to (isFromOrder || isFromOnlineOrder), NSConstants.KEY_IS_ADD_ADDRESS to true)
                     )
                 }
 
@@ -84,7 +87,7 @@ class NSSelectAddressFragment : BaseViewModelFragment<NSSelectAddressViewModel, 
                     if (NSApplication.getInstance().getSelectedAddress().addressId.isNotEmpty()) {
                         switchResultActivity(
                             dataResult,
-                            NSPlaceOrderActivity::class.java,
+                            if(isFromOnlineOrder) PlaceOrderAddressActivity::class.java else NSPlaceOrderActivity::class.java,
                             bundleOf(NSConstants.KEY_IS_FROM_ORDER to viewModel.isFromOrder)
                         )
                     } else {
@@ -176,7 +179,7 @@ class NSSelectAddressFragment : BaseViewModelFragment<NSSelectAddressViewModel, 
                                 cartAddressResult,
                                 NSAddressActivity::class.java,
                                 bundleOf(
-                                    NSConstants.KEY_IS_FROM_ORDER to isFromOrder,
+                                    NSConstants.KEY_IS_FROM_ORDER to (isFromOrder || isFromOnlineOrder),
                                     NSConstants.KEY_IS_ADD_ADDRESS to false,
                                     NSConstants.KEY_IS_SELECTED_ADDRESS to Gson().toJson(model)
                                 )

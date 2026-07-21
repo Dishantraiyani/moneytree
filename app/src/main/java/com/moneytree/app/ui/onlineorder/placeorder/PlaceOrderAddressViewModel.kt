@@ -18,7 +18,7 @@ import com.moneytree.app.ui.onlineorder.OnlineOrderHelper
  */
 class PlaceOrderAddressViewModel(application: Application) : NSViewModel(application) {
 
-    var selectedAddressModel: PlaceOrderAddressCreateResponse? = null
+    var selectedAddressModel: NSAddressCreateResponse? = null
     var finalPayoutAmount: Int = 0
     var isProductSendDataAvailable = MutableLiveData<Boolean>()
     var successResponse: NSSuccessResponse? = null
