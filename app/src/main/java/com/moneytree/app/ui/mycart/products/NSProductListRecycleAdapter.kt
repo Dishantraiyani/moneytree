@@ -154,7 +154,6 @@ class NSProductListRecycleAdapter(
 					Glide.with(activity).load(url).error(R.drawable.placeholder)
 						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
-					tvProductNameGrid.isSelected = true
 					tvPriceGrid.text = rate?.let { addText(activity, R.string.price_value, it) }
 					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
 					ivProductImgGrid.setOnClickListener(object : SingleClickListener() {

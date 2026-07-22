@@ -25,6 +25,7 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
+import com.moneytree.app.common.callbacks.NSProductFilterCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
@@ -38,7 +39,6 @@ import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.common.utils.visible
-import com.moneytree.app.databinding.LayoutSearchableDialogFilterBinding
 import com.moneytree.app.databinding.NsFragmentProductsBinding
 import com.moneytree.app.repository.network.responses.NSCategoryData
 import com.moneytree.app.repository.network.responses.NSDiseasesData
@@ -48,15 +48,13 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.repository.network.responses.SearchData
 import com.moneytree.app.ui.common.ProductCategoryViewModel
 import com.moneytree.app.ui.mycart.cart.NSCartActivity
-import com.moneytree.app.ui.mycart.history.NSRepuhaseOrStockHistoryActivity
 import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
-import com.moneytree.app.ui.mycart.products.NSMyFilterRecycleAdapter
-import com.moneytree.app.ui.mycart.products.diseases.NSMyDiseasesFilterRecycleAdapter
+import com.moneytree.app.ui.mycart.products.ProductFilterDialogFragment
 import com.moneytree.app.ui.productDetail.MTProductsDetailActivity
 import org.greenrobot.eventbus.EventBus
 import java.util.Locale
 
-class MTProductFragment : NSFragment(), NSSearchCallback {
+class MTProductFragment : NSFragment(), NSSearchCallback, NSProductFilterCallback {
     private val productModel: MTProductViewModel by lazy {
         ViewModelProvider(this)[MTProductViewModel::class.java]
     }
@@ -105,10 +103,6 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
         with(productBinding) {
             HeaderUtils(layoutHeader, requireActivity(), clBackView = true, headerTitle = productModel.categoryName?:"", isSearch = true, isAddNew = true, searchCallback = this@MTProductFragment)
             with(layoutHeader) {
-                //tvCategories.visible()
-                tvDiseases.visible()
-                cardCategoriesType.gone()
-                cardDiseasesType.visible()
                 ivAddNew.setImageResource(if(isGridMode) R.drawable.ic_list else R.drawable.ic_grid)
             }
             //setProductStockAdapter()
@@ -134,11 +128,8 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
                 }
 
                 clFilterChangeBtn.setOnClickListener {
-                    rlFilter.visible()
-                }
-
-                viewFilter.setOnClickListener {
-                    rlFilter.gone()
+                    val dialog = ProductFilterDialogFragment.newInstance(this@MTProductFragment, isCategoryHidden = true, isStockHidden = true)
+                    dialog.show(childFragmentManager, ProductFilterDialogFragment::class.java.simpleName)
                 }
 
                 with(layoutHeader) {
@@ -191,15 +182,6 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
                             switchResultActivity(dataResult, NSCartActivity::class.java)
                         }
                     })
-
-
-                    statusTypeSpinner.setPlaceholderAdapter(resources.getStringArray(R.array.in_stock_filter), requireContext()) {
-                        if (selectedStock != it) {
-                            selectedStock = it!!
-                            setFirstPage()
-                            getProductStocks(isShowProgress = true, isBottomProgress = false)
-                        }
-                    }
                 }
             }
         }
@@ -286,17 +268,6 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
         }
     }
 
-    private fun setCategoryData(categoryResponse: NSJointCategoryDiseasesResponse) {
-        productBinding.apply {
-            categoriesTypeSpinner.setOnClickListener {
-                showFilterDialog(activity, categoryResponse.categoryList)
-            }
-
-            diseasesTypeSpinner.setOnClickListener {
-                showDiseasesFilterDialog(activity, categoryResponse.diseasesList)
-            }
-        }
-    }
 
     /**
      * To observe the view model for data changes
@@ -318,8 +289,7 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
 
                 productCategoryModel.isCategoryDataAvailable.observe(
                     viewLifecycleOwner
-                ) { categoryData ->
-                    setCategoryData(categoryData)
+                ) {
                 }
 
                 isProductsDataAvailable.observe(
@@ -384,162 +354,12 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
         }
     }
 
-    private fun showFilterDialog(activity: Activity, categoryData: MutableList<NSCategoryData>) {
-        val builder = AlertDialog.Builder(activity)
-        val view: View = activity.layoutInflater.inflate(R.layout.layout_searchable_dialog_filter, null)
-        builder.setView(view)
-        val bind: LayoutSearchableDialogFilterBinding = LayoutSearchableDialogFilterBinding.bind(view)
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        with(bind) {
-            tvTop.text = activity.resources.getString(R.string.select_categroies)
-            listItems.layoutManager = LinearLayoutManager(activity)
-            val listAdapter = NSMyFilterRecycleAdapter(activity)
-            listItems.adapter = listAdapter
-            listAdapter.clearData()
-            listAdapter.updateData(categoryData)
-
-            tvApply.setOnClickListener {
-                dialog.dismiss()
-                setCategory()
-            }
-
-            tvClear.setSafeOnClickListener {
-                dialog.dismiss()
-                NSApplication.getInstance().clearFilter()
-                setCategory()
-            }
-
-            etSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                }
-
-                override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    val tempData = ArrayList<NSCategoryData>()
-                    for (nsCategoryData in categoryData) {
-                        if (nsCategoryData.categoryName != null) {
-                            if (nsCategoryData.categoryName!!.lowercase(Locale.getDefault())
-                                    .contains(
-                                        charSequence.toString().lowercase(
-                                            Locale.getDefault()
-                                        )
-                                    )
-                            ) {
-                                tempData.add(nsCategoryData)
-                            }
-                        }
-                    }
-                    if (charSequence.toString().isEmpty()) {
-                        tempData.clear()
-                        tempData.addAll(categoryData)
-                    }
-                    listAdapter.clearData()
-                    listAdapter.updateData(tempData)
-                }
-
-                override fun afterTextChanged(p0: Editable?) {
-
-                }
-            })
-        }
-
-        dialog.show()
-    }
-
-    private fun showDiseasesFilterDialog(activity: Activity, diseasesData: MutableList<NSDiseasesData>) {
-        val builder = AlertDialog.Builder(activity)
-        val view: View = activity.layoutInflater.inflate(R.layout.layout_searchable_dialog_filter, null)
-        builder.setView(view)
-        val bind: LayoutSearchableDialogFilterBinding = LayoutSearchableDialogFilterBinding.bind(view)
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        with(bind) {
-            tvTop.text = activity.resources.getString(R.string.select_diseases)
-            listItems.layoutManager = LinearLayoutManager(activity)
-            val listAdapter = NSMyDiseasesFilterRecycleAdapter(activity)
-            listItems.adapter = listAdapter
-            listAdapter.clearData()
-            listAdapter.updateData(diseasesData)
-
-            tvApply.setOnClickListener {
-                dialog.dismiss()
-                setCategory()
-            }
-
-            tvClear.setSafeOnClickListener {
-                dialog.dismiss()
-                NSApplication.getInstance().clearDiseasesFilter()
-                setCategory()
-            }
-
-            etSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                }
-
-                override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    val tempData = ArrayList<NSDiseasesData>()
-                    for (nsCategoryData in diseasesData) {
-                        if (nsCategoryData.diseasesName != null) {
-                            if (nsCategoryData.diseasesName!!.lowercase(Locale.getDefault())
-                                    .contains(
-                                        charSequence.toString().lowercase(
-                                            Locale.getDefault()
-                                        )
-                                    )
-                            ) {
-                                tempData.add(nsCategoryData)
-                            }
-                        }
-                    }
-                    if (charSequence.toString().isEmpty()) {
-                        tempData.clear()
-                        tempData.addAll(diseasesData)
-                    }
-                    listAdapter.clearData()
-                    listAdapter.updateData(tempData)
-                }
-
-                override fun afterTextChanged(p0: Editable?) {
-
-                }
-            })
-        }
-
-        dialog.show()
-    }
-
     private fun setCategory() {
         with(productModel) {
-            val data = NSApplication.getInstance().getFilterList()
-            if (data.isEmpty()) {
-                productBinding.categoriesTypeSpinner.text = "All"
-            } else {
-                val itemSelected = "${data.size} Item Selected"
-                productBinding.categoriesTypeSpinner.text = itemSelected
-            }
+            setFirstPage()
+            diseasesId = ""
 
             val diseases = NSApplication.getInstance().getDiseasesFilterList()
-            if (diseases.isEmpty()) {
-                productBinding.diseasesTypeSpinner.text = "All"
-            } else {
-                val itemSelected = "${diseases.size} Item Selected"
-                productBinding.diseasesTypeSpinner.text = itemSelected
-            }
-
-            setFirstPage()
-            //categoryId = ""
-            diseasesId = ""
-            //var tempCategoryId = ""
-            /*for (dat in data) {
-                if (categoryId?.isNotEmpty() == true) {
-                    categoryId += ",$dat"
-                } else {
-                    categoryId = dat
-                }
-            }*/
-
             for (dat in diseases) {
                 if (diseasesId?.isNotEmpty() == true) {
                     diseasesId += ",$dat"
@@ -547,13 +367,21 @@ class MTProductFragment : NSFragment(), NSSearchCallback {
                     diseasesId = dat
                 }
             }
-
-            //categoryId = tempCategoryId + diseasesId
+            
+            val isValid = !diseasesId.isNullOrEmpty()
+            productBinding.clFilterChangeBtn.setBackgroundResource(if (isValid) R.drawable.green_border else R.drawable.gray_border)
+            
             getProductStocks(isShowProgress = true, isBottomProgress = false)
         }
     }
 
+    override fun onApplyFilters() {
+        setCategory()
+    }
 
+    override fun onClearFilters() {
+        setCategory()
+    }
 
     override fun onSearch(search: String) {
         with(productModel) {

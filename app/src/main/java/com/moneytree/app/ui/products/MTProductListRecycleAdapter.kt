@@ -120,7 +120,6 @@ class MTProductListRecycleAdapter(
 					Glide.with(activity).load(url).error(R.drawable.placeholder).diskCacheStrategy(DiskCacheStrategy.NONE)
 						.skipMemoryCache(true).into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
-					tvProductNameGrid.isSelected = true
 					tvPriceGrid.text = addText(activity, R.string.price_value, rate)
 					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice)
 	    

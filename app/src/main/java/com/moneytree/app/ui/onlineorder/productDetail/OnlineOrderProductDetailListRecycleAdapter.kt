@@ -117,7 +117,6 @@ class OnlineOrderProductDetailListRecycleAdapter(
 					Glide.with(activity).load(url).error(R.drawable.placeholder)
 						.into(ivProductImgGrid)
 					tvProductNameGrid.text = productName
-					tvProductNameGrid.isSelected = true
 					tvRateGrid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
 					tvPriceGrid.text = rate?.let { addText(activity, R.string.price_value, it) }
 					tvRateGrid.text = addText(activity, R.string.rate_title, sdPrice?:"")

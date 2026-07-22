@@ -920,5 +920,6 @@
     <string name="royalty_status">Royalty Status</string>
     <string name="activation_status">Activation Status</string>
     <string name="account_detail">Account Details</string>
+    <string name="stock_status">Stock Status</string>
 
 </resources>
