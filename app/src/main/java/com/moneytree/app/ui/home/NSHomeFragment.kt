@@ -90,8 +90,10 @@ import org.greenrobot.eventbus.ThreadMode
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moneytree.app.common.utils.isValidList
+import com.google.android.material.appbar.AppBarLayout
 import com.moneytree.app.ui.mycart.products.NSProductsActivity
 import kotlin.jvm.java
+import kotlin.math.abs
 
 
 class NSHomeFragment : NSFragment() {
@@ -138,7 +140,27 @@ class NSHomeFragment : NSFragment() {
 			setOnlineOrderLayout()
 			getKycKey()
 		}
+        setupScrollListener()
         observeViewModel()
+    }
+
+    private fun setupScrollListener() {
+        homeBinding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val totalScrollRange = appBarLayout.totalScrollRange
+            if (totalScrollRange == 0) return@OnOffsetChangedListener
+
+            val percentage = abs(verticalOffset).toFloat() / totalScrollRange.toFloat()
+            val params = homeBinding.nsvScroll.layoutParams as ViewGroup.MarginLayoutParams
+            
+            // Calculate margin: from -12sdp to 0 based on scroll percentage
+            val twelveSdp = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._12sdp)
+            val targetMargin = (-twelveSdp * (1 - percentage)).toInt()
+            
+            if (params.topMargin != targetMargin) {
+                params.topMargin = targetMargin
+                homeBinding.nsvScroll.layoutParams = params
+            }
+        })
     }
 
 	/**

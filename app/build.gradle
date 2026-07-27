@@ -31,8 +31,8 @@ android {
     productFlavors {
         development {
             dimension "moneytree"
-            versionCode 47
-            versionName "5.3"
+            versionCode 49
+            versionName "5.5"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'PREFERENCE', ' "MoneyTreeNext" '
             buildConfigField 'String', 'WELCOME_PREFERENCE', ' "Welcome_MoneyTree" '
@@ -109,8 +109,8 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     ksp "androidx.room:room-compiler:$roomVersion"
 
-    implementation 'com.github.bumptech.glide:glide:5.0.7'
-    annotationProcessor 'com.github.bumptech.glide:compiler:5.0.7'
+    implementation 'com.github.bumptech.glide:glide:5.0.9'
+    annotationProcessor 'com.github.bumptech.glide:compiler:5.0.9'
 
     implementation 'me.relex:circleindicator:2.1.6'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
@@ -118,7 +118,7 @@ dependencies {
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.tbuonomo:dotsindicator:5.1.1'
 
-    implementation 'com.onesignal:OneSignal:5.9.5'
+    implementation 'com.onesignal:OneSignal:5.9.7'
     implementation platform('com.google.firebase:firebase-bom:34.16.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation("io.github.g00fy2.quickie:quickie-bundled:1.12.0")

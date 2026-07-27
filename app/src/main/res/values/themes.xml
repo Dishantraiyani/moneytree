@@ -28,7 +28,7 @@
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/purple_200</item>
+        <item name="colorAccent">@color/orange</item>
     </style>
 
     <!--LockScreen-->

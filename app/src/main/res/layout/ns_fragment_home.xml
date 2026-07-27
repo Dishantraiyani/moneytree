@@ -6,75 +6,105 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:background="@color/background_color">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="match_parent">
 
-		<include android:id="@+id/layout_header"
-			layout="@layout/layout_header"/>
-
-		<ImageView
-			android:id="@+id/iv_header_icon"
-			android:layout_width="@dimen/_80sdp"
-			android:layout_height="@dimen/_40sdp"
-			android:src="@drawable/ic_app_icon"
-			android:contentDescription="@string/description"
-			app:layout_constraintStart_toStartOf="@+id/layout_header"
-			app:layout_constraintEnd_toEndOf="@+id/layout_header"
-			app:layout_constraintTop_toTopOf="@+id/layout_header"
-			app:layout_constraintBottom_toBottomOf="@+id/layout_header"
-			android:visibility="visible"/>
-
-		<RelativeLayout
-			android:id="@+id/rl_banner"
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/app_bar"
 			android:layout_width="match_parent"
-			android:layout_height="@dimen/_150sdp"
-			android:visibility="invisible"
+			android:layout_height="wrap_content"
 			android:background="@color/background_color"
-			android:layout_gravity="center_horizontal"
-			android:paddingTop="@dimen/_5sdp"
-			android:paddingBottom="0dp"
-			app:layout_constraintTop_toBottomOf="@id/layout_header"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent">
+			app:elevation="0dp">
 
-			<com.moneytree.app.slider.SliderView
-				android:id="@+id/viewPager"
+			<com.google.android.material.appbar.CollapsingToolbarLayout
 				android:layout_width="match_parent"
-				android:layout_height="@dimen/_150sdp"
-				android:layout_gravity="center"
-				android:clipToPadding="false"
-				app:sliderAnimationDuration="600"
-				app:sliderArrowsEnabled="true"
-				app:sliderAutoCycleDirection="right"
-				app:sliderAutoCycleEnabled="true"
-				app:sliderIndicatorAnimationDuration="600"
-				app:sliderIndicatorGravity="center_horizontal|bottom"
-				app:sliderIndicatorMarginLeft="15dp"
-				app:sliderIndicatorMarginRight="15dp"
-				app:sliderIndicatorMarginTop="15dp"
-				app:sliderIndicatorMarginBottom="0dp"
-				app:sliderIndicatorOrientation="horizontal"
-				app:sliderIndicatorPadding="0dp"
-				app:sliderIndicatorRadius="0dp"
-				app:sliderIndicatorSelectedColor="@color/orange"
-				app:sliderIndicatorUnselectedColor="#FFF"
-				app:sliderScrollTimeInSec="3"
-				app:sliderStartAutoCycle="true"/>
+				android:layout_height="wrap_content"
+				app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-		</RelativeLayout>
+				<RelativeLayout
+					android:id="@+id/rl_banner"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/_150sdp"
+					android:layout_marginTop="@dimen/_48sdp"
+					android:visibility="invisible"
+					android:background="@color/background_color"
+					android:layout_gravity="center_horizontal"
+					android:paddingTop="@dimen/_5sdp"
+					android:paddingBottom="0dp"
+					app:layout_collapseMode="parallax">
+
+					<com.moneytree.app.slider.SliderView
+						android:id="@+id/viewPager"
+						android:layout_width="match_parent"
+						android:layout_height="@dimen/_150sdp"
+						android:layout_gravity="center"
+						android:clipToPadding="false"
+						app:sliderAnimationDuration="600"
+						app:sliderArrowsEnabled="true"
+						app:sliderAutoCycleDirection="right"
+						app:sliderAutoCycleEnabled="true"
+						app:sliderIndicatorAnimationDuration="600"
+						app:sliderIndicatorGravity="center_horizontal|bottom"
+						app:sliderIndicatorMarginLeft="15dp"
+						app:sliderIndicatorMarginRight="15dp"
+						app:sliderIndicatorMarginTop="15dp"
+						app:sliderIndicatorMarginBottom="0dp"
+						app:sliderIndicatorOrientation="horizontal"
+						app:sliderIndicatorPadding="0dp"
+						app:sliderIndicatorRadius="0dp"
+						app:sliderIndicatorSelectedColor="@color/orange"
+						app:sliderIndicatorUnselectedColor="#FFF"
+						app:sliderScrollTimeInSec="3"
+						app:sliderStartAutoCycle="true"/>
+
+				</RelativeLayout>
+
+				<androidx.appcompat.widget.Toolbar
+					android:id="@+id/toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/_48sdp"
+					app:contentInsetStart="0dp"
+					app:layout_collapseMode="pin">
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent">
+
+						<include android:id="@+id/layout_header"
+							layout="@layout/layout_header"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"/>
+
+						<ImageView
+							android:id="@+id/iv_header_icon"
+							android:layout_width="@dimen/_80sdp"
+							android:layout_height="@dimen/_40sdp"
+							android:src="@drawable/ic_app_icon"
+							android:contentDescription="@string/description"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toTopOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent"
+							android:visibility="visible"/>
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.appcompat.widget.Toolbar>
+
+			</com.google.android.material.appbar.CollapsingToolbarLayout>
+
+		</com.google.android.material.appbar.AppBarLayout>
 
 		<androidx.core.widget.NestedScrollView
+			android:id="@+id/nsv_scroll"
 			android:layout_width="match_parent"
-			android:layout_height="0dp"
+			android:layout_height="match_parent"
 			android:background="@drawable/half_top_corners_second"
 			android:backgroundTint="@color/background_color"
 			android:elevation="@dimen/_2sdp"
 			android:layout_marginTop="@dimen/_minus12sdp"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/rl_banner"
-			app:layout_constraintBottom_toBottomOf="parent">
+			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -508,7 +538,7 @@
 							android:layout_marginStart="@dimen/_10sdp"
 							android:ellipsize="marquee"
 							android:lines="1"
-							android:layout_marginTop="@dimen/_2sdp"
+							android:layout_marginTop="@dimen/_20sdp"
 							app:layout_constraintTop_toBottomOf="@id/tv_active1"
 							app:layout_constraintStart_toEndOf="@+id/iv_my_user_icon"
 							app:layout_constraintVertical_chainStyle="packed"
@@ -660,8 +690,7 @@
 						android:background="@drawable/white_corners_20"
 						app:layout_constraintTop_toTopOf="parent"
 						app:layout_constraintStart_toStartOf="parent"
-						app:layout_constraintEnd_toEndOf="parent"
-						app:layout_constraintBottom_toTopOf="@id/cl_top_home">
+						app:layout_constraintEnd_toEndOf="parent">
 
 						<TextView
 							android:id="@+id/tv_status_title"
@@ -910,100 +939,6 @@
 
 						</androidx.constraintlayout.widget.ConstraintLayout>
 
-						<!--<androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/cl_voucher"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            app:layout_constraintStart_toEndOf="@id/cl_down_line"
-                            app:layout_constraintEnd_toStartOf="@id/cl_join_voucher"
-                            app:layout_constraintTop_toBottomOf="@id/view_line2"
-                            app:layout_constraintBottom_toBottomOf="parent">
-
-                            <TextView
-                                android:id="@+id/tv_voucher"
-                                style="@style/LayoutWidthHeightWrap"
-                                android:textSize="@dimen/_14sdp"
-                                android:text="@string/zero"
-                                android:textColor="@color/orange"
-                                android:fontFamily="@font/inter_medium"
-                                android:textStyle="bold"
-                                android:layout_gravity="center"
-                                android:includeFontPadding="false"
-                                android:visibility="visible"
-                                app:layout_constraintVertical_chainStyle="packed"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toTopOf="@id/tv_voucher_title"
-                                app:layout_constraintTop_toTopOf="parent"/>
-
-                            <TextView
-                                android:id="@+id/tv_voucher_title"
-                                style="@style/LayoutWidthHeightWrap"
-                                android:textSize="@dimen/_9sdp"
-                                android:text="@string/vouchers"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/inter_regular"
-                                android:layout_gravity="center"
-                                android:includeFontPadding="false"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:visibility="visible"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_voucher"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/cl_join_voucher"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            android:visibility="gone"
-                            app:layout_constraintStart_toEndOf="@id/cl_voucher"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/view_line2"
-                            app:layout_constraintBottom_toBottomOf="parent">
-
-                            <TextView
-                                android:id="@+id/tv_join_voucher"
-                                style="@style/LayoutWidthHeightWrap"
-                                android:textSize="@dimen/_14sdp"
-                                android:text="@string/zero"
-                                android:textColor="@color/orange"
-                                android:fontFamily="@font/inter_medium"
-                                android:textStyle="bold"
-                                android:layout_gravity="center"
-                                android:includeFontPadding="false"
-                                android:visibility="visible"
-                                app:layout_constraintVertical_chainStyle="packed"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintBottom_toTopOf="@id/tv_join_voucher_title"
-                                app:layout_constraintTop_toTopOf="parent"/>
-
-                            <TextView
-                                android:id="@+id/tv_join_voucher_title"
-                                style="@style/LayoutWidthHeightWrap"
-                                android:textSize="@dimen/_9sdp"
-                                android:text="@string/join_vouchers"
-                                android:textColor="@color/black"
-                                android:fontFamily="@font/inter_regular"
-                                android:layout_gravity="center"
-                                android:includeFontPadding="false"
-                                android:layout_marginTop="@dimen/_8sdp"
-                                android:visibility="visible"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_join_voucher"
-                                app:layout_constraintBottom_toBottomOf="parent"/>
-
-                        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
 					</androidx.constraintlayout.widget.ConstraintLayout>
 
 				</LinearLayout>
@@ -1199,7 +1134,7 @@
 								android:textStyle="normal"
 								android:textColor="@color/white"
 								android:text="@string/history"
-								android:paddingHorizontal="@dimen/_1sdp"
+								android:paddingHorizontal="@dimen/_10sdp"
 								android:includeFontPadding="false" />
 
 							<ImageView
@@ -1237,18 +1172,14 @@
 
 		</androidx.core.widget.NestedScrollView>
 
-
-
 		<androidx.core.widget.NestedScrollView
+			android:id="@+id/nav_view2"
 			style="@style/LayoutWidthHeightZero"
 			android:paddingTop="@dimen/_2sdp"
 			android:paddingBottom="@dimen/_30sdp"
 			android:clipToPadding="false"
 			android:visibility="gone"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent">
+			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -1256,15 +1187,11 @@
 				android:orientation="vertical"
 				android:paddingHorizontal="@dimen/_10sdp">
 
-
 				<androidx.constraintlayout.widget.ConstraintLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="@dimen/_10sdp"
-					android:visibility="gone"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintTop_toBottomOf="@id/layout_header">
+					android:visibility="gone">
 
 					<androidx.cardview.widget.CardView
 						android:layout_width="match_parent"
@@ -1281,10 +1208,7 @@
 							android:layout_width="match_parent"
 							android:layout_height="match_parent"
 							android:paddingStart="@dimen/_20sdp"
-							android:paddingEnd="@dimen/_10sdp"
-							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintEnd_toEndOf="parent"
-							app:layout_constraintTop_toBottomOf="@+id/view_line_home">
+							android:paddingEnd="@dimen/_10sdp">
 
 							<TextView
 								android:id="@+id/tv_package_name_title"
@@ -1351,9 +1275,7 @@
 			app:cardCornerRadius="@dimen/_40sdp"
 			android:visibility="gone"
 			android:layout_marginBottom="@dimen/_15sdp"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintBottom_toBottomOf="parent">
+			android:layout_gravity="bottom|center_horizontal">
 
 			<androidx.constraintlayout.widget.ConstraintLayout
 				android:layout_width="match_parent"
@@ -1393,7 +1315,7 @@
 
 		</androidx.cardview.widget.CardView>
 
-	</androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 	<com.google.android.material.navigation.NavigationView
 		android:id="@+id/nav_view"
