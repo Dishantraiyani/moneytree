@@ -648,7 +648,7 @@
 			android:layout_marginHorizontal="@dimen/_5sdp"
 			android:layout_marginTop="@dimen/_10sdp" />
 
-		<Button
+		<androidx.appcompat.widget.AppCompatButton
 			android:id="@+id/btn_submit"
 			android:layout_width="match_parent"
 			style="@style/LayoutWidthHeightZeroWrap"

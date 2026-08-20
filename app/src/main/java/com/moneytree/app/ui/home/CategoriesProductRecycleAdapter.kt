@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.moneytree.app.R
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
@@ -21,6 +22,19 @@ import com.moneytree.app.repository.network.responses.ProductDataDTO
 
 class CategoriesProductRecycleAdapter(private val context: Activity, private val onClickResponse: NSProductCategoryCallback) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 	private val categoryData: MutableList<NSCategoryData> = arrayListOf()
+    private val iconMap = mapOf(
+        "ayurvedic" to R.drawable.ic_ayurvedic,
+        "cosmetic" to R.drawable.ic_cosmetic,
+        "fmcg" to R.drawable.ic_fmcg,
+        "herbo_nutraceuticals" to R.drawable.ic_herbo_nutraceuticals,
+        "otc" to R.drawable.ic_otc,
+        "protein_powder" to R.drawable.ic_protein_powder,
+        "spray" to R.drawable.ic_spray,
+        "home_care" to R.drawable.ic_home_care,
+        "agriculture_product" to R.drawable.ic_agriculture_product,
+        "personal_care" to R.drawable.ic_personal_care,
+        "gym_supplement" to R.drawable.ic_gym_supplement
+    )
 
     fun updateData(categoriesList: List<NSCategoryData>) {
         categoryData.addAll(categoriesList)
@@ -85,12 +99,8 @@ class CategoriesProductRecycleAdapter(private val context: Activity, private val
             with(voucherBinding) {
                 with(response) {
                     
-                    try {
-                        val drawable: Drawable? = ResourcesCompat.getDrawable(context.resources, context.resources.getIdentifier(categoryName?.replace(" ", "_")?.lowercase(), "drawable", context.packageName), null)
-                        ivCategoryProduct.setImageDrawable(drawable)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
+                    val resId = iconMap[categoryName?.replace(" ", "_")?.lowercase()] ?: R.drawable.placeholder
+                    ivCategoryProduct.setImageResource(resId)
 
                     tvCategoryName.text = categoryName
                     productListAdapter.updateData(response.products)

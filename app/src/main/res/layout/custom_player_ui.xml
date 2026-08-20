@@ -49,7 +49,7 @@
 		android:layout_alignParentBottom="true"
 		android:textColor="@color/ayp_red" />
 
-	<Button
+	<androidx.appcompat.widget.AppCompatButton
 		android:id="@+id/play_pause_button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
 		android:layout_centerVertical="true"
 		android:text="Play/Pause" />
 
-	<Button
+	<androidx.appcompat.widget.AppCompatButton
 		android:id="@+id/enter_exit_fullscreen_button"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

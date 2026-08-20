@@ -4,6 +4,8 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ComplexColorCompat
 import androidx.lifecycle.ViewModelProvider
 import com.kal.rackmonthpicker.RackMonthPicker
 import com.moneytree.app.R
@@ -96,6 +98,7 @@ class NSPaymentSummaryFragment : BaseViewModelFragment<NSPaymentSummaryViewModel
                 .setNegativeButton {
                     picker?.dismiss()
                 }
+            picker.setColorTheme(ContextCompat.getColor(requireActivity(), R.color.orange))
             picker.show()
         }
     }

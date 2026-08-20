@@ -610,7 +610,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_text_bg" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_send"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

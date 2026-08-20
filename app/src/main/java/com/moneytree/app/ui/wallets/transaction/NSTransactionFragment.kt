@@ -15,9 +15,12 @@ import com.moneytree.app.common.callbacks.NSDateRangeCallback
 import com.moneytree.app.common.callbacks.NSHeaderMainSearchCallback
 import com.moneytree.app.common.callbacks.NSHeaderSearchCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSTransactionCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentTransactionBinding
+import com.moneytree.app.repository.network.responses.NSWalletData
+import com.moneytree.app.ui.home.BankDetailDialogFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -128,6 +131,10 @@ class NSTransactionFragment : NSFragment() {
                                 pageIndex = page.toString()
                                 getTransactionListData(pageIndex, "", false, isBottomProgress = true)
                             }
+                        }
+                    }, object : NSTransactionCallback {
+                        override fun onTransactionClick(transaction: NSWalletData) {
+                            NSTransactionDetailDialogFragment.newInstance(transaction).show(childFragmentManager, "TransactionDetailDialog")
                         }
                     })
                 rvTransactions.adapter = transactionListAdapter

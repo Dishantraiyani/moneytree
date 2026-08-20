@@ -51,6 +51,7 @@ class NSSignUpFragment : NSFragment() {
 		savedInstanceState: Bundle?
 	): View {
 		_binding = NsFragmentSignupBinding.inflate(inflater, container, false)
+		getReferrerCode()
 		viewCreated()
 		setListener()
 		return binding.root

@@ -30,7 +30,7 @@
 			android:layout_height="0dp"
 			android:layout_weight="1"
 			android:visibility="invisible" />
-		<Button
+		<androidx.appcompat.widget.AppCompatButton
 			android:id="@+id/cancel_button"
 			style="?android:attr/buttonBarNegativeButtonStyle"
 			android:layout_width="wrap_content"

@@ -92,7 +92,7 @@
 		android:inputType="text"
 		android:imeOptions="actionDone"/>
 
-	<Button
+	<androidx.appcompat.widget.AppCompatButton
 		android:id="@+id/btn_submit"
 		style="@style/LayoutWidthHeightWrap"
 		android:background="@drawable/login_button_border"

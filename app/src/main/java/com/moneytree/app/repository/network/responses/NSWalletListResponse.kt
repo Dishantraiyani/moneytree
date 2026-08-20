@@ -31,6 +31,9 @@ data class WalletAmount(
 )
 
 data class NSWalletData(
+    @SerializedName("memberid")
+    @Expose
+    var memberid: String? = null,
     @SerializedName("transferid")
     @Expose
     var transferid: String? = null,

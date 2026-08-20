@@ -85,7 +85,7 @@
 
     </RelativeLayout>
 
-	<Button
+	<androidx.appcompat.widget.AppCompatButton
 		android:id="@+id/btn_activation"
 		android:layout_width="match_parent"
 		style="@style/LayoutWidthHeightZeroWrap"

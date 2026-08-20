@@ -8,15 +8,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
+import com.moneytree.app.common.callbacks.NSTransactionCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.LayoutTransactionBinding
 import com.moneytree.app.repository.network.responses.NSVoucherListData
 import com.moneytree.app.repository.network.responses.NSWalletData
+import androidx.core.graphics.toColorInt
 
 class NSTransactionRecycleAdapter(
-    activityNS: Activity,
-    onPageChange: NSPageChangeCallback
+	activityNS: Activity,
+	onPageChange: NSPageChangeCallback,
+	private val callback: NSTransactionCallback,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val activity: Activity = activityNS
     private val transactionData: MutableList<NSWalletData> = arrayListOf()
@@ -74,15 +77,21 @@ class NSTransactionRecycleAdapter(
         fun bind(response: NSWalletData) {
             with(transactionBinding) {
                 with(response) {
-                    tvTransactionId.text = addText(activity, R.string.transaction_id, transferid!!)
-                    tvTransactionStatus.text = status!!
-                    tvOrderCredit.text = entryType!!.trim()
+                    tvTransactionId.text = addText(activity, R.string.transfer_id_value, transferid ?: "")
+                    tvMemberId.text = addText(activity, R.string.member_id, memberid ?: "")
                     tvDate.text = entryDate
-                    tvCreditPrice.text = amount!!.trim()
+                    tvCreditPrice.text = addText(activity, R.string.price_value, amount?.trim() ?: "0")
+                    tvOrderCredit.text = entryType?.trim()?.uppercase()
 
-                    val isCreditCheck = entryType!!.lowercase() == "credit"
-                    tvOrderCredit.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
-                    tvCreditPrice.setTextColor(if(isCreditCheck) Color.parseColor("#0FCE6E") else Color.parseColor("#E74B3C"))
+                    val isCreditCheck = entryType?.lowercase() == "credit"
+                    val statusColor = if (isCreditCheck) "#0FCE6E".toColorInt() else "#F51D46".toColorInt()
+                    
+                    tvCreditPrice.setTextColor(statusColor)
+                    tvOrderCredit.setTextColor(statusColor)
+
+                    root.setOnClickListener {
+                        callback.onTransactionClick(this)
+                    }
                 }
             }
         }

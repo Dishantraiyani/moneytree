@@ -31,8 +31,8 @@ android {
     productFlavors {
         development {
             dimension "moneytree"
-            versionCode 49
-            versionName "5.5"
+            versionCode 51
+            versionName "5.7"
             applicationIdSuffix ".dev"
             buildConfigField 'String', 'PREFERENCE', ' "MoneyTreeNext" '
             buildConfigField 'String', 'WELCOME_PREFERENCE', ' "Welcome_MoneyTree" '

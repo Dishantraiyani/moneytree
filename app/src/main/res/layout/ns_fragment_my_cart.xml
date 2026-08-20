@@ -163,7 +163,7 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintEnd_toEndOf="parent">
 
-			<Button
+			<androidx.appcompat.widget.AppCompatButton
 				android:id="@+id/btn_stock"
 				style="@style/LayoutWidthHeightZeroWrap"
 				android:layout_width="match_parent"
@@ -175,7 +175,7 @@
 				android:fontFamily="@font/inter_regular"
 				android:layout_marginHorizontal="@dimen/_5sdp" />
 
-			<Button
+			<androidx.appcompat.widget.AppCompatButton
 				android:id="@+id/btn_repurchase"
 				style="@style/LayoutWidthHeightZeroWrap"
 				android:layout_width="match_parent"

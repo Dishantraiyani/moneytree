@@ -1,104 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_8sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="?android:attr/selectableItemBackground">
 
+    <!-- Left Side Information -->
     <TextView
         android:id="@+id/tv_transaction_id"
-        style="@style/LoginSubFontsZeroWrap"
-        tools:text="Transfer Id: 1234567890"
-        app:guidelineUseRtl="true"
-        android:textColor="@color/orange"
-        android:gravity="center|start"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:paddingHorizontal="@dimen/_10sdp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:fontFamily="@font/inter_semi_bold"
+        android:textColor="@color/text_dark"
+        android:textSize="@dimen/_10sdp"
+        app:layout_constraintEnd_toStartOf="@+id/ll_amount_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Transfer Id: 6797752581" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_transaction_status"
-        style="@style/LayoutWidthHeightZeroWrap"
-        android:paddingHorizontal="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_4sdp"
+    <TextView
+        android:id="@+id/tv_member_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/text_muted"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toStartOf="@+id/ll_amount_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_transaction_id">
+        app:layout_constraintTop_toBottomOf="@id/tv_transaction_id"
+        tools:text="Member Id: 9010530525" />
 
-        <TextView
-            android:id="@+id/tv_transaction_status"
-            style="@style/LoginSubFontsZeroWrap"
-            tools:text="Status: Recharge"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:gravity="center|start"
-            android:textStyle="bold"
-            android:fontFamily="@font/inter_regular"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_order_credit"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_order_credit"
-            style="@style/LoginSubFontsZeroWrap"
-            android:gravity="center|end"
-            android:lines="1"
-            android:textColor="@color/green"
-            app:guidelineUseRtl="true"
-            android:textSize="@dimen/_11sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Credit" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_date_credit"
-        style="@style/LayoutWidthHeightZeroWrap"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:paddingHorizontal="@dimen/_10sdp"
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/gray_text"
+        android:textSize="@dimen/_7sdp"
+        app:layout_constraintBottom_toTopOf="@id/view_line"
+        app:layout_constraintEnd_toStartOf="@+id/ll_amount_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_transaction_status">
+        app:layout_constraintTop_toBottomOf="@id/tv_member_id"
+        tools:text="2026-08-01 10:52:13" />
 
-        <TextView
-            android:id="@+id/tv_date"
-            style="@style/LoginSubFontsZeroWrap"
-            android:textColor="@color/gray_text"
-            tools:text="29 Dec 2021 10:10 AM"
-            android:textSize="@dimen/_11sdp"
-            android:gravity="start"
-            app:layout_constraintEnd_toStartOf="@id/tv_credit_price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!-- Right Side Information -->
+    <LinearLayout
+        android:id="@+id/ll_amount_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/view_line"
+        app:layout_constraintEnd_toStartOf="@+id/iv_next"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tv_credit_price"
-            style="@style/LoginSubFontsZeroWrap"
-            android:gravity="center|end"
-            android:lines="1"
-            android:textColor="@color/green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/orange"
+            android:paddingEnd="@dimen/_3sdp"
+            android:paddingStart="0dp"
             android:textSize="@dimen/_11sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="100.5" />
+            tools:text="₹380.87" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_order_credit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_7sdp"
+            android:paddingEnd="@dimen/_3sdp"
+            android:paddingStart="0dp"
+            android:textAllCaps="true"
+            tools:text="CREDIT" />
 
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:padding="@dimen/_2sdp"
+        android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+        app:layout_constraintBottom_toTopOf="@id/view_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/icon_gray"
+        android:contentDescription="@string/view" />
+
+    <!-- Divider Line -->
     <View
         android:id="@+id/view_line"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.6dp"
         android:background="@color/line_color"
-        android:layout_marginTop="@dimen/_8sdp"
-        app:layout_constraintTop_toBottomOf="@id/cl_date_credit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Hidden status view -->
+    <TextView
+        android:id="@+id/tv_transaction_status"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

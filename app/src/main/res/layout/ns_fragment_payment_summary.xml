@@ -42,7 +42,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"/>
 
-	<Button
+	<androidx.appcompat.widget.AppCompatButton
 		android:id="@+id/btn_submit"
 		style="@style/LayoutWidthHeightZeroWrap"
 		android:background="@drawable/login_button_border"

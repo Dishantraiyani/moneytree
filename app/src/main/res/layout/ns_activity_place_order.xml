@@ -93,7 +93,7 @@
                         app:layout_constraintStart_toEndOf="@id/iv_member_id"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_edit_address"
                         style="@style/LayoutWidthHeightZeroWrap"
                         android:layout_height="@dimen/_35sdp"
@@ -331,7 +331,7 @@
                 android:textSize="@dimen/_9sdp"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 style="@style/LayoutWidthHeightZeroWrap"

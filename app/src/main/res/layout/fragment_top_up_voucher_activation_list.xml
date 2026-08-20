@@ -193,7 +193,7 @@
                 android:layout_height="1dp"
                 android:background="@color/line_color"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_view_detail"
                 android:layout_width="match_parent"
                 style="@style/LayoutWidthHeightZeroWrap"

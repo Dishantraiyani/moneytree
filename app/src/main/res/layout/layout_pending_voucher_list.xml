@@ -129,7 +129,7 @@
 				app:layout_constraintTop_toTopOf="parent"
 				app:layout_constraintBottom_toBottomOf="parent">
 
-				<Button
+				<androidx.appcompat.widget.AppCompatButton
 					android:id="@+id/btn_view"
 					style="@style/LayoutWidthHeightZeroWrap"
 					android:layout_width="wrap_content"
