@@ -28,13 +28,7 @@ data class NSRechargeSaveRequest(
 	@SerializedName("note")
 	@Expose
 	var note: String?,
-	@SerializedName("ad1")
+	@SerializedName("additional_fields")
 	@Expose
-	var ad1: String?,
-	@SerializedName("ad2")
-	@Expose
-	var ad2: String?,
-	@SerializedName("ad3")
-	@Expose
-	var ad3: String?
+	var additionalFields: HashMap<String, String>? = null
 )

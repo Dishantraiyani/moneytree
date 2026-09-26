@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import java.util.regex.Pattern
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -20,11 +21,10 @@ import com.moneytree.app.common.*
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSRechargeRepeatCallback
 import com.moneytree.app.common.utils.*
+import com.moneytree.app.databinding.LayoutAdditionalFieldsBinding
 import com.moneytree.app.databinding.NsFragmentMobileRechargeBinding
 import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
-import com.moneytree.app.repository.network.responses.PlansResponse
-import com.moneytree.app.repository.network.responses.RechargeListDataItem
-import com.moneytree.app.repository.network.responses.ServiceProviderDataItem
+import com.moneytree.app.repository.network.responses.*
 import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
 import com.moneytree.app.ui.recharge.RechargeDetailRecycleAdapter
@@ -43,6 +43,7 @@ class NSMobileRechargeFragment : NSFragment() {
 	private var rechargeFetchListAdapter: RechargeDetailRecycleAdapter? = null
 	private var rechargeRepeatData: String? = null
 	private var rechargeListAdapter: NSRechargeListRecycleAdapter? = null
+	private val additionalFieldsViews = mutableListOf<Pair<AdditionalDataFields, View>>()
 
 	companion object {
 		fun newInstance(bundle: Bundle?) = NSMobileRechargeFragment().apply {
@@ -226,19 +227,7 @@ class NSMobileRechargeFragment : NSFragment() {
 							if (p0.toString().length >= 10) {
 								if (spinner.selectedItemPosition != 0 || rechargeType.lowercase() == "prepaid") {
 									dataItemModel?.apply {
-										rechargeRequestFetchData =
-											NSRechargeSaveRequest(
-												rechargeType,
-												rechargeMasterId,
-												"",
-												p0.toString(),
-												"",
-												"0",
-												"",
-												etAd1.text.toString(),
-												etAd2.text.toString(),
-												etAd3.text.toString()
-											)
+										rechargeRequestFetchData = NSRechargeSaveRequest(rechargeType, rechargeMasterId, "", p0.toString(), "", "0", "", validateAdditionalFields()?: hashMapOf())
 									}
 									getRechargeFetchData()
 								}
@@ -256,12 +245,12 @@ class NSMobileRechargeFragment : NSFragment() {
 
 					btnSubmit.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
+							val additionalData = validateAdditionalFields()?: hashMapOf()
+							
 							val amount = etAmount.text.toString()
 							val mobileNumber = etCustomerDetail.text.toString()
 							val note = etNote.text.toString()
-							val ad1 = etAd1.text.toString()
-							val ad2 = etAd2.text.toString()
-							val ad3 = etAd3.text.toString()
+							
 							val serviceProvider = dataItemModel!!.rechargeMasterId
 							val rechargeType = dataItemModel!!.rechargeType
 							val accountDisplay = dataItemModel!!.accountDisplay
@@ -280,7 +269,7 @@ class NSMobileRechargeFragment : NSFragment() {
 								etAmount.error = activity.resources.getString(R.string.please_enter_amount_between, dataItemModel!!.minAmt, dataItemModel!!.maxAmt)
 								return
 							} else {
-								val rechargeRequest = NSRechargeSaveRequest(rechargeType, serviceProvider, serviceProviderTitle, mobileNumber, accountDisplay, amount, note, ad1, ad2, ad3)
+								val rechargeRequest = NSRechargeSaveRequest(rechargeType, serviceProvider, serviceProviderTitle, mobileNumber, accountDisplay, amount, note, additionalFields = additionalData)
 								dataResult.launch(Intent(activity, NSRechargeDetailActivity::class.java).putExtra(NSConstants.KEY_RECHARGE_VERIFY, Gson().toJson(rechargeRequest)))
 								finish()
 							}
@@ -370,48 +359,26 @@ class NSMobileRechargeFragment : NSFragment() {
 								dataItemModel!!.accountDisplay ?: ""
 							)
 							with(dataItemModel!!) {
-								rechargeRequestFetchData =
-									NSRechargeSaveRequest(rechargeType, rechargeMasterId, "", etCustomerDetail.text.toString(), "", "0", "", tvAd1.text.toString(), tvAd2.text.toString(), tvAd3.text.toString())
+								rechargeRequestFetchData = NSRechargeSaveRequest(rechargeType, rechargeMasterId, "", etCustomerDetail.text.toString(), "", "0", "", validateAdditionalFields()?: hashMapOf())
 							}
 						}
 
 						if (dataItemModel != null) {
-							with(dataItemModel!!) {
+							dataItemModel?.apply {
 								if (position != 0) {
 									if (accountDisplay != null && accountDisplay != "NA" && accountDisplay.isNotEmpty()) {
-										tvMobileNumberTitle.setVisibility(position != 0)
-										cardMobileNumber.setVisibility(position != 0)
+										tvMobileNumberTitle.setVisibility(true)
+										cardMobileNumber.setVisibility(true)
 									}
-									if (ad1 != null && ad1 != "NA" && ad1.isNotEmpty()) {
-										ivAd1.text = ad1.first().uppercase()
-										tvAd1.visible()
-										cardAd1.visible()
-										setHintData(tvAd1, etAd1, ad1)
-									} else {
-										tvAd1.gone()
-										cardAd1.gone()
+									
+									getAdditionalFields(this.rechargeMasterId) {
+										addAdditionalFields(it)
 									}
-									if (ad2 != null && ad2 != "NA" && ad2.isNotEmpty()) {
-										ivAd2.text = ad2.first().uppercase()
-										tvAd2.visible()
-										cardAd2.visible()
-										setHintData(tvAd2, etAd2, ad2)
-									} else {
-										tvAd2.gone()
-										cardAd2.gone()
-									}
-									if (ad3 != null && ad3 != "NA" && ad3.isNotEmpty()) {
-										ivAd3.text = ad3.first().uppercase()
-										tvAd3.visible()
-										cardAd3.visible()
-										setHintData(tvAd3, etAd3, ad3)
-									} else {
-										tvAd3.gone()
-										cardAd3.gone()
-									}
+									
 								} else {
 									tvMobileNumberTitle.setVisibility(false)
 									cardMobileNumber.setVisibility(false)
+									addAdditionalFields(arrayListOf())
 								}
 							}
 
@@ -419,9 +386,9 @@ class NSMobileRechargeFragment : NSFragment() {
 								etCustomerDetail.setText(rechargeRepeat!!.accountDisplay)
 								etAmount.setText(rechargeRepeat!!.amount)
 								etNote.setText(rechargeRepeat!!.note)
-								etAd1.setText(rechargeRepeat!!.ad1)
-								etAd2.setText(rechargeRepeat!!.ad2)
-								etAd3.setText(rechargeRepeat!!.ad3)
+								//etAd1.setText(rechargeRepeat!!.ad1)
+								//etAd2.setText(rechargeRepeat!!.ad2)
+								//etAd3.setText(rechargeRepeat!!.ad3)
 								rechargeRepeat = null
 							}
 						}
@@ -597,5 +564,84 @@ class NSMobileRechargeFragment : NSFragment() {
 			rvRechargeList.visibility = if (isRegisterVisible) View.VISIBLE else View.GONE
 			tvRechargeNotFoundSub.visibility = if (isRegisterVisible) View.GONE else View.VISIBLE
 		}
+	}
+
+	private fun addAdditionalFields(fields: MutableList<AdditionalDataFields>) {
+		rgBinding.llAdditionalFields.removeAllViews()
+		additionalFieldsViews.clear()
+		fields.forEach { field ->
+			val fieldBinding = LayoutAdditionalFieldsBinding.inflate(layoutInflater, rgBinding.llAdditionalFields, false)
+			val isLabelAvailable = !field.label.isNullOrEmpty()
+			fieldBinding.tvAd1.setVisibility(isLabelAvailable)
+			fieldBinding.tvAd1.text = field.label
+			
+			if (field.type?.lowercase() == "dropdown") {
+				fieldBinding.cardAd1.gone()
+				fieldBinding.cardSpinner.visible()
+				fieldBinding.ivSpinner.text = field.label?.firstOrNull()?.uppercase() ?: ""
+				setupAdditionalSpinner(fieldBinding.spinnerAd, field)
+				additionalFieldsViews.add(field to fieldBinding.spinnerAd)
+			} else {
+				fieldBinding.cardAd1.visible()
+				fieldBinding.cardSpinner.gone()
+				fieldBinding.etAd1.hint = "Enter ${field.label}"
+				fieldBinding.ivAd1.text = field.label?.firstOrNull()?.uppercase() ?: ""
+				additionalFieldsViews.add(field to fieldBinding.etAd1)
+			}
+			rgBinding.llAdditionalFields.addView(fieldBinding.root)
+		}
+	}
+
+	private fun setupAdditionalSpinner(spinner: SearchableSpinner, field: AdditionalDataFields) {
+		val optionsList = mutableListOf<String>()
+		optionsList.add("Select ${field.label}")
+		field.options?.forEach { option ->
+			option.label?.let { optionsList.add(it) }
+		}
+
+		val adapter = ArrayAdapter(activity, R.layout.layout_spinner, optionsList)
+		spinner.adapter = adapter
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+	}
+
+	private fun validateAdditionalFields(): HashMap<String, String>? {
+		val dataMap = HashMap<String, String>()
+		additionalFieldsViews.forEach { (field, view) ->
+			val value: String = if (view is EditText) {
+				view.text.toString().trim()
+			} else if (view is SearchableSpinner) {
+				if (view.selectedItemPosition > 0) {
+					Gson().toJson(field.options?.get(view.selectedItemPosition - 1))//?.value ?: ""
+				} else ""
+			} else ""
+
+			if (field.required == true && value.isEmpty()) {
+				if (view is EditText) {
+					view.error = "Please enter ${field.label}"
+				} else {
+					Toast.makeText(activity, "Please select ${field.label}", Toast.LENGTH_SHORT).show()
+				}
+				return null
+			}
+
+			if (!field.regex.isNullOrEmpty() && value.isNotEmpty() && !field.type.equals("dropdown")) {
+				try {
+					val pattern = Pattern.compile(field.regex!!)
+					if (!pattern.matcher(value).matches()) {
+						if (view is EditText) {
+							view.error = "Please enter valid ${field.label}"
+						} else {
+							Toast.makeText(activity, "Invalid selection for ${field.label}", Toast.LENGTH_SHORT).show()
+						}
+						return null
+					}
+				} catch (e: Exception) {
+					e.printStackTrace()
+				}
+			}
+
+			dataMap[field.key ?: field.label ?: "unknown"] = value
+		}
+		return dataMap
 	}
 }

@@ -1007,9 +1007,7 @@ class NSApiManager {
 				rsR.accountDisplay!!,
 				rsR.amount!!,
 				rsR.note!!,
-				rsR.ad1!!,
-				rsR.ad2!!,
-				rsR.ad3!!
+				rsR.additionalFields?: hashMapOf()
 			), callback
 		)
 	}
@@ -1022,19 +1020,21 @@ class NSApiManager {
 			), callback
 		)
 	}
+	
+	fun getAdditionalFields(rechargeMasterId: String?, callback: NSRetrofitCallback<AdditionalFieldsResponse>) {
+		request(unAuthorised3020Client.getAdditionalFields(NSUserManager.getAuthToken(), rechargeMasterId), callback)
+	}
 
 	fun rechargeFetchData(
-		rsR: NSRechargeSaveRequest,
+		rsR: NSRechargeSaveRequest?,
 		callback: NSRetrofitCallback<NSRechargeFetchListResponse>
 	) {
 		request(
 			unAuthorised3020Client.rechargeFetchData(
 				NSUserManager.getAuthToken(),
-				rsR.serviceProvider!!,
-				rsR.accountDisplay!!,
-				rsR.ad1!!,
-				rsR.ad2!!,
-				rsR.ad3!!
+				rsR?.serviceProvider,
+				rsR?.accountDisplay,
+				rsR?.additionalFields?: hashMapOf()
 			), callback
 		)
 	}
@@ -1887,9 +1887,7 @@ interface RTApiInterface {
 		@Field("account_display") accountDisplay: String,
 		@Field("amount") amount: String,
 		@Field("note") note: String,
-		@Field("ad1") ad1: String,
-		@Field("ad2") ad2: String,
-		@Field("ad3") ad3: String
+		@FieldMap additionalFields: HashMap<String, String>
 	): Call<NSRechargeSaveResponse>
 
 	@FormUrlEncoded
@@ -1898,6 +1896,13 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("recharge_id") rechargeId: String
 	): Call<NSSuccessResponse>
+	
+	@FormUrlEncoded
+	@POST("get-additional-fields")
+	fun getAdditionalFields(
+		@Field("token_id") token: String,
+		@Field("recharge_master_id") rechargeMasterId: String?
+	): Call<AdditionalFieldsResponse>
 
 	@FormUrlEncoded
 	@POST("recharge-list")
@@ -1913,11 +1918,9 @@ interface RTApiInterface {
 	@POST("recharge-fetch-data")
 	fun rechargeFetchData(
 		@Field("token_id") token: String,
-		@Field("service_provider") serviceProvider: String,
-		@Field("account_display") accountDisplay: String,
-		@Field("ad1") ad1: String,
-		@Field("ad2") ad2: String,
-		@Field("ad3") ad3: String
+		@Field("service_provider") serviceProvider: String?,
+		@Field("account_display") accountDisplay: String?,
+		@FieldMap additionalFields: HashMap<String, String>
 	): Call<NSRechargeFetchListResponse>
 
 	@FormUrlEncoded

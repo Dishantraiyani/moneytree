@@ -7,16 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.HeaderUtils
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.utils.buildAlertDialog
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
+import com.moneytree.app.databinding.LayoutAdditionalFieldsViewBinding
 import com.moneytree.app.databinding.LayoutWaitBinding
 import com.moneytree.app.databinding.NsFragmentRechargeDetailBinding
+import com.moneytree.app.repository.network.responses.AdditionalOptions
 import com.moneytree.app.ui.recharge.NSRechargeViewModel
+import kotlin.collections.forEach
 
 
 class NSRechargeDetailFragment : NSFragment() {
@@ -97,24 +102,35 @@ class NSRechargeDetailFragment : NSFragment() {
 				tvAccountDisplayValue.text = rechargeRequest!!.accountDisplay
 				tvAmount.text = rechargeRequest!!.amount
 				tvNote.text = rechargeRequest!!.note
-				tvAd1.text = rechargeRequest!!.ad1
-				tvAd2.text = rechargeRequest!!.ad2
-				tvAd3.text = rechargeRequest!!.ad3
+				addAdditionalFields(rechargeRequest?.additionalFields?: hashMapOf())
+				
 				with(rechargeRequest!!) {
-					if (ad1?.isNotEmpty() == true) {
-						llAd1.visible()
-					}
-					if (ad2?.isNotEmpty() == true) {
-						llAd2.visible()
-					}
-					if (ad3?.isNotEmpty() == true) {
-						llAd3.visible()
-					}
 					if (note?.isNotEmpty() == true) {
 						llNotes.visible()
 					}
 				}
 			}
+		}
+	}
+	
+	private fun addAdditionalFields(fields: HashMap<String, String>) {
+		rgBinding.llAdditionalFields.removeAllViews()
+		viewModel.additionalFields.clear()
+		fields.forEach { field ->
+			val fieldBinding = LayoutAdditionalFieldsViewBinding.inflate(layoutInflater, rgBinding.llAdditionalFields, false)
+			val isLabelAvailable = field.key.isNotEmpty()
+			fieldBinding.llAd1.setVisibility(isLabelAvailable)
+			
+			if (field.value.startsWith("{")) {
+				val gson = Gson().fromJson(field.value, AdditionalOptions::class.java)
+				fieldBinding.tvAd1.text = gson.label
+				viewModel.additionalFields[field.key] = gson.value?:""
+			} else {
+				fieldBinding.tvAd1.text = field.value
+				viewModel.additionalFields[field.key] = field.value
+			}
+			
+			rgBinding.llAdditionalFields.addView(fieldBinding.root)
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.moneytree.app.repository
 
-import android.util.Log
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
@@ -79,13 +78,29 @@ object NSRechargeRepository {
 			}
 		})
 	}
+	
+	fun getAdditionalFields(rechargeMasterId: String?, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.getAdditionalFields(rechargeMasterId, object :
+			NSRetrofitCallback<AdditionalFieldsResponse>(viewModelCallback, NSApiErrorHandler.ERROR_GET_ADDITIONAL_FIELDS) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as AdditionalFieldsResponse
+				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
 
 	/**
 	 * To get wallet list data API
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun getRechargeFetchData(rechargeSave: NSRechargeSaveRequest,
+	fun getRechargeFetchData(rechargeSave: NSRechargeSaveRequest?,
 					 viewModelCallback: NSGenericViewModelCallback
 	) {
 		apiManager.cancelAllRequests()

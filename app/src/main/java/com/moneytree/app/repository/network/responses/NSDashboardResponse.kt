@@ -62,6 +62,8 @@ data class NSDashboardData(
     val isRechargeDisplay: String? = null,
     @SerializedName("online_order_charge_percentage")
     val onlineOrderChargePercentage: String? = "-1",
+    @SerializedName("ov_credit_amt")
+    val ovCreditAmt: String? = "-1",
     @SerializedName("category_products")
     val categoryProducts: MutableList<NSCategoryData>? = null
 )

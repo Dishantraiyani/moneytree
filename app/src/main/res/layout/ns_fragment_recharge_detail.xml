@@ -179,92 +179,10 @@
 					</LinearLayout>
 
 					<LinearLayout
-						android:id="@+id/ll_ad1"
+						android:id="@+id/ll_additional_fields"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
-						android:layout_marginBottom="@dimen/_15sdp"
-						android:orientation="horizontal"
-						android:visibility="gone">
-
-						<TextView
-							style="@style/LoginSubFontsWrap"
-							android:layout_marginStart="@dimen/_5sdp"
-							android:text="@string/ad1"
-							android:maxWidth="@dimen/_100sdp"
-							android:textColor="@color/black"
-							android:textSize="@dimen/_10sdp" />
-
-						<TextView
-							android:id="@+id/tv_ad1"
-							style="@style/LoginSubFontsZeroWrap"
-							android:layout_width="0dp"
-							android:layout_weight="1"
-							android:textSize="@dimen/_10sdp"
-							android:maxWidth="@dimen/_100sdp"
-							android:background="@drawable/phone_white_background"
-							android:gravity="end|center_vertical"
-							android:paddingHorizontal="@dimen/_10sdp"
-							android:textColor="@color/black"
-							android:textStyle="bold" />
-					</LinearLayout>
-
-					<LinearLayout
-						android:id="@+id/ll_ad2"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginBottom="@dimen/_15sdp"
-						android:orientation="horizontal"
-						android:visibility="gone">
-
-						<TextView
-							style="@style/LoginSubFontsWrap"
-							android:layout_marginStart="@dimen/_5sdp"
-							android:text="@string/ad2"
-							android:maxWidth="@dimen/_100sdp"
-							android:textColor="@color/black"
-							android:textSize="@dimen/_10sdp" />
-
-						<TextView
-							android:id="@+id/tv_ad2"
-							style="@style/LoginSubFontsZeroWrap"
-							android:layout_width="0dp"
-							android:layout_weight="1"
-							android:textSize="@dimen/_10sdp"
-							android:background="@drawable/phone_white_background"
-							android:gravity="end|center_vertical"
-							android:paddingHorizontal="@dimen/_10sdp"
-							android:textColor="@color/black"
-							android:textStyle="bold" />
-					</LinearLayout>
-
-					<LinearLayout
-						android:id="@+id/ll_ad3"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginBottom="@dimen/_15sdp"
-						android:orientation="horizontal"
-						android:visibility="gone">
-
-						<TextView
-							style="@style/LoginSubFontsWrap"
-							android:layout_marginStart="@dimen/_5sdp"
-							android:text="@string/ad3"
-							android:maxWidth="@dimen/_100sdp"
-							android:textColor="@color/black"
-							android:textSize="@dimen/_10sdp" />
-
-						<TextView
-							android:id="@+id/tv_ad3"
-							style="@style/LoginSubFontsZeroWrap"
-							android:layout_width="0dp"
-							android:layout_weight="1"
-							android:textSize="@dimen/_10sdp"
-							android:background="@drawable/phone_white_background"
-							android:gravity="end|center_vertical"
-							android:paddingHorizontal="@dimen/_10sdp"
-							android:textColor="@color/black"
-							android:textStyle="bold" />
-					</LinearLayout>
+						android:orientation="vertical"/>
 
 				</LinearLayout>
 

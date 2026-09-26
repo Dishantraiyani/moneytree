@@ -12,12 +12,15 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.NSViewModel
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.databinding.LayoutAdditionalFieldsViewBinding
 import com.moneytree.app.repository.NSRechargeRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
 import com.moneytree.app.repository.network.responses.*
 import com.moneytree.app.ui.success.SuccessActivity
+import kotlin.collections.set
 
 
 /**
@@ -48,6 +51,7 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 	var rechargeType: String = ""
 	var rechargeResponse: NSRechargeListResponse? = null
 	var isRechargeDataAvailable = MutableLiveData<Boolean>()
+	var additionalFields: HashMap<String, String> = hashMapOf()
 
 	/**
 	 * for Recharge Detail Screen
@@ -102,6 +106,9 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 
 	fun saveRecharge(context: Context, callback: (Boolean) -> Unit) {
 		if (rechargeRequest != null) {
+			
+			rechargeRequest?.additionalFields = additionalFields
+			
 			//isProgressShowing.value = true
 			NSRechargeRepository.saveRecharge(rechargeRequest!!,
 				object : NSGenericViewModelCallback {
@@ -156,8 +163,22 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 	fun getRechargeFetchData() {
 		if (rechargeRequestFetchData != null) {
 			//isProgressShowing.value = true
-			Log.d("DAdaAvailable", "onSuccess: 1 ${rechargeRequestFetchData?.accountDisplay}")
-			NSRechargeRepository.getRechargeFetchData(rechargeRequestFetchData!!,
+			
+			val request = rechargeRequestFetchData?.copy()
+			val filedMap: HashMap<String, String> = hashMapOf()
+			val field = request?.additionalFields?: hashMapOf()
+			field.forEach { field ->
+				
+				if (field.value.startsWith("{")) {
+					val gson = Gson().fromJson(field.value, AdditionalOptions::class.java)
+					filedMap[field.key] = gson.value?:""
+				} else {
+					filedMap[field.key] = field.value
+				}
+			}
+			request?.additionalFields = filedMap
+			
+			NSRechargeRepository.getRechargeFetchData(request,
 				object : NSGenericViewModelCallback {
 					override fun <T> onSuccess(data: T) {
 						isProgressShowing.value = false
@@ -199,6 +220,33 @@ class NSRechargeViewModel(application: Application) : NSViewModel(application),
 
 				})
 		}
+	}
+	
+	fun getAdditionalFields(rechargeMasterId: String?, callback: (MutableList<AdditionalDataFields>) -> Unit) {
+		isProgressShowing.value = true
+		NSRechargeRepository.getAdditionalFields(rechargeMasterId, object : NSGenericViewModelCallback {
+				override fun <T> onSuccess(data: T) {
+					isProgressShowing.value = false
+					val additionalFields = data as AdditionalFieldsResponse
+					callback.invoke(additionalFields.data?: arrayListOf())
+				}
+				
+				override fun onError(errors: List<Any>) {
+					isProgressShowing.value = false
+					callback.invoke(arrayListOf())
+				}
+				
+				override fun onFailure(failureMessage: String?) {
+					isProgressShowing.value = false
+					callback.invoke(arrayListOf())
+				}
+				
+				override fun <T> onNoNetwork(localData: T) {
+					isProgressShowing.value = false
+					callback.invoke(arrayListOf())
+				}
+			
+			})
 	}
 
 	fun openSuccessFail(activity: Activity) {
