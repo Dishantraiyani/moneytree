@@ -69,6 +69,7 @@ class StockDetailRecycleAdapter(
             with(voucherBinding) {
                 with(response) {
 					ivNext.gone()
+	                llPaymentSummary.gone()
 					tvRepurchaseNo.text = response.productName
 					if (isStock) {
 						tvStockId.text = response.stockTransferId

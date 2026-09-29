@@ -121,8 +121,8 @@ class NSRePurchaseListFragment : NSFragment() {
         with(repurchaseListModel) {
             repurchaseDataManage(isRepurchase)
             if (isRepurchase) {
-                repurchaseListAdapter!!.clearData()
-                repurchaseListAdapter!!.updateData(rePurchaseList)
+                repurchaseListAdapter?.clearData()
+                repurchaseListAdapter?.updateData(rePurchaseList)
             }
         }
     }

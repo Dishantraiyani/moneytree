@@ -13,6 +13,7 @@ import com.moneytree.app.common.callbacks.NSStockHistoryDetailCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutRepurchaseStockItemBinding
 import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 
@@ -92,16 +93,43 @@ class RSHistoryRecycleAdapter(
 
                     tvDate.text = createdAt
                     tvRemark.text = remark
-                    tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
-					tvStockId.text = response.stockiestid
+	                tvTotal.text = total?.let { addText(activity, R.string.price_value, it) }
+	                tvStockId.text = response.stockiestid
+	                
+	                paymentSummary?.let { summary ->
+		                llPaymentSummary.visibility = View.VISIBLE
+		                tvPaymentMode.text = summary.paymentMode ?: "-"
+		                tvUsedFrom.text = summary.usedFrom ?: "-"
+		                
+		                tvVoucherAmount.setVisibility((summary.voucherAmount?:"0") != "0")
+		                tvVoucherAmount.text = summary.voucherAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+		                
+		                tvWalletAmount.setVisibility((summary.walletAmount?:"0") != "0")
+		                tvWalletAmount.text = summary.walletAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+		                
+		                tvOvCreditAmount.setVisibility((summary.ovCreditAmount?:"0") != "0")
+		                tvOvCreditAmount.text = summary.ovCreditAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+		                
+		                tvCashAmount.setVisibility((summary.cashAmount?:"0") != "0")
+		                tvCashAmount.text = summary.cashAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+
+                        llPaymentSummaryDetails.visibility = if (response.isExpanded) View.VISIBLE else View.GONE
+                        ivPaymentSummaryArrow.rotation = if (response.isExpanded) 180f else 0f
+
+                        llPaymentSummaryHeader.setOnClickListener {
+                            response.isExpanded = !response.isExpanded
+                            llPaymentSummaryDetails.visibility = if (response.isExpanded) View.VISIBLE else View.GONE
+                            ivPaymentSummaryArrow.animate().rotation(if (response.isExpanded) 180f else 0f).setDuration(200).start()
+                        }
+	                } ?: run {
+		                llPaymentSummary.visibility = View.GONE
+	                }
 
 					clProductLayout.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							stockItemCallback.onResponse(response)
 						}
 					})
-                   /* tvDescription.text = description!!
-					*/
                 }
             }
         }

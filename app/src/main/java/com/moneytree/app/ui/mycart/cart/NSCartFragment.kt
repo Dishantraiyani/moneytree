@@ -115,7 +115,7 @@ class NSCartFragment : NSFragment() {
                                         dataResult,
                                         PurchaseCompleteActivity::class.java
                                     )
-                                    finish()
+                                    //finish()
                                 } else {
                                     if (NSConstants.SOCKET_TYPE.equals(NSConstants.SUPER_SOCKET_TYPE)) {
                                         clBottomSheet.visible()
@@ -124,7 +124,7 @@ class NSCartFragment : NSFragment() {
                                             dataResult,
                                             PurchaseCompleteActivity::class.java
                                         )
-                                        finish()
+                                        //finish()
                                     }
                                 }
                             }
@@ -138,14 +138,14 @@ class NSCartFragment : NSFragment() {
 					btnRepurchase.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							switchResultActivity(dataResult, PurchaseCompleteActivity::class.java)
-							finish()
+							//finish()
 						}
 					})
 
 					btnStock.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
 							switchResultActivity(dataResult, StockCompleteActivity::class.java)
-							finish()
+							//finish()
 						}
 					})
 				}

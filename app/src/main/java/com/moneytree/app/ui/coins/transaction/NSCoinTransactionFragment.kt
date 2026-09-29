@@ -19,6 +19,7 @@ import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.databinding.NsFragmentCoinTransactionBinding
 import com.moneytree.app.databinding.NsFragmentTransactionBinding
+import com.moneytree.app.enums.getTransactionTypeList
 import com.moneytree.app.ui.wallets.transaction.NSTransactionFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -135,7 +136,7 @@ class NSCoinTransactionFragment : NSFragment() {
                     })
                 rvTransactions.adapter = transactionListAdapter
                 pageIndex = "1"
-				NSUtilities.setDateRange(transactionBinding.layoutDateRange, activity.resources.getStringArray(R.array.transaction_filter), activity, true, object : NSDateRangeCallback {
+				NSUtilities.setDateRange(transactionBinding.layoutDateRange, getTransactionTypeList(), activity, true, object : NSDateRangeCallback {
 					override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
 						transactionListModel.apply {
 							startingDate = startDate

@@ -258,6 +258,57 @@
 
 			<TextView
 				style="@style/LoginSubFontsWrap"
+				android:text="@string/payment_mode_title"
+				android:textColor="@color/black"
+				android:layout_marginStart="@dimen/_5sdp"
+				android:layout_marginTop="@dimen/_15sdp"
+				android:textSize="@dimen/_10sdp"/>
+
+			<androidx.cardview.widget.CardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/_6sdp"
+				app:cardCornerRadius="@dimen/_5sdp"
+				android:layout_marginHorizontal="@dimen/_5sdp">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="@dimen/_1sdp"
+					app:guidelineUseRtl="true"
+					app:chainUseRtl="true">
+
+					<ImageView
+						android:id="@+id/iv_payment_type"
+						android:layout_width="@dimen/_15sdp"
+						android:layout_height="@dimen/_15sdp"
+						android:src="@drawable/ic_wallet_coin"
+						android:layout_marginStart="@dimen/_10sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						android:contentDescription="@string/username_title" />
+
+					<Spinner
+						android:id="@+id/payment_type_spinner"
+						style="@style/LoginSubFontsZeroWrap"
+						android:paddingHorizontal="@dimen/_10sdp"
+						android:minHeight="@dimen/_38sdp"
+						android:textSize="@dimen/_12sdp"
+						android:dropDownWidth="@dimen/_200sdp"
+						android:spinnerMode="dropdown"
+						android:includeFontPadding="false"
+						app:layout_constraintTop_toTopOf="parent"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toEndOf="@id/iv_payment_type"
+						app:layout_constraintEnd_toEndOf="parent"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.cardview.widget.CardView>
+
+			<TextView
+				style="@style/LoginSubFontsWrap"
 				android:text="@string/remark"
 				android:textColor="@color/black"
 				android:layout_marginStart="@dimen/_5sdp"
@@ -319,7 +370,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="horizontal"
-				android:layout_marginTop="@dimen/_15sdp">
+				android:layout_marginTop="@dimen/_15sdp"
+				android:visibility="gone">
 
 				<TextView
 					style="@style/LoginSubFontsWrap"
@@ -345,7 +397,8 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="horizontal"
-				android:layout_marginTop="@dimen/_5sdp">
+				android:layout_marginTop="@dimen/_5sdp"
+				android:visibility="gone">
 
 				<TextView
 					android:id="@+id/tv_product_title"
@@ -366,6 +419,252 @@
 					android:textColor="@color/black"
 					android:fontFamily="@font/inter_semi_bold"
 					android:textSize="@dimen/_10sdp" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/ll_payment_summary"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:background="@drawable/bg_payment_summary"
+				android:orientation="vertical"
+				android:padding="@dimen/_8sdp"
+				android:layout_marginHorizontal="@dimen/_5sdp"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/ll_total">
+
+				<TextView
+					android:id="@+id/tv_payment_summary_title"
+					style="@style/LoginSubFontsWrap"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:text="@string/payment_summary"
+					android:textColor="@color/black"
+					android:textSize="@dimen/_10sdp"
+					android:textStyle="bold" />
+
+				<!-- Payment Mode -->
+				<LinearLayout
+					android:id="@+id/ll_payment_mode"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_4sdp"
+					android:orientation="horizontal"
+					android:visibility="gone">
+
+					<TextView
+						android:id="@+id/tv_payment_mode_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/payment_mode_title"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_payment_mode"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/orange"
+						android:textSize="@dimen/_9sdp"
+						tools:text="Wallet" />
+				</LinearLayout>
+
+				<!-- Used From -->
+				<LinearLayout
+					android:id="@+id/ll_used_from"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_3sdp"
+					android:orientation="horizontal"
+					android:visibility="gone">
+
+					<TextView
+						android:id="@+id/tv_used_from_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/stockiest_type"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_used_from"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_9sdp"
+						tools:text="Member" />
+				</LinearLayout>
+
+				<!-- Product Qty -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_3sdp"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/tv_product_quantity_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/product_quantity"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_product_qty"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_9sdp"
+						tools:text="₹50.00" />
+				</LinearLayout>
+
+				<!-- Wallet Amount -->
+				<LinearLayout
+					android:id="@+id/ll_wallet_amount"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_3sdp"
+					android:orientation="horizontal"
+					android:visibility="gone">
+
+					<TextView
+						android:id="@+id/tv_wallet_amount_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/wallet_amount_title"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_wallet_amount"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/orange"
+						android:textSize="@dimen/_9sdp"
+						tools:text="₹2000.00" />
+				</LinearLayout>
+
+				<!-- OV Credit Amount -->
+				<LinearLayout
+					android:id="@+id/ll_ov_credit_amount"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_3sdp"
+					android:orientation="horizontal"
+					android:visibility="gone">
+
+					<TextView
+						android:id="@+id/tv_ov_credit_amount_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/ov_credit_amount_title"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_ov_credit_amount"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/black"
+						android:textSize="@dimen/_9sdp"
+						tools:text="₹0.00" />
+				</LinearLayout>
+
+				<!-- Cash Amount -->
+				<LinearLayout
+					android:id="@+id/ll_cash"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_3sdp"
+					android:orientation="horizontal"
+					android:visibility="gone">
+
+					<TextView
+						android:id="@+id/tv_cash_amount_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/cash_amount_title"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_cash_amount"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/orange"
+						android:textSize="@dimen/_9sdp"
+						tools:text="₹200.00" />
+				</LinearLayout>
+
+				<!-- Cash Amount -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/_3sdp"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/tv_total_paid_title"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:fontFamily="@font/inter_regular"
+						android:text="@string/total_amount_title"
+						android:textColor="@color/gray_text"
+						android:textSize="@dimen/_9sdp" />
+
+					<TextView
+						android:id="@+id/tv_total_amount"
+						style="@style/LoginSubFontsWrap"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_medium"
+						android:gravity="end"
+						android:textColor="@color/orange"
+						android:textSize="@dimen/_9sdp"
+						tools:text="₹200.00" />
+				</LinearLayout>
 			</LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton

@@ -68,9 +68,9 @@ class NSRePurchaseInfoRecycleAdapter(
             with(rePurchaseBinding) {
                 with(response) {
                     tvProductName.text = addText(activity, R.string.product_name, productName!!)
-                    tvQty.text = addText(activity, R.string.qty_title, qty!!)
-                    tvAmount.text = addText(activity, R.string.dashboard_data, amount!!)
-                    tvRate.text = addText(activity, R.string.rate_title, rate!!)
+                    tvQty.text = addText(activity, R.string.qty_title, qty?:"0")
+                    tvAmount.text = addText(activity, R.string.dashboard_data, amount?:"0")
+                    tvRate.text = addText(activity, R.string.rate_title_with_amount, rate?:"0")
                 }
             }
         }

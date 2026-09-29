@@ -16,8 +16,12 @@ import com.google.gson.Gson
 import com.moneytree.app.R
 import com.moneytree.app.common.*
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentStockCompleteBinding
+import com.moneytree.app.enums.PaymentMode
+import com.moneytree.app.enums.calculatePaymentAmount
+import com.moneytree.app.enums.getPaymentModeList
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -54,6 +58,7 @@ class NSStockCompleteFragment : NSFragment() {
 		}
 		observeViewModel()
 		setWalletTypes()
+		setPaymentMods()
 		setTotalAmount()
 	}
 
@@ -83,11 +88,14 @@ class NSStockCompleteFragment : NSFragment() {
 							} else if (etMemberName.text.toString().isEmpty()) {
 								Toast.makeText(activity, "Please Enter Valid Member Id", Toast.LENGTH_SHORT).show()
 								return
+							} else if (selectedPaymentMode.isEmpty()) {
+								Toast.makeText(activity, "Please Select Payment Mode", Toast.LENGTH_SHORT).show()
+								return
 							}
 							val memberId = etMemberId.text.toString()
 							val remark = etRemark.text.toString()
 							val productList = NSApplication.getInstance().getProductList()
-							if (productList.size > 0) {
+							if (productList.isNotEmpty()) {
 								saveSocketStockTransferMyCart(memberId, selectedStockType, remark, Gson().toJson(productList), true)
 							} else {
 								Toast.makeText(activity, "Please Select Product", Toast.LENGTH_SHORT).show()
@@ -107,9 +115,58 @@ class NSStockCompleteFragment : NSFragment() {
 				val finalAmount1 = data.itemQty * amount1
 				totalAmountValue += finalAmount1
 			}
-			tvProductTitle.text =
-				"${NSApplication.getInstance().getProductList().size} Item Selected"
+			tvProductTitle.text = "${NSApplication.getInstance().getProductList().size} Item Selected"
 			tvAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+			
+			tvProductQty.text = NSApplication.getInstance().getProductList().size.toString()
+			tvTotalAmount.text = addText(activity, R.string.price_value, totalAmountValue.toString())
+			stockModel.finalAmount = totalAmountValue.toString()
+		}
+	}
+	
+	private fun setPaymentMode() {
+		stockCompleteBinding.apply {
+			llPaymentMode.setVisibility(stockModel.selectedPaymentMode.isNotEmpty())
+			tvPaymentMode.text = stockModel.selectedPaymentMode
+			setWalletAndCreditAmount()
+		}
+	}
+	
+	private fun setUsedFrom() {
+		stockCompleteBinding.apply {
+			llUsedFrom.setVisibility(stockModel.selectedStockType.isNotEmpty())
+			tvUsedFrom.text = stockModel.selectedStockType
+			setWalletAndCreditAmount()
+		}
+	}
+	
+	private fun setWalletAndCreditAmount() {
+		stockCompleteBinding.apply {
+			val walletAmount = stockModel.stockListModel?.walletAmount?.toDoubleOrNull()?.toInt()?:0
+			val creditAmount = stockModel.stockListModel?.ovCreditAmount?.toDoubleOrNull()?.toInt()?:0
+			val productAmount = stockModel.finalAmount.toDoubleOrNull()?.toInt()?:0
+			
+			val selectedType = PaymentMode.fromValue(stockModel.selectedPaymentMode)
+			if (selectedType != null) {
+				val paymentAmount =
+					calculatePaymentAmount(productAmount, selectedType, walletAmount, creditAmount)
+				
+				llWalletAmount.setVisibility(paymentAmount.walletAmount != 0 && selectedType == PaymentMode.WALLET)
+				tvWalletAmount.text =
+					addText(activity, R.string.price_value, paymentAmount.walletAmount.toString())
+				
+				llOvCreditAmount.setVisibility(paymentAmount.creditAmount != 0 && selectedType == PaymentMode.CREDIT)
+				tvOvCreditAmount.text =
+					addText(activity, R.string.price_value, paymentAmount.creditAmount.toString())
+				
+				llCash.setVisibility(paymentAmount.cashAmount != 0)
+				tvCashAmount.text =
+					addText(activity, R.string.price_value, paymentAmount.cashAmount.toString())
+			} else {
+				llWalletAmount.setVisibility(false)
+				llOvCreditAmount.setVisibility(false)
+				llOvCreditAmount.setVisibility(false)
+			}
 		}
 	}
 
@@ -138,8 +195,37 @@ class NSStockCompleteFragment : NSFragment() {
 							p0: AdapterView<*>?, view: View?, position: Int, id: Long
 						) {
 							selectedStockType = walletListType[position]
+							setUsedFrom()
 						}
 
+						override fun onNothingSelected(p0: AdapterView<*>?) {
+						}
+					}
+			}
+		}
+	}
+	
+	private fun setPaymentMods() {
+		with(stockModel) {
+			with(stockCompleteBinding) {
+				val paymentTypes: MutableList<String> = arrayListOf()
+				paymentTypes.addAll(getPaymentModeList())
+				val adapter = ArrayAdapter(activity, R.layout.layout_spinner, paymentTypes)
+				paymentTypeSpinner.adapter = adapter
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+				paymentTypeSpinner.onItemSelectedListener =
+					object : AdapterView.OnItemSelectedListener {
+						override fun onItemSelected(
+							p0: AdapterView<*>?, view: View?, position: Int, id: Long
+						) {
+							if (position != 0) {
+								selectedPaymentMode = paymentTypes[position]
+							} else {
+								selectedPaymentMode = ""
+							}
+							setPaymentMode()
+						}
+						
 						override fun onNothingSelected(p0: AdapterView<*>?) {
 						}
 					}

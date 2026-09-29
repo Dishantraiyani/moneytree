@@ -290,7 +290,7 @@ object NSUtilities {
 	}
 
 	fun setDateRange(
-		layoutDateRange: LayoutDateRangeSelectBinding, list: Array<String>,
+		layoutDateRange: LayoutDateRangeSelectBinding, filterListType: MutableList<String>,
 		activity: Activity, isFilterVisible: Boolean = false, callback: NSDateRangeCallback) {
 		layoutDateRange.clFilterType.setVisibility(isFilterVisible)
 		var startingDate = NSDateTimeHelper.getCurrentDate()
@@ -301,8 +301,6 @@ object NSUtilities {
 
 		var startDateList = if (layoutDateRange.tvStartDate.text.isNotEmpty())  layoutDateRange.tvStartDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
 		var endDateList = if (layoutDateRange.tvEndDate.text.isNotEmpty())  layoutDateRange.tvEndDate.text.split("-") else NSDateTimeHelper.getCurrentDate().split("-")
-		val filterListType: MutableList<String> = arrayListOf()
-		filterListType.addAll(list)
 		var selectedFilterType = filterListType[0]
 
 		layoutDateRange.tvStartDate.setOnClickListener {

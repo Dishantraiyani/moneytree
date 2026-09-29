@@ -28,6 +28,7 @@ import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.switchActivity
 import com.moneytree.app.common.utils.switchResultActivity
 import com.moneytree.app.databinding.NsFragmentRegisterBinding
+import com.moneytree.app.enums.getRegisterTypeList
 import com.moneytree.app.repository.network.responses.NSRegisterListData
 import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.memberActivation.NSMemberActivationFormActivity
@@ -164,7 +165,7 @@ class NSRegisterFragment : NSFragment(), NSSearchCallback {
 
                 rvRegisterList.adapter = registerListAdapter
 
-                NSUtilities.setDateRange(registerBinding.layoutDateRange, activity.resources.getStringArray(R.array.register_filter), activity, true, object :
+                NSUtilities.setDateRange(registerBinding.layoutDateRange, getRegisterTypeList(), activity, true, object :
                     NSDateRangeCallback {
                     override fun onDateRangeSelect(startDate: String, endDate: String, type: String) {
                         registerListModel.apply {

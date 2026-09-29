@@ -103,6 +103,18 @@ fun Activity.hideKeyboard() {
     }
 }
 
+fun View.showKeyboard() {
+    requestFocus()
+    
+    post {
+        val imm = context.getSystemService(
+            Context.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
+        
+        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    }
+}
+
 // Extension functions for Fragment
 /**
  * Used for switching to an activity from the fragment with additional flags and bundle parameters

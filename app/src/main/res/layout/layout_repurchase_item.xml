@@ -1,122 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:id="@+id/cl_repurchase" xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_repurchase"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_2sdp"
-    app:cardUseCompatPadding="true"
     android:layout_marginBottom="@dimen/_5sdp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:cardCornerRadius="@dimen/_4sdp"
+    app:cardElevation="@dimen/_2sdp"
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_repurchase_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_5sdp"
-        android:paddingHorizontal="@dimen/_5sdp">
+        android:paddingHorizontal="@dimen/_8sdp"
+        android:paddingVertical="@dimen/_8sdp">
 
         <TextView
             android:id="@+id/tv_order_no_repurchase"
             style="@style/LoginSubFontsZeroWrap"
-            tools:text="Order No: "
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/orange"
-            android:paddingStart="@dimen/_10sdp"
-            android:lines="1"
-            android:textStyle="bold"
             android:fontFamily="@font/inter_semi_bold"
-            android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toStartOf="@id/iv_next"
+            android:gravity="start"
+            android:lines="1"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
+            app:guidelineUseRtl="true"
+            app:layout_constraintEnd_toStartOf="@id/tv_transaction_type"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Order No: 260926103200" />
+
+        <TextView
+            android:id="@+id/tv_transaction_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_soft_circle"
+            android:fontFamily="@font/inter_medium"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_6sdp"
+            android:paddingVertical="@dimen/_2sdp"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/_9sdp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_order_no_repurchase"
+            app:layout_constraintEnd_toStartOf="@id/iv_next"
+            app:layout_constraintTop_toTopOf="@id/tv_order_no_repurchase"
+            tools:text="Normal" />
+
+        <ImageView
+            android:id="@+id/iv_next"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:alpha="0.8"
+            android:contentDescription="@string/next"
+            android:src="@drawable/arrow_right"
+            app:layout_constraintBottom_toBottomOf="@id/tv_order_no_repurchase"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_order_no_repurchase" />
 
         <TextView
             android:id="@+id/tv_member_id"
             style="@style/LoginSubFontsZeroWrap"
-            tools:text="Member Id: "
-            android:textSize="@dimen/_11sdp"
-            android:gravity="start"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/black"
-            android:paddingStart="@dimen/_10sdp"
-            android:lines="1"
-            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/inter_medium"
-            android:paddingEnd="@dimen/_5sdp"
-            app:layout_constraintEnd_toStartOf="@id/iv_next"
+            android:gravity="start"
+            android:lines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:guidelineUseRtl="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_order_no_repurchase" />
-
-        <LinearLayout
-            android:id="@+id/ll_total"
-            style="@style/LoginSubFontsZeroWrap"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toStartOf="@id/iv_next"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_member_id" >
-
-            <TextView
-                android:id="@+id/tv_total_title"
-                style="@style/LoginSubFontsWrap"
-                android:text="@string/total"
-                android:gravity="start"
-                app:guidelineUseRtl="true"
-                android:textColor="@color/black"
-                android:paddingStart="@dimen/_10sdp"
-                android:lines="1"
-                android:textSize="@dimen/_11sdp"
-                android:fontFamily="@font/inter_regular"
-                android:paddingEnd="@dimen/_2sdp"
-                />
-
-            <TextView
-                android:id="@+id/tv_total"
-                style="@style/LoginSubFontsWrap"
-                tools:text="Value"
-                android:gravity="start"
-                app:guidelineUseRtl="true"
-                android:textColor="@color/orange"
-                android:lines="1"
-                android:textSize="@dimen/_11sdp"
-                android:fontFamily="@font/inter_medium"
-                android:paddingEnd="@dimen/_5sdp"
-                />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_no_repurchase"
+            tools:text="Member Id: 1046" />
 
         <TextView
             android:id="@+id/tv_date"
             style="@style/LoginSubFontsZeroWrap"
-            tools:text="998899"
-            app:guidelineUseRtl="true"
-            android:textColor="@color/gray_text"
-            android:gravity="center|start"
-            android:textSize="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:fontFamily="@font/inter_regular"
-            android:paddingStart="@dimen/_10sdp"
-            android:paddingEnd="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:paddingTop="0dp"
-            android:paddingBottom="@dimen/_5sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/iv_next"
-            app:layout_constraintTop_toBottomOf="@id/ll_total" />
+            android:gravity="end|center_vertical"
+            android:lines="1"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/_8sdp"
+            app:guidelineUseRtl="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_no_repurchase"
+            tools:text="Date: 2026-07-08" />
 
-        <ImageView
-            android:id="@+id/iv_next"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
-            android:src="@drawable/arrow_right"
-            android:alpha="0.8"
-            android:layout_marginEnd="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="parent"
+        <LinearLayout
+            android:id="@+id/ll_total"
+            style="@style/LoginSubFontsZeroWrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_member_id">
+
+            <TextView
+                android:id="@+id/tv_total_title"
+                style="@style/LoginSubFontsWrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/total_amount_title"
+                android:textColor="@color/gray_text"
+                android:textSize="@dimen/_9sdp" />
+
+            <TextView
+                android:id="@+id/tv_total"
+                style="@style/LoginSubFontsWrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:fontFamily="@font/inter_semi_bold"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                tools:text="₹2250.00" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_payment_summary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="@drawable/bg_payment_summary"
+            android:orientation="vertical"
+            android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/next"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_total">
+
+            <TextView
+                android:id="@+id/tv_payment_summary_title"
+                style="@style/LoginSubFontsWrap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_semi_bold"
+                android:text="@string/payment_summary"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10sdp"
+                android:textStyle="bold" />
+
+            <!-- Payment Mode -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_payment_mode_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/payment_mode_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_payment_mode"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="Wallet" />
+            </LinearLayout>
+
+            <!-- Used From -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_used_from_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/used_from_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_used_from"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="Member" />
+            </LinearLayout>
+
+            <!-- Voucher Amount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_voucher_amount_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/voucher_amount_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_voucher_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="₹50.00" />
+            </LinearLayout>
+
+            <!-- Wallet Amount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_wallet_amount_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/wallet_amount_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_wallet_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="₹2000.00" />
+            </LinearLayout>
+
+            <!-- OV Credit Amount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_ov_credit_amount_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/ov_credit_amount_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_ov_credit_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="₹0.00" />
+            </LinearLayout>
+
+            <!-- Cash Amount -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cash_amount_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/cash_amount_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_cash_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="₹200.00" />
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.cardview.widget.CardView>

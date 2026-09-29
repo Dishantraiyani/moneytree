@@ -46,6 +46,20 @@ data class MemberDetailModel(
 	@SerializedName("fullname")
 	@Expose
 	var fullname: String? = null,
+	@SerializedName("wallet_amount")
+	@Expose
+	var walletAmount: String? = null,
+	@SerializedName("ov_credit_amount")
+	@Expose
+	var ovCreditAmount: String? = null,
 	@field:SerializedName("is_login")
 	var isLogin: String? = null
-)
+) {
+	fun getAmountOfWallet(): String {
+		return walletAmount?:"0"
+	}
+	
+	fun getCreditAmount(): String {
+		return ovCreditAmount?:"0"
+	}
+}

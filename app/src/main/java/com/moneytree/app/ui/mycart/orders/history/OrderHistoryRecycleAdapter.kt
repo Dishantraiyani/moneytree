@@ -10,17 +10,13 @@ import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.SingleClickListener
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
-import com.moneytree.app.common.callbacks.NSStockHistoryDetailCallback
 import com.moneytree.app.common.utils.addText
-import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutOrderHistoryItemBinding
-import com.moneytree.app.databinding.LayoutRepurchaseStockItemBinding
 import com.moneytree.app.repository.network.responses.OrderAddressResponse
 import com.moneytree.app.repository.network.responses.OrderHistoryDataItem
-import com.moneytree.app.repository.network.responses.RepurchaseDataItem
 
 
 class OrderHistoryRecycleAdapter(

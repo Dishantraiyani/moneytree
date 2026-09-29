@@ -233,10 +233,10 @@ object NSProductRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun saveMyCart(memberId: String, walletType: String, remark: String, productList: String,
+	fun saveMyCart(memberId: String, walletType: String, paymentMod: String, remark: String, productList: String,
 				   viewModelCallback: NSGenericViewModelCallback
 	) {
-		apiManager.saveMyCart(memberId, walletType, remark, productList, object :
+		apiManager.saveMyCart(memberId, walletType, paymentMod, remark, productList, object :
 			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_SEND_DATA) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse
@@ -256,10 +256,10 @@ object NSProductRepository {
 	 *
 	 * @param viewModelCallback The callback to communicate back to the view model
 	 */
-	fun saveSocketStockTransferMyCart(memberId: String, walletType: String, remark: String, productList: String,
+	fun saveSocketStockTransferMyCart(memberId: String, walletType: String, remark: String, paymentMode: String, productList: String,
 				   viewModelCallback: NSGenericViewModelCallback
 	) {
-		apiManager.saveSocketStockTransferMyCart(memberId, walletType, remark, productList, object :
+		apiManager.saveSocketStockTransferMyCart(memberId, walletType, remark, paymentMode, productList, object :
 			NSRetrofitCallback<NSSuccessResponse>(viewModelCallback, NSApiErrorHandler.ERROR_PRODUCT_SEND_DATA) {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse

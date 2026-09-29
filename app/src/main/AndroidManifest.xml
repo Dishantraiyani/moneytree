@@ -36,6 +36,18 @@
         tools:targetApi="n">
 
         <activity
+            android:name=".ui.credit.wallet.CreditWalletActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".ui.credit.CreditPayoutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
             android:name=".ui.onlineorder.orderHistoryDetail.detail.OnlineOrderHistoryDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"

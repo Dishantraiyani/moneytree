@@ -7,6 +7,7 @@ import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.showKeyboard
 import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.LayoutHeaderBinding
 
@@ -55,6 +56,7 @@ class HeaderUtils(private val binding: LayoutHeaderBinding,
 
             ivSearch.setOnClickListener {
                 cardSearch.visibility = View.VISIBLE
+                etSearch.showKeyboard()
             }
 
             etSearch.setOnKeyListener(object: View.OnKeyListener{

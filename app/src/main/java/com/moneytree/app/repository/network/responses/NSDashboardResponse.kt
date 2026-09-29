@@ -63,7 +63,7 @@ data class NSDashboardData(
     @SerializedName("online_order_charge_percentage")
     val onlineOrderChargePercentage: String? = "-1",
     @SerializedName("ov_credit_amt")
-    val ovCreditAmt: String? = "-1",
+    val ovCreditAmt: MutableList<NSWalletAmountData>? = null,
     @SerializedName("category_products")
     val categoryProducts: MutableList<NSCategoryData>? = null
 )
@@ -171,6 +171,9 @@ data class NSTodayRePurchaseListData(
     @SerializedName("repurchase_no")
     @Expose
     var repurchaseNo: String? = null,
+    @SerializedName("transaction_type")
+    @Expose
+    var transactionType: String? = null,
     @SerializedName("stockiestid")
     @Expose
     var stockiestid: String? = null,
@@ -183,6 +186,33 @@ data class NSTodayRePurchaseListData(
     @SerializedName("remark")
     @Expose
     var remark: String? = null,
+    @SerializedName("total")
+    @Expose
+    var total: String? = null,
+    @SerializedName("payment_summary")
+    @Expose
+    var paymentSummary: RepurchasePaymentSummary? = null
+)
+
+data class RepurchasePaymentSummary(
+    @SerializedName("payment_mode")
+    @Expose
+    var paymentMode: String? = null,
+    @SerializedName("used_from")
+    @Expose
+    var usedFrom: String? = null,
+    @SerializedName("voucher_amount")
+    @Expose
+    var voucherAmount: String? = null,
+    @SerializedName("wallet_amount")
+    @Expose
+    var walletAmount: String? = null,
+    @SerializedName("ov_credit_amount")
+    @Expose
+    var ovCreditAmount: String? = null,
+    @SerializedName("cash_amount")
+    @Expose
+    var cashAmount: String? = null,
     @SerializedName("total")
     @Expose
     var total: String? = null

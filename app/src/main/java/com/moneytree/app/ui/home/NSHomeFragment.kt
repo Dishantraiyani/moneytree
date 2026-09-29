@@ -3,7 +3,6 @@ package com.moneytree.app.ui.home
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
@@ -11,12 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.graphics.toColorInt
 import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
-import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.moneytree.app.BuildConfig
 import com.moneytree.app.R
@@ -38,6 +39,7 @@ import com.moneytree.app.common.utils.addText
 import com.moneytree.app.common.utils.gone
 import com.moneytree.app.common.utils.invisible
 import com.moneytree.app.common.utils.isInteger
+import com.moneytree.app.common.utils.isValidList
 import com.moneytree.app.common.utils.setEmail
 import com.moneytree.app.common.utils.setSafeOnClickListener
 import com.moneytree.app.common.utils.setUserName
@@ -56,12 +58,14 @@ import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.assessment.NSAssessmentActivity
 import com.moneytree.app.ui.coins.CoinWalletActivity
 import com.moneytree.app.ui.common.ProductCategoryViewModel
+import com.moneytree.app.ui.credit.wallet.CreditWalletActivity
 import com.moneytree.app.ui.doctor.NSDoctorActivity
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
 import com.moneytree.app.ui.login.NSLoginActivity
 import com.moneytree.app.ui.meeting.MeetingActivity
 import com.moneytree.app.ui.mycart.orders.NSOrderActivity
 import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
+import com.moneytree.app.ui.mycart.products.NSProductsActivity
 import com.moneytree.app.ui.notification.NSNotificationActivity
 import com.moneytree.app.ui.offers.OffersActivity
 import com.moneytree.app.ui.onlineorder.OnlineOrderActivity
@@ -87,12 +91,6 @@ import maulik.barcodescanner.ui.BarcodeScanningActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import androidx.core.graphics.toColorInt
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.moneytree.app.common.utils.isValidList
-import com.google.android.material.appbar.AppBarLayout
-import com.moneytree.app.ui.mycart.products.NSProductsActivity
-import kotlin.jvm.java
 import kotlin.math.abs
 
 
@@ -174,6 +172,10 @@ class NSHomeFragment : NSFragment() {
 
 			drawer.closeDrawer(GravityCompat.START)
 
+			clOvCreditDetail.setOnClickListener {
+				switchActivity(CreditWalletActivity::class.java)
+			}
+			
 			clVoucherBtn.setOnClickListener {
 				switchActivity(
 					NSVouchersActivity::class.java
@@ -397,8 +399,12 @@ class NSHomeFragment : NSFragment() {
 					NSConstants.SOCKET_TYPE = getSocketType()
 
                     tvBalance.text = addText(activity, R.string.balance, setWallet())
-                    NSApplication.getInstance().setWalletBalance(setWallet())
-                    tvStatusRoyalty.text = setRoyaltyStatus()//addText(activity, R.string.status_royalty, setRoyaltyStatus())
+	                NSApplication.getInstance().setWalletBalance(setWallet())
+	                
+	                tvCreditBalance.text = addText(activity, R.string.balance, setOvCreditAmount())
+	                NSApplication.getInstance().setOvCreditBalance(setWallet())
+	                
+	                tvStatusRoyalty.text = setRoyaltyStatus()//addText(activity, R.string.status_royalty, setRoyaltyStatus())
 	                
 	                tvMyEarningTitle.text = resources.getString(R.string.my_earning_title)
 	                tvMyEarning.text = addText(activity, R.string.my_earning_value, setEarningAmount())
@@ -544,6 +550,7 @@ class NSHomeFragment : NSFragment() {
 						}
 
 						llContactUs.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
 							NSUtilities.callCustomerCare(requireContext(), NSConstants.CUSTOMER_CARE)
 						}
 
@@ -569,6 +576,7 @@ class NSHomeFragment : NSFragment() {
 						}
 
                         llRePurchase.setOnClickListener {
+	                        drawer.closeDrawer(GravityCompat.START)
 							pref.offerTabPosition = 0
 							switchActivity(OffersActivity::class.java)
                         }

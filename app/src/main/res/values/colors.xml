@@ -66,4 +66,8 @@
     <color name="field_fill">#FEFEFD</color>
     <color name="icon_gray">#A7B2AD</color>
     <color name="shadow_green">#337C46</color>
+
+    <color name="transaction_type_success">#110FCE6E</color>
+    <color name="transaction_type_rejected">#11F51D46</color>
+    <color name="transaction_type_other">#11FFA500</color>
 </resources>

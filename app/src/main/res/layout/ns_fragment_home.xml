@@ -148,177 +148,265 @@
 						app:layout_constraintTop_toTopOf="@+id/tv_account_detail_title"
 						app:layout_constraintBottom_toBottomOf="@+id/tv_account_detail_title"/>
 
-					<androidx.constraintlayout.widget.ConstraintLayout
+					<LinearLayout
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
-						android:paddingVertical="@dimen/_12sdp"
+						android:orientation="vertical"
+						android:background="@drawable/white_corners_20"
 						android:layout_marginTop="@dimen/_10sdp"
 						android:layout_marginBottom="@dimen/_10sdp"
-						android:background="@drawable/white_corners_20"
 						android:layout_marginHorizontal="@dimen/_10sdp"
 						app:layout_constraintTop_toBottomOf="@+id/tv_account_detail_title"
 						app:layout_constraintStart_toStartOf="parent"
 						app:layout_constraintEnd_toEndOf="parent"
 						app:layout_constraintBottom_toBottomOf="parent">
 
-
-
-						<ImageView
-							android:id="@+id/imgWallet"
-							android:layout_width="@dimen/_30sdp"
-							android:layout_height="@dimen/_30sdp"
-							android:background="@drawable/round_white_circle"
-							android:backgroundTint="@color/icon_bg_color"
-							android:contentDescription="@string/description"
-							android:padding="@dimen/_7sdp"
-							android:src="@drawable/ic_wallet_home"
-							android:tint="@color/orange"
-							tools:ignore="UseAppTint"
-							android:layout_marginTop="@dimen/_10sdp"
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingVertical="@dimen/_12sdp"
+							app:layout_constraintTop_toBottomOf="@+id/tv_account_detail_title"
 							app:layout_constraintStart_toStartOf="parent"
-							app:layout_constraintEnd_toStartOf="@id/divider1"
-							app:layout_constraintTop_toTopOf="parent" />
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintBottom_toBottomOf="parent">
 
-						<TextView
-							android:id="@+id/tvWalletTitle"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/wallet_balance"
-							android:textColor="@color/dark_black_sec"
-							android:textSize="@dimen/_7sdp"
-							android:fontFamily="@font/inter_medium"
-							app:layout_constraintTop_toBottomOf="@id/imgWallet"
-							app:layout_constraintStart_toStartOf="@id/imgWallet"
-							app:layout_constraintEnd_toEndOf="@id/imgWallet"
-							android:layout_marginTop="@dimen/_8sdp"/>
 
-						<TextView
-							android:id="@+id/tv_balance"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							tools:text="₹411580.06"
-							android:textColor="@color/orange"
-							android:textSize="@dimen/_9sdp"
-							android:fontFamily="@font/inter_bold"
-							android:gravity="center"
-							app:layout_constraintTop_toBottomOf="@id/tvWalletTitle"
-							app:layout_constraintStart_toStartOf="@id/imgWallet"
-							app:layout_constraintEnd_toEndOf="@id/imgWallet"
-							android:layout_marginTop="@dimen/_1sdp"/>
 
-						<!-- Divider 1 -->
+							<ImageView
+								android:id="@+id/imgWallet"
+								android:layout_width="@dimen/_30sdp"
+								android:layout_height="@dimen/_30sdp"
+								android:background="@drawable/round_white_circle"
+								android:backgroundTint="@color/icon_bg_color"
+								android:contentDescription="@string/description"
+								android:padding="@dimen/_7sdp"
+								android:src="@drawable/ic_wallet_home"
+								android:tint="@color/orange"
+								tools:ignore="UseAppTint"
+								android:layout_marginTop="@dimen/_10sdp"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintEnd_toStartOf="@id/divider1"
+								app:layout_constraintTop_toTopOf="parent" />
+
+							<TextView
+								android:id="@+id/tvWalletTitle"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/wallet_balance"
+								android:textColor="@color/dark_black_sec"
+								android:textSize="@dimen/_7sdp"
+								android:fontFamily="@font/inter_medium"
+								app:layout_constraintTop_toBottomOf="@id/imgWallet"
+								app:layout_constraintStart_toStartOf="@id/imgWallet"
+								app:layout_constraintEnd_toEndOf="@id/imgWallet"
+								android:layout_marginTop="@dimen/_8sdp"/>
+
+							<TextView
+								android:id="@+id/tv_balance"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								tools:text="₹411580.06"
+								android:textColor="@color/orange"
+								android:textSize="@dimen/_9sdp"
+								android:fontFamily="@font/inter_bold"
+								android:gravity="center"
+								app:layout_constraintTop_toBottomOf="@id/tvWalletTitle"
+								app:layout_constraintStart_toStartOf="@id/imgWallet"
+								app:layout_constraintEnd_toEndOf="@id/imgWallet"
+								android:layout_marginTop="@dimen/_1sdp"/>
+
+							<!-- Divider 1 -->
+
+							<View
+								android:id="@+id/divider1"
+								android:layout_width="@dimen/_1sdp"
+								android:layout_height="0dp"
+								android:background="#E5DDD5"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintBottom_toBottomOf="parent"
+								app:layout_constraintStart_toEndOf="@id/imgWallet"
+								app:layout_constraintEnd_toStartOf="@id/imgRoyalty"/>
+
+							<!-- ================= Royalty ================= -->
+
+							<ImageView
+								android:id="@+id/imgRoyalty"
+								android:layout_width="@dimen/_30sdp"
+								android:layout_height="@dimen/_30sdp"
+								android:background="@drawable/round_white_circle"
+								android:backgroundTint="@color/icon_bg_color"
+								android:padding="@dimen/_7sdp"
+								android:src="@drawable/ic_royalty"
+								android:tint="@color/orange"
+								tools:ignore="UseAppTint"
+								android:layout_marginTop="@dimen/_10sdp"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintStart_toEndOf="@id/divider1"
+								app:layout_constraintEnd_toStartOf="@id/divider2"/>
+
+							<TextView
+								android:id="@+id/tvRoyaltyTitle"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/royalty_status"
+								android:textColor="@color/dark_black_sec"
+								android:textSize="@dimen/_7sdp"
+								android:fontFamily="@font/inter_medium"
+								app:layout_constraintTop_toBottomOf="@id/imgRoyalty"
+								app:layout_constraintStart_toStartOf="@id/imgRoyalty"
+								app:layout_constraintEnd_toEndOf="@id/imgRoyalty"
+								android:layout_marginTop="@dimen/_8sdp"/>
+
+							<TextView
+								android:id="@+id/tv_status_royalty"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								tools:text="GOLD"
+								android:textColor="@color/orange"
+								android:textSize="@dimen/_9sdp"
+								android:fontFamily="@font/inter_bold"
+								android:gravity="center"
+								app:layout_constraintTop_toBottomOf="@id/tvRoyaltyTitle"
+								app:layout_constraintStart_toStartOf="@id/imgRoyalty"
+								app:layout_constraintEnd_toEndOf="@id/imgRoyalty"
+								android:layout_marginTop="@dimen/_1sdp"/>
+
+							<!-- Divider 2 -->
+
+							<View
+								android:id="@+id/divider2"
+								android:layout_width="@dimen/_1sdp"
+								android:layout_height="0dp"
+								android:background="#E5DDD5"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintBottom_toBottomOf="parent"
+								app:layout_constraintStart_toEndOf="@id/imgRoyalty"
+								app:layout_constraintEnd_toStartOf="@id/imgActivation"/>
+
+							<!-- ================= Activation ================= -->
+
+							<ImageView
+								android:id="@+id/imgActivation"
+								android:layout_width="@dimen/_30sdp"
+								android:layout_height="@dimen/_30sdp"
+								android:background="@drawable/round_white_circle"
+								android:backgroundTint="@color/icon_bg_color"
+								android:padding="@dimen/_6sdp"
+								android:src="@drawable/ic_user_active_home"
+								android:tint="@color/orange"
+								android:layout_marginTop="@dimen/_10sdp"
+								tools:ignore="UseAppTint"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintStart_toEndOf="@id/divider2"
+								app:layout_constraintEnd_toEndOf="parent"/>
+
+							<TextView
+								android:id="@+id/tvActivationTitle"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/activation_status"
+								android:textColor="@color/dark_black_sec"
+								android:textSize="@dimen/_7sdp"
+								android:fontFamily="@font/inter_medium"
+								app:layout_constraintTop_toBottomOf="@id/imgActivation"
+								app:layout_constraintStart_toStartOf="@id/imgActivation"
+								app:layout_constraintEnd_toEndOf="@id/imgActivation"
+								android:layout_marginTop="@dimen/_8sdp"/>
+
+							<TextView
+								android:id="@+id/tv_active"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								tools:text="ACTIVE (1100)"
+								android:textColor="@color/orange"
+								android:textSize="@dimen/_9sdp"
+								android:gravity="center"
+								android:fontFamily="@font/inter_bold"
+								app:layout_constraintTop_toBottomOf="@id/tvActivationTitle"
+								app:layout_constraintStart_toStartOf="@id/imgActivation"
+								app:layout_constraintEnd_toEndOf="@id/imgActivation"
+								android:layout_marginTop="@dimen/_1sdp"/>
+
+						</androidx.constraintlayout.widget.ConstraintLayout>
 
 						<View
-							android:id="@+id/divider1"
-							android:layout_width="@dimen/_1sdp"
-							android:layout_height="0dp"
-							android:background="#E5DDD5"
-							app:layout_constraintTop_toTopOf="parent"
-							app:layout_constraintBottom_toBottomOf="parent"
-							app:layout_constraintStart_toEndOf="@id/imgWallet"
-							app:layout_constraintEnd_toStartOf="@id/imgRoyalty"/>
+							android:id="@+id/view_account_divider"
+							android:layout_width="match_parent"
+							android:layout_height="1dp"
+							android:background="@color/line_color" />
 
-						<!-- ================= Royalty ================= -->
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:id="@+id/cl_ov_credit_detail"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content">
 
-						<ImageView
-							android:id="@+id/imgRoyalty"
-							android:layout_width="@dimen/_30sdp"
-							android:layout_height="@dimen/_30sdp"
-							android:background="@drawable/round_white_circle"
-							android:backgroundTint="@color/icon_bg_color"
-							android:padding="@dimen/_7sdp"
-							android:src="@drawable/ic_royalty"
-							android:tint="@color/orange"
-							tools:ignore="UseAppTint"
-							android:layout_marginTop="@dimen/_10sdp"
-							app:layout_constraintTop_toTopOf="parent"
-							app:layout_constraintStart_toEndOf="@id/divider1"
-							app:layout_constraintEnd_toStartOf="@id/divider2"/>
+							<ImageView
+								android:id="@+id/imgOvCurrency"
+								android:layout_width="@dimen/_30sdp"
+								android:layout_height="@dimen/_30sdp"
+								android:background="@drawable/round_white_circle"
+								android:backgroundTint="@color/icon_bg_color"
+								android:contentDescription="@string/description"
+								android:padding="@dimen/_7sdp"
+								android:src="@drawable/ic_creadit_coin"
+								android:tint="@color/orange"
+								tools:ignore="UseAppTint"
+								android:layout_marginStart="@dimen/_10sdp"
+								android:layout_marginVertical="@dimen/_10sdp"
+								android:layout_marginTop="@dimen/_10sdp"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintBottom_toBottomOf="parent"/>
 
-						<TextView
-							android:id="@+id/tvRoyaltyTitle"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/royalty_status"
-							android:textColor="@color/dark_black_sec"
-							android:textSize="@dimen/_7sdp"
-							android:fontFamily="@font/inter_medium"
-							app:layout_constraintTop_toBottomOf="@id/imgRoyalty"
-							app:layout_constraintStart_toStartOf="@id/imgRoyalty"
-							app:layout_constraintEnd_toEndOf="@id/imgRoyalty"
-							android:layout_marginTop="@dimen/_8sdp"/>
+							<TextView
+								android:id="@+id/tvCreditTitle"
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:text="@string/credit_amount"
+								android:textColor="@color/dark_black_sec"
+								android:textSize="@dimen/_7sdp"
+								android:fontFamily="@font/inter_medium"
+								android:gravity="start"
+								android:layout_marginStart="@dimen/_10sdp"
+								app:layout_constraintVertical_chainStyle="packed"
+								app:layout_constraintEnd_toStartOf="@id/iv_next"
+								app:layout_constraintBottom_toTopOf="@id/tv_credit_balance"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintStart_toEndOf="@id/imgOvCurrency" />
 
-						<TextView
-							android:id="@+id/tv_status_royalty"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							tools:text="GOLD"
-							android:textColor="@color/orange"
-							android:textSize="@dimen/_9sdp"
-							android:fontFamily="@font/inter_bold"
-							android:gravity="center"
-							app:layout_constraintTop_toBottomOf="@id/tvRoyaltyTitle"
-							app:layout_constraintStart_toStartOf="@id/imgRoyalty"
-							app:layout_constraintEnd_toEndOf="@id/imgRoyalty"
-							android:layout_marginTop="@dimen/_1sdp"/>
+							<TextView
+								android:id="@+id/tv_credit_balance"
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								tools:text="₹411580.06"
+								android:textColor="@color/orange"
+								android:textSize="@dimen/_9sdp"
+								android:fontFamily="@font/inter_bold"
+								android:gravity="start"
+								app:layout_constraintEnd_toStartOf="@id/iv_next"
+								android:layout_marginStart="@dimen/_10sdp"
+								app:layout_constraintTop_toBottomOf="@id/tvCreditTitle"
+								app:layout_constraintStart_toEndOf="@id/imgOvCurrency"
+								app:layout_constraintBottom_toBottomOf="parent"
+								android:layout_marginTop="@dimen/_1sdp"/>
 
-						<!-- Divider 2 -->
+							<ImageView
+								android:id="@+id/iv_next"
+								android:layout_width="@dimen/_12sdp"
+								android:layout_height="@dimen/_12sdp"
+								android:src="@drawable/arrow_right"
+								app:guidelineUseRtl="true"
+								android:layout_marginEnd="@dimen/_10sdp"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintBottom_toBottomOf="parent"
+								android:contentDescription="@string/next"/>
 
-						<View
-							android:id="@+id/divider2"
-							android:layout_width="@dimen/_1sdp"
-							android:layout_height="0dp"
-							android:background="#E5DDD5"
-							app:layout_constraintTop_toTopOf="parent"
-							app:layout_constraintBottom_toBottomOf="parent"
-							app:layout_constraintStart_toEndOf="@id/imgRoyalty"
-							app:layout_constraintEnd_toStartOf="@id/imgActivation"/>
+						</androidx.constraintlayout.widget.ConstraintLayout>
 
-						<!-- ================= Activation ================= -->
 
-						<ImageView
-							android:id="@+id/imgActivation"
-							android:layout_width="@dimen/_30sdp"
-							android:layout_height="@dimen/_30sdp"
-							android:background="@drawable/round_white_circle"
-							android:backgroundTint="@color/icon_bg_color"
-							android:padding="@dimen/_6sdp"
-							android:src="@drawable/ic_user_active_home"
-							android:tint="@color/orange"
-							android:layout_marginTop="@dimen/_10sdp"
-							tools:ignore="UseAppTint"
-							app:layout_constraintTop_toTopOf="parent"
-							app:layout_constraintStart_toEndOf="@id/divider2"
-							app:layout_constraintEnd_toEndOf="parent"/>
+					</LinearLayout>
 
-						<TextView
-							android:id="@+id/tvActivationTitle"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:text="@string/activation_status"
-							android:textColor="@color/dark_black_sec"
-							android:textSize="@dimen/_7sdp"
-							android:fontFamily="@font/inter_medium"
-							app:layout_constraintTop_toBottomOf="@id/imgActivation"
-							app:layout_constraintStart_toStartOf="@id/imgActivation"
-							app:layout_constraintEnd_toEndOf="@id/imgActivation"
-							android:layout_marginTop="@dimen/_8sdp"/>
-
-						<TextView
-							android:id="@+id/tv_active"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							tools:text="ACTIVE (1100)"
-							android:textColor="@color/orange"
-							android:textSize="@dimen/_9sdp"
-							android:gravity="center"
-							android:fontFamily="@font/inter_bold"
-							app:layout_constraintTop_toBottomOf="@id/tvActivationTitle"
-							app:layout_constraintStart_toStartOf="@id/imgActivation"
-							app:layout_constraintEnd_toEndOf="@id/imgActivation"
-							android:layout_marginTop="@dimen/_1sdp"/>
-
-					</androidx.constraintlayout.widget.ConstraintLayout>
 
 				</androidx.constraintlayout.widget.ConstraintLayout>
 

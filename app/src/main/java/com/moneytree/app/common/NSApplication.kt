@@ -25,6 +25,7 @@ class NSApplication : Application() {
     private lateinit var preferencesLogin: NSLoginPreferences
     private lateinit var apiManager: NSApiManager
     private lateinit var walletBalance: String
+    private lateinit var ovCreditBalance: String
 	private val ONESIGNAL_APP_ID = "a31a4b92-4cf4-4768-ba20-904945d2159e"
 	private var productList: HashMap<String, ProductDataDTO> = hashMapOf()
 	private var orderList: HashMap<String, ProductDataDTO> = hashMapOf()
@@ -77,6 +78,12 @@ class NSApplication : Application() {
 
 	fun setWalletBalance(balance: String) {
 		walletBalance = balance
+	}
+	
+	fun getOvCreditBalance(): String = ovCreditBalance
+	
+	fun setOvCreditBalance(balance: String) {
+		ovCreditBalance = balance
 	}
 
 	fun setProductList(model: ProductDataDTO) {

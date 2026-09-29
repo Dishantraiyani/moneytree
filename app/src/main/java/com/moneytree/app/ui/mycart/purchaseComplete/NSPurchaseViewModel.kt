@@ -23,6 +23,7 @@ class NSPurchaseViewModel(application: Application) : NSViewModel(application) {
 	var isProductSendDataAvailable = MutableLiveData<Boolean>()
 	var successResponse: NSSuccessResponse? = null
 	var selectedWalletType: String = ""
+	var selectedPaymentMod: String = ""
 	var finalAmount: String = "0"
 
 
@@ -60,11 +61,11 @@ class NSPurchaseViewModel(application: Application) : NSViewModel(application) {
 	 * Get redeem list data
 	 *
 	 */
-	fun saveMyCart(memberId: String,walletType: String, remark: String,productList: String, isShowProgress: Boolean) {
+	fun saveMyCart(memberId: String,walletType: String, paymentMod: String, remark: String,productList: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
-		NSProductRepository.saveMyCart(memberId, walletType, remark, productList, object: NSGenericViewModelCallback {
+		NSProductRepository.saveMyCart(memberId, walletType, paymentMod, remark, productList, object: NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				successResponse = data as NSSuccessResponse

@@ -1088,13 +1088,13 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun saveMyCart(
-		memberId: String, walletType: String, remark: String, productList: String,
+		memberId: String, walletType: String, paymentMod: String, remark: String, productList: String,
 		callback: NSRetrofitCallback<NSSuccessResponse>
 	) {
 		request(
 			unAuthorised3020Client.saveMyCart(
 				NSUserManager.getAuthToken(),
-				memberId, walletType, remark, productList
+				memberId, walletType, paymentMod, remark, productList
 			), callback
 		)
 	}
@@ -1105,13 +1105,13 @@ class NSApiManager {
 	 * @param callback  The callback for the result
 	 */
 	fun saveSocketStockTransferMyCart(
-		memberId: String, walletType: String, remark: String, productList: String,
+		memberId: String, walletType: String, remark: String, paymentMode: String,productList: String,
 		callback: NSRetrofitCallback<NSSuccessResponse>
 	) {
 		request(
 			unAuthorised3020Client.saveSocketStockTransferMyCart(
 				NSUserManager.getAuthToken(),
-				memberId, walletType, remark, productList
+				memberId, walletType, remark, paymentMode, productList
 			), callback
 		)
 	}
@@ -1530,6 +1530,14 @@ class NSApiManager {
 	fun topUpClaimVoucher(voucherId: String, deliveryType: String, productOption: String, callback: NSRetrofitCallback<NSSuccessResponse>) {
 		request(unAuthorised3020Client.topUpClaimVoucher(NSUserManager.getAuthToken(), voucherId, deliveryType, productOption), callback)
 	}
+	
+	fun getCreditPayoutList(pageIndex: String, search: String, paymentStatus: String, callback: NSRetrofitCallback<CreditPayoutListResponse>) {
+		request(unAuthorised3020Client.getCreditPayoutList(NSUserManager.getAuthToken(), pageIndex, search, paymentStatus), callback)
+	}
+	
+	fun getCreditWalletList(pageIndex: String, search: String, startDate: String, endDate: String, type: String, callback: NSRetrofitCallback<CreditWalletListResponse>) {
+		request(unAuthorised3020Client.getCreditWalletList(NSUserManager.getAuthToken(), pageIndex, search, startDate, endDate, type), callback)
+	}
 }
 
 fun requestBody(text: String): RequestBody {
@@ -1938,14 +1946,17 @@ interface RTApiInterface {
 	@POST("save-my-cart")
 	fun saveMyCart(
 		@Field("token_id") token: String,
-		@Field("member_id") memberId: String, @Field("wallet_type") walletType: String, @Field("remark") remark: String, @Field("product_list") productList: String,
+		@Field("member_id") memberId: String, @Field("wallet_type") walletType: String,
+		@Field("payment_mode") paymentMode: String,
+		@Field("remark") remark: String,
+		@Field("product_list") productList: String
 	): Call<NSSuccessResponse>
 
 	@FormUrlEncoded
 	@POST("save-stockiest-stock-transfer")
 	fun saveSocketStockTransferMyCart(
 		@Field("token_id") token: String,
-		@Field("member_id") memberId: String, @Field("stock_type") walletType: String, @Field("remark") remark: String, @Field("product_list") productList: String,
+		@Field("member_id") memberId: String, @Field("stock_type") walletType: String, @Field("remark") remark: String,@Field("payment_mode") paymentMode: String, @Field("product_list") productList: String,
 	): Call<NSSuccessResponse>
 
 	@FormUrlEncoded
@@ -2338,4 +2349,24 @@ interface RTApiInterface {
 		@Field("token_id") token: String,
 		@Field("direct_order_id") repurchaseInfo: String
 	): Call<OnlineOrderInfoResponse>
+	
+	@FormUrlEncoded
+	@POST("ov-credit-payout-list-api")
+	fun getCreditPayoutList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String,
+		@Field("payment_status") paymentStatus: String
+	): Call<CreditPayoutListResponse>
+	
+	@FormUrlEncoded
+	@POST("ov-credit-wallet-list-api")
+	fun getCreditWalletList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String,
+		@Field("start_date") startDate: String,
+		@Field("end_date") endDate: String,
+		@Field("type") type: String
+	): Call<CreditWalletListResponse>
 }

@@ -53,5 +53,10 @@ data class RepurchaseDataItem(
 	val orderNo: String? = null,
 
 	@field:SerializedName("stockiest_to")
-	val stockiestTo: String? = null
+	val stockiestTo: String? = null,
+	
+	@field:SerializedName("payment_summary")
+	val paymentSummary: RepurchasePaymentSummary? = null,
+
+	var isExpanded: Boolean = false
 )

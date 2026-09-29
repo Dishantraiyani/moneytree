@@ -64,6 +64,7 @@ class NSDoctorHistoryFragment : BaseViewModelFragment<NSDoctorHistoryViewModel, 
 				if (layoutHeader.etSearch.text.isNotEmpty()) {
 					layoutHeader.etSearch.setText("")
 				} else {
+					hideKeyboard(layoutHeader.etSearch)
 					layoutHeader.cardSearch.gone()
 					dcAdapter?.setData(viewModel.tempDoctorList)
 				}

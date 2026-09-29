@@ -165,6 +165,15 @@ class NSHomeViewModel(application: Application) : NSViewModel(application) {
             }
         }
     }
+	
+	fun setOvCreditAmount(): String {
+		dashboardData?.data?.ovCreditAmt?.apply {
+			NSConstants.OV_CREDIT_BALANCE = if(this.isValidList()) this[0].amount?:"0" else "0"
+		}?: {
+			NSConstants.OV_CREDIT_BALANCE = "0"
+		}
+		return NSConstants.OV_CREDIT_BALANCE
+	}
 
 	fun getSocketType(): String? {
 		with(dashboardData) {

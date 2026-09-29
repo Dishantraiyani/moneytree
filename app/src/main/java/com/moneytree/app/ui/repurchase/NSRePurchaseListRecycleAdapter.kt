@@ -2,6 +2,7 @@ package com.moneytree.app.ui.repurchase
 
 import android.app.Activity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
@@ -9,6 +10,7 @@ import com.moneytree.app.common.NSConstants
 import com.moneytree.app.common.callbacks.NSInfoSelectCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.setVisibility
 import com.moneytree.app.databinding.LayoutRepurchaseItemBinding
 import com.moneytree.app.repository.network.responses.NSTodayRePurchaseListData
 
@@ -70,10 +72,35 @@ class NSRePurchaseListRecycleAdapter(
         fun bind(response: NSTodayRePurchaseListData) {
             with(rePurchaseBinding) {
                 with(response) {
-                    tvOrderNoRepurchase.text = addText(activity, R.string.order_no, repurchaseNo!!)
-                    tvMemberId.text = addText(activity, R.string.member_id, memberid!!)
-                    tvTotal.text = addText(activity, R.string.dashboard_data, total!!)
-                    tvDate.text = addText(activity, R.string.voucher_date, createdAt!!)
+                    tvOrderNoRepurchase.text = addText(activity, R.string.order_no, repurchaseNo ?: "")
+                    tvMemberId.text = addText(activity, R.string.member_id, memberid ?: "")
+                    tvTotal.text = total?.let { addText(activity, R.string.price_value, it) } ?: ""
+                    tvDate.text = addText(activity, R.string.voucher_date, createdAt ?: "")
+
+                    tvTransactionType.text = transactionType ?: "Normal"
+                    tvTransactionType.visibility = if (transactionType.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+                    paymentSummary?.let { summary ->
+                        llPaymentSummary.visibility = View.VISIBLE
+                        tvPaymentMode.text = summary.paymentMode ?: "-"
+                        tvUsedFrom.text = summary.usedFrom ?: "-"
+                        
+                        val voucherAmount = summary.voucherAmount ?: "0"
+                        tvVoucherAmount.setVisibility(voucherAmount != "0")
+                        tvVoucherAmount.text = summary.voucherAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+                        
+                        
+                        tvWalletAmount.setVisibility((summary.walletAmount?:"0") != "0")
+                        tvWalletAmount.text = summary.walletAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+                        
+                        tvOvCreditAmount.setVisibility((summary.ovCreditAmount?:"0") != "0")
+                        tvOvCreditAmount.text = summary.ovCreditAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+                        
+                        tvCashAmount.setVisibility((summary.cashAmount?:"0") != "0")
+                        tvCashAmount.text = summary.cashAmount?.let { addText(activity, R.string.price_value, it) } ?: "₹0"
+                    } ?: run {
+                        llPaymentSummary.visibility = View.GONE
+                    }
 
                     clRepurchase.setOnClickListener {
                         onClickListener.onClick(absoluteAdapterPosition)

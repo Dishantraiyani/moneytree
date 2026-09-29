@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.moneytree.app.common.NSApplication
 import com.moneytree.app.common.NSViewModel
+import com.moneytree.app.enums.PaymentMode
 import com.moneytree.app.repository.NSProductRepository
 import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.responses.MemberDetailModel
@@ -22,7 +23,9 @@ class NSStockCompleteViewModel(application: Application) : NSViewModel(applicati
 	var isProductSendDataAvailable = MutableLiveData<Boolean>()
 	var successResponse: NSSuccessResponse? = null
 	var selectedStockType: String = ""
-
+	var selectedPaymentMode: String = PaymentMode.WALLET.value
+	var finalAmount: String = "0"
+	
 	fun checkStockList(memberId: String, isShowProgress: Boolean) {
 		if (isShowProgress) {
 			isProgressShowing.value = true
@@ -61,7 +64,7 @@ class NSStockCompleteViewModel(application: Application) : NSViewModel(applicati
 		if (isShowProgress) {
 			isProgressShowing.value = true
 		}
-		NSProductRepository.saveSocketStockTransferMyCart(memberId, stockType, remark, productList, object: NSGenericViewModelCallback {
+		NSProductRepository.saveSocketStockTransferMyCart(memberId, stockType, remark, selectedPaymentMode, productList, object: NSGenericViewModelCallback {
 			override fun <T> onSuccess(data: T) {
 				isProgressShowing.value = false
 				successResponse = data as NSSuccessResponse
