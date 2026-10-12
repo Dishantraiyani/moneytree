@@ -51,7 +51,13 @@ data class CreditPayoutData(
     var remark: String? = null,
     @SerializedName("created_at")
     @Expose
-    var createdAt: String? = null
+    var createdAt: String? = null,
+    @SerializedName("tds_amount")
+    @Expose
+    var tdsAmount: String? = null,
+    @SerializedName("net_amount")
+    @Expose
+    var netAmount: String? = null
 )
 
 data class CreditPayoutSummary(
@@ -61,6 +67,9 @@ data class CreditPayoutSummary(
     @SerializedName("total_amount")
     @Expose
     var totalAmount: String? = null,
+    @SerializedName("tds_amount")
+    @Expose
+    var tdsAmount: String? = null,
     @SerializedName("pending_amount")
     @Expose
     var pendingAmount: String? = null,
@@ -69,5 +78,8 @@ data class CreditPayoutSummary(
     var acceptedAmount: String? = null,
     @SerializedName("rejected_amount")
     @Expose
-    var rejectedAmount: String? = null
+    var rejectedAmount: String? = null,
+    @SerializedName("net_amount")
+    @Expose
+    var netAmount: String? = null
 )

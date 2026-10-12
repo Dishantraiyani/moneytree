@@ -438,6 +438,8 @@
     <string name="price_value">₹%1$s</string>
     <string name="offers">Offers</string>
     <string name="transfer_id_value">Transfer Id: %1$s</string>
+    <string name="net_payable">Net Payable: %1$s</string>
+    <string name="net_payable_title">Net Payable</string>
     <string name="transfer_type">Transfer Type: %1$s</string>
 
     <string name="payout_no">Payout No: %1$s</string>
@@ -445,6 +447,7 @@
     <string name="date_from">Date From:</string>
     <string name="date_to">To:</string>
     <string name="tds">Tds:</string>
+    <string name="tds_title">Tds</string>
     <string name="admin_data">Admin:</string>
     <string name="percentage_data">Percentage:</string>
     <string name="level">Level:</string>
@@ -468,6 +471,7 @@
     <string name="slot12">Slot 12</string>
     <string name="correct">correct</string>
     <string name="next">next</string>
+    <string name="next_title">Next</string>
     <string name="slider">slider</string>
     <string name="slots">Slots</string>
 
@@ -946,8 +950,34 @@
     <string name="credit_amount">OV Credit Amount</string>
     <string name="product_quantity">Product Qty</string>
     <string name="no_credit_payout_available">No Credit Payouts Available</string>
-    <string name="no_credit_wallet_available">No Credit Wallets Available</string>
-    <string name="ov_credit_payout">OV Credit Payout</string>
+    <string name="no_credit_withdrawal_available">No Credit Withdrawal Reports Available</string>
+    <string name="no_credit_wallet_available">No Credit Transaction Available</string>
+    <string name="ov_credit_payout">OV Credit Withdrawal Report</string>
     <string name="ov_credit">OV Credit</string>
+    <string name="ov_credit_transaction">OV Credit Transaction</string>
+    <string name="opening_balance">Opening Balance</string>
+    <string name="payout_no_title">Payout No.</string>
+    <string name="payout_name">Payout Name</string>
+    <string name="payout_amount">Payout Amount</string>
+    <string name="payout_release_date">Payout Release Date</string>
+    <string name="entry_date_title">Entry Date</string>
+    <string name="admin_charge">Admin Charge</string>
+    <string name="net_amount">Net Amount</string>
+    <string name="coin_amount">Coin Amount</string>
+    <string name="total_withdrawal">Total Withdrawal</string>
+    <string name="pending_released">Pending Released</string>
+    <string name="ov_coin">OV Coin</string>
+    <string name="pending_withdrawal">Pending Withdrawal (Net Payable)</string>
+    <string name="accepted_withdrawal">Accepted Withdrawal (Net Paid)</string>
+    <string name="rejected_withdrawal">Rejected Withdrawal (Net Amount)</string>
+    <string name="before_tds">Before TDS</string>
+    <string name="transaction">Transaction</string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="payout_summary">Payout Summary</string>
+    <string name="ov_credit_payout_summary">Ov Credit Payout Summary</string>
+    <string name="total_payout_title">Total Payout</string>
+    <string name="released">Released</string>
+    <string name="payout_summary_detail">Payout Summary Detail</string>
+    <string name="upcoming_release_date">UpComing Release Date</string>
 
 </resources>

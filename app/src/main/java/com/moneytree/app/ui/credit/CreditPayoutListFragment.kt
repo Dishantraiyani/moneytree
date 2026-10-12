@@ -152,10 +152,12 @@ class CreditPayoutListFragment : NSFragment(), NSSearchCallback {
 
             payoutSummary?.let { summary ->
                 binding.cardCreditSummary.visibility = View.VISIBLE
-                binding.tvTotalRequest.text = summary.totalCnt ?: "0"
-                binding.tvTotalAmount.text = summary.totalAmount?.let { addText(requireActivity(), R.string.price_value, it) } ?: "₹0.00"
+                binding.tvTotalWithdraw.text = summary.totalAmount?.let { addText(requireActivity(), R.string.price_value, it) } ?: "₹0.00"
+                binding.tvTds.text = summary.tdsAmount?.let { addText(requireActivity(), R.string.price_value, it) } ?: "₹0.00"
                 binding.tvPendingAmount.text = summary.pendingAmount?.let { addText(requireActivity(), R.string.price_value, it) } ?: "₹0.00"
                 binding.tvAcceptedAmount.text = summary.acceptedAmount?.let { addText(requireActivity(), R.string.price_value, it) } ?: "₹0.00"
+                binding.tvRejectedAmount.text = summary.rejectedAmount?.let { addText(requireActivity(), R.string.price_value, it) } ?: "₹0.00"
+                binding.tvNetPayable.text = summary.netAmount?.let { addText(requireActivity(), R.string.net_payable, it) } ?: "₹0.00"
             } ?: run {
                 binding.cardCreditSummary.visibility = View.GONE
             }

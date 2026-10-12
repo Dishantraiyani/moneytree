@@ -1535,6 +1535,10 @@ class NSApiManager {
 		request(unAuthorised3020Client.getCreditPayoutList(NSUserManager.getAuthToken(), pageIndex, search, paymentStatus), callback)
 	}
 	
+	fun getCreditPayoutSummaryList(pageIndex: String, search: String, status: String, callback: NSRetrofitCallback<CreditPayoutSummaryResponse>) {
+		request(unAuthorised3020Client.getCreditPayoutSummaryList(NSUserManager.getAuthToken(), pageIndex, search, status), callback)
+	}
+	
 	fun getCreditWalletList(pageIndex: String, search: String, startDate: String, endDate: String, type: String, callback: NSRetrofitCallback<CreditWalletListResponse>) {
 		request(unAuthorised3020Client.getCreditWalletList(NSUserManager.getAuthToken(), pageIndex, search, startDate, endDate, type), callback)
 	}
@@ -2358,6 +2362,15 @@ interface RTApiInterface {
 		@Field("search") search: String,
 		@Field("payment_status") paymentStatus: String
 	): Call<CreditPayoutListResponse>
+	
+	@FormUrlEncoded
+	@POST("ov-credit-payout-summary-list-api")
+	fun getCreditPayoutSummaryList(
+		@Field("token_id") token: String,
+		@Field("page_index") pageIndex: String,
+		@Field("search") search: String,
+		@Field("status") status: String
+	): Call<CreditPayoutSummaryResponse>
 	
 	@FormUrlEncoded
 	@POST("ov-credit-wallet-list-api")

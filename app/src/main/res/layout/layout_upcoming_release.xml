@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/ll_total_request"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_58sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:background="@drawable/bg_upcoming_release_date"
+        android:orientation="vertical"
+        android:gravity="start"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_5sdp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_total_request_title"
+                style="@style/LoginSubFontsWrap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:text="@string/total_payout_title"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_8sdp"
+                android:gravity="start" />
+
+            <TextView
+                android:id="@+id/tvNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/next_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_7sdp"
+                android:fontFamily="@font/inter_medium"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:paddingHorizontal="@dimen/_6sdp"
+                android:paddingVertical="@dimen/_1sdp"
+                android:background="@drawable/orange_round" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_total_payout"
+            style="@style/LoginSubFontsWrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/inter_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11sdp"
+            android:textStyle="bold"
+            android:gravity="center"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/tv_payout_detail"
+            style="@style/LoginSubFontsWrap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/before_tds"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/_7sdp"
+            android:gravity="start" />
+    </LinearLayout>
+
+</RelativeLayout>

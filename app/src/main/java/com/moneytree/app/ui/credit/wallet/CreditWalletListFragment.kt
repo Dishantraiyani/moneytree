@@ -50,7 +50,7 @@ class CreditWalletListFragment : NSFragment(), NSSearchCallback {
      * View created
      */
     private fun viewCreated() {
-        HeaderUtils(binding.layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.ov_credit), isSearch = true , searchCallback = this)
+        HeaderUtils(binding.layoutHeader, requireActivity(), clBackView = true, headerTitle = resources.getString( R.string.ov_credit_transaction), isSearch = true , searchCallback = this)
         setStatusSpinner()
         setCreditPayoutAdapter()
         observeViewModel()

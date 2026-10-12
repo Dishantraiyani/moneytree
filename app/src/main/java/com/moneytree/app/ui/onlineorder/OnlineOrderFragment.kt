@@ -1,12 +1,6 @@
 package com.moneytree.app.ui.onlineorder
 
-import android.app.Activity
-import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,23 +20,24 @@ import com.moneytree.app.common.NSConstants.Companion.isGridMode
 import com.moneytree.app.common.NSFragment
 import com.moneytree.app.common.NSRequestCodes
 import com.moneytree.app.common.SingleClickListener
-import com.moneytree.app.common.callbacks.NSProductFilterCallback
 import com.moneytree.app.common.callbacks.NSCartTotalAmountCallback
 import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.callbacks.NSProductDetailCallback
+import com.moneytree.app.common.callbacks.NSProductFilterCallback
 import com.moneytree.app.common.callbacks.NSSearchCallback
 import com.moneytree.app.common.callbacks.NSSearchResponseCallback
-import com.moneytree.app.common.utils.*
+import com.moneytree.app.common.utils.addText
+import com.moneytree.app.common.utils.addTextChangeListener
+import com.moneytree.app.common.utils.isValidList
+import com.moneytree.app.common.utils.setVisibility
+import com.moneytree.app.common.utils.switchActivity
+import com.moneytree.app.common.utils.switchResultActivity
+import com.moneytree.app.common.utils.visible
 import com.moneytree.app.databinding.NsFragmentOrdersBinding
-import com.moneytree.app.repository.network.responses.NSBrandData
-import com.moneytree.app.repository.network.responses.NSCategoryData
-import com.moneytree.app.repository.network.responses.NSJointCategoryDiseasesResponse
 import com.moneytree.app.repository.network.responses.NSProductListResponse
 import com.moneytree.app.repository.network.responses.ProductDataDTO
 import com.moneytree.app.repository.network.responses.SearchData
-import com.moneytree.app.ui.mycart.cart.NSCartActivity
 import com.moneytree.app.ui.mycart.orders.history.NSOrderHistoryActivity
-import com.moneytree.app.ui.mycart.productDetail.NSProductsDetailActivity
 import com.moneytree.app.ui.onlineorder.cart.OnlineCartActivity
 import com.moneytree.app.ui.onlineorder.productDetail.OnlineOrderProductsDetailActivity
 import kotlinx.coroutines.CoroutineScope
@@ -51,7 +46,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.Locale
 
 class OnlineOrderFragment : NSFragment(), NSSearchCallback, NSProductFilterCallback {
     private val productModel: OnlineOrderViewModel by lazy {

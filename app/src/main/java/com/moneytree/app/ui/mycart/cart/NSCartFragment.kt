@@ -137,6 +137,7 @@ class NSCartFragment : NSFragment() {
 
 					btnRepurchase.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
+							clBottomSheet.gone()
 							switchResultActivity(dataResult, PurchaseCompleteActivity::class.java)
 							//finish()
 						}
@@ -144,6 +145,7 @@ class NSCartFragment : NSFragment() {
 
 					btnStock.setOnClickListener(object : SingleClickListener() {
 						override fun performClick(v: View?) {
+							clBottomSheet.gone()
 							switchResultActivity(dataResult, StockCompleteActivity::class.java)
 							//finish()
 						}

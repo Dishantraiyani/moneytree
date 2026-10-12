@@ -66,6 +66,8 @@ class NSLoginFragment : NSFragment() {
 	 * View created
 	 */
 	private fun viewCreated() {
+		NSApplication.getInstance().clearOrderList()
+		NSApplication.getInstance().clearProductList()
 		observeViewModel()
 		with(binding) {
 			with(loginViewModel) {

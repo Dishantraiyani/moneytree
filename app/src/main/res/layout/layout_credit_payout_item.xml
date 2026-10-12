@@ -42,10 +42,10 @@
             android:background="@drawable/bg_soft_circle"
             android:fontFamily="@font/inter_medium"
             android:gravity="center"
-            android:paddingHorizontal="@dimen/_6sdp"
-            android:paddingVertical="@dimen/_2sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_3sdp"
             android:textColor="@color/orange"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_9sdp"
             app:layout_constraintBottom_toBottomOf="@id/tv_order_no_repurchase"
             app:layout_constraintEnd_toStartOf="@id/iv_next"
             app:layout_constraintTop_toTopOf="@id/tv_order_no_repurchase"
@@ -60,6 +60,7 @@
             android:alpha="0.8"
             android:contentDescription="@string/next"
             android:src="@drawable/arrow_right"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/tv_order_no_repurchase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_order_no_repurchase" />
@@ -237,6 +238,63 @@
 
                 <TextView
                     android:id="@+id/tv_ifsc_code"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="SBIN0001754" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/tds_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_tds_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_medium"
+                    android:gravity="end"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_9sdp"
+                    tools:text="30980430524" />
+            </LinearLayout>
+
+            <!-- IFSC Code -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/net_payable_title"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_9sdp" />
+
+                <TextView
+                    android:id="@+id/tv_net_payable"
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

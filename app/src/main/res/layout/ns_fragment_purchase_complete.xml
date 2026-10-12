@@ -259,7 +259,8 @@
 				android:textColor="@color/black"
 				android:layout_marginStart="@dimen/_5sdp"
 				android:layout_marginTop="@dimen/_15sdp"
-				android:textSize="@dimen/_10sdp"/>
+				android:textSize="@dimen/_10sdp"
+				android:visibility="gone"/>
 
 			<androidx.cardview.widget.CardView
 				android:id="@+id/card_recharge_type"
@@ -267,6 +268,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/_6sdp"
 				app:cardCornerRadius="@dimen/_5sdp"
+				android:visibility="gone"
 				android:layout_marginHorizontal="@dimen/_5sdp">
 
 				<androidx.constraintlayout.widget.ConstraintLayout

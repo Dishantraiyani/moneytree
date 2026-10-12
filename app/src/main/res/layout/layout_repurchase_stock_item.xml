@@ -441,6 +441,7 @@
 
                 <!-- Voucher Amount -->
                 <LinearLayout
+                    android:id="@+id/ll_voucher_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -471,6 +472,7 @@
 
                 <!-- Wallet Amount -->
                 <LinearLayout
+                    android:id="@+id/ll_wallet_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -501,6 +503,7 @@
 
                 <!-- OV Credit Amount -->
                 <LinearLayout
+                    android:id="@+id/ll_ov_credit_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -531,6 +534,7 @@
 
                 <!-- Cash Amount -->
                 <LinearLayout
+                    android:id="@+id/ll_cash_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"

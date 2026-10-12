@@ -5,6 +5,7 @@ import com.moneytree.app.repository.network.callbacks.NSGenericViewModelCallback
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
 import com.moneytree.app.repository.network.error.NSApiErrorHandler
 import com.moneytree.app.repository.network.responses.CreditPayoutListResponse
+import com.moneytree.app.repository.network.responses.CreditPayoutSummaryResponse
 import com.moneytree.app.repository.network.responses.NSRePurchaseInfoResponse
 import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
 import com.moneytree.app.repository.network.responses.OnlineOrderInfoResponse
@@ -35,6 +36,24 @@ object CreditPayoutRepository {
                 } else {
 					errorMessageList.clear()
                     errorMessageList.add(data.message!!)
+                    viewModelCallback.onError(errorMessageList)
+                }
+            }
+        })
+    }
+    
+    fun getCreditPayoutSummaryList(pageIndex: String, search: String, paymentStatus: String,
+                            viewModelCallback: NSGenericViewModelCallback
+    ) {
+        apiManager.getCreditPayoutSummaryList(pageIndex, search, paymentStatus, object :
+            NSRetrofitCallback<CreditPayoutSummaryResponse>(viewModelCallback, NSApiErrorHandler.ERROR_REPURCHASE_LIST_DATA) {
+            override fun <T> onResponse(response: Response<T>) {
+                val data = response.body() as CreditPayoutSummaryResponse
+                if (data.status == true) {
+                    viewModelCallback.onSuccess(response.body())
+                } else {
+                    errorMessageList.clear()
+                    errorMessageList.add(data.message?:"")
                     viewModelCallback.onError(errorMessageList)
                 }
             }

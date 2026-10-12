@@ -2,11 +2,11 @@ package com.moneytree.app.ui.credit
 
 import android.app.Activity
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.moneytree.app.R
 import com.moneytree.app.common.NSConstants
@@ -15,7 +15,6 @@ import com.moneytree.app.common.callbacks.NSPageChangeCallback
 import com.moneytree.app.common.utils.addText
 import com.moneytree.app.databinding.LayoutCreditPayoutItemBinding
 import com.moneytree.app.repository.network.responses.CreditPayoutData
-import androidx.core.graphics.toColorInt
 
 class CreditPayoutListRecycleAdapter(
 	activityNS: Activity,
@@ -98,11 +97,13 @@ class CreditPayoutListRecycleAdapter(
                         }
                     }
 
-                    tvBankHolderName.text = bankHolderName ?: "-"
-                    tvBankName.text = bankName ?: "-"
-                    tvAccountNumber.text = acNo ?: "-"
-                    tvIfscCode.text = ifscCode ?: "-"
-                    tvRemark.text = remark ?: "-"
+                    tvBankHolderName.text = bankHolderName?.ifEmpty { "-" } ?: "-"
+                    tvBankName.text = bankName?.ifEmpty { "-" } ?: "-"
+                    tvAccountNumber.text = acNo?.ifEmpty { "-" } ?: "-"
+                    tvIfscCode.text = ifscCode?.ifEmpty { "-" } ?: "-"
+                    tvRemark.text = remark?.ifEmpty { "-" } ?: "-"
+                    tvTdsAmount.text = tdsAmount?.ifEmpty { "-" } ?: "-"
+                    tvNetPayable.text = netAmount?.ifEmpty { "-" } ?: "-"
 
                     clRepurchase.setOnClickListener {
                         onClickListener.onClick(absoluteAdapterPosition)

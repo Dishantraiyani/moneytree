@@ -101,12 +101,15 @@
             <LinearLayout
                 android:id="@+id/ll_total_request"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_52sdp"
                 android:layout_weight="1"
                 android:layout_marginEnd="@dimen/_4sdp"
                 android:background="@drawable/bg_credit_payout"
                 android:orientation="vertical"
-                android:gravity="center"
+                android:gravity="start"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_3sdp"
+                android:paddingVertical="@dimen/_5sdp"
                 app:layout_constraintEnd_toStartOf="@id/ll_total_amount"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -117,13 +120,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/total_request"
+                    android:text="@string/total_withdrawal"
                     android:textColor="@color/gray_text"
                     android:textSize="@dimen/_8sdp"
                     android:gravity="center" />
 
                 <TextView
-                    android:id="@+id/tv_total_request"
+                    android:id="@+id/tv_total_withdraw"
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,36 +137,50 @@
                     android:textStyle="bold"
                     android:gravity="center"
                     tools:text="3" />
+
+                <TextView
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/before_tds"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_7sdp"
+                    android:gravity="center" />
             </LinearLayout>
 
             <!-- Total Amount -->
             <LinearLayout
                 android:id="@+id/ll_total_amount"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_52sdp"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="@dimen/_2sdp"
                 android:background="@drawable/bg_credit_payout"
                 android:backgroundTint="#FDFAF6"
                 android:orientation="vertical"
-                android:gravity="center"
-                app:layout_constraintEnd_toStartOf="@+id/ll_pending_amount"
+                android:gravity="start"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_3sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ll_total_request"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/tv_total_amount_title"
+                    android:id="@+id/tv_total_tds"
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/total_amount_title"
+                    android:text="@string/tds_title"
+                    android:textAllCaps="true"
                     android:textColor="@color/gray_text"
                     android:textSize="@dimen/_8sdp"
                     android:gravity="center" />
 
                 <TextView
-                    android:id="@+id/tv_total_amount"
+                    android:id="@+id/tv_tds"
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -174,46 +191,58 @@
                     android:textStyle="bold"
                     android:gravity="center"
                     tools:text="₹1800.00" />
+
+                <TextView
+                    android:id="@+id/tv_net_payable"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/before_tds"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_7sdp"
+                    android:gravity="center" />
             </LinearLayout>
 
             <!-- Pending Amount -->
             <LinearLayout
                 android:id="@+id/ll_pending_amount"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="@dimen/_2sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:background="@drawable/bg_credit_payout"
                 android:backgroundTint="#FEF7F0"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ll_total_amount">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_total_amount"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
                     android:id="@+id/tv_pending_amount_title"
                     style="@style/LoginSubFontsWrap"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/pending_amount"
+                    android:text="@string/pending_withdrawal"
                     android:textColor="@color/gray_text"
                     android:textSize="@dimen/_8sdp"
-                    android:gravity="center" />
+                    android:layout_weight="1"
+                    android:gravity="start" />
 
                 <TextView
                     android:id="@+id/tv_pending_amount"
                     style="@style/LoginSubFontsWrap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
                     android:fontFamily="@font/inter_semi_bold"
                     android:textColor="#FFA500"
                     android:textSize="@dimen/_11sdp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    tools:text="₹600.00" />
+                    tools:text="₹1200.00"
+                    android:layout_gravity="center_vertical"/>
             </LinearLayout>
 
             <!-- Accepted Amount -->
@@ -229,7 +258,7 @@
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_total_amount"
+                app:layout_constraintTop_toBottomOf="@id/ll_pending_amount"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
@@ -238,7 +267,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="@string/accepted_amount"
+                    android:text="@string/accepted_withdrawal"
                     android:textColor="@color/gray_text"
                     android:textSize="@dimen/_8sdp"
                     android:layout_weight="1"
@@ -251,6 +280,47 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semi_bold"
                     android:textColor="#0FCE6E"
+                    android:textSize="@dimen/_11sdp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    tools:text="₹1200.00"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_rejected_amount"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_credit_payout"
+                android:backgroundTint="#FFF5F5"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_accepted_amount"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_rejected_amount_title"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/rejected_withdrawal"
+                    android:textColor="@color/gray_text"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:gravity="start" />
+
+                <TextView
+                    android:id="@+id/tv_rejected_amount"
+                    style="@style/LoginSubFontsWrap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semi_bold"
+                    android:textColor="@color/red"
                     android:textSize="@dimen/_11sdp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -290,7 +360,7 @@
             android:id="@+id/tv_not_found_sub"
             style="@style/LayoutWidthHeightZero"
             android:clipToPadding="false"
-            android:text="@string/no_credit_payout_available"
+            android:text="@string/no_credit_withdrawal_available"
             android:textColor="@color/gray_text"
             android:gravity="center|top"
             android:textSize="@dimen/_12sdp"

@@ -150,3 +150,23 @@ fun calculatePaymentAmount(
 		cashAmount = cashAmount
 	)
 }
+
+enum class SummaryType(val value: String) {
+	All("All"),
+	Pending("Pending"),
+	Released("Released");
+	
+	companion object {
+		fun fromValue(value: String): SummaryType? {
+			return entries.find { it.value == value }
+		}
+	}
+}
+
+fun getSummaryTypeList(): MutableList<String> {
+	val list: MutableList<String> = arrayListOf()
+	list.add(SummaryType.All.value)
+	list.add(SummaryType.Pending.value)
+	list.add(SummaryType.Released.value)
+	return list
+}

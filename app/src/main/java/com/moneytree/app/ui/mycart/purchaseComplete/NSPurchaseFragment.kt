@@ -175,7 +175,10 @@ class NSPurchaseFragment : NSFragment() {
 	}
 
 	private fun setWalletTypes() {
-		with(productModel) {
+		productModel.selectedWalletType = WalletTypeMode.MEMBER.value
+		setUsedFrom()
+		
+		/*with(productModel) {
 			with(purchaseCompleteBinding) {
 				selectedWalletType = ""
 				val walletListType: MutableList<String> = arrayListOf()
@@ -214,7 +217,7 @@ class NSPurchaseFragment : NSFragment() {
 						}
 					}
 			}
-		}
+		}*/
 	}
 	
 	private fun setPaymentMods() {
@@ -236,8 +239,8 @@ class NSPurchaseFragment : NSFragment() {
 								""
 							}
 							
-							//setPaymentMode()
-							setWalletTypes()
+							setPaymentMode()
+							//setWalletTypes()
 						}
 						
 						override fun onNothingSelected(p0: AdapterView<*>?) {

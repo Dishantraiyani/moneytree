@@ -58,6 +58,8 @@ import com.moneytree.app.ui.activate.NSActivateActivity
 import com.moneytree.app.ui.assessment.NSAssessmentActivity
 import com.moneytree.app.ui.coins.CoinWalletActivity
 import com.moneytree.app.ui.common.ProductCategoryViewModel
+import com.moneytree.app.ui.credit.CreditPayoutActivity
+import com.moneytree.app.ui.credit.summary.CreditPayoutSummaryActivity
 import com.moneytree.app.ui.credit.wallet.CreditWalletActivity
 import com.moneytree.app.ui.doctor.NSDoctorActivity
 import com.moneytree.app.ui.downloads.NSDownloadPlansActivity
@@ -171,9 +173,17 @@ class NSHomeFragment : NSFragment() {
 			}
 
 			drawer.closeDrawer(GravityCompat.START)
-
-			clOvCreditDetail.setOnClickListener {
+			
+			llTransaction.setOnClickListener {
 				switchActivity(CreditWalletActivity::class.java)
+			}
+			
+			llWithdrawCredit.setOnClickListener {
+				switchActivity(CreditPayoutActivity::class.java)
+			}
+			
+			llPayoutSummaryCredit.setOnClickListener {
+				switchActivity(CreditPayoutSummaryActivity::class.java)
 			}
 			
 			clVoucherBtn.setOnClickListener {

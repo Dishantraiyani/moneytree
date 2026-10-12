@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +42,15 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
     private lateinit var rlLayout: RelativeLayout
 	var isConnected = true
 
+    private val disconnectHandler = Handler(Looper.getMainLooper())
+    private val disconnectRunnable = Runnable {
+        if (!isConnected) {
+            switchActivity(
+                NoNetworkActivity::class.java
+            )
+        }
+    }
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		checkConnection(this)
@@ -58,6 +69,11 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
     override fun onStop() {
         super.onStop()
         EventBus.getDefault().unregister(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disconnectHandler.removeCallbacks(disconnectRunnable)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -175,15 +191,13 @@ open class NSActivity : AppCompatActivity(), ConnectivityListener, NSReplaceFrag
 	override fun onConnectionState(state: ConnectionState) {
 		when (state) {
 			ConnectionState.DISCONNECTED -> {
-				if (isConnected) {
-					isConnected = false
-					switchActivity(
-						NoNetworkActivity::class.java
-					)
-				}
+				isConnected = false
+				disconnectHandler.removeCallbacks(disconnectRunnable)
+				disconnectHandler.postDelayed(disconnectRunnable, 30000)
 			}
 			ConnectionState.CONNECTED -> {
 				isConnected = true
+				disconnectHandler.removeCallbacks(disconnectRunnable)
 			}
 			else -> {}
 		}
