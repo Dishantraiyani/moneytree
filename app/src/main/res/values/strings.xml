@@ -97,6 +97,8 @@
     <string name="no_royalty_available">No Royalty Offer Available</string>
     <string name="no_repurchase_available">No RePurchase Available</string>
     <string name="no_voucher_available">No Voucher Available</string>
+    <string name="no_status_list_available">No Status List Available</string>
+    <string name="no_voucher_list_available">No Voucher List Available</string>
     <string name="no_downline_re_offer_available">No Downline ReOffer Available</string>
     <string name="no_register_available">No Register Available</string>
     <string name="no_doctor_available">No Doctor\'s Available</string>
@@ -676,6 +678,7 @@
     <string name="add_a_note">Add a note</string>
     <string name="scan_qr_code">Scan Any QR</string>
     <string name="status">Status</string>
+    <string name="status_title_new">Status:</string>
     <string name="repeat">Repeat</string>
     <string name="select_provider">Select Provider</string>
     <string name="view_all">View All</string>
@@ -914,7 +917,9 @@
     <string name="you_are_activated_via_8888_pro">You are activated via 8888 Pro.</string>
     <string name="not_activated">Not Activated</string>
     <string name="activated">Activated</string>
+    <string name="activated_expired">Activated/Expired</string>
     <string name="downline_members_active_status">Downline members - Activation status</string>
+    <string name="my_down_lines">My Downline</string>
     <string name="new_activation">New Activation</string>
     <string name="select_member">Select Member</string>
     <string name="dash">-</string>
@@ -961,6 +966,17 @@
     <string name="payout_amount">Payout Amount</string>
     <string name="payout_release_date">Payout Release Date</string>
     <string name="entry_date_title">Entry Date</string>
+    <string name="sponsor_id_title">Sponsor ID</string>
+    <string name="expiry_date_title">Expiry Date</string>
+    <string name="voucher_id_title">Voucher ID</string>
+    <string name="activated_by_title">Activated By</string>
+    <string name="activated_by_name_title">Activated By Name</string>
+    <string name="active_title">Active</string>
+    <string name="claim_status_title">Claim Status</string>
+    <string name="accepted">Accepted</string>
+    <string name="target_repurchase_title">Target Repurchase</string>
+    <string name="repurchase_done_title">Repurchase Done</string>
+    <string name="claim_remark_title">Claim Remark</string>
     <string name="admin_charge">Admin Charge</string>
     <string name="net_amount">Net Amount</string>
     <string name="coin_amount">Coin Amount</string>
@@ -979,5 +995,8 @@
     <string name="released">Released</string>
     <string name="payout_summary_detail">Payout Summary Detail</string>
     <string name="upcoming_release_date">UpComing Release Date</string>
+    <string name="repurchase_30000_activation">30000 Activation</string>
+    <string name="my_status">My Status</string>
+    <string name="check_voucher">Check Voucher</string>
 
 </resources>

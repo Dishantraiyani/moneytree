@@ -12,12 +12,14 @@ import com.moneytree.app.repository.network.responses.NSPackageVoucherQntRespons
 import com.moneytree.app.repository.network.responses.NSSuccessResponse
 import com.moneytree.app.repository.network.responses.NSVoucherListResponse
 import com.moneytree.app.repository.network.responses.PendingVoucherListResponse
+import com.moneytree.app.repository.network.responses.Repurchase30000Response
 import com.moneytree.app.repository.network.responses.TopUp8888MemberListResponse
 import com.moneytree.app.repository.network.responses.TopUp8888Response
 import com.moneytree.app.repository.network.responses.TopUpDashboardResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherAvailableListResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherListResponse
 import com.moneytree.app.repository.network.responses.TopUpVoucherQntResponse
+import com.moneytree.app.repository.network.responses.VoucherList30000Response
 import retrofit2.Response
 
 /**
@@ -344,6 +346,40 @@ object NSVoucherRepository {
 			override fun <T> onResponse(response: Response<T>) {
 				val data = response.body() as NSSuccessResponse
 				if (data.status) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+
+
+	fun getTopUpVoucher30000Dashboard(viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.repurchase30000Dashboard(object :
+			NSRetrofitCallback<Repurchase30000Response>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as Repurchase30000Response
+				if (data.status == true) {
+					viewModelCallback.onSuccess(response.body())
+				} else {
+					errorMessageList.clear()
+					errorMessageList.add(data.message!!)
+					viewModelCallback.onError(errorMessageList)
+				}
+			}
+		})
+	}
+
+	fun getTopUpVoucher30000VoucherList(voucherId: String, viewModelCallback: NSGenericViewModelCallback) {
+		apiManager.repurchase30000VoucherList(voucherId, object :
+			NSRetrofitCallback<VoucherList30000Response>(viewModelCallback, NSApiErrorHandler.ERROR_VOUCHER_TOPUP_VOUCHER_TRANSFER) {
+			override fun <T> onResponse(response: Response<T>) {
+				val data = response.body() as VoucherList30000Response
+				if (data.status == true) {
 					viewModelCallback.onSuccess(response.body())
 				} else {
 					errorMessageList.clear()

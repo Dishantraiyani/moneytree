@@ -80,6 +80,7 @@ import com.moneytree.app.ui.recharge.NSRechargeActivity
 import com.moneytree.app.ui.recharge.history.NSRechargeHistoryActivity
 import com.moneytree.app.ui.recharge.rechargePayment.RozerActivity
 import com.moneytree.app.ui.reports.NSReportsActivity
+import com.moneytree.app.ui.repurchaseAct.Repurchase3000ActivationActivity
 import com.moneytree.app.ui.slide.GridRecycleAdapter
 import com.moneytree.app.ui.vouchers.NSVouchersActivity
 import com.moneytree.app.ui.vouchers.topup.list.TopUpVoucherListActivity
@@ -503,6 +504,11 @@ class NSHomeFragment : NSFragment() {
 		                    drawer.closeDrawer(GravityCompat.START)
 		                    switchActivity(TopUpVoucher8888Activity::class.java)
 	                    }
+
+						ll30000Activation.setOnClickListener {
+							drawer.closeDrawer(GravityCompat.START)
+							switchActivity(Repurchase3000ActivationActivity::class.java)
+						}
 	                    
 	                    llTopupVouchersActivation.setOnClickListener {
 		                    drawer.closeDrawer(GravityCompat.START)

@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.wallets.transfer.NSTransferFragment">
+
+    <include android:id="@+id/layout_header"
+        layout="@layout/layout_header"/>
+
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/srl_refresh"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/layout_header"
+		app:layout_constraintBottom_toBottomOf="parent">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_activation_status"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/bg_status_card"
+				android:padding="@dimen/_12sdp"
+				android:visibility="gone"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent">
+
+				<TextView
+					android:id="@+id/tv_activation_title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_regular"
+					android:textSize="@dimen/_9sdp"
+					android:gravity="start"
+					android:text="@string/my_activation_status"
+					android:textColor="@color/gray_text"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="@+id/tv_activation_status"
+					app:layout_constraintBottom_toBottomOf="@+id/tv_activation_status"/>
+
+				<TextView
+					android:id="@+id/tv_activation_status"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_8sdp"
+					android:gravity="center"
+					android:text="@string/not_activated"
+					android:textColor="@color/status_not_activated_text"
+					android:background="@drawable/bg_status_not_activated"
+					android:paddingHorizontal="@dimen/_8sdp"
+					android:paddingVertical="@dimen/_3sdp"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_details_container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/bg_status_inner_card"
+					android:padding="@dimen/_10sdp"
+					android:layout_marginTop="@dimen/_10sdp"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_activation_status">
+
+					<TextView
+						android:id="@+id/tv_voucher_code_title"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_9sdp"
+						android:text="@string/voucher_code_"
+						android:textColor="@color/gray_text"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
+
+					<TextView
+						android:id="@+id/tv_voucher_code"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_semi_bold"
+						android:textSize="@dimen/_10sdp"
+						android:text="@string/dash"
+						android:textColor="@color/dark_black"
+						android:layout_marginTop="@dimen/_2sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_voucher_code_title"/>
+
+					<View
+						android:id="@+id/v_divider1"
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/card_divider"
+						android:layout_marginVertical="@dimen/_8sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_voucher_code"/>
+
+					<TextView
+						android:id="@+id/tv_sponsor_id_title"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_9sdp"
+						android:text="@string/sponsor_id_title"
+						android:textColor="@color/gray_text"
+						android:layout_marginTop="@dimen/_8sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/v_divider1"/>
+
+					<TextView
+						android:id="@+id/tv_sponsor_id"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_semi_bold"
+						android:textSize="@dimen/_10sdp"
+						android:text="@string/dash"
+						android:textColor="@color/dark_black"
+						android:layout_marginTop="@dimen/_2sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_sponsor_id_title"/>
+
+					<View
+						android:id="@+id/v_divider2"
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/card_divider"
+						android:layout_marginVertical="@dimen/_8sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_sponsor_id"/>
+
+					<TextView
+						android:id="@+id/tv_entry_date_title"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_9sdp"
+						android:text="@string/entry_date_title"
+						android:textColor="@color/gray_text"
+						android:layout_marginTop="@dimen/_8sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toStartOf="@id/v_vertical_divider"
+						app:layout_constraintTop_toBottomOf="@id/v_divider2"/>
+
+					<TextView
+						android:id="@+id/tv_entry_date"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_semi_bold"
+						android:textSize="@dimen/_10sdp"
+						android:text="@string/dash"
+						android:textColor="@color/dark_black"
+						android:layout_marginTop="@dimen/_2sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toStartOf="@id/v_vertical_divider"
+						app:layout_constraintTop_toBottomOf="@id/tv_entry_date_title"/>
+
+					<View
+						android:id="@+id/v_vertical_divider"
+						android:layout_width="1dp"
+						android:layout_height="0dp"
+						android:background="@color/card_divider"
+						android:layout_marginHorizontal="@dimen/_8sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="@id/tv_entry_date_title"
+						app:layout_constraintBottom_toBottomOf="@id/tv_entry_date"/>
+
+					<TextView
+						android:id="@+id/tv_expiry_date_title"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_9sdp"
+						android:text="@string/expiry_date_title"
+						android:textColor="@color/gray_text"
+						android:layout_marginTop="@dimen/_8sdp"
+						android:layout_marginStart="@dimen/_8sdp"
+						app:layout_constraintStart_toEndOf="@id/v_vertical_divider"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/v_divider2"/>
+
+					<TextView
+						android:id="@+id/tv_expiry_date"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_semi_bold"
+						android:textSize="@dimen/_10sdp"
+						android:text="@string/dash"
+						android:textColor="@color/dark_black"
+						android:layout_marginTop="@dimen/_2sdp"
+						android:layout_marginStart="@dimen/_8sdp"
+						app:layout_constraintStart_toEndOf="@id/v_vertical_divider"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_expiry_date_title"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/cl_downline_summary"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/bg_status_card"
+				android:padding="@dimen/_10sdp"
+				android:visibility="gone"
+				android:layout_marginTop="@dimen/_10sdp"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/cl_activation_status">
+
+				<TextView
+					android:id="@+id/tv_downline_title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/inter_semi_bold"
+					android:textSize="@dimen/_11sdp"
+					android:gravity="start"
+					android:text="@string/downline_summary"
+					android:textColor="@color/dark_black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toTopOf="parent"/>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_total_downline_box"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:background="@drawable/bg_downline_total"
+					android:paddingVertical="@dimen/_8sdp"
+					android:paddingHorizontal="@dimen/_4sdp"
+					android:layout_marginTop="@dimen/_8sdp"
+					android:layout_marginEnd="@dimen/_4sdp"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintEnd_toStartOf="@id/cl_activated_box"
+					app:layout_constraintTop_toBottomOf="@id/tv_downline_title">
+
+					<TextView
+						android:id="@+id/tv_total_downline_label"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_8sdp"
+						android:gravity="center"
+						android:text="@string/total_downline"
+						android:textColor="@color/gray_text"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
+
+					<TextView
+						android:id="@+id/tv_total_downline_value"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_bold"
+						android:textSize="@dimen/_13sdp"
+						android:gravity="center"
+						tools:text="21"
+						android:textColor="@color/downline_total_text"
+						android:layout_marginTop="@dimen/_3sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_total_downline_label"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_activated_box"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:background="@drawable/bg_downline_activated"
+					android:paddingVertical="@dimen/_8sdp"
+					android:paddingHorizontal="@dimen/_4sdp"
+					android:layout_marginTop="@dimen/_8sdp"
+					android:layout_marginHorizontal="@dimen/_2sdp"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toEndOf="@id/cl_total_downline_box"
+					app:layout_constraintEnd_toStartOf="@id/cl_not_activated_box"
+					app:layout_constraintTop_toBottomOf="@id/tv_downline_title">
+
+					<TextView
+						android:id="@+id/tv_activated_label"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_8sdp"
+						android:gravity="center"
+						android:text="@string/activated"
+						android:textColor="@color/gray_text"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
+
+					<TextView
+						android:id="@+id/tv_downline_activated"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_bold"
+						android:textSize="@dimen/_13sdp"
+						android:gravity="center"
+						tools:text="0"
+						android:textColor="@color/downline_activated_text"
+						android:layout_marginTop="@dimen/_3sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_activated_label"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/cl_not_activated_box"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:background="@drawable/bg_downline_not_activated"
+					android:paddingVertical="@dimen/_8sdp"
+					android:paddingHorizontal="@dimen/_4sdp"
+					android:layout_marginTop="@dimen/_8sdp"
+					android:layout_marginStart="@dimen/_4sdp"
+					app:layout_constraintHorizontal_weight="1"
+					app:layout_constraintStart_toEndOf="@id/cl_activated_box"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@id/tv_downline_title">
+
+					<TextView
+						android:id="@+id/tv_not_activated_label"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_regular"
+						android:textSize="@dimen/_8sdp"
+						android:gravity="center"
+						android:text="@string/not_activated"
+						android:textColor="@color/gray_text"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"/>
+
+					<TextView
+						android:id="@+id/tv_downline_not_activated"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/inter_bold"
+						android:textSize="@dimen/_13sdp"
+						android:gravity="center"
+						tools:text="21"
+						android:textColor="@color/downline_not_activated_text"
+						android:layout_marginTop="@dimen/_3sdp"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/tv_not_activated_label"/>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+			<androidx.appcompat.widget.AppCompatButton
+				android:id="@+id/btn_submit"
+				android:layout_width="match_parent"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:background="@drawable/login_button_border"
+				android:text="@string/downline_members"
+				android:textColor="@color/white"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:visibility="gone"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_20sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/cl_downline_summary" />
+
+			<androidx.appcompat.widget.AppCompatButton
+				android:id="@+id/btn_new_create"
+				android:layout_width="match_parent"
+				style="@style/LayoutWidthHeightZeroWrap"
+				android:background="@drawable/orange_border"
+				android:text="@string/my_status"
+				android:textColor="@color/orange"
+				android:textAllCaps="true"
+				android:textSize="@dimen/_12sdp"
+				android:visibility="gone"
+				android:fontFamily="@font/inter_regular"
+				android:layout_marginHorizontal="@dimen/_10sdp"
+				android:layout_marginTop="@dimen/_12sdp"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/btn_submit" />
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

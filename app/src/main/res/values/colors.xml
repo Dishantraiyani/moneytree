@@ -70,4 +70,12 @@
     <color name="transaction_type_success">#110FCE6E</color>
     <color name="transaction_type_rejected">#11F51D46</color>
     <color name="transaction_type_other">#11FFA500</color>
+
+    <color name="status_not_activated_text">#C0392B</color>
+    <color name="status_activated_text">#166534</color>
+    <color name="card_divider">#EAE5DC</color>
+
+    <color name="downline_total_text">#007A33</color>
+    <color name="downline_activated_text">#006699</color>
+    <color name="downline_not_activated_text">#A91D1D</color>
 </resources>

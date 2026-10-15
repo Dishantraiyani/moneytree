@@ -7,8 +7,85 @@ import com.moneytree.app.common.NSUserManager
 import com.moneytree.app.common.utils.NSUtilities
 import com.moneytree.app.config.ApiConfig
 import com.moneytree.app.repository.network.callbacks.NSRetrofitCallback
-import com.moneytree.app.repository.network.requests.*
-import com.moneytree.app.repository.network.responses.*
+import com.moneytree.app.repository.network.requests.NSChangePasswordRequest
+import com.moneytree.app.repository.network.requests.NSDoctorSendRequest
+import com.moneytree.app.repository.network.requests.NSKycSendRequest
+import com.moneytree.app.repository.network.requests.NSLoginRequest
+import com.moneytree.app.repository.network.requests.NSRechargeSaveRequest
+import com.moneytree.app.repository.network.requests.VoucherActiveSaveModel
+import com.moneytree.app.repository.network.requests.VoucherTransferModel
+import com.moneytree.app.repository.network.responses.AdditionalFieldsResponse
+import com.moneytree.app.repository.network.responses.CreditPayoutListResponse
+import com.moneytree.app.repository.network.responses.CreditPayoutSummaryResponse
+import com.moneytree.app.repository.network.responses.CreditWalletListResponse
+import com.moneytree.app.repository.network.responses.DistrictResponse
+import com.moneytree.app.repository.network.responses.DoctorHistoryResponse
+import com.moneytree.app.repository.network.responses.DoctorResponse
+import com.moneytree.app.repository.network.responses.DownloadListResponse
+import com.moneytree.app.repository.network.responses.DspAndSponsorModel
+import com.moneytree.app.repository.network.responses.KycResponse
+import com.moneytree.app.repository.network.responses.KycVerificationCheckResponse
+import com.moneytree.app.repository.network.responses.MeetingsListResponse
+import com.moneytree.app.repository.network.responses.NSActivationListResponse
+import com.moneytree.app.repository.network.responses.NSActivationPackageResponse
+import com.moneytree.app.repository.network.responses.NSAddressCreateResponse
+import com.moneytree.app.repository.network.responses.NSAddressListResponse
+import com.moneytree.app.repository.network.responses.NSBrandResponse
+import com.moneytree.app.repository.network.responses.NSCategoryListResponse
+import com.moneytree.app.repository.network.responses.NSChangePasswordResponse
+import com.moneytree.app.repository.network.responses.NSCheckVersionResponse
+import com.moneytree.app.repository.network.responses.NSDashboardResponse
+import com.moneytree.app.repository.network.responses.NSDirectSettingResponse
+import com.moneytree.app.repository.network.responses.NSDiseasesResponse
+import com.moneytree.app.repository.network.responses.NSDownlineMemberDirectReOfferResponse
+import com.moneytree.app.repository.network.responses.NSJoiningVoucherTransferResponse
+import com.moneytree.app.repository.network.responses.NSKycKeyResponse
+import com.moneytree.app.repository.network.responses.NSLevelMemberTreeDetailResponse
+import com.moneytree.app.repository.network.responses.NSLevelMemberTreeResponse
+import com.moneytree.app.repository.network.responses.NSLogoutResponse
+import com.moneytree.app.repository.network.responses.NSMemberDetailResponse
+import com.moneytree.app.repository.network.responses.NSMemberTreeResponse
+import com.moneytree.app.repository.network.responses.NSNotificationListResponse
+import com.moneytree.app.repository.network.responses.NSPackageResponse
+import com.moneytree.app.repository.network.responses.NSPackageVoucherQntResponse
+import com.moneytree.app.repository.network.responses.NSPendingCoinWalletListResponse
+import com.moneytree.app.repository.network.responses.NSProductListResponse
+import com.moneytree.app.repository.network.responses.NSRePurchaseInfoResponse
+import com.moneytree.app.repository.network.responses.NSRePurchaseListResponse
+import com.moneytree.app.repository.network.responses.NSRechargeFetchListResponse
+import com.moneytree.app.repository.network.responses.NSRechargeListResponse
+import com.moneytree.app.repository.network.responses.NSRechargeSaveResponse
+import com.moneytree.app.repository.network.responses.NSRedeemListResponse
+import com.moneytree.app.repository.network.responses.NSRegisterListResponse
+import com.moneytree.app.repository.network.responses.NSRepurchaseStockModel
+import com.moneytree.app.repository.network.responses.NSRetailInfoResponse
+import com.moneytree.app.repository.network.responses.NSRetailListResponse
+import com.moneytree.app.repository.network.responses.NSRoyaltyInfoResponse
+import com.moneytree.app.repository.network.responses.NSRoyaltyListResponse
+import com.moneytree.app.repository.network.responses.NSSearchListResponse
+import com.moneytree.app.repository.network.responses.NSSendMessageResponse
+import com.moneytree.app.repository.network.responses.NSServiceProviderResponse
+import com.moneytree.app.repository.network.responses.NSSetDefaultResponse
+import com.moneytree.app.repository.network.responses.NSSuccessResponse
+import com.moneytree.app.repository.network.responses.NSUpLineListResponse
+import com.moneytree.app.repository.network.responses.NSUserResponse
+import com.moneytree.app.repository.network.responses.NSVoucherListResponse
+import com.moneytree.app.repository.network.responses.NSWalletListResponse
+import com.moneytree.app.repository.network.responses.OnlineOrderInfoResponse
+import com.moneytree.app.repository.network.responses.OrderHistoryResponse
+import com.moneytree.app.repository.network.responses.OrderInfoResponse
+import com.moneytree.app.repository.network.responses.PendingVoucherListResponse
+import com.moneytree.app.repository.network.responses.PlansResponse
+import com.moneytree.app.repository.network.responses.Repurchase30000Response
+import com.moneytree.app.repository.network.responses.StateResponse
+import com.moneytree.app.repository.network.responses.TopUp8888MemberListResponse
+import com.moneytree.app.repository.network.responses.TopUp8888Response
+import com.moneytree.app.repository.network.responses.TopUpDashboardResponse
+import com.moneytree.app.repository.network.responses.TopUpVoucherAvailableListResponse
+import com.moneytree.app.repository.network.responses.TopUpVoucherListResponse
+import com.moneytree.app.repository.network.responses.TopUpVoucherQntResponse
+import com.moneytree.app.repository.network.responses.VoucherList30000Response
+import com.moneytree.app.repository.network.responses.YoutubeResponse
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -21,7 +98,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.PartMap
+import retrofit2.http.QueryMap
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -1542,6 +1628,14 @@ class NSApiManager {
 	fun getCreditWalletList(pageIndex: String, search: String, startDate: String, endDate: String, type: String, callback: NSRetrofitCallback<CreditWalletListResponse>) {
 		request(unAuthorised3020Client.getCreditWalletList(NSUserManager.getAuthToken(), pageIndex, search, startDate, endDate, type), callback)
 	}
+
+	fun repurchase30000Dashboard(callback: NSRetrofitCallback<Repurchase30000Response>) {
+		request(unAuthorised3020Client.repurchase30000Dashboard(NSUserManager.getAuthToken()), callback)
+	}
+
+	fun repurchase30000VoucherList(voucherId: String,callback: NSRetrofitCallback<VoucherList30000Response>) {
+		request(unAuthorised3020Client.repurchase30000VoucherList(NSUserManager.getAuthToken(), voucherId), callback)
+	}
 }
 
 fun requestBody(text: String): RequestBody {
@@ -2382,4 +2476,17 @@ interface RTApiInterface {
 		@Field("end_date") endDate: String,
 		@Field("type") type: String
 	): Call<CreditWalletListResponse>
+
+	@FormUrlEncoded
+	@POST("sr30000-dashboard")
+	fun repurchase30000Dashboard(
+		@Field("token_id") token: String
+	): Call<Repurchase30000Response>
+
+	@FormUrlEncoded
+	@POST("sr30000-voucher-list")
+	fun repurchase30000VoucherList(
+		@Field("token_id") token: String,
+		@Field("voucher_id") voucherId: String
+	): Call<VoucherList30000Response>
 }
